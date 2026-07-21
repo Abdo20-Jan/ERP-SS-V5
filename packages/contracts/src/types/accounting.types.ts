@@ -135,3 +135,102 @@ export interface DimensionRestrictionDto {
   restriction: string;
   dimension?: DimensionDto;
 }
+
+// Ledger (MS-01-SS7) — amounts as decimal strings (never binary float)
+export interface CreateLineItemDto {
+  accountId: string;
+  debitAmount?: string | number;
+  creditAmount?: string | number;
+  originCurrency?: string;
+  originAmount?: string | number;
+  originExchangeRate?: string | number;
+  costCenterId?: string;
+  projectId?: string;
+  partyId?: string;
+  productId?: string;
+  description?: string;
+  reference?: string;
+}
+
+export interface CreateJournalEntryDto {
+  journalId: string;
+  entryDate: string;
+  description: string;
+  lines: CreateLineItemDto[];
+  correlationId?: string;
+  originModule?: string;
+  originEntityType?: string;
+  originEntityId?: string;
+}
+
+export interface LineItemDto {
+  id: string;
+  accountId: string;
+  accountCode?: string;
+  accountName?: string;
+  debitAmount: string;
+  creditAmount: string;
+  originCurrency?: string | null;
+  originAmount?: string | null;
+  originExchangeRate?: string | null;
+  costCenterId?: string | null;
+  projectId?: string | null;
+  partyId?: string | null;
+  productId?: string | null;
+  description?: string | null;
+  reference?: string | null;
+}
+
+export interface JournalEntryDto {
+  id: string;
+  entryNumber: string;
+  journalId: string;
+  entryDate: string;
+  description: string;
+  status: "DRAFT" | "POSTED" | "REVERSED" | string;
+  totalDebit: string;
+  totalCredit: string;
+  lines: LineItemDto[];
+  correlationId: string;
+  originModule?: string | null;
+  originEntityType?: string | null;
+  originEntityId?: string | null;
+  reversedFromId?: string | null;
+  reversalReason?: string | null;
+  createdAt: string;
+  postedAt?: string | null;
+  reversedAt?: string | null;
+}
+
+export interface PostJournalEntryDto {
+  correlationId?: string;
+}
+
+export interface ReverseJournalEntryDto {
+  reason: string;
+  reversalDate: string;
+  correlationId?: string;
+}
+
+export interface CreateJournalDto {
+  code: string;
+  name: string;
+  type: string;
+}
+
+export interface JournalDto {
+  id: string;
+  code: string;
+  name: string;
+  type: string;
+  isActive: boolean;
+  nextSequence: number;
+  createdAt?: string;
+}
+
+export interface PaginatedJournalEntriesDto {
+  data: JournalEntryDto[];
+  total: number;
+  page: number;
+  limit: number;
+}

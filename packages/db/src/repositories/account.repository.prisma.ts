@@ -137,9 +137,8 @@ export class PrismaAccountRepository implements AccountRepository {
     return this.db.account.count({ where: { parentId: accountId } });
   }
 
-  async countJournalLines(_accountId: string): Promise<number> {
-    // SS7 will implement journal lines; until then no postings exist.
-    return 0;
+  async countJournalLines(accountId: string): Promise<number> {
+    return this.db.journalEntryLine.count({ where: { accountId } });
   }
 
   private toCoa(row: {

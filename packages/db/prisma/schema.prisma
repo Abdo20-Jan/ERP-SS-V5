@@ -23,8 +23,11 @@ model User {
   createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz
   updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamptz
 
-  roles UserRole[]
-  audit AuditLog[]
+  roles           UserRole[]
+  audit           AuditLog[]
+  entriesCreated  JournalEntry[] @relation("EntryCreatedBy")
+  entriesPosted   JournalEntry[] @relation("EntryPostedBy")
+  entriesReversed JournalEntry[] @relation("EntryReversedBy")
 
   @@map("users")
 }
@@ -335,6 +338,7 @@ model Account {
   parent                Account?                       @relation("AccountHierarchy", fields: [parentId], references: [id])
   children              Account[]                      @relation("AccountHierarchy")
   dimensionRestrictions AccountDimensionRestriction[]
+  journalLines          JournalEntryLine[]
 
   @@unique([coaId, code])
   @@index([parentId])
@@ -420,4 +424,83 @@ model AccountDimensionRestriction {
 
   @@id([accountId, dimensionId])
   @@map("account_dimension_restrictions")
+}
+
+// ============================================
+// LEDGER ENGINE (MS-01-SS7)
+// ============================================
+
+model Journal {
+  id           String   @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  code         String   @unique
+  name         String
+  type         String
+  isActive     Boolean  @default(true) @map("is_active")
+  nextSequence Int      @default(1) @map("next_sequence")
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  entries JournalEntry[]
+
+  @@map("journals")
+}
+
+model JournalEntry {
+  id               String    @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  organizationId   String    @default("org_001") @map("organization_id")
+  journalId        String    @map("journal_id") @db.Uuid
+  entryNumber      String    @default("") @map("entry_number")
+  entryDate        DateTime  @map("entry_date") @db.Date
+  description      String
+  correlationId    String    @unique @map("correlation_id")
+  originModule     String?   @map("origin_module")
+  originEntityType String?   @map("origin_entity_type")
+  originEntityId   String?   @map("origin_entity_id")
+  status           String    @default("DRAFT")
+  createdById      String    @map("created_by") @db.Uuid
+  postedById       String?   @map("posted_by") @db.Uuid
+  postedAt         DateTime? @map("posted_at") @db.Timestamptz
+  reversedById     String?   @map("reversed_by") @db.Uuid
+  reversedAt       DateTime? @map("reversed_at") @db.Timestamptz
+  reversedFromId   String?   @map("reversed_from_id") @db.Uuid
+  reversalReason   String?   @map("reversal_reason")
+  createdAt        DateTime  @default(now()) @map("created_at") @db.Timestamptz
+
+  journal      Journal            @relation(fields: [journalId], references: [id])
+  lines        JournalEntryLine[]
+  createdBy    User               @relation("EntryCreatedBy", fields: [createdById], references: [id])
+  postedBy     User?              @relation("EntryPostedBy", fields: [postedById], references: [id])
+  reversedBy   User?              @relation("EntryReversedBy", fields: [reversedById], references: [id])
+  reversedFrom JournalEntry?      @relation("ReversalChain", fields: [reversedFromId], references: [id])
+  reversals    JournalEntry[]     @relation("ReversalChain")
+
+  @@index([journalId, entryDate])
+  @@index([organizationId])
+  @@index([originModule, originEntityType, originEntityId])
+  @@index([status])
+  @@map("journal_entries")
+}
+
+model JournalEntryLine {
+  id                 String   @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  entryId            String   @map("entry_id") @db.Uuid
+  accountId          String   @map("account_id") @db.Uuid
+  debitAmount        Decimal  @default(0) @map("debit_amount") @db.Decimal(18, 2)
+  creditAmount       Decimal  @default(0) @map("credit_amount") @db.Decimal(18, 2)
+  originCurrency     String?  @map("origin_currency")
+  originAmount       Decimal? @map("origin_amount") @db.Decimal(18, 2)
+  originExchangeRate Decimal? @map("origin_exchange_rate") @db.Decimal(18, 6)
+  costCenterId       String?  @map("cost_center_id") @db.Uuid
+  projectId          String?  @map("project_id") @db.Uuid
+  partyId            String?  @map("party_id") @db.Uuid
+  productId          String?  @map("product_id") @db.Uuid
+  description        String?
+  reference          String?
+  createdAt          DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  entry   JournalEntry @relation(fields: [entryId], references: [id], onDelete: Cascade)
+  account Account      @relation(fields: [accountId], references: [id])
+
+  @@index([entryId])
+  @@index([accountId])
+  @@map("journal_entry_lines")
 }

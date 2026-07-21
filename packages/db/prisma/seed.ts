@@ -276,6 +276,22 @@ async function main() {
     console.log("✅ Exchange rate USD→ARS already present");
   }
 
+  // === Journals (MS-01-SS7) ===
+  const journals = [
+    { code: "01", name: "Diário Geral", type: "GENERAL" },
+    { code: "02", name: "Diário de Vendas", type: "SALES" },
+    { code: "03", name: "Diário de Compras", type: "PURCHASES" },
+    { code: "04", name: "Diário de Caixa", type: "CASH" },
+  ];
+  for (const j of journals) {
+    await prisma.journal.upsert({
+      where: { code: j.code },
+      update: {},
+      create: j,
+    });
+  }
+  console.log("✅ Journals seeded");
+
   console.log("🎉 Seed completed successfully!");
 }
 

@@ -23,4 +23,10 @@ export {
   InvalidDimensionTypeError,
   InvalidRestrictionError,
   InvalidDimensionHierarchyError,
+  UnbalancedEntryError,
+  InvalidLineError,
+  InvalidJournalStateError,
+  ReversalRequiresReasonError,
+  InvalidJournalTypeError,
+  DuplicateCorrelationError,
 } from "./domain-error";

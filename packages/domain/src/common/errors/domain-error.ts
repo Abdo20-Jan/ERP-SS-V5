@@ -152,3 +152,40 @@ export class InvalidDimensionHierarchyError extends DomainError {
     super(message, "INVALID_DIMENSION_HIERARCHY", details);
   }
 }
+
+// Ledger (MS-01-SS7)
+export class UnbalancedEntryError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "UNBALANCED_ENTRY", details);
+  }
+}
+
+export class InvalidLineError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "INVALID_LINE", details);
+  }
+}
+
+export class InvalidJournalStateError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "INVALID_STATE", details);
+  }
+}
+
+export class ReversalRequiresReasonError extends DomainError {
+  constructor(message = "Reversal requires a non-empty reason", details?: Record<string, unknown>) {
+    super(message, "REVERSAL_REQUIRES_REASON", details);
+  }
+}
+
+export class InvalidJournalTypeError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "INVALID_JOURNAL_TYPE", details);
+  }
+}
+
+export class DuplicateCorrelationError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "DUPLICATE_CORRELATION", details);
+  }
+}
