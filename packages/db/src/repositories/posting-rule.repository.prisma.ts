@@ -160,7 +160,7 @@ export class PrismaPostingRuleRepository implements PostingRuleRepository {
       condition: l.condition,
       dimensionMapping: (l.dimensionMapping as PostingRuleLineSnapshot["dimensionMapping"]) ?? null,
       placeholders: Array.isArray(l.placeholders)
-        ? (l.placeholders as PostingRuleLineSnapshot["placeholders"])
+        ? (l.placeholders as unknown as PostingRuleLineSnapshot["placeholders"])
         : [],
     }));
     const snap: PostingRuleSnapshot = {
