@@ -175,8 +175,8 @@ export interface LineItemDto {
   originExchangeRate?: string | null;
   costCenterId?: string | null;
   projectId?: string | null;
-  partyId?: string | null;
   productId?: string | null;
+  partyId?: string | null;
   description?: string | null;
   reference?: string | null;
 }
@@ -233,4 +233,71 @@ export interface PaginatedJournalEntriesDto {
   total: number;
   page: number;
   limit: number;
+}
+
+// Posting Rules (MS-01-SS8)
+export interface CreatePlaceholderRefDto {
+  placeholder: string;
+  providedBy: string;
+  valueType: "account_id" | "account_code" | "dimension_value" | "party_id" | string;
+}
+
+export interface CreatePostingRuleLineDto {
+  sequence: number;
+  debitAccountCode: string;
+  creditAccountCode: string;
+  condition?: string;
+  dimensionMapping?: {
+    costCenterFrom?: string;
+    costCenterValue?: string;
+    projectFrom?: string;
+    projectValue?: string;
+  };
+  placeholders?: CreatePlaceholderRefDto[];
+}
+
+export interface CreatePostingRuleDto {
+  name: string;
+  description?: string;
+  eventType: string;
+  originModule: string;
+  validFrom?: string;
+  validUntil?: string;
+  lines: CreatePostingRuleLineDto[];
+}
+
+export interface UpdatePostingRuleDto {
+  name?: string;
+  description?: string | null;
+  validUntil?: string | null;
+  lines?: CreatePostingRuleLineDto[];
+}
+
+export interface PlaceholderRefDto {
+  placeholder: string;
+  providedBy: string;
+  valueType: string;
+}
+
+export interface PostingRuleLineDto {
+  id: string;
+  sequence: number;
+  debitAccountCode: string;
+  creditAccountCode: string;
+  condition?: string | null;
+  dimensionMapping?: Record<string, unknown> | null;
+  placeholders?: PlaceholderRefDto[];
+}
+
+export interface PostingRuleDto {
+  id: string;
+  name: string;
+  description?: string | null;
+  eventType: string;
+  originModule: string;
+  isActive: boolean;
+  validFrom: string;
+  validUntil?: string | null;
+  lines: PostingRuleLineDto[];
+  createdAt: string;
 }

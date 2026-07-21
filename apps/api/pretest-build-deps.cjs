@@ -10,5 +10,6 @@ run("packages/contracts", "npx tsc");
 run("packages/db", "node ensure-currency-migration.cjs");
 run("packages/db", "node ensure-dimension-migration.cjs");
 run("packages/db", "node ensure-ledger-migration.cjs");
+run("packages/db", "node ensure-posting-rule-migration.cjs");
 run("packages/db", "npx prisma generate");
 run("packages/db", "npx tsc");

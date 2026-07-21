@@ -29,4 +29,8 @@ export {
   ReversalRequiresReasonError,
   InvalidJournalTypeError,
   DuplicateCorrelationError,
+  MissingDebitCreditError,
+  InvalidPlaceholderError,
+  InvalidSequenceError,
+  DuplicatePostingRuleError,
 } from "./domain-error";

@@ -504,3 +504,43 @@ model JournalEntryLine {
   @@index([accountId])
   @@map("journal_entry_lines")
 }
+
+// ============================================
+// POSTING RULES (MS-01-SS8)
+// ============================================
+
+model PostingRule {
+  id           String    @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  name         String
+  description  String?
+  eventType    String    @map("event_type")
+  originModule String    @map("origin_module")
+  validFrom    DateTime  @default(now()) @map("valid_from") @db.Timestamptz
+  validUntil   DateTime? @map("valid_until") @db.Timestamptz
+  isActive     Boolean   @default(true) @map("is_active")
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  createdBy    String?   @map("created_by") @db.Uuid
+
+  lines PostingRuleLine[]
+
+  @@unique([eventType, originModule, validFrom])
+  @@index([eventType, originModule, isActive])
+  @@map("posting_rules")
+}
+
+model PostingRuleLine {
+  id                String  @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  ruleId            String  @map("rule_id") @db.Uuid
+  sequence          Int
+  debitAccountCode  String  @map("debit_account_code")
+  creditAccountCode String  @map("credit_account_code")
+  condition         String?
+  dimensionMapping  Json?   @map("dimension_mapping")
+  placeholders      Json?
+
+  rule PostingRule @relation(fields: [ruleId], references: [id], onDelete: Cascade)
+
+  @@unique([ruleId, sequence])
+  @@index([ruleId])
+  @@map("posting_rule_lines")
+}

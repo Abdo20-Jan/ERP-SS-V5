@@ -292,6 +292,72 @@ async function main() {
   }
   console.log("✅ Journals seeded");
 
+  // === Posting Rules (MS-01-SS8 examples) ===
+  const existingManual = await prisma.postingRule.findFirst({
+    where: { eventType: "MANUAL", originModule: "ACCOUNTING", isActive: true },
+  });
+  if (!existingManual) {
+    await prisma.postingRule.create({
+      data: {
+        name: "Lançamento Manual",
+        description: "Template para lançamentos manuais no Diário Geral",
+        eventType: "MANUAL",
+        originModule: "ACCOUNTING",
+        validFrom: new Date(),
+        isActive: true,
+        lines: {
+          create: [
+            {
+              sequence: 1,
+              debitAccountCode: "1",
+              creditAccountCode: "4",
+              placeholders: [],
+            },
+          ],
+        },
+      },
+    });
+    console.log("✅ Posting rule seeded: Manual Journal");
+  } else {
+    console.log("✅ Posting rule Manual already present");
+  }
+
+  const existingSale = await prisma.postingRule.findFirst({
+    where: { eventType: "VENTA", originModule: "SALES", isActive: true },
+  });
+  if (!existingSale) {
+    await prisma.postingRule.create({
+      data: {
+        name: "Venda à Vista (esqueleto)",
+        description:
+          "Template para venda à vista — integração com SALES no MS-03",
+        eventType: "VENTA",
+        originModule: "SALES",
+        validFrom: new Date(),
+        isActive: true,
+        lines: {
+          create: [
+            {
+              sequence: 1,
+              debitAccountCode: "1",
+              creditAccountCode: "4",
+              placeholders: [
+                {
+                  placeholder: "cuenta_ventas",
+                  providedBy: "SALES",
+                  valueType: "account_code",
+                },
+              ],
+            },
+          ],
+        },
+      },
+    });
+    console.log("✅ Posting rule seeded: Sales Skeleton");
+  } else {
+    console.log("✅ Posting rule Sales already present");
+  }
+
   console.log("🎉 Seed completed successfully!");
 }
 

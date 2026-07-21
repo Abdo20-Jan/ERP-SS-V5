@@ -153,7 +153,6 @@ export class InvalidDimensionHierarchyError extends DomainError {
   }
 }
 
-// Ledger (MS-01-SS7)
 export class UnbalancedEntryError extends DomainError {
   constructor(message: string, details?: Record<string, unknown>) {
     super(message, "UNBALANCED_ENTRY", details);
@@ -173,7 +172,10 @@ export class InvalidJournalStateError extends DomainError {
 }
 
 export class ReversalRequiresReasonError extends DomainError {
-  constructor(message = "Reversal requires a non-empty reason", details?: Record<string, unknown>) {
+  constructor(
+    message = "Reversal requires a non-empty reason",
+    details?: Record<string, unknown>,
+  ) {
     super(message, "REVERSAL_REQUIRES_REASON", details);
   }
 }
@@ -187,5 +189,30 @@ export class InvalidJournalTypeError extends DomainError {
 export class DuplicateCorrelationError extends DomainError {
   constructor(message: string, details?: Record<string, unknown>) {
     super(message, "DUPLICATE_CORRELATION", details);
+  }
+}
+
+// Posting rules (MS-01-SS8)
+export class MissingDebitCreditError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "MISSING_DEBIT_CREDIT", details);
+  }
+}
+
+export class InvalidPlaceholderError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "INVALID_PLACEHOLDER", details);
+  }
+}
+
+export class InvalidSequenceError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "INVALID_SEQUENCE", details);
+  }
+}
+
+export class DuplicatePostingRuleError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "DUPLICATE_RULE", details);
   }
 }

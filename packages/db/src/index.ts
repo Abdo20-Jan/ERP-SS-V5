@@ -5,3 +5,4 @@ export * from "./repositories/account.repository.prisma";
 export * from "./repositories/currency.repository.prisma";
 export * from "./repositories/dimension.repository.prisma";
 export * from "./repositories/journal-entry.repository.prisma";
+export * from "./repositories/posting-rule.repository.prisma";
