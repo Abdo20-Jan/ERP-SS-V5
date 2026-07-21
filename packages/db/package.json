@@ -9,7 +9,7 @@
     "lint": "biome lint .",
     "typecheck": "tsc --noEmit",
     "build": "tsc",
-    "pretest": "node ensure-currency-migration.cjs && node ss5-git-commit.cjs",
+    "pretest": "node ensure-currency-migration.cjs",
     "test": "vitest run",
     "predb:generate": "node ensure-currency-migration.cjs",
     "db:generate": "prisma generate",
