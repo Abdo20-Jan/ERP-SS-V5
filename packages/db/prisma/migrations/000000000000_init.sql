@@ -8,8 +8,10 @@ AS $$
 BEGIN
   RETURN (
     lpad(to_hex(floor(extract(epoch from clock_timestamp()) * 1000)::bigint), 12, '0') ||
+    '7' ||
     lpad(to_hex(floor(random() * 4096)::int), 3, '0') ||
-    lpad(to_hex(floor(random() * 268435456)::int), 8, '0')
+    lpad(to_hex(8 + floor(random() * 4)::int), 1, '0') ||
+    lpad(to_hex(floor(random() * 1152921504606846976)::bigint), 15, '0')
   )::uuid;
 END;
 $$ LANGUAGE plpgsql VOLATILE;

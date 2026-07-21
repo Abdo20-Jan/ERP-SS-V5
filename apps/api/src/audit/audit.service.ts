@@ -13,9 +13,19 @@ interface FindAllParams {
   endDate?: Date;
 }
 
+interface AuditListResult {
+  data: unknown[];
+  meta: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  };
+}
+
 @Injectable()
 export class AuditService {
-  async findAll(params: FindAllParams) {
+  async findAll(params: FindAllParams): Promise<AuditListResult> {
     const {
       page,
       limit,

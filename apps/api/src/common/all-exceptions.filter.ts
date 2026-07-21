@@ -1,16 +1,16 @@
 import {
-  ArgumentsHost,
+  type ArgumentsHost,
   Catch,
-  ExceptionFilter,
+  type ExceptionFilter,
   HttpException,
   HttpStatus,
-  Logger,
 } from "@nestjs/common";
 import { AppError } from "@sunset/contracts";
+import { createLogger } from "@sunset/observability";
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
-  private readonly logger = new Logger(AllExceptionsFilter.name);
+  private readonly logger = createLogger({ name: "api.exceptions" });
 
   catch(exception: unknown, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
@@ -18,7 +18,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const request = ctx.getRequest();
 
     let status = HttpStatus.INTERNAL_SERVER_ERROR;
-    let errorResponse: any = {
+    let errorResponse: Record<string, unknown> = {
       error: {
         code: "INTERNAL_ERROR",
         message: "Erro interno do servidor",
@@ -37,23 +37,32 @@ export class AllExceptionsFilter implements ExceptionFilter {
           message:
             typeof exceptionResponse === "string"
               ? exceptionResponse
-              : (exceptionResponse as any).message || exception.message,
+              : ((exceptionResponse as Record<string, unknown>).message as
+                  | string
+                  | undefined) || exception.message,
         },
       };
     } else if (exception instanceof Error) {
       this.logger.error(
-        `Unhandled exception: ${exception.message}`,
-        exception.stack,
+        { err: { message: exception.message, stack: exception.stack } },
+        "Unhandled exception",
       );
     }
 
     // Add correlation ID to error response
     if (request.correlationId) {
-      errorResponse.error.correlationId = request.correlationId;
+      (errorResponse.error as Record<string, unknown>).correlationId =
+        request.correlationId;
     }
 
     this.logger.error(
-      `HTTP ${status} - ${request.method} ${request.url} - ${JSON.stringify(errorResponse)}`,
+      {
+        status,
+        method: request.method,
+        url: request.url,
+        response: errorResponse,
+      },
+      `HTTP ${status}`,
     );
 
     response.status(status).send(errorResponse);

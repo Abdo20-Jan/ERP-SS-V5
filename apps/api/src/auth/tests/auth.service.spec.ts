@@ -1,46 +1,38 @@
 import { UnauthorizedException } from "@nestjs/common";
-import { JwtService } from "@nestjs/jwt";
-import { Test, TestingModule } from "@nestjs/testing";
+import type { JwtService } from "@nestjs/jwt";
+import { describe, beforeEach, afterEach, it, expect, vi } from "vitest";
+import { prisma } from "@sunset/db";
+import * as bcrypt from "bcryptjs";
 import { AuthService } from "../auth.service";
 
-jest.mock("@sunset/db", () => ({
+vi.mock("@sunset/db", () => ({
   prisma: {
     user: {
-      findUnique: jest.fn(),
+      findUnique: vi.fn(),
     },
     auditLog: {
-      create: jest.fn(),
+      create: vi.fn(),
     },
   },
 }));
 
-jest.mock("bcrypt", () => ({
-  compare: jest.fn(),
+vi.mock("bcryptjs", () => ({
+  compare: vi.fn(),
 }));
 
 describe("AuthService", () => {
   let service: AuthService;
-  let jwtService: JwtService;
+  let jwtService: Pick<JwtService, "sign">;
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        AuthService,
-        {
-          provide: JwtService,
-          useValue: {
-            sign: jest.fn().mockReturnValue("mock-jwt-token"),
-          },
-        },
-      ],
-    }).compile();
-
-    service = module.get<AuthService>(AuthService);
-    jwtService = module.get<JwtService>(JwtService);
+  beforeEach(() => {
+    jwtService = {
+      sign: vi.fn().mockReturnValue("mock-jwt-token"),
+    } as Pick<JwtService, "sign">;
+    service = new AuthService(jwtService as JwtService);
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe("validateUser", () => {
@@ -60,11 +52,8 @@ describe("AuthService", () => {
         ],
       };
 
-      const { prisma } = require("@sunset/db");
       prisma.user.findUnique.mockResolvedValue(mockUser);
-
-      const bcrypt = require("bcrypt");
-      bcrypt.compare.mockResolvedValue(true);
+      (bcrypt.compare as unknown as ReturnType<typeof vi.fn>).mockResolvedValue(true);
 
       const result = await service.validateUser("test@example.com", "password");
 
@@ -80,7 +69,6 @@ describe("AuthService", () => {
     });
 
     it("should throw UnauthorizedException when user not found", async () => {
-      const { prisma } = require("@sunset/db");
       prisma.user.findUnique.mockResolvedValue(null);
 
       await expect(
@@ -95,7 +83,6 @@ describe("AuthService", () => {
         isActive: false,
       };
 
-      const { prisma } = require("@sunset/db");
       prisma.user.findUnique.mockResolvedValue(mockUser);
 
       await expect(
@@ -111,11 +98,9 @@ describe("AuthService", () => {
         isActive: true,
       };
 
-      const { prisma } = require("@sunset/db");
       prisma.user.findUnique.mockResolvedValue(mockUser);
 
-      const bcrypt = require("bcrypt");
-      bcrypt.compare.mockResolvedValue(false);
+      (bcrypt.compare as unknown as ReturnType<typeof vi.fn>).mockResolvedValue(false);
 
       await expect(
         service.validateUser("test@example.com", "wrong-password"),
@@ -157,7 +142,6 @@ describe("AuthService", () => {
   describe("logout", () => {
     it("should log audit event and return success message", async () => {
       const mockUser = { id: "user-id" };
-      const { prisma } = require("@sunset/db");
 
       const result = await service.logout(mockUser, "correlation-id");
 

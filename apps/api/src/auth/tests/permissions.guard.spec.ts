@@ -1,29 +1,27 @@
 import { ForbiddenException } from "@nestjs/common";
-import { Reflector } from "@nestjs/core";
-import { Test, TestingModule } from "@nestjs/testing";
+import type { Reflector } from "@nestjs/core";
+import { describe, beforeEach, it, expect, vi } from "vitest";
 import { PermissionsGuard } from "../permissions.guard";
 
 describe("PermissionsGuard", () => {
   let guard: PermissionsGuard;
-  let reflector: Reflector;
+  let reflector: { getAllAndOverride: ReturnType<typeof vi.fn> };
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [PermissionsGuard, Reflector],
-    }).compile();
-
-    guard = module.get<PermissionsGuard>(PermissionsGuard);
-    reflector = module.get<Reflector>(Reflector);
+  beforeEach(() => {
+    reflector = {
+      getAllAndOverride: vi.fn(),
+    };
+    guard = new PermissionsGuard(reflector as unknown as Reflector);
   });
 
   it("should allow access when no permissions required", () => {
-    jest.spyOn(reflector, "getAllAndOverride").mockReturnValue(undefined);
+    vi.spyOn(reflector, "getAllAndOverride").mockReturnValue(undefined);
 
     const context = {
-      getHandler: jest.fn(),
-      getClass: jest.fn(),
-      switchToHttp: jest.fn().mockReturnValue({
-        getRequest: jest.fn().mockReturnValue({}),
+      getHandler: vi.fn(),
+      getClass: vi.fn(),
+      switchToHttp: vi.fn().mockReturnValue({
+        getRequest: vi.fn().mockReturnValue({}),
       }),
     } as any;
 
@@ -31,13 +29,13 @@ describe("PermissionsGuard", () => {
   });
 
   it("should allow access when user has required permissions", () => {
-    jest.spyOn(reflector, "getAllAndOverride").mockReturnValue(["user:read"]);
+    vi.spyOn(reflector, "getAllAndOverride").mockReturnValue(["user:read"]);
 
     const context = {
-      getHandler: jest.fn(),
-      getClass: jest.fn(),
-      switchToHttp: jest.fn().mockReturnValue({
-        getRequest: jest.fn().mockReturnValue({
+      getHandler: vi.fn(),
+      getClass: vi.fn(),
+      switchToHttp: vi.fn().mockReturnValue({
+        getRequest: vi.fn().mockReturnValue({
           user: {
             roles: [
               {
@@ -58,13 +56,13 @@ describe("PermissionsGuard", () => {
   });
 
   it("should deny access when user lacks required permissions", () => {
-    jest.spyOn(reflector, "getAllAndOverride").mockReturnValue(["admin:write"]);
+    vi.spyOn(reflector, "getAllAndOverride").mockReturnValue(["admin:write"]);
 
     const context = {
-      getHandler: jest.fn(),
-      getClass: jest.fn(),
-      switchToHttp: jest.fn().mockReturnValue({
-        getRequest: jest.fn().mockReturnValue({
+      getHandler: vi.fn(),
+      getClass: vi.fn(),
+      switchToHttp: vi.fn().mockReturnValue({
+        getRequest: vi.fn().mockReturnValue({
           user: {
             roles: [
               {
@@ -82,13 +80,13 @@ describe("PermissionsGuard", () => {
   });
 
   it("should deny access when user is not authenticated", () => {
-    jest.spyOn(reflector, "getAllAndOverride").mockReturnValue(["user:read"]);
+    vi.spyOn(reflector, "getAllAndOverride").mockReturnValue(["user:read"]);
 
     const context = {
-      getHandler: jest.fn(),
-      getClass: jest.fn(),
-      switchToHttp: jest.fn().mockReturnValue({
-        getRequest: jest.fn().mockReturnValue({}),
+      getHandler: vi.fn(),
+      getClass: vi.fn(),
+      switchToHttp: vi.fn().mockReturnValue({
+        getRequest: vi.fn().mockReturnValue({}),
       }),
     } as any;
 

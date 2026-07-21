@@ -10,9 +10,13 @@ import { LocalStrategy } from "./local.strategy";
   imports: [
     PassportModule,
     JwtModule.register({
-      secret: process.env.JWT_SECRET || "dev-secret-change-in-production",
+      secret:
+        process.env.JWT_SECRET ??
+        (() => {
+          throw new Error("JWT_SECRET environment variable is required");
+        })(),
       signOptions: {
-        expiresIn: process.env.JWT_EXPIRES_IN || "1h",
+        expiresIn: (process.env.JWT_EXPIRES_IN || "1h") as "1h",
       },
     }),
   ],

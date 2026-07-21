@@ -1,35 +1,24 @@
-import { HealthCheckService } from "@nestjs/terminus";
-import { Test, TestingModule } from "@nestjs/testing";
+import type { HealthCheckService, HealthCheckResult } from "@nestjs/terminus";
+import { describe, beforeEach, it, expect, vi } from "vitest";
 import { HealthController } from "../health.controller";
-import { PrismaHealthIndicator } from "../prisma.health";
+import type { PrismaHealthIndicator } from "../prisma.health";
 
 describe("HealthController", () => {
   let controller: HealthController;
-  let healthCheckService: HealthCheckService;
-  let prismaHealthIndicator: PrismaHealthIndicator;
+  let healthCheckService: { check: ReturnType<typeof vi.fn> };
+  let prismaHealthIndicator: { isHealthy: ReturnType<typeof vi.fn> };
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [HealthController],
-      providers: [
-        {
-          provide: HealthCheckService,
-          useValue: {
-            check: jest.fn(),
-          },
-        },
-        {
-          provide: PrismaHealthIndicator,
-          useValue: {
-            isHealthy: jest.fn(),
-          },
-        },
-      ],
-    }).compile();
-
-    controller = module.get<HealthController>(HealthController);
-    healthCheckService = module.get<HealthCheckService>(HealthCheckService);
-    prismaHealthIndicator = module.get<PrismaHealthIndicator>(PrismaHealthIndicator);
+  beforeEach(() => {
+    healthCheckService = {
+      check: vi.fn(),
+    };
+    prismaHealthIndicator = {
+      isHealthy: vi.fn(),
+    };
+    controller = new HealthController(
+      healthCheckService as unknown as HealthCheckService,
+      prismaHealthIndicator as unknown as PrismaHealthIndicator,
+    );
   });
 
   it("should be defined", () => {
@@ -39,7 +28,7 @@ describe("HealthController", () => {
   describe("check", () => {
     it("should return health status without DB check", async () => {
       const mockResult = { status: "ok" };
-      jest.spyOn(healthCheckService, "check").mockResolvedValue(mockResult as any);
+      vi.spyOn(healthCheckService, "check").mockResolvedValue(mockResult as unknown as HealthCheckResult);
 
       const result = await controller.check();
 
@@ -51,10 +40,10 @@ describe("HealthController", () => {
   describe("ready", () => {
     it("should return health status with DB check", async () => {
       const mockResult = { status: "ok", info: { database: { status: "up" } } };
-      jest.spyOn(healthCheckService, "check").mockResolvedValue(mockResult as any);
-      jest.spyOn(prismaHealthIndicator, "isHealthy").mockResolvedValue({
+      vi.spyOn(healthCheckService, "check").mockResolvedValue(mockResult as unknown as HealthCheckResult);
+      vi.spyOn(prismaHealthIndicator, "isHealthy").mockResolvedValue({
         database: { status: "up" },
-      } as any);
+      } as unknown as HealthCheckResult);
 
       const result = await controller.ready();
 
@@ -72,10 +61,10 @@ describe("HealthController", () => {
           app: { status: "up", version: "0.0.0" },
         },
       };
-      jest.spyOn(healthCheckService, "check").mockResolvedValue(mockResult as any);
-      jest.spyOn(prismaHealthIndicator, "isHealthy").mockResolvedValue({
+      vi.spyOn(healthCheckService, "check").mockResolvedValue(mockResult as unknown as HealthCheckResult);
+      vi.spyOn(prismaHealthIndicator, "isHealthy").mockResolvedValue({
         database: { status: "up" },
-      } as any);
+      } as unknown as HealthCheckResult);
 
       const result = await controller.detailed();
 

@@ -1,14 +1,16 @@
-import { Test, TestingModule } from "@nestjs/testing";
+import { Test, type TestingModule } from "@nestjs/testing";
+import { describe, beforeEach, afterEach, it, expect, vi } from "vitest";
+import { prisma } from "@sunset/db";
 import { ParametersService } from "../parameters.service";
 
-jest.mock("@sunset/db", () => ({
+vi.mock("@sunset/db", () => ({
   prisma: {
     parameter: {
-      findMany: jest.fn(),
-      create: jest.fn(),
+      findMany: vi.fn(),
+      create: vi.fn(),
     },
     auditLog: {
-      create: jest.fn(),
+      create: vi.fn(),
     },
   },
 }));
@@ -25,7 +27,7 @@ describe("ParametersService", () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe("findAll", () => {
@@ -40,7 +42,6 @@ describe("ParametersService", () => {
         },
       ];
 
-      const { prisma } = require("@sunset/db");
       prisma.parameter.findMany.mockResolvedValue(mockParameters);
 
       const result = await service.findAll({ includeExpired: false });
@@ -57,7 +58,6 @@ describe("ParametersService", () => {
     });
 
     it("should include expired parameters when requested", async () => {
-      const { prisma } = require("@sunset/db");
       prisma.parameter.findMany.mockResolvedValue([]);
 
       await service.findAll({ includeExpired: true });
@@ -72,7 +72,6 @@ describe("ParametersService", () => {
     });
 
     it("should filter by key", async () => {
-      const { prisma } = require("@sunset/db");
       prisma.parameter.findMany.mockResolvedValue([]);
 
       await service.findAll({ key: "company", includeExpired: false });
@@ -97,7 +96,6 @@ describe("ParametersService", () => {
         validFrom: new Date(),
       };
 
-      const { prisma } = require("@sunset/db");
       prisma.parameter.create.mockResolvedValue(mockParameter);
 
       const result = await service.create({
@@ -120,7 +118,6 @@ describe("ParametersService", () => {
       const validFrom = new Date("2024-01-01");
       const validUntil = new Date("2024-12-31");
 
-      const { prisma } = require("@sunset/db");
       prisma.parameter.create.mockResolvedValue({});
 
       await service.create({

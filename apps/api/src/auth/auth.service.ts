@@ -1,11 +1,11 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { Inject, Injectable, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { prisma } from "@sunset/db";
-import * as bcrypt from "bcrypt";
+import * as bcrypt from "bcryptjs";
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly jwtService: JwtService) {}
+  constructor(@Inject(JwtService) private readonly jwtService: JwtService) {}
 
   async validateUser(email: string, password: string): Promise<any> {
     const user = await prisma.user.findUnique({
@@ -54,7 +54,7 @@ export class AuthService {
     return result;
   }
 
-  async login(user: any, correlationId?: string) {
+  async login(user: any, _correlationId?: string) {
     const permissions = user.roles.flatMap((ur: any) =>
       ur.role.permissions.map((rp: any) => rp.permission.action),
     );

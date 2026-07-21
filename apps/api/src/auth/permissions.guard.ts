@@ -1,7 +1,8 @@
 import {
-  CanActivate,
-  ExecutionContext,
+  type CanActivate,
+  type ExecutionContext,
   ForbiddenException,
+  Inject,
   Injectable,
 } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
@@ -10,7 +11,7 @@ export const PERMISSIONS_KEY = "permissions";
 
 @Injectable()
 export class PermissionsGuard implements CanActivate {
-  constructor(private reflector: Reflector) {}
+  constructor(@Inject(Reflector) private reflector: Reflector) {}
 
   canActivate(context: ExecutionContext): boolean {
     const requiredPermissions = this.reflector.getAllAndOverride<string[]>(

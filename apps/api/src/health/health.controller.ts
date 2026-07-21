@@ -1,16 +1,16 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller, Get, Inject } from "@nestjs/common";
 import {
   HealthCheck,
-  HealthCheckResult,
   HealthCheckService,
+  type HealthCheckResult,
 } from "@nestjs/terminus";
 import { PrismaHealthIndicator } from "./prisma.health";
 
 @Controller()
 export class HealthController {
   constructor(
-    private readonly health: HealthCheckService,
-    private readonly prisma: PrismaHealthIndicator,
+    @Inject(HealthCheckService) private readonly health: HealthCheckService,
+    @Inject(PrismaHealthIndicator) private readonly prisma: PrismaHealthIndicator,
   ) {}
 
   @Get("health")
@@ -25,7 +25,7 @@ export class HealthController {
     return this.health.check([async () => this.prisma.isHealthy("database")]);
   }
 
-  @Get("v1/health")
+  @Get("health/detailed")
   @HealthCheck()
   async detailed(): Promise<HealthCheckResult> {
     return this.health.check([

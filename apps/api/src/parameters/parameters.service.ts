@@ -16,7 +16,7 @@ interface CreateParams {
 
 @Injectable()
 export class ParametersService {
-  async findAll(params: FindAllParams) {
+  async findAll(params: FindAllParams): Promise<unknown[]> {
     const { key, includeExpired } = params;
 
     const where: any = {};
@@ -37,7 +37,7 @@ export class ParametersService {
     });
   }
 
-  async create(params: CreateParams) {
+  async create(params: CreateParams): Promise<unknown> {
     const { key, value, description, validFrom, validUntil } = params;
 
     // Log audit event

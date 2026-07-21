@@ -104,13 +104,30 @@
         "noUnusedTemplateLiteral": "error",
         "noUselessElse": "error",
         "useConst": "error",
-        "useFragmentShorthand": "error",
+        "useFragmentSyntax": "error",
         "useShorthandArrayType": "error",
         "useSingleCaseStatement": "error"
       }
     }
   },
   "javascript": {
+    "parser": {
+      "unsafeParameterDecoratorsEnabled": true
+    },
+    "globals": [
+      "describe",
+      "it",
+      "test",
+      "expect",
+      "beforeEach",
+      "afterEach",
+      "beforeAll",
+      "afterAll",
+      "jest",
+      "vi",
+      "Mock",
+      "console"
+    ],
     "formatter": {
       "quoteStyle": "single",
       "jsxQuoteStyle": "double",

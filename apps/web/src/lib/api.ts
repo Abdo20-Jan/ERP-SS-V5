@@ -1,4 +1,5 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+const CORRELATION_STORAGE_KEY = "sunset-correlation-id";
 
 export interface ApiError {
   error: {
@@ -8,6 +9,19 @@ export interface ApiError {
   };
 }
 
+function getCorrelationId(): string {
+  if (typeof window !== "undefined") {
+    const stored = window.localStorage.getItem(CORRELATION_STORAGE_KEY);
+    if (stored) {
+      return stored;
+    }
+    const id = crypto.randomUUID();
+    window.localStorage.setItem(CORRELATION_STORAGE_KEY, id);
+    return id;
+  }
+  return crypto.randomUUID();
+}
+
 async function request<T>(
   path: string,
   options: RequestInit = {},
@@ -15,7 +29,7 @@ async function request<T>(
   const token =
     typeof window !== "undefined" ? localStorage.getItem("access_token") : null;
 
-  const correlationId = crypto.randomUUID();
+  const correlationId = getCorrelationId();
 
   const response = await fetch(`${API_URL}${path}`, {
     ...options,
@@ -42,7 +56,7 @@ async function request<T>(
 
 export const api = {
   login: (email: string, password: string) =>
-    request<{ access_token: string; user: any }>("/v1/auth/login", {
+    request<{ access_token: string; user: unknown }>("/v1/auth/login", {
       method: "POST",
       body: JSON.stringify({ email, password }),
     }),
@@ -50,7 +64,7 @@ export const api = {
   logout: () =>
     request<{ message: string }>("/v1/auth/logout", { method: "POST" }),
 
-  me: () => request<any>("/v1/auth/me"),
+  me: () => request<unknown>("/v1/auth/me"),
 
   health: () => request<{ status: string }>("/health"),
 

@@ -11,7 +11,7 @@ export class ConflictError extends AppError {
     this.name = "ConflictError";
   }
 
-  toJSON() {
+  override toJSON() {
     return {
       error: {
         code: this.code,

@@ -10,7 +10,7 @@ export class ValidationError extends AppError {
     this.name = "ValidationError";
   }
 
-  toJSON() {
+  override toJSON() {
     return {
       error: {
         code: this.code,

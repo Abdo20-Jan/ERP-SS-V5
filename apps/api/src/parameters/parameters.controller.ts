@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Inject,
   Post,
   Query,
   UseGuards,
@@ -12,33 +13,33 @@ import { RequirePermission } from "../auth/require-permission.decorator";
 import { ParametersService } from "./parameters.service";
 
 class CreateParameterDto {
-  key: string;
-  value: any;
+  key!: string;
+  value: unknown;
   description?: string;
   validFrom?: string;
   validUntil?: string;
 }
 
-@Controller("v1/parameters")
+@Controller("parameters")
 @UseGuards(JwtAuthGuard, PermissionsGuard)
 export class ParametersController {
-  constructor(private readonly parametersService: ParametersService) {}
+  constructor(@Inject(ParametersService) private readonly parametersService: ParametersService) {}
 
   @Get()
   @RequirePermission("parameter:read")
   async findAll(
     @Query("key") key?: string,
     @Query("includeExpired") includeExpired = false,
-  ) {
+  ): Promise<unknown[]> {
     return this.parametersService.findAll({
       key,
-      includeExpired: includeExpired === true || includeExpired === "true",
+      includeExpired,
     });
   }
 
   @Post()
   @RequirePermission("parameter:write")
-  async create(@Body() createParameterDto: CreateParameterDto) {
+  async create(@Body() createParameterDto: CreateParameterDto): Promise<unknown> {
     return this.parametersService.create({
       key: createParameterDto.key,
       value: createParameterDto.value,

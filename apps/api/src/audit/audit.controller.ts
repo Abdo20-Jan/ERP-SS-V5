@@ -1,6 +1,7 @@
 import {
   Controller,
   Get,
+  Inject,
   Query,
   UseGuards,
 } from "@nestjs/common";
@@ -9,10 +10,20 @@ import { PermissionsGuard } from "../auth/permissions.guard";
 import { RequirePermission } from "../auth/require-permission.decorator";
 import { AuditService } from "./audit.service";
 
-@Controller("v1/audit")
+interface AuditListResult {
+  data: unknown[];
+  meta: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  };
+}
+
+@Controller("audit")
 @UseGuards(JwtAuthGuard, PermissionsGuard)
 export class AuditController {
-  constructor(private readonly auditService: AuditService) {}
+  constructor(@Inject(AuditService) private readonly auditService: AuditService) {}
 
   @Get()
   @RequirePermission("audit:read")
@@ -26,7 +37,7 @@ export class AuditController {
     @Query("correlationId") correlationId?: string,
     @Query("startDate") startDate?: string,
     @Query("endDate") endDate?: string,
-  ) {
+  ): Promise<AuditListResult> {
     return this.auditService.findAll({
       page: Number(page),
       limit: Number(limit),

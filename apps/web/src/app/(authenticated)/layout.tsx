@@ -34,7 +34,9 @@ export default function AuthenticatedLayout({
   return (
     <Shell>
       <TopNav
-        user={user ? { name: user.name, email: user.email } : undefined}
+        {...(user
+          ? { user: { name: user.name, email: user.email } }
+          : {})}
         onLogout={async () => {
           await logout();
           router.push("/login");

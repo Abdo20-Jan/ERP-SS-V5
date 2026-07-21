@@ -42,7 +42,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       try {
         const me = await api.me();
-        setUser(me);
+        setUser(me as User);
       } catch {
         localStorage.removeItem("access_token");
       } finally {
@@ -56,7 +56,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = useCallback(async (email: string, password: string) => {
     const response = await api.login(email, password);
     localStorage.setItem("access_token", response.access_token);
-    setUser(response.user);
+    setUser(response.user as User);
   }, []);
 
   const logout = useCallback(async () => {

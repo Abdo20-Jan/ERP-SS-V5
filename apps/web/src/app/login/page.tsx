@@ -31,8 +31,16 @@ export default function LoginPage() {
     try {
       await login(email, password);
       router.push("/app");
-    } catch (err: any) {
-      setError(err?.error?.message || "Credenciais inválidas. Tente novamente.");
+    } catch (err: unknown) {
+      const errorMessage =
+        typeof err === "object" &&
+        err !== null &&
+        "error" in err &&
+        typeof (err as { error?: { message?: string } }).error?.message ===
+          "string"
+          ? (err as { error: { message: string } }).error.message
+          : "Credenciais inválidas. Tente novamente.";
+      setError(errorMessage);
       setIsSubmitting(false);
     }
   };

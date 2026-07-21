@@ -47,7 +47,7 @@ export default function AppPage() {
             <CardDescription>Sem registros</CardDescription>
           </CardHeader>
           <CardContent>
-            <EmptyState actionLabel="Criar primeiro" onAction={() => {}} />
+            <EmptyState actionLabel="Criar primeiro" onAction={() => { /* no-op */ }} />
           </CardContent>
         </Card>
 
@@ -57,7 +57,7 @@ export default function AppPage() {
             <CardDescription>Erro recuperável</CardDescription>
           </CardHeader>
           <CardContent>
-            <ErrorState correlationId="abc-123" onAction={() => {}} />
+            <ErrorState correlationId="abc-123" onAction={() => { /* no-op */ }} />
           </CardContent>
         </Card>
 
@@ -67,7 +67,7 @@ export default function AppPage() {
             <CardDescription>Sem permissão</CardDescription>
           </CardHeader>
           <CardContent>
-            <NoPermissionState onAction={() => {}} />
+            <NoPermissionState onAction={() => { /* no-op */ }} />
           </CardContent>
         </Card>
 
@@ -77,7 +77,7 @@ export default function AppPage() {
             <CardDescription>Conflito de edição</CardDescription>
           </CardHeader>
           <CardContent>
-            <ConflictState onReload={() => {}} />
+            <ConflictState onReload={() => { /* no-op */ }} />
           </CardContent>
         </Card>
 

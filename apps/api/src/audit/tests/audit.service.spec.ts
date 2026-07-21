@@ -1,11 +1,13 @@
-import { Test, TestingModule } from "@nestjs/testing";
+import { Test, type TestingModule } from "@nestjs/testing";
+import { describe, beforeEach, afterEach, it, expect, vi } from "vitest";
+import { prisma } from "@sunset/db";
 import { AuditService } from "../audit.service";
 
-jest.mock("@sunset/db", () => ({
+vi.mock("@sunset/db", () => ({
   prisma: {
     auditLog: {
-      findMany: jest.fn(),
-      count: jest.fn(),
+      findMany: vi.fn(),
+      count: vi.fn(),
     },
   },
 }));
@@ -22,7 +24,7 @@ describe("AuditService", () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe("findAll", () => {
@@ -41,7 +43,6 @@ describe("AuditService", () => {
         },
       ];
 
-      const { prisma } = require("@sunset/db");
       prisma.auditLog.findMany.mockResolvedValue(mockLogs);
       prisma.auditLog.count.mockResolvedValue(1);
 
@@ -57,7 +58,6 @@ describe("AuditService", () => {
     });
 
     it("should filter by userId", async () => {
-      const { prisma } = require("@sunset/db");
       prisma.auditLog.findMany.mockResolvedValue([]);
       prisma.auditLog.count.mockResolvedValue(0);
 
@@ -73,7 +73,6 @@ describe("AuditService", () => {
     });
 
     it("should filter by action", async () => {
-      const { prisma } = require("@sunset/db");
       prisma.auditLog.findMany.mockResolvedValue([]);
       prisma.auditLog.count.mockResolvedValue(0);
 
@@ -89,7 +88,6 @@ describe("AuditService", () => {
     });
 
     it("should filter by date range", async () => {
-      const { prisma } = require("@sunset/db");
       prisma.auditLog.findMany.mockResolvedValue([]);
       prisma.auditLog.count.mockResolvedValue(0);
 

@@ -7,7 +7,11 @@ export class AppError extends Error {
   ) {
     super(message);
     this.name = "AppError";
-    Error.captureStackTrace(this, this.constructor);
+    (
+      Error as unknown as {
+        captureStackTrace?: (target: object, ctor: new (...args: never[]) => Error) => void;
+      }
+    ).captureStackTrace?.(this, this.constructor as new (...args: never[]) => Error);
   }
 
   toJSON() {
