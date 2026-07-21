@@ -20,6 +20,19 @@ async function bootstrap() {
     credentials: true,
   });
 
+  // Rate limiting (brute force protection)
+  await app.register(require("@fastify/rate-limit"), {
+    max: 100, // 100 requests
+    timeWindow: "1 minute",
+    errorResponseBuilder: (request, context) => ({
+      error: {
+        code: "RATE_LIMIT_EXCEEDED",
+        message: `Muitas requisições. Tente novamente em ${context.after}.`,
+        correlationId: request.headers["x-correlation-id"],
+      },
+    }),
+  });
+
   // Global validation pipe
   app.useGlobalPipes(
     new ValidationPipe({
@@ -45,6 +58,7 @@ async function bootstrap() {
   console.log(`🚀 API running on http://${host}:${port}`);
   console.log(`📊 Health check: http://${host}:${port}/health`);
   console.log(`📊 Ready check: http://${host}:${port}/ready`);
+  console.log(`🔒 Rate limit: 100 req/min`);
 }
 
 bootstrap();

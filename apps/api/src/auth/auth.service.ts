@@ -54,7 +54,7 @@ export class AuthService {
     return result;
   }
 
-  async login(user: any) {
+  async login(user: any, correlationId?: string) {
     const permissions = user.roles.flatMap((ur: any) =>
       ur.role.permissions.map((rp: any) => rp.permission.action),
     );
@@ -76,7 +76,7 @@ export class AuthService {
     };
   }
 
-  async logout(user: any) {
+  async logout(user: any, correlationId?: string) {
     // Log audit event
     await prisma.auditLog.create({
       data: {
@@ -84,6 +84,7 @@ export class AuthService {
         action: "user.logout",
         entityType: "user",
         entityId: user.id,
+        correlationId,
         metadata: {
           timestamp: new Date().toISOString(),
         },
