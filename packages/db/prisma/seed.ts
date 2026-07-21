@@ -50,6 +50,8 @@ async function main() {
     { action: "parameter:read", description: "Consultar parâmetros" },
     { action: "parameter:write", description: "Criar/alterar parâmetros" },
     { action: "health:read", description: "Ver health checks detalhados" },
+    { action: "party:read", description: "Listar/ver partes (clientes, fornecedores)" },
+    { action: "party:write", description: "Criar/editar/ativar/desativar partes" },
   ];
 
   for (const perm of permissions) {

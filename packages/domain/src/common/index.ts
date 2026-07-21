@@ -22,4 +22,7 @@ export {
   InvalidCurrencyCodeError,
   InvalidDateRangeError,
   InvalidEntityIdError,
+  InvalidCuitError,
+  PartyValidationError,
+  PartyInactiveError,
 } from "./errors";

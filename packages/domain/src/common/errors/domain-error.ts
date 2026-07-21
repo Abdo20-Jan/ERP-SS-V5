@@ -44,3 +44,21 @@ export class InvalidEntityIdError extends DomainError {
     super(message, "INVALID_ENTITY_ID", details);
   }
 }
+
+export class InvalidCuitError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "INVALID_CUIT", details);
+  }
+}
+
+export class PartyValidationError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "VALIDATION_ERROR", details);
+  }
+}
+
+export class PartyInactiveError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "PARTY_INACTIVE", details);
+  }
+}

@@ -9,6 +9,7 @@
     "lint": "biome lint .",
     "typecheck": "tsc --noEmit",
     "build": "tsc",
+    "test": "vitest run",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "db:migrate:deploy": "prisma migrate deploy",
@@ -17,6 +18,8 @@
     "db:reset": "prisma migrate reset"
   },
   "dependencies": {
+    "@sunset/domain": "workspace:*",
+    "@sunset/contracts": "workspace:*",
     "@prisma/client": "^6.2.1",
     "bcryptjs": "^2.4.3",
     "uuidv7": "^1.0.2"

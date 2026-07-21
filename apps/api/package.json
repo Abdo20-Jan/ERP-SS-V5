@@ -27,6 +27,7 @@
     "@nestjs/throttler": "^6.4.0",
     "@sunset/contracts": "workspace:*",
     "@sunset/db": "workspace:*",
+    "@sunset/domain": "workspace:*",
     "@sunset/observability": "workspace:*",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.5.1",

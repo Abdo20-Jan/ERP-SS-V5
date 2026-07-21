@@ -8,6 +8,7 @@ import { AllExceptionsFilter } from "./common/all-exceptions.filter";
 import { CorrelationIdInterceptor } from "./common/correlation-id.interceptor";
 import { HealthModule } from "./health/health.module";
 import { ParametersModule } from "./parameters/parameters.module";
+import { PartyModule } from "./party/party.module";
 import { PrismaModule } from "./prisma/prisma.module";
 
 @Module({
@@ -23,6 +24,7 @@ import { PrismaModule } from "./prisma/prisma.module";
     AuthModule,
     AuditModule,
     ParametersModule,
+    PartyModule,
   ],
   providers: [
     {

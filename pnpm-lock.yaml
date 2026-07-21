@@ -59,6 +59,9 @@ importers:
       '@sunset/db':
         specifier: workspace:*
         version: link:../../packages/db
+      '@sunset/domain':
+        specifier: workspace:*
+        version: link:../../packages/domain
       '@sunset/observability':
         specifier: workspace:*
         version: link:../../packages/observability
@@ -263,6 +266,12 @@ importers:
       '@prisma/client':
         specifier: ^6.2.1
         version: 6.19.3(prisma@6.19.3(magicast@0.3.5)(typescript@5.9.3))(typescript@5.9.3)
+      '@sunset/contracts':
+        specifier: workspace:*
+        version: link:../contracts
+      '@sunset/domain':
+        specifier: workspace:*
+        version: link:../domain
       bcryptjs:
         specifier: ^2.4.3
         version: 2.4.3
