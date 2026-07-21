@@ -10,6 +10,7 @@ import { HealthModule } from "./health/health.module";
 import { ParametersModule } from "./parameters/parameters.module";
 import { PartyModule } from "./party/party.module";
 import { ProductModule } from "./product/product.module";
+import { AccountingModule } from "./accounting/accounting.module";
 import { PrismaModule } from "./prisma/prisma.module";
 
 @Module({
@@ -27,6 +28,7 @@ import { PrismaModule } from "./prisma/prisma.module";
     ParametersModule,
     PartyModule,
     ProductModule,
+    AccountingModule,
   ],
   providers: [
     {

@@ -293,3 +293,51 @@ model ProductCertification {
   @@index([productId])
   @@map("product_certifications")
 }
+
+// ============================================
+// CHART OF ACCOUNTS (MS-01-SS4)
+// ============================================
+
+model ChartOfAccounts {
+  id          String    @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  name        String
+  description String?
+  version     Int       @default(1)
+  validFrom   DateTime  @default(now()) @map("valid_from") @db.Timestamptz
+  validUntil  DateTime? @map("valid_until") @db.Timestamptz
+  isActive    Boolean   @default(true) @map("is_active")
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz
+
+  accounts Account[]
+
+  @@map("chart_of_accounts")
+}
+
+model Account {
+  id                 String    @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  coaId              String    @map("coa_id") @db.Uuid
+  code               String
+  name               String
+  type               String
+  nature             String
+  parentId           String?   @map("parent_id") @db.Uuid
+  level              Int
+  isSystem           Boolean   @default(false) @map("is_system")
+  isActive           Boolean   @default(true) @map("is_active")
+  allowManualPosting Boolean   @default(true) @map("allow_manual_posting")
+  description        String?
+  validFrom          DateTime  @default(now()) @map("valid_from") @db.Timestamptz
+  validUntil         DateTime? @map("valid_until") @db.Timestamptz
+  createdAt          DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt          DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+
+  coa      ChartOfAccounts @relation(fields: [coaId], references: [id])
+  parent   Account?        @relation("AccountHierarchy", fields: [parentId], references: [id])
+  children Account[]       @relation("AccountHierarchy")
+
+  @@unique([coaId, code])
+  @@index([parentId])
+  @@index([type])
+  @@index([isActive])
+  @@map("accounts")
+}

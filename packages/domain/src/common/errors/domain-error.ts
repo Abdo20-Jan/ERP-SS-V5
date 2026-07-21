@@ -80,3 +80,33 @@ export class ProductInactiveError extends DomainError {
     super(message, "PRODUCT_INACTIVE", details);
   }
 }
+
+export class InvalidAccountTypeError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "INVALID_ACCOUNT_TYPE", details);
+  }
+}
+
+export class InvalidHierarchyError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "INVALID_HIERARCHY", details);
+  }
+}
+
+export class InvalidAccountCodeError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "INVALID_CODE", details);
+  }
+}
+
+export class SystemAccountError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "SYSTEM_ACCOUNT", details);
+  }
+}
+
+export class AccountingValidationError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "VALIDATION_ERROR", details);
+  }
+}

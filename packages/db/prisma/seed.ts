@@ -54,6 +54,8 @@ async function main() {
     { action: "party:write", description: "Criar/editar/ativar/desativar partes" },
     { action: "product:read", description: "Listar/ver produtos" },
     { action: "product:write", description: "Criar/editar/ativar/desativar produtos" },
+    { action: "accounting:read", description: "Consultar plano de contas, moedas, dimensões e lançamentos" },
+    { action: "accounting:write", description: "Criar/alterar contas, moedas, dimensões e lançamentos" },
   ];
 
   for (const perm of permissions) {
@@ -172,6 +174,44 @@ async function main() {
     });
   }
   console.log("✅ Product categories seeded");
+
+  // Chart of accounts baseline
+  let coa = await prisma.chartOfAccounts.findFirst({
+    where: { name: "Plano de Contas Sunset", isActive: true },
+  });
+  if (!coa) {
+    coa = await prisma.chartOfAccounts.create({
+      data: {
+        name: "Plano de Contas Sunset",
+        description: "Plano de contas padrão - estrutura argentina simplificada",
+        version: 1,
+        validFrom: new Date(),
+        isActive: true,
+      },
+    });
+  }
+  const systemAccounts = [
+    { code: "1", name: "ATIVO", type: "ASSET", nature: "DEBITOR" },
+    { code: "2", name: "PASSIVO", type: "LIABILITY", nature: "CREDITOR" },
+    { code: "3", name: "PATRIMÔNIO LÍQUIDO", type: "EQUITY", nature: "CREDITOR" },
+    { code: "4", name: "RECEITAS", type: "REVENUE", nature: "CREDITOR" },
+    { code: "5", name: "CUSTOS E DESPESAS", type: "EXPENSE", nature: "DEBITOR" },
+    { code: "6", name: "CONTAS DE CONTROLE", type: "CONTROL", nature: "DEBITOR" },
+  ];
+  for (const acc of systemAccounts) {
+    await prisma.account.upsert({
+      where: { coaId_code: { coaId: coa.id, code: acc.code } },
+      update: {},
+      create: {
+        ...acc,
+        coaId: coa.id,
+        level: 1,
+        isSystem: true,
+        allowManualPosting: false,
+      },
+    });
+  }
+  console.log("✅ Chart of accounts baseline seeded");
 
   console.log("🎉 Seed completed successfully!");
 }
