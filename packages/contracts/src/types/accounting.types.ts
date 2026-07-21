@@ -51,3 +51,48 @@ export interface ChartOfAccountsDto {
   accounts?: AccountDto[];
   createdAt: string;
 }
+
+// Currency & Exchange Rate (MS-01-SS5)
+export interface CreateCurrencyDto {
+  code: string;
+  name: string;
+  symbol: string;
+  decimalPlaces?: number;
+  isFunctional?: boolean;
+  isPresentation?: boolean;
+}
+
+export interface CurrencyDto {
+  id: string;
+  code: string;
+  name: string;
+  symbol: string;
+  decimalPlaces: number;
+  isFunctional: boolean;
+  isPresentation: boolean;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface SetExchangeRateDto {
+  fromCurrency?: string;
+  toCurrency: string;
+  rate: number | string;
+  validFrom: string;
+  validUntil?: string;
+  source: string;
+  sourceReference?: string;
+}
+
+export interface ExchangeRateDto {
+  id: string;
+  fromCurrency: string;
+  toCurrency: string;
+  rate: string;
+  validFrom: string;
+  validUntil?: string | null;
+  source: string;
+  sourceReference?: string | null;
+  createdAt: string;
+}

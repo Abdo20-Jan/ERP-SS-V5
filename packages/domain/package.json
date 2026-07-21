@@ -8,6 +8,7 @@
   "scripts": {
     "lint": "biome lint .",
     "typecheck": "tsc --noEmit",
+    "pretest": "tsc",
     "test": "vitest run",
     "test:watch": "vitest",
     "build": "tsc"

@@ -110,3 +110,27 @@ export class AccountingValidationError extends DomainError {
     super(message, "VALIDATION_ERROR", details);
   }
 }
+
+export class InvalidRateError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "INVALID_RATE", details);
+  }
+}
+
+export class DuplicateFunctionalCurrencyError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "DUPLICATE_FUNCTIONAL", details);
+  }
+}
+
+export class DuplicatePresentationCurrencyError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "DUPLICATE_PRESENTATION", details);
+  }
+}
+
+export class CurrencyInactiveError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "CURRENCY_INACTIVE", details);
+  }
+}

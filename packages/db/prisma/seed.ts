@@ -213,6 +213,69 @@ async function main() {
   }
   console.log("✅ Chart of accounts baseline seeded");
 
+  // === Currency & Exchange Rates (MS-01-SS5) ===
+  const ars = await prisma.currency.upsert({
+    where: { code: "ARS" },
+    update: {},
+    create: {
+      code: "ARS",
+      name: "Peso Argentino",
+      symbol: "$",
+      decimalPlaces: 2,
+      isFunctional: true,
+      isPresentation: false,
+      isActive: true,
+    },
+  });
+  const usd = await prisma.currency.upsert({
+    where: { code: "USD" },
+    update: {},
+    create: {
+      code: "USD",
+      name: "Dólar Estadounidense",
+      symbol: "US$",
+      decimalPlaces: 2,
+      isFunctional: false,
+      isPresentation: true,
+      isActive: true,
+    },
+  });
+  await prisma.currency.upsert({
+    where: { code: "BRL" },
+    update: {},
+    create: {
+      code: "BRL",
+      name: "Real Brasileño",
+      symbol: "R$",
+      decimalPlaces: 2,
+      isFunctional: false,
+      isPresentation: false,
+      isActive: true,
+    },
+  });
+  console.log("✅ Currencies created: ARS (functional), USD (presentation), BRL");
+  const existingRate = await prisma.exchangeRate.findFirst({
+    where: {
+      fromCurrencyId: usd.id,
+      toCurrencyId: ars.id,
+      validUntil: null,
+    },
+  });
+  if (!existingRate) {
+    await prisma.exchangeRate.create({
+      data: {
+        fromCurrencyId: usd.id,
+        toCurrencyId: ars.id,
+        rate: 350.5,
+        validFrom: new Date(),
+        source: "MANUAL",
+      },
+    });
+    console.log("✅ Exchange rate seeded: 1 USD = 350.50 ARS");
+  } else {
+    console.log("✅ Exchange rate USD→ARS already present");
+  }
+
   console.log("🎉 Seed completed successfully!");
 }
 

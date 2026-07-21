@@ -33,4 +33,8 @@ export {
   InvalidAccountCodeError,
   SystemAccountError,
   AccountingValidationError,
+  InvalidRateError,
+  DuplicateFunctionalCurrencyError,
+  DuplicatePresentationCurrencyError,
+  CurrencyInactiveError,
 } from "./errors";
