@@ -21,7 +21,8 @@
     "db:down": "docker-compose down",
     "db:logs": "docker-compose logs -f postgres",
     "spec:validate": "python3 scripts/validate-requirements.py",
-    "doctor": "python3 scripts/doctor.py"
+    "doctor": "python3 scripts/doctor.py",
+    "verify:guards": "python3 scripts/validate-guards.py"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",

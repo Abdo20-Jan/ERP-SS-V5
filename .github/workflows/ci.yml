@@ -32,6 +32,9 @@ jobs:
       - name: Run Biome lint
         run: pnpm lint
 
+      - name: Verify API guards (MS-01-SS9)
+        run: pnpm run verify:guards
+
   typecheck:
     name: Typecheck
     runs-on: ubuntu-latest
