@@ -1,0 +1,121 @@
+// Sunset ERP Database Schema
+// MS-00-SS2: DB + API + Health
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// IDENTIDADE E RBAC
+// ============================================
+
+model User {
+  id           String   @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  email        String   @unique
+  name         String
+  passwordHash String   @map("password_hash")
+  isActive     Boolean  @default(true) @map("is_active")
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  roles UserRole[]
+  audit AuditLog[]
+
+  @@map("users")
+}
+
+model Role {
+  id          String   @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  name        String   @unique
+  description String?
+  isSystem    Boolean  @default(false) @map("is_system")
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  users       UserRole[]
+  permissions RolePermission[]
+
+  @@map("roles")
+}
+
+model UserRole {
+  userId String @map("user_id") @db.Uuid
+  roleId String @map("role_id") @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role   Role   @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@id([userId, roleId])
+  @@map("user_roles")
+}
+
+model Permission {
+  id          String   @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  action      String   @unique
+  description String?
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  roles RolePermission[]
+
+  @@map("permissions")
+}
+
+model RolePermission {
+  roleId       String     @map("role_id") @db.Uuid
+  permissionId String     @map("permission_id") @db.Uuid
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, permissionId])
+  @@map("role_permissions")
+}
+
+// ============================================
+// AUDITORIA APPEND-ONLY
+// ============================================
+
+model AuditLog {
+  id            String   @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  userId        String?  @map("user_id") @db.Uuid
+  action        String
+  entityType    String?  @map("entity_type")
+  entityId      String?  @map("entity_id") @db.Uuid
+  before        Json?
+  after         Json?
+  correlationId String?  @map("correlation_id")
+  ipAddress     String?  @map("ip_address")
+  userAgent     String?  @map("user_agent")
+  metadata      Json?
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  user User? @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([action])
+  @@index([entityType, entityId])
+  @@index([correlationId])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
+
+// ============================================
+// PARÂMETROS COM VIGÊNCIA
+// ============================================
+
+model Parameter {
+  id          String    @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  key         String
+  value       Json
+  description String?
+  validFrom   DateTime  @default(now()) @map("valid_from") @db.Timestamptz
+  validUntil  DateTime? @map("valid_until") @db.Timestamptz
+  createdBy   String?   @map("created_by") @db.Uuid
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz
+
+  @@unique([key, validFrom])
+  @@index([key, validFrom, validUntil])
+  @@map("parameters")
+}
