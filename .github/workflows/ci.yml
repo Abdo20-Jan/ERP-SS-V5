@@ -162,6 +162,14 @@ jobs:
         run: pnpm --filter @sunset/db exec prisma db seed
         if: success()
 
+      - name: Generate Prisma client
+        run: pnpm --filter @sunset/db exec prisma generate
+        if: success()
+
+      - name: Validate invariants D-003.12-16
+        run: pnpm run validate:invariants
+        if: success()
+
       - name: Run integration tests
         run: pnpm test:ci
         if: success()

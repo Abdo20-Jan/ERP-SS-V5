@@ -22,7 +22,8 @@
     "db:logs": "docker-compose logs -f postgres",
     "spec:validate": "python3 scripts/validate-requirements.py",
     "doctor": "python3 scripts/doctor.py",
-    "verify:guards": "python3 scripts/validate-guards.py"
+    "verify:guards": "python3 scripts/validate-guards.py",
+    "validate:invariants": "pnpm --filter @sunset/db exec tsx ../../scripts/validate-invariants.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
