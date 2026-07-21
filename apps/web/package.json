@@ -1,0 +1,29 @@
+{
+  "name": "@sunset/web",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Sunset ERP Web - Next.js frontend",
+  "scripts": {
+    "dev": "next dev -p 3001",
+    "build": "next build",
+    "start": "next start -p 3001",
+    "lint": "biome lint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@sunset/ui": "workspace:*",
+    "next": "^15.1.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@types/node": "^22.10.5",
+    "@types/react": "^19.0.4",
+    "@types/react-dom": "^19.0.2",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.2"
+  }
+}
