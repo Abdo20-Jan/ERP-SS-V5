@@ -331,9 +331,10 @@ model Account {
   createdAt          DateTime  @default(now()) @map("created_at") @db.Timestamptz
   updatedAt          DateTime  @updatedAt @map("updated_at") @db.Timestamptz
 
-  coa      ChartOfAccounts @relation(fields: [coaId], references: [id])
-  parent   Account?        @relation("AccountHierarchy", fields: [parentId], references: [id])
-  children Account[]       @relation("AccountHierarchy")
+  coa                   ChartOfAccounts                @relation(fields: [coaId], references: [id])
+  parent                Account?                       @relation("AccountHierarchy", fields: [parentId], references: [id])
+  children              Account[]                      @relation("AccountHierarchy")
+  dimensionRestrictions AccountDimensionRestriction[]
 
   @@unique([coaId, code])
   @@index([parentId])
@@ -382,4 +383,41 @@ model ExchangeRate {
   @@index([fromCurrencyId, toCurrencyId, validFrom])
   @@index([validFrom, validUntil])
   @@map("exchange_rates")
+}
+
+// ============================================
+// DIMENSION REGISTRY (MS-01-SS6)
+// ============================================
+
+model DimensionDefinition {
+  id          String   @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  type        String
+  code        String
+  name        String
+  description String?
+  parentId    String?  @map("parent_id") @db.Uuid
+  isActive    Boolean  @default(true) @map("is_active")
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  parent       DimensionDefinition?          @relation("DimensionHierarchy", fields: [parentId], references: [id])
+  children     DimensionDefinition[]         @relation("DimensionHierarchy")
+  restrictions AccountDimensionRestriction[]
+
+  @@unique([type, code])
+  @@index([parentId])
+  @@index([type])
+  @@map("dimension_definitions")
+}
+
+model AccountDimensionRestriction {
+  accountId   String @map("account_id") @db.Uuid
+  dimensionId String @map("dimension_id") @db.Uuid
+  restriction String
+
+  account   Account             @relation(fields: [accountId], references: [id])
+  dimension DimensionDefinition @relation(fields: [dimensionId], references: [id])
+
+  @@id([accountId, dimensionId])
+  @@map("account_dimension_restrictions")
 }

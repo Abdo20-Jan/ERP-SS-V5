@@ -96,3 +96,42 @@ export interface ExchangeRateDto {
   sourceReference?: string | null;
   createdAt: string;
 }
+
+// Dimensions (MS-01-SS6)
+export interface CreateDimensionDto {
+  type: string;
+  code: string;
+  name: string;
+  description?: string;
+  parentId?: string;
+}
+
+export interface UpdateDimensionDto {
+  name?: string;
+  description?: string | null;
+}
+
+export interface DimensionDto {
+  id: string;
+  type: string;
+  code: string;
+  name: string;
+  description?: string | null;
+  parentId?: string | null;
+  isActive: boolean;
+  children?: DimensionDto[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface SetDimensionRestrictionDto {
+  dimensionId: string;
+  restriction: "REQUIRED" | "PROHIBITED" | "OPTIONAL" | string;
+}
+
+export interface DimensionRestrictionDto {
+  accountId: string;
+  dimensionId: string;
+  restriction: string;
+  dimension?: DimensionDto;
+}

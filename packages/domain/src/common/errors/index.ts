@@ -20,4 +20,7 @@ export {
   DuplicateFunctionalCurrencyError,
   DuplicatePresentationCurrencyError,
   CurrencyInactiveError,
+  InvalidDimensionTypeError,
+  InvalidRestrictionError,
+  InvalidDimensionHierarchyError,
 } from "./domain-error";

@@ -8,5 +8,6 @@ const run = (cwd, cmd) => {
 run("packages/domain", "npx tsc");
 run("packages/contracts", "npx tsc");
 run("packages/db", "node ensure-currency-migration.cjs");
+run("packages/db", "node ensure-dimension-migration.cjs");
 run("packages/db", "npx prisma generate");
 run("packages/db", "npx tsc");

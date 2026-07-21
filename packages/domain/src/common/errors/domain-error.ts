@@ -134,3 +134,21 @@ export class CurrencyInactiveError extends DomainError {
     super(message, "CURRENCY_INACTIVE", details);
   }
 }
+
+export class InvalidDimensionTypeError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "INVALID_DIMENSION_TYPE", details);
+  }
+}
+
+export class InvalidRestrictionError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "INVALID_RESTRICTION", details);
+  }
+}
+
+export class InvalidDimensionHierarchyError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "INVALID_DIMENSION_HIERARCHY", details);
+  }
+}
