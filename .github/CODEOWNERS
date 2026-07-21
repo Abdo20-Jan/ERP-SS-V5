@@ -1,0 +1,6 @@
+* @OWNER
+/apps/api/ @OWNER
+/apps/web/ @OWNER
+/apps/desktop/ @OWNER
+/packages/db/ @OWNER
+/docs/governance/ @OWNER

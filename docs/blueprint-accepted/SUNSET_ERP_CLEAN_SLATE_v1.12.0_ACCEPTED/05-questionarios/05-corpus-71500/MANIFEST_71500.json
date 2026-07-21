@@ -1,0 +1,19 @@
+{
+  "version": "1.12.0",
+  "modules": 13,
+  "submodules": 65,
+  "prs": 65,
+  "questions_per_unit": 500,
+  "module_questions": 6500,
+  "submodule_questions": 32500,
+  "pr_questions": 32500,
+  "total_questions": 71500,
+  "unit_files": 143,
+  "jsonl_gzip": "05-questionarios/05-corpus-71500/QUESTOES_71500.jsonl.gz",
+  "sha256_jsonl_gzip": "02bfb037dba10f3ab4598530e4c230b4fd4328717afbecd0ceda9a2e8cd0249d",
+  "level_counts": {
+    "MODULE": 6500,
+    "SUBMODULE": 32500,
+    "PR": 32500
+  }
+}

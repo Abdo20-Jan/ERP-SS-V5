@@ -1,0 +1,12 @@
+{
+  "accepted_question_files": 143,
+  "accepted_questions": 71500,
+  "unique_question_ids": 71500,
+  "unique_suggestion_hashes": 71500,
+  "logical_prs": 65,
+  "physical_slices": 650,
+  "slice_size": 50,
+  "toml_valid": true,
+  "hooks_json_valid": true,
+  "generated_at": "2026-07-17"
+}

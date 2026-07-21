@@ -1,0 +1,521 @@
+﻿modulo_codigo,modulo,submodulo_codigo,submodulo,ordem_funcao,funcao
+COMEX,COMEX,SM-COMEX-01,Pedido internacional e produção,1,"Criar o pedido internacional e suas linhas por SKU, quantidade, preço, moeda e Incoterm."
+COMEX,COMEX,SM-COMEX-01,Pedido internacional e produção,2,"Vincular fornecedor, exportador, fabricante, proforma e condições de pagamento."
+COMEX,COMEX,SM-COMEX-01,Pedido internacional e produção,3,"Executar workflow de aprovação, envio ao fornecedor, confirmação e alteração controlada."
+COMEX,COMEX,SM-COMEX-01,Pedido internacional e produção,4,"Controlar cronograma de produção, datas prometidas, produção parcial e saldo pendente."
+COMEX,COMEX,SM-COMEX-01,Pedido internacional e produção,5,Registrar versões da proforma e impedir duplicidade do mesmo pedido/documento.
+COMEX,COMEX,SM-COMEX-01,Pedido internacional e produção,6,Importar itens em massa por Excel e reaproveitar o cadastro mestre de SKUs.
+COMEX,COMEX,SM-COMEX-01,Pedido internacional e produção,7,"Exibir status, atrasos, próximas ações, responsáveis e exceções em uma única página."
+COMEX,COMEX,SM-COMEX-01,Pedido internacional e produção,8,"Gerar eventos para previsão de caixa, documentos, embarque e auditoria."
+COMEX,COMEX,SM-COMEX-02,"Embarque, booking, BL e contêiner",1,Comparar opções de frete e registrar a escolha do booking.
+COMEX,COMEX,SM-COMEX-02,"Embarque, booking, BL e contêiner",2,Criar um ou vários embarques a partir do mesmo pedido internacional.
+COMEX,COMEX,SM-COMEX-02,"Embarque, booking, BL e contêiner",3,"Controlar contêineres, tipos, lacres, volumes, peso, cubagem e linhas transportadas."
+COMEX,COMEX,SM-COMEX-02,"Embarque, booking, BL e contêiner",4,"Registrar ETD, ETA, porto de origem, transbordos, porto de destino e transportador."
+COMEX,COMEX,SM-COMEX-02,"Embarque, booking, BL e contêiner",5,Gerenciar BL master/house e suas versões.
+COMEX,COMEX,SM-COMEX-02,"Embarque, booking, BL e contêiner",6,"Conferir commercial invoice, packing list, BL e saldos embarcados."
+COMEX,COMEX,SM-COMEX-02,"Embarque, booking, BL e contêiner",7,"Tratar embarques parciais, alteração de navio, rollover, atraso e cancelamento."
+COMEX,COMEX,SM-COMEX-02,"Embarque, booking, BL e contêiner",8,"Emitir alertas de chegada, free time, documentos faltantes e divergências."
+COMEX,COMEX,SM-COMEX-03,Despacho e regimes aduaneiros,1,"Abrir e controlar despacho aduaneiro por embarque, contêiner e mercadoria."
+COMEX,COMEX,SM-COMEX-03,Despacho e regimes aduaneiros,2,"Selecionar e manter separados os regimes de importação definitiva, trânsito, ZPA e Zona Franca."
+COMEX,COMEX,SM-COMEX-03,Despacho e regimes aduaneiros,3,"Registrar NCM/posição tarifária, origem, valor aduaneiro e dados do despacho."
+COMEX,COMEX,SM-COMEX-03,Despacho e regimes aduaneiros,4,"Controlar canal aduaneiro, exigências, verificações, bloqueios, garantias e liberações."
+COMEX,COMEX,SM-COMEX-03,Despacho e regimes aduaneiros,5,"Registrar direitos de importação, taxa estatística, arancel SIM e demais conceitos aduaneiros."
+COMEX,COMEX,SM-COMEX-03,Despacho e regimes aduaneiros,6,"Vincular despachante, aduana, terminal, depósito fiscal e documentos apresentados."
+COMEX,COMEX,SM-COMEX-03,Despacho e regimes aduaneiros,7,Manter histórico de retificações e eventos sem sobrescrever o despacho original.
+COMEX,COMEX,SM-COMEX-03,Despacho e regimes aduaneiros,8,"Gerar eventos fiscais, contábeis, de landed cost e de entrada em estoque."
+COMEX,COMEX,SM-COMEX-04,"Documentos, OCR, ocorrências e prazos",1,"Receber documentos por upload, e-mail, API ou importação em lote."
+COMEX,COMEX,SM-COMEX-04,"Documentos, OCR, ocorrências e prazos",2,"Classificar proforma, invoice, packing list, BL, booking, despacho, comprovantes e faturas de gastos."
+COMEX,COMEX,SM-COMEX-04,"Documentos, OCR, ocorrências e prazos",3,Extrair campos e itens por OCR com confiança por campo e revisão humana.
+COMEX,COMEX,SM-COMEX-04,"Documentos, OCR, ocorrências e prazos",4,"Associar automaticamente documentos ao pedido, fornecedor, contêiner e despacho."
+COMEX,COMEX,SM-COMEX-04,"Documentos, OCR, ocorrências e prazos",5,"Comparar documentos e abrir divergências por quantidade, valor, SKU, peso ou identificação."
+COMEX,COMEX,SM-COMEX-04,"Documentos, OCR, ocorrências e prazos",6,"Abrir ocorrências, atribuir responsável, prazo, prioridade, evidência e resolução."
+COMEX,COMEX,SM-COMEX-04,"Documentos, OCR, ocorrências e prazos",7,"Controlar vencimentos, ETA, free time, devolução, pagamentos e documentos faltantes."
+COMEX,COMEX,SM-COMEX-04,"Documentos, OCR, ocorrências e prazos",8,"Manter versionamento, trilha de auditoria, busca integral e visualização lado a lado."
+COMEX,COMEX,SM-COMEX-05,"Recebimento, devolução e fechamento",1,"Registrar chegada, descarga, desconsolidação e confirmação do depósito."
+COMEX,COMEX,SM-COMEX-05,"Recebimento, devolução e fechamento",2,"Conferir quantidade recebida contra packing list, despacho e contêiner."
+COMEX,COMEX,SM-COMEX-05,"Recebimento, devolução e fechamento",3,"Tratar faltas, sobras, avarias, mercadoria bloqueada e ocorrências com operador."
+COMEX,COMEX,SM-COMEX-05,"Recebimento, devolução e fechamento",4,"Gerar entrada em estoque por SKU, despacho, contêiner e camada de custo."
+COMEX,COMEX,SM-COMEX-05,"Recebimento, devolução e fechamento",5,Controlar prazo e comprovante de devolução do contêiner.
+COMEX,COMEX,SM-COMEX-05,"Recebimento, devolução e fechamento",6,Registrar gastos finais e custos tardios vinculados à importação.
+COMEX,COMEX,SM-COMEX-05,"Recebimento, devolução e fechamento",7,"Validar checklist de encerramento operacional, documental, financeiro e aduaneiro."
+COMEX,COMEX,SM-COMEX-05,"Recebimento, devolução e fechamento",8,"Reabrir a importação com permissão, motivo e histórico completo."
+LANDED,Landed cost,SM-LANDED-01,Catálogo de componentes e elegibilidade,1,Manter catálogo versionado de componentes de custo e sua natureza.
+LANDED,Landed cost,SM-LANDED-01,Catálogo de componentes e elegibilidade,2,"Classificar cada componente como elegível ou não para custo contábil, gerencial e cash-out."
+LANDED,Landed cost,SM-LANDED-01,Catálogo de componentes e elegibilidade,3,"Separar valores líquidos, IVA, percepções, retenções e créditos recuperáveis."
+LANDED,Landed cost,SM-LANDED-01,Catálogo de componentes e elegibilidade,4,"Definir vigência, moeda, fornecedor, centro de custo e regra padrão de rateio."
+LANDED,Landed cost,SM-LANDED-01,Catálogo de componentes e elegibilidade,5,"Distinguir frete, seguro, porto, despachante, linha marítima, operador, transporte e direitos aduaneiros."
+LANDED,Landed cost,SM-LANDED-01,Catálogo de componentes e elegibilidade,6,"Permitir ativação, desativação e nova versão sem apagar o histórico."
+LANDED,Landed cost,SM-LANDED-01,Catálogo de componentes e elegibilidade,7,"Validar combinação de componente, documento, regime e base de custo."
+LANDED,Landed cost,SM-LANDED-01,Catálogo de componentes e elegibilidade,8,"Expor o catálogo para compras, COMEX, fiscal, contabilidade e relatórios."
+LANDED,Landed cost,SM-LANDED-02,Pools provisórios e documentos,1,"Criar pool de custo por importação, despacho, contêiner ou agrupamento configurado."
+LANDED,Landed cost,SM-LANDED-02,Pools provisórios e documentos,2,"Incorporar estimativas, provisões, faturas e documentos aduaneiros."
+LANDED,Landed cost,SM-LANDED-02,Pools provisórios e documentos,3,"Controlar valores estimados, confirmados, cancelados e pendentes."
+LANDED,Landed cost,SM-LANDED-02,Pools provisórios e documentos,4,Converter moedas pela taxa do evento e preservar moeda original e taxa utilizada.
+LANDED,Landed cost,SM-LANDED-02,Pools provisórios e documentos,5,Evitar duplicidade de fatura ou componente dentro do pool.
+LANDED,Landed cost,SM-LANDED-02,Pools provisórios e documentos,6,Exibir documentos faltantes e diferenças entre estimativa e valor real.
+LANDED,Landed cost,SM-LANDED-02,Pools provisórios e documentos,7,Submeter o pool para revisão e aprovação.
+LANDED,Landed cost,SM-LANDED-02,Pools provisórios e documentos,8,Versionar o pool sem apagar o cálculo anterior.
+LANDED,Landed cost,SM-LANDED-03,Rateio e simulador,1,"Ratear por FOB, quantidade, peso, volume, percentual ou regra configurável."
+LANDED,Landed cost,SM-LANDED-03,Rateio e simulador,2,Permitir regra diferente por componente de custo.
+LANDED,Landed cost,SM-LANDED-03,Rateio e simulador,3,Simular o impacto antes de aplicar ao estoque.
+LANDED,Landed cost,SM-LANDED-03,Rateio e simulador,4,"Exibir valor total, base, fator, arredondamento e valor por SKU/linha."
+LANDED,Landed cost,SM-LANDED-03,Rateio e simulador,5,Garantir fechamento exato entre pool e soma das alocações.
+LANDED,Landed cost,SM-LANDED-03,Rateio e simulador,6,"Tratar linhas sem base, base zero, diferenças de arredondamento e exclusões."
+LANDED,Landed cost,SM-LANDED-03,Rateio e simulador,7,Comparar cenários de rateio lado a lado.
+LANDED,Landed cost,SM-LANDED-03,Rateio e simulador,8,Exportar memória de cálculo e manter rastreabilidade até o documento de origem.
+LANDED,Landed cost,SM-LANDED-04,Aplicação a estoque e margem,1,Aplicar custo aprovado às camadas de estoque correspondentes.
+LANDED,Landed cost,SM-LANDED-04,Aplicação a estoque e margem,2,"Manter separadas as quatro bases: contábil, gerencial, cash-out e provisória."
+LANDED,Landed cost,SM-LANDED-04,Aplicação a estoque e margem,3,"Atualizar custo unitário por SKU, despacho, contêiner e camada FIFO."
+LANDED,Landed cost,SM-LANDED-04,Aplicação a estoque e margem,4,Calcular margem sobre preço líquido e margem sobre custo.
+LANDED,Landed cost,SM-LANDED-04,Aplicação a estoque e margem,5,Recalcular disponibilidade e rentabilidade sem alterar quantidades físicas.
+LANDED,Landed cost,SM-LANDED-04,Aplicação a estoque e margem,6,Gerar eventos contábeis e gerenciais da aplicação.
+LANDED,Landed cost,SM-LANDED-04,Aplicação a estoque e margem,7,Exibir impacto no estoque remanescente e nas vendas ainda não reconhecidas.
+LANDED,Landed cost,SM-LANDED-04,Aplicação a estoque e margem,8,Bloquear aplicação duplicada da mesma versão do pool.
+LANDED,Landed cost,SM-LANDED-05,Custos tardios e reconciliação,1,Registrar faturas e gastos recebidos depois da aplicação inicial.
+LANDED,Landed cost,SM-LANDED-05,Custos tardios e reconciliação,2,"Reabrir cálculo por nova versão, sem apagar a versão anterior."
+LANDED,Landed cost,SM-LANDED-05,Custos tardios e reconciliação,3,Alocar a parcela correspondente ao estoque remanescente.
+LANDED,Landed cost,SM-LANDED-05,Custos tardios e reconciliação,4,Levar a parcela referente a mercadoria já vendida para ajuste do período conforme regra aprovada.
+LANDED,Landed cost,SM-LANDED-05,Custos tardios e reconciliação,5,"Reconciliar documentos, pool, rateio, estoque e contabilização."
+LANDED,Landed cost,SM-LANDED-05,Custos tardios e reconciliação,6,Exibir provisório versus definitivo e variações por componente e SKU.
+LANDED,Landed cost,SM-LANDED-05,Custos tardios e reconciliação,7,Gerar exceções para diferenças não explicadas.
+LANDED,Landed cost,SM-LANDED-05,Custos tardios e reconciliação,8,Emitir relatório de fechamento e memória de cálculo auditável.
+FISCAL,Fiscal,SM-FISCAL-01,Motor tributário e vigências,1,Manter regras tributárias versionadas por data de vigência.
+FISCAL,Fiscal,SM-FISCAL-01,Motor tributário e vigências,2,"Determinar IVA, IIBB, percepções, retenções e demais tributos por operação."
+FISCAL,Fiscal,SM-FISCAL-01,Motor tributário e vigências,3,"Considerar jurisdição, província, condição fiscal do cliente, tipo de documento e item."
+FISCAL,Fiscal,SM-FISCAL-01,Motor tributário e vigências,4,Validar CUIT e condição de IVA.
+FISCAL,Fiscal,SM-FISCAL-01,Motor tributário e vigências,5,Importar e aplicar padrón COMARB/AGIP ou fonte configurada.
+FISCAL,Fiscal,SM-FISCAL-01,Motor tributário e vigências,6,Simular cálculo antes da emissão.
+FISCAL,Fiscal,SM-FISCAL-01,Motor tributário e vigências,7,"Explicar a regra aplicada, base, alíquota, fonte e exceção."
+FISCAL,Fiscal,SM-FISCAL-01,Motor tributário e vigências,8,Preservar histórico quando uma alíquota ou condição mudar.
+FISCAL,Fiscal,SM-FISCAL-02,Emissão SI Factura/ARCA,1,"Determinar Factura A, B ou C conforme aplicabilidade."
+FISCAL,Fiscal,SM-FISCAL-02,Emissão SI Factura/ARCA,2,"Gerar cabeçalho, linhas, tributos, descrição e referência ao despacho."
+FISCAL,Fiscal,SM-FISCAL-02,Emissão SI Factura/ARCA,3,Enviar comprovante à SI Factura por adapter substituível.
+FISCAL,Fiscal,SM-FISCAL-02,Emissão SI Factura/ARCA,4,"Controlar API key, ambiente, idempotência, timeout, retry e fila."
+FISCAL,Fiscal,SM-FISCAL-02,Emissão SI Factura/ARCA,5,"Registrar CAE, vencimento, número, ponto de venda e resposta completa."
+FISCAL,Fiscal,SM-FISCAL-02,Emissão SI Factura/ARCA,6,"Tratar pendência, rejeição, indisponibilidade e reenvio sem duplicidade."
+FISCAL,Fiscal,SM-FISCAL-02,Emissão SI Factura/ARCA,7,Importar comprovante emitido diretamente na ARCA e vinculá-lo à operação.
+FISCAL,Fiscal,SM-FISCAL-02,Emissão SI Factura/ARCA,8,"Disponibilizar PDF, dados estruturados e trilha de auditoria."
+FISCAL,Fiscal,SM-FISCAL-03,"Notas, remitos e contingência",1,Emitir nota de crédito e nota de débito vinculadas ao documento original.
+FISCAL,Fiscal,SM-FISCAL-03,"Notas, remitos e contingência",2,"Emitir remito de saída e manter vínculo com pedido, entrega e depósito."
+FISCAL,Fiscal,SM-FISCAL-03,"Notas, remitos e contingência",3,"Controlar motivo, valores, itens e saldo remanescente do documento original."
+FISCAL,Fiscal,SM-FISCAL-03,"Notas, remitos e contingência",4,Gerar comprovante interno não fiscal quando a autorização externa estiver indisponível.
+FISCAL,Fiscal,SM-FISCAL-03,"Notas, remitos e contingência",5,Impedir criação offline de CAE ou numeração fiscal fictícia.
+FISCAL,Fiscal,SM-FISCAL-03,"Notas, remitos e contingência",6,Enfileirar emissão fiscal para sincronização posterior.
+FISCAL,Fiscal,SM-FISCAL-03,"Notas, remitos e contingência",7,"Controlar cancelamento, substituição e documentação de contingência."
+FISCAL,Fiscal,SM-FISCAL-03,"Notas, remitos e contingência",8,"Reconciliar remito assinado, entrega e documento fiscal."
+FISCAL,Fiscal,SM-FISCAL-04,"Percepções, retenções e obrigações",1,Calcular percepções e retenções por jurisdição e natureza da operação.
+FISCAL,Fiscal,SM-FISCAL-04,"Percepções, retenções e obrigações",2,"Registrar créditos, débitos e saldos fiscais por tributo."
+FISCAL,Fiscal,SM-FISCAL-04,"Percepções, retenções e obrigações",3,Gerar calendário de obrigações e vencimentos.
+FISCAL,Fiscal,SM-FISCAL-04,"Percepções, retenções e obrigações",4,Preparar apurações mensais e demais periodicidades configuradas.
+FISCAL,Fiscal,SM-FISCAL-04,"Percepções, retenções e obrigações",5,"Controlar certificados de exclusão, isenção ou condição especial."
+FISCAL,Fiscal,SM-FISCAL-04,"Percepções, retenções e obrigações",6,Registrar comprovantes de retenção/percepção recebidos e emitidos.
+FISCAL,Fiscal,SM-FISCAL-04,"Percepções, retenções e obrigações",7,"Gerar arquivos, relatórios e bases para declarações."
+FISCAL,Fiscal,SM-FISCAL-04,"Percepções, retenções e obrigações",8,"Alertar divergências entre cálculo do ERP, documento e declaração."
+FISCAL,Fiscal,SM-FISCAL-05,Reconciliação e auditoria fiscal,1,"Reconciliar documentos fiscais com vendas, compras, tesouraria e contabilidade."
+FISCAL,Fiscal,SM-FISCAL-05,Reconciliação e auditoria fiscal,2,Comparar autorização externa com registro interno.
+FISCAL,Fiscal,SM-FISCAL-05,Reconciliação e auditoria fiscal,3,"Localizar documentos faltantes, duplicados, rejeitados ou pendentes."
+FISCAL,Fiscal,SM-FISCAL-05,Reconciliação e auditoria fiscal,4,Permitir drill-down da apuração até documento e linha.
+FISCAL,Fiscal,SM-FISCAL-05,Reconciliação e auditoria fiscal,5,Controlar trilha de alterações de regra e vigência.
+FISCAL,Fiscal,SM-FISCAL-05,Reconciliação e auditoria fiscal,6,Gerar evidências para auditoria e contador.
+FISCAL,Fiscal,SM-FISCAL-05,Reconciliação e auditoria fiscal,7,Registrar ajustes e retificações sem apagar o período original.
+FISCAL,Fiscal,SM-FISCAL-05,Reconciliação e auditoria fiscal,8,"Emitir painel de riscos, obrigações e inconsistências fiscais."
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-01,Plano de contas e dimensões,1,"Manter plano de contas hierárquico, códigos, natureza e grupos."
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-01,Plano de contas e dimensões,2,Criar contas sintéticas e analíticas com vigência e status.
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-01,Plano de contas e dimensões,3,"Manter centros de custo, centros de resultado e dimensões combináveis."
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-01,Plano de contas e dimensões,4,Validar combinações obrigatórias ou proibidas por conta e evento.
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-01,Plano de contas e dimensões,5,"Mapear contas para balanço, DRE e demais demonstrações."
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-01,Plano de contas e dimensões,6,"Importar, revisar e versionar estrutura contábil."
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-01,Plano de contas e dimensões,7,Desativar conta sem apagar lançamentos históricos.
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-01,Plano de contas e dimensões,8,"Controlar responsáveis, aprovações e trilha de alteração."
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-02,Motor de lançamentos e journals,1,Receber eventos dos módulos e gerar proposta contábil.
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-02,Motor de lançamentos e journals,2,"Aplicar regra de débito, crédito, conta, dimensão, moeda e histórico."
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-02,Motor de lançamentos e journals,3,Criar lançamentos manuais com dupla partida obrigatória.
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-02,Motor de lançamentos e journals,4,Validar débito igual a crédito antes da postagem.
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-02,Motor de lançamentos e journals,5,"Aprovar, postar, reverter, estornar e reapresentar lançamentos."
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-02,Motor de lançamentos e journals,6,Impedir duplicidade por idempotency key do evento de origem.
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-02,Motor de lançamentos e journals,7,"Manter vínculo até documento, workflow e usuário de origem."
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-02,Motor de lançamentos e journals,8,Executar lançamentos em lote com validação por linha.
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-03,Moedas e diferenças cambiais,1,Manter ARS como moeda funcional e USD como moeda de apresentação.
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-03,Moedas e diferenças cambiais,2,"Registrar moeda original, taxa, fonte, data e valor funcional em cada evento."
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-03,Moedas e diferenças cambiais,3,Usar câmbio master para demonstrações em USD.
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-03,Moedas e diferenças cambiais,4,Calcular diferença cambial realizada na liquidação.
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-03,Moedas e diferenças cambiais,5,Calcular diferença cambial não realizada em reavaliações.
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-03,Moedas e diferenças cambiais,6,"Tratar contas bancárias, fornecedores e clientes em USD."
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-03,Moedas e diferenças cambiais,7,Preservar dívida original em USD mesmo quando paga em ARS.
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-03,Moedas e diferenças cambiais,8,Gerar memória de cálculo e lançamentos de ajuste/reversão.
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-04,"Livros, períodos e controles",1,"Manter livros, diários e sequências de lançamento."
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-04,"Livros, períodos e controles",2,"Criar períodos diário, semanal, mensal, semestral, anual e fiscal."
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-04,"Livros, períodos e controles",3,"Abrir, fechar, bloquear e reabrir períodos com permissão."
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-04,"Livros, períodos e controles",4,"Controlar cutoff por data operacional, fiscal e contábil."
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-04,"Livros, períodos e controles",5,Bloquear postagem comum em período fechado.
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-04,"Livros, períodos e controles",6,Permitir ajuste autorizado em período especial.
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-04,"Livros, períodos e controles",7,"Manter numeração, integridade, logs e evidências."
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-04,"Livros, períodos e controles",8,"Gerar painel de lançamentos pendentes, rejeitados e não contabilizados."
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-05,"Razão, balanço, DRE e drill-down",1,"Consultar razão geral e detalhe por conta, dimensão, documento e período."
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-05,"Razão, balanço, DRE e drill-down",2,"Gerar balancete, balanço patrimonial e DRE."
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-05,"Razão, balanço, DRE e drill-down",3,Apresentar valores em ARS e USD.
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-05,"Razão, balanço, DRE e drill-down",4,Reproduzir o layout de balanço aprovado com hierarquia e subtotais.
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-05,"Razão, balanço, DRE e drill-down",5,"Permitir drill-down até lançamento, linha e evento operacional."
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-05,"Razão, balanço, DRE e drill-down",6,"Comparar períodos, orçamento e variações."
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-05,"Razão, balanço, DRE e drill-down",7,Exportar Excel/PDF com filtros e memória de geração.
+ACCOUNTING,Contábil — fundação,SM-ACCOUNTING-05,"Razão, balanço, DRE e drill-down",8,Validar equação patrimonial e reconciliação com o General Ledger.
+INVENTORY,Estoque,SM-INVENTORY-01,"Depósitos, posições e disponibilidade",1,"Manter depósitos nacionais, fiscais, terceirizados e futuros depósitos próprios."
+INVENTORY,Estoque,SM-INVENTORY-01,"Depósitos, posições e disponibilidade",2,"Controlar código, tipo, endereço, zonas e capacidade."
+INVENTORY,Estoque,SM-INVENTORY-01,"Depósitos, posições e disponibilidade",3,Manter hierarquia Zona → Rua → Rack → Nível → Posição.
+INVENTORY,Estoque,SM-INVENTORY-01,"Depósitos, posições e disponibilidade",4,Ativar ou desativar níveis de endereçamento por depósito.
+INVENTORY,Estoque,SM-INVENTORY-01,"Depósitos, posições e disponibilidade",5,Controlar locais virtuais como trânsito e porto.
+INVENTORY,Estoque,SM-INVENTORY-01,"Depósitos, posições e disponibilidade",6,"Consultar saldo físico, disponível, reservado e bloqueado."
+INVENTORY,Estoque,SM-INVENTORY-01,"Depósitos, posições e disponibilidade",7,Calcular available-to-promise por SKU e depósito.
+INVENTORY,Estoque,SM-INVENTORY-01,"Depósitos, posições e disponibilidade",8,"Exibir mapa e filtros por posição, despacho, contêiner e status."
+INVENTORY,Estoque,SM-INVENTORY-02,Recebimentos e movimentos,1,"Receber mercadoria de importação, compra, devolução ou transferência."
+INVENTORY,Estoque,SM-INVENTORY-02,Recebimentos e movimentos,2,"Criar movimentos de entrada, saída, transferência e reclassificação."
+INVENTORY,Estoque,SM-INVENTORY-02,Recebimentos e movimentos,3,"Vincular movimento a SKU, despacho, contêiner, posição e documento."
+INVENTORY,Estoque,SM-INVENTORY-02,Recebimentos e movimentos,4,"Controlar quantidade, unidade, data, responsável e evidência."
+INVENTORY,Estoque,SM-INVENTORY-02,Recebimentos e movimentos,5,Registrar remito assinado e confirmação de descarga.
+INVENTORY,Estoque,SM-INVENTORY-02,Recebimentos e movimentos,6,Impedir movimento duplicado ou saldo negativo não autorizado.
+INVENTORY,Estoque,SM-INVENTORY-02,Recebimentos e movimentos,7,Executar movimentação em lote com pré-validação.
+INVENTORY,Estoque,SM-INVENTORY-02,Recebimentos e movimentos,8,Manter razão de estoque append-only e auditável.
+INVENTORY,Estoque,SM-INVENTORY-03,"Reserva, alocação e FIFO",1,"Reservar estoque somente após confirmação do pedido, não no orçamento."
+INVENTORY,Estoque,SM-INVENTORY-03,"Reserva, alocação e FIFO",2,Alocar por camada FIFO a partir da disponibilidade para venda.
+INVENTORY,Estoque,SM-INVENTORY-03,"Reserva, alocação e FIFO",3,Permitir reserva e entrega parciais.
+INVENTORY,Estoque,SM-INVENTORY-03,"Reserva, alocação e FIFO",4,"Liberar, substituir ou cancelar reserva com histórico."
+INVENTORY,Estoque,SM-INVENTORY-03,"Reserva, alocação e FIFO",5,"Priorizar depósito, despacho ou camada por regra configurável."
+INVENTORY,Estoque,SM-INVENTORY-03,"Reserva, alocação e FIFO",6,Tratar concorrência de dois pedidos disputando o mesmo saldo.
+INVENTORY,Estoque,SM-INVENTORY-03,"Reserva, alocação e FIFO",7,Exibir disponibilidade antes e depois da reserva.
+INVENTORY,Estoque,SM-INVENTORY-03,"Reserva, alocação e FIFO",8,"Gerar eventos para comercial, logística, custo e contabilidade."
+INVENTORY,Estoque,SM-INVENTORY-04,Sincronização com operadores,1,Receber posição e movimentos por API ou Excel por depósito.
+INVENTORY,Estoque,SM-INVENTORY-04,Sincronização com operadores,2,Importar snapshot semanal às sextas-feiras às 15:30.
+INVENTORY,Estoque,SM-INVENTORY-04,Sincronização com operadores,3,"Validar layout, duplicidade, SKU, quantidades e data do movimento."
+INVENTORY,Estoque,SM-INVENTORY-04,Sincronização com operadores,4,"Manter resumo semanal e detalhe por posição, despacho e contêiner."
+INVENTORY,Estoque,SM-INVENTORY-04,Sincronização com operadores,5,Comparar ERP versus arquivo do operador.
+INVENTORY,Estoque,SM-INVENTORY-04,Sincronização com operadores,6,Conservar a sugestão automática e permitir revisão manual.
+INVENTORY,Estoque,SM-INVENTORY-04,Sincronização com operadores,7,Enfileirar arquivos inválidos e devolver erros por linha.
+INVENTORY,Estoque,SM-INVENTORY-04,Sincronização com operadores,8,"Controlar último arquivo válido, origem e histórico de reprocessamento."
+INVENTORY,Estoque,SM-INVENTORY-05,"Ajustes, perdas e relatórios",1,"Abrir ocorrência para qualquer divergência, com tolerância zero."
+INVENTORY,Estoque,SM-INVENTORY-05,"Ajustes, perdas e relatórios",2,Executar recontagem e investigação antes do ajuste.
+INVENTORY,Estoque,SM-INVENTORY-05,"Ajustes, perdas e relatórios",3,"Registrar perda, sobra, avaria ou erro de posição."
+INVENTORY,Estoque,SM-INVENTORY-05,"Ajustes, perdas e relatórios",4,Exigir aprovação conforme campo e criticidade.
+INVENTORY,Estoque,SM-INVENTORY-05,"Ajustes, perdas e relatórios",5,Criar conta a cobrar do operador quando a perda for confirmada.
+INVENTORY,Estoque,SM-INVENTORY-05,"Ajustes, perdas e relatórios",6,Preservar saldo anterior e movimento compensatório.
+INVENTORY,Estoque,SM-INVENTORY-05,"Ajustes, perdas e relatórios",7,"Gerar relatórios de saldo, giro, aging, divergência e perdas."
+INVENTORY,Estoque,SM-INVENTORY-05,"Ajustes, perdas e relatórios",8,"Permitir drill-down até remito, arquivo, usuário e evidência."
+TREASURY,Tesouraria,SM-TREASURY-01,Contas bancárias e posição de caixa,1,"Manter contas por banco, país, moeda, titularidade e status."
+TREASURY,Tesouraria,SM-TREASURY-01,Contas bancárias e posição de caixa,2,Suportar contas em ARS e USD na Argentina e contas no exterior.
+TREASURY,Tesouraria,SM-TREASURY-01,Contas bancárias e posição de caixa,3,"Controlar saldo contábil, bancário, conciliado, disponível e projetado."
+TREASURY,Tesouraria,SM-TREASURY-01,Contas bancárias e posição de caixa,4,"Importar extratos por arquivo e, futuramente, API."
+TREASURY,Tesouraria,SM-TREASURY-01,Contas bancárias e posição de caixa,5,Manter histórico de alterações bancárias e aprovações.
+TREASURY,Tesouraria,SM-TREASURY-01,Contas bancárias e posição de caixa,6,Exibir posição consolidada e por conta/moeda.
+TREASURY,Tesouraria,SM-TREASURY-01,Contas bancárias e posição de caixa,7,"Controlar limites, bloqueios, tarifas e dados de liquidação."
+TREASURY,Tesouraria,SM-TREASURY-01,Contas bancárias e posição de caixa,8,"Gerar visão diária, semanal e mensal de caixa."
+TREASURY,Tesouraria,SM-TREASURY-02,Pagamentos e terceiros pagadores,1,Criar proposta de pagamento a partir de obrigações selecionadas.
+TREASURY,Tesouraria,SM-TREASURY-02,Pagamentos e terceiros pagadores,2,Executar dupla aprovação com dois aprovadores diferentes.
+TREASURY,Tesouraria,SM-TREASURY-02,Pagamentos e terceiros pagadores,3,"Permitir pagamento parcial, total ou em lote."
+TREASURY,Tesouraria,SM-TREASURY-02,Pagamentos e terceiros pagadores,4,Liquidar faturas de credores diferentes por uma contraparte pagadora/recebedora.
+TREASURY,Tesouraria,SM-TREASURY-02,Pagamentos e terceiros pagadores,5,Gerar saldo a pagar ou receber da contraparte quando houver diferença.
+TREASURY,Tesouraria,SM-TREASURY-02,Pagamentos e terceiros pagadores,6,"Controlar data, conta, moeda, taxa, encargos e comprovante."
+TREASURY,Tesouraria,SM-TREASURY-02,Pagamentos e terceiros pagadores,7,Impedir pagamento duplicado por reenvio.
+TREASURY,Tesouraria,SM-TREASURY-02,Pagamentos e terceiros pagadores,8,Permitir override master sem quebrar integridade e com auditoria.
+TREASURY,Tesouraria,SM-TREASURY-03,Recebimentos e meios de pagamento,1,"Registrar transferências, depósitos, cartões, cheques físicos e outros meios."
+TREASURY,Tesouraria,SM-TREASURY-03,Recebimentos e meios de pagamento,2,Alocar um recebimento a uma ou várias faturas/pedidos.
+TREASURY,Tesouraria,SM-TREASURY-03,Recebimentos e meios de pagamento,3,Permitir recebimento parcial e múltiplos meios na mesma venda.
+TREASURY,Tesouraria,SM-TREASURY-03,Recebimentos e meios de pagamento,4,Controlar valores não identificados e créditos em conta do cliente.
+TREASURY,Tesouraria,SM-TREASURY-03,Recebimentos e meios de pagamento,5,Confirmar liquidação efetiva antes de liberar mercadoria.
+TREASURY,Tesouraria,SM-TREASURY-03,Recebimentos e meios de pagamento,6,Registrar pagamento de financeira parceira e vínculo com o cliente.
+TREASURY,Tesouraria,SM-TREASURY-03,Recebimentos e meios de pagamento,7,"Tratar estorno, devolução, cheque rejeitado e chargeback."
+TREASURY,Tesouraria,SM-TREASURY-03,Recebimentos e meios de pagamento,8,"Gerar eventos para comercial, contas a receber e contabilidade."
+TREASURY,Tesouraria,SM-TREASURY-04,"Câmbio, empréstimos e aportes",1,Registrar fechamento de câmbio por operação internacional.
+TREASURY,Tesouraria,SM-TREASURY-04,"Câmbio, empréstimos e aportes",2,"Informar taxa negociada, banco, data, moeda, principal e liquidação."
+TREASURY,Tesouraria,SM-TREASURY-04,"Câmbio, empréstimos e aportes",3,"Registrar SWIFT, comissões, tarifas bancárias e tributos em linhas separadas."
+TREASURY,Tesouraria,SM-TREASURY-04,"Câmbio, empréstimos e aportes",4,Manter dívida original em USD e desembolso equivalente em ARS quando aplicável.
+TREASURY,Tesouraria,SM-TREASURY-04,"Câmbio, empréstimos e aportes",5,Calcular diferença cambial realizada.
+TREASURY,Tesouraria,SM-TREASURY-04,"Câmbio, empréstimos e aportes",6,"Controlar empréstimos, parcelas, juros, vencimentos e pagamentos."
+TREASURY,Tesouraria,SM-TREASURY-04,"Câmbio, empréstimos e aportes",7,Registrar aportes e retiradas/distribuições quando aplicável.
+TREASURY,Tesouraria,SM-TREASURY-04,"Câmbio, empréstimos e aportes",8,"Projetar impacto de câmbio, empréstimo e aporte no caixa."
+TREASURY,Tesouraria,SM-TREASURY-05,Conciliação e previsão de caixa,1,Importar extrato e sugerir correspondência com pagamentos e recebimentos.
+TREASURY,Tesouraria,SM-TREASURY-05,Conciliação e previsão de caixa,2,"Executar matching por valor, data, contraparte, referência e documento."
+TREASURY,Tesouraria,SM-TREASURY-05,Conciliação e previsão de caixa,3,Permitir revisão manual preservando a sugestão original.
+TREASURY,Tesouraria,SM-TREASURY-05,Conciliação e previsão de caixa,4,"Controlar itens não conciliados, diferenças e pendências."
+TREASURY,Tesouraria,SM-TREASURY-05,Conciliação e previsão de caixa,5,"Gerar previsão de caixa por vencimento, pedido, importação e cenário."
+TREASURY,Tesouraria,SM-TREASURY-05,Conciliação e previsão de caixa,6,"Produzir visão diária, semanal e mensal."
+TREASURY,Tesouraria,SM-TREASURY-05,Conciliação e previsão de caixa,7,Comparar realizado versus previsto e explicar variações.
+TREASURY,Tesouraria,SM-TREASURY-05,Conciliação e previsão de caixa,8,"Emitir alertas de saldo insuficiente, concentração e vencimento."
+SALES,Comercial,SM-SALES-01,"Preço, catálogo e margem",1,Manter catálogo comercial de produtos e serviços.
+SALES,Comercial,SM-SALES-01,"Preço, catálogo e margem",2,"Consultar estoque, custo e disponibilidade em tempo real."
+SALES,Comercial,SM-SALES-01,"Preço, catálogo e margem",3,"Calcular preço em ARS ou USD a partir de custo, câmbio e margem."
+SALES,Comercial,SM-SALES-01,"Preço, catálogo e margem",4,"Exibir margem em valor, percentual sobre preço líquido e percentual sobre custo."
+SALES,Comercial,SM-SALES-01,"Preço, catálogo e margem",5,"Simular cenários de câmbio, desconto, frete, financiamento e comissão."
+SALES,Comercial,SM-SALES-01,"Preço, catálogo e margem",6,Preservar a base de custo usada em cada cálculo.
+SALES,Comercial,SM-SALES-01,"Preço, catálogo e margem",7,Controlar vigência e histórico de parâmetros de preço.
+SALES,Comercial,SM-SALES-01,"Preço, catálogo e margem",8,Permitir cálculo rápido por item e em lote.
+SALES,Comercial,SM-SALES-02,Orçamento e desconto,1,"Criar orçamento a partir de cliente, lead, oportunidade ou contato direto."
+SALES,Comercial,SM-SALES-02,Orçamento e desconto,2,"Adicionar itens, quantidades, serviços, frete e condições."
+SALES,Comercial,SM-SALES-02,Orçamento e desconto,3,"Enviar orçamento por e-mail, portal ou PDF."
+SALES,Comercial,SM-SALES-02,Orçamento e desconto,4,"Controlar versões, validade, aceite e motivo de perda."
+SALES,Comercial,SM-SALES-02,Orçamento e desconto,5,Aplicar desconto por item ou total.
+SALES,Comercial,SM-SALES-02,Orçamento e desconto,6,"Acionar aprovação conforme regra, valor ou margem."
+SALES,Comercial,SM-SALES-02,Orçamento e desconto,7,Exibir impacto do desconto na margem antes de confirmar.
+SALES,Comercial,SM-SALES-02,Orçamento e desconto,8,Garantir que orçamento não reserve estoque.
+SALES,Comercial,SM-SALES-03,"Pedido, reserva e disponibilidade",1,Converter orçamento aceito em pedido sem redigitação.
+SALES,Comercial,SM-SALES-03,"Pedido, reserva e disponibilidade",2,Criar pedido direto quando permitido.
+SALES,Comercial,SM-SALES-03,"Pedido, reserva e disponibilidade",3,Reservar estoque somente após abertura/confirmação da venda.
+SALES,Comercial,SM-SALES-03,"Pedido, reserva e disponibilidade",4,Permitir pedidos e entregas parciais.
+SALES,Comercial,SM-SALES-03,"Pedido, reserva e disponibilidade",5,"Controlar saldo pedido, reservado, faturado, entregue e cancelado."
+SALES,Comercial,SM-SALES-03,"Pedido, reserva e disponibilidade",6,Realocar reserva entre depósitos/camadas com permissão.
+SALES,Comercial,SM-SALES-03,"Pedido, reserva e disponibilidade",7,Bloquear venda acima da disponibilidade salvo exceção autorizada.
+SALES,Comercial,SM-SALES-03,"Pedido, reserva e disponibilidade",8,"Exibir próxima ação e pendências de pagamento, fiscal e logística."
+SALES,Comercial,SM-SALES-04,"Faturamento, pagamento e liberação",1,Solicitar emissão fiscal ao módulo Fiscal/SI Factura.
+SALES,Comercial,SM-SALES-04,"Faturamento, pagamento e liberação",2,"Controlar fatura, notas, impostos, vencimento e situação da autorização."
+SALES,Comercial,SM-SALES-04,"Faturamento, pagamento e liberação",3,Registrar comprovante e aguardar crédito bancário efetivo.
+SALES,Comercial,SM-SALES-04,"Faturamento, pagamento e liberação",4,Liberar mercadoria somente após recebimento ou pagamento da financeira.
+SALES,Comercial,SM-SALES-04,"Faturamento, pagamento e liberação",5,"Tratar pagamento parcial, crédito em conta e múltiplos meios."
+SALES,Comercial,SM-SALES-04,"Faturamento, pagamento e liberação",6,Emitir comprovante interno de contingência quando aplicável.
+SALES,Comercial,SM-SALES-04,"Faturamento, pagamento e liberação",7,Gerar gate de liberação auditável.
+SALES,Comercial,SM-SALES-04,"Faturamento, pagamento e liberação",8,"Integrar faturamento, tesouraria, estoque e contabilidade."
+SALES,Comercial,SM-SALES-05,"Entrega, devolução e comissão",1,Planejar retirada pelo cliente ou entrega por transportadora.
+SALES,Comercial,SM-SALES-05,"Entrega, devolução e comissão",2,"Emitir remito e coordenar depósito, transporte, data e endereço."
+SALES,Comercial,SM-SALES-05,"Entrega, devolução e comissão",3,Confirmar saída e entrega com remito assinado.
+SALES,Comercial,SM-SALES-05,"Entrega, devolução e comissão",4,"Controlar entrega parcial, falha, reentrega, seguro e custo de frete."
+SALES,Comercial,SM-SALES-05,"Entrega, devolução e comissão",5,"Registrar devolução por item, quantidade, motivo e condição."
+SALES,Comercial,SM-SALES-05,"Entrega, devolução e comissão",6,Gerar nota de crédito/débito e retorno ao estoque quando aprovado.
+SALES,Comercial,SM-SALES-05,"Entrega, devolução e comissão",7,"Gerar comissão somente após quitação integral, salvo autorização financeira."
+SALES,Comercial,SM-SALES-05,"Entrega, devolução e comissão",8,"Manter comissão paga mesmo após evento posterior, conforme política aprovada."
+PURCHASING,Compras,SM-PURCHASING-01,Requisições e compras emergenciais,1,"Criar requisição de compra por área, categoria, centro de custo e necessidade."
+PURCHASING,Compras,SM-PURCHASING-01,Requisições e compras emergenciais,2,"Classificar bens, serviços, consumo, ativo ou despesa."
+PURCHASING,Compras,SM-PURCHASING-01,Requisições e compras emergenciais,3,"Definir urgência, justificativa, quantidade, orçamento e data necessária."
+PURCHASING,Compras,SM-PURCHASING-01,Requisições e compras emergenciais,4,Executar workflow de aprovação por valor e categoria.
+PURCHASING,Compras,SM-PURCHASING-01,Requisições e compras emergenciais,5,Permitir compra emergencial com regularização posterior e trilha completa.
+PURCHASING,Compras,SM-PURCHASING-01,Requisições e compras emergenciais,6,Evitar requisições duplicadas da mesma necessidade.
+PURCHASING,Compras,SM-PURCHASING-01,Requisições e compras emergenciais,7,Converter requisição aprovada em cotação ou pedido.
+PURCHASING,Compras,SM-PURCHASING-01,Requisições e compras emergenciais,8,Exibir fila de pendências e SLA da solicitação.
+PURCHASING,Compras,SM-PURCHASING-02,Cotação e pedido de compra,1,Solicitar e registrar propostas de múltiplos fornecedores.
+PURCHASING,Compras,SM-PURCHASING-02,Cotação e pedido de compra,2,"Comparar preço, prazo, impostos, frete, condição e moeda."
+PURCHASING,Compras,SM-PURCHASING-02,Cotação e pedido de compra,3,Selecionar proposta com justificativa quando não for a menor.
+PURCHASING,Compras,SM-PURCHASING-02,Cotação e pedido de compra,4,Criar pedido de compra e linhas por item/serviço.
+PURCHASING,Compras,SM-PURCHASING-02,Cotação e pedido de compra,5,"Controlar aprovação, envio, aceite e alteração do pedido."
+PURCHASING,Compras,SM-PURCHASING-02,Cotação e pedido de compra,6,"Manter saldo, vigência, datas e condições do pedido."
+PURCHASING,Compras,SM-PURCHASING-02,Cotação e pedido de compra,7,Importar linhas em massa e copiar pedidos recorrentes.
+PURCHASING,Compras,SM-PURCHASING-02,Cotação e pedido de compra,8,Vincular fornecedor e histórico de dados bancários.
+PURCHASING,Compras,SM-PURCHASING-03,Recebimento de bens e serviços,1,Registrar recebimento total ou parcial de bens.
+PURCHASING,Compras,SM-PURCHASING-03,Recebimento de bens e serviços,2,Confirmar prestação e aceite de serviços.
+PURCHASING,Compras,SM-PURCHASING-03,Recebimento de bens e serviços,3,"Conferir pedido, quantidade, qualidade e documento de entrega."
+PURCHASING,Compras,SM-PURCHASING-03,Recebimento de bens e serviços,4,Gerar entrada de estoque quando aplicável.
+PURCHASING,Compras,SM-PURCHASING-03,Recebimento de bens e serviços,5,"Tratar falta, sobra, avaria, devolução e rejeição."
+PURCHASING,Compras,SM-PURCHASING-03,Recebimento de bens e serviços,6,Manter saldo pendente do pedido.
+PURCHASING,Compras,SM-PURCHASING-03,Recebimento de bens e serviços,7,"Anexar evidências, remitos e confirmações."
+PURCHASING,Compras,SM-PURCHASING-03,Recebimento de bens e serviços,8,"Gerar evento para three-way match, fiscal e contabilidade."
+PURCHASING,Compras,SM-PURCHASING-04,Fatura e contas a pagar,1,"Capturar fatura por OCR, upload, e-mail ou entrada manual."
+PURCHASING,Compras,SM-PURCHASING-04,Fatura e contas a pagar,2,Registrar cada item líquido e tributos em linhas separadas.
+PURCHASING,Compras,SM-PURCHASING-04,Fatura e contas a pagar,3,Executar conferência pedido × recebimento × fatura quando aplicável.
+PURCHASING,Compras,SM-PURCHASING-04,Fatura e contas a pagar,4,"Classificar conta contábil, centro de custo, imposto e vencimento."
+PURCHASING,Compras,SM-PURCHASING-04,Fatura e contas a pagar,5,Tratar fatura sem pedido ou compra emergencial com aprovação.
+PURCHASING,Compras,SM-PURCHASING-04,Fatura e contas a pagar,6,Gerar obrigação de contas a pagar.
+PURCHASING,Compras,SM-PURCHASING-04,Fatura e contas a pagar,7,Permitir pagamento por terceiro ou a contraparte diferente.
+PURCHASING,Compras,SM-PURCHASING-04,Fatura e contas a pagar,8,"Manter vínculo integral entre fatura, obrigação, pagamento e documento."
+PURCHASING,Compras,SM-PURCHASING-05,"Contratos, reposição e análise",1,Manter contratos de fornecimento e serviço com vigência e anexos.
+PURCHASING,Compras,SM-PURCHASING-05,"Contratos, reposição e análise",2,"Controlar preços, reajustes, limites, consumo e vencimentos."
+PURCHASING,Compras,SM-PURCHASING-05,"Contratos, reposição e análise",3,Gerar alertas de renovação e obrigação contratual.
+PURCHASING,Compras,SM-PURCHASING-05,"Contratos, reposição e análise",4,"Sugerir reposição por estoque, consumo ou demanda configurada."
+PURCHASING,Compras,SM-PURCHASING-05,"Contratos, reposição e análise",5,"Analisar compras por fornecedor, categoria, centro de custo e período."
+PURCHASING,Compras,SM-PURCHASING-05,"Contratos, reposição e análise",6,"Comparar preço contratado, pedido e faturado."
+PURCHASING,Compras,SM-PURCHASING-05,"Contratos, reposição e análise",7,"Medir lead time, cumprimento e variação de custo."
+PURCHASING,Compras,SM-PURCHASING-05,"Contratos, reposição e análise",8,Gerar base para negociação e orçamento.
+CRM,CRM,SM-CRM-01,"Entrada, deduplicação e distribuição de leads",1,"Capturar leads manualmente, por portal, marketplace, WhatsApp, e-mail ou importação."
+CRM,CRM,SM-CRM-01,"Entrada, deduplicação e distribuição de leads",2,Validar CUIT e dados mínimos quando existirem.
+CRM,CRM,SM-CRM-01,"Entrada, deduplicação e distribuição de leads",3,"Deduplicar por CUIT, telefone, e-mail e cadastro-base."
+CRM,CRM,SM-CRM-01,"Entrada, deduplicação e distribuição de leads",4,Converter contato existente em novo papel sem duplicar Party Master.
+CRM,CRM,SM-CRM-01,"Entrada, deduplicação e distribuição de leads",5,"Classificar fonte, canal, segmento, região e interesse."
+CRM,CRM,SM-CRM-01,"Entrada, deduplicação e distribuição de leads",6,"Distribuir lead por regra, carteira, região, fila ou responsável."
+CRM,CRM,SM-CRM-01,"Entrada, deduplicação e distribuição de leads",7,Controlar SLA de primeiro contato e alertas de atraso.
+CRM,CRM,SM-CRM-01,"Entrada, deduplicação e distribuição de leads",8,"Manter histórico de origem, distribuição e reatribuição."
+CRM,CRM,SM-CRM-02,"Contas, contatos e carteira",1,Manter visão comercial da empresa/pessoa e seus papéis.
+CRM,CRM,SM-CRM-02,"Contas, contatos e carteira",2,"Controlar razão social, nome fantasia, CUIT, endereços e contatos."
+CRM,CRM,SM-CRM-02,"Contas, contatos e carteira",3,"Manter múltiplos contatos, funções e canais preferidos."
+CRM,CRM,SM-CRM-02,"Contas, contatos e carteira",4,"Associar conta a carteira, vendedor, representante ou equipe."
+CRM,CRM,SM-CRM-02,"Contas, contatos e carteira",5,"Controlar segmentos cliente final, revenda, transportadora e marketplace."
+CRM,CRM,SM-CRM-02,"Contas, contatos e carteira",6,"Exibir vendas, pagamentos, oportunidades, tickets e atividades em uma timeline."
+CRM,CRM,SM-CRM-02,"Contas, contatos e carteira",7,Alertar revisão cadastral a cada 18 meses sem impedir faturamento.
+CRM,CRM,SM-CRM-02,"Contas, contatos e carteira",8,Controlar transferência de carteira com histórico.
+CRM,CRM,SM-CRM-03,"Oportunidades, pipeline e forecast",1,"Criar oportunidade com cliente, necessidade, produtos, valor e prazo estimado."
+CRM,CRM,SM-CRM-03,"Oportunidades, pipeline e forecast",2,Manter funil e etapas configuráveis.
+CRM,CRM,SM-CRM-03,"Oportunidades, pipeline e forecast",3,"Registrar probabilidade, data prevista, concorrente e próximo passo."
+CRM,CRM,SM-CRM-03,"Oportunidades, pipeline e forecast",4,Alertar oportunidades paradas ou sem atividade.
+CRM,CRM,SM-CRM-03,"Oportunidades, pipeline e forecast",5,Converter oportunidade em orçamento sem redigitação.
+CRM,CRM,SM-CRM-03,"Oportunidades, pipeline e forecast",6,"Marcar ganho, perda, adiamento e motivo."
+CRM,CRM,SM-CRM-03,"Oportunidades, pipeline e forecast",7,Calcular forecast ponderado e não ponderado.
+CRM,CRM,SM-CRM-03,"Oportunidades, pipeline e forecast",8,"Permitir análise por vendedor, canal, região, segmento e produto."
+CRM,CRM,SM-CRM-04,"Atividades, WhatsApp, e-mail e tickets",1,"Registrar ligação, reunião, e-mail, WhatsApp, visita e tarefa."
+CRM,CRM,SM-CRM-04,"Atividades, WhatsApp, e-mail e tickets",2,"Agendar follow-up, lembrete e responsável."
+CRM,CRM,SM-CRM-04,"Atividades, WhatsApp, e-mail e tickets",3,Manter thread de comunicação vinculada à conta e oportunidade.
+CRM,CRM,SM-CRM-04,"Atividades, WhatsApp, e-mail e tickets",4,Criar templates e mensagens rápidas.
+CRM,CRM,SM-CRM-04,"Atividades, WhatsApp, e-mail e tickets",5,"Registrar anexos, observações e resultado da atividade."
+CRM,CRM,SM-CRM-04,"Atividades, WhatsApp, e-mail e tickets",6,Abrir ticket pré-venda ou encaminhar ao atendimento.
+CRM,CRM,SM-CRM-04,"Atividades, WhatsApp, e-mail e tickets",7,Controlar SLA e pendências da atividade.
+CRM,CRM,SM-CRM-04,"Atividades, WhatsApp, e-mail e tickets",8,Permitir captura offline e sincronização posterior idempotente.
+CRM,CRM,SM-CRM-05,"Metas, desempenho e offline",1,"Definir metas por vendedor, equipe, canal, região e período."
+CRM,CRM,SM-CRM-05,"Metas, desempenho e offline",2,"Medir leads, contatos, oportunidades, conversão, receita e margem."
+CRM,CRM,SM-CRM-05,"Metas, desempenho e offline",3,"Comparar realizado, pipeline e meta."
+CRM,CRM,SM-CRM-05,"Metas, desempenho e offline",4,Exibir ranking e tendências sem ocultar critérios.
+CRM,CRM,SM-CRM-05,"Metas, desempenho e offline",5,Permitir dashboard pessoal e gerencial por permissão.
+CRM,CRM,SM-CRM-05,"Metas, desempenho e offline",6,"Disponibilizar carteira, atividades e oportunidades no desktop offline."
+CRM,CRM,SM-CRM-05,"Metas, desempenho e offline",7,Resolver conflitos de sincronização por revisão manual.
+CRM,CRM,SM-CRM-05,"Metas, desempenho e offline",8,"Gerar alertas de baixa atividade, atraso e risco de meta."
+CLOSE,Fechamento contábil transversal,SM-CLOSE-01,Calendário e tarefas de fechamento,1,"Manter calendário diário, semanal, mensal, semestral, anual e fiscal."
+CLOSE,Fechamento contábil transversal,SM-CLOSE-01,Calendário e tarefas de fechamento,2,"Gerar checklist por período, área, responsável e prazo."
+CLOSE,Fechamento contábil transversal,SM-CLOSE-01,Calendário e tarefas de fechamento,3,Controlar dependências entre tarefas.
+CLOSE,Fechamento contábil transversal,SM-CLOSE-01,Calendário e tarefas de fechamento,4,"Exibir status, atraso, bloqueio, evidência e próxima ação."
+CLOSE,Fechamento contábil transversal,SM-CLOSE-01,Calendário e tarefas de fechamento,5,Reatribuir tarefa e escalar atraso.
+CLOSE,Fechamento contábil transversal,SM-CLOSE-01,Calendário e tarefas de fechamento,6,Exigir aprovação e assinatura de tarefas críticas.
+CLOSE,Fechamento contábil transversal,SM-CLOSE-01,Calendário e tarefas de fechamento,7,Copiar checklist de período anterior e versionar alterações.
+CLOSE,Fechamento contábil transversal,SM-CLOSE-01,Calendário e tarefas de fechamento,8,Consolidar cockpit executivo do fechamento.
+CLOSE,Fechamento contábil transversal,SM-CLOSE-02,Reconciliação de subledgers,1,"Reconciliar COMEX, landed cost, fiscal, estoque, tesouraria, comercial e compras com o GL."
+CLOSE,Fechamento contábil transversal,SM-CLOSE-02,Reconciliação de subledgers,2,Definir regras e chaves de correspondência por subledger.
+CLOSE,Fechamento contábil transversal,SM-CLOSE-02,Reconciliação de subledgers,3,"Comparar saldos, movimentos e documentos."
+CLOSE,Fechamento contábil transversal,SM-CLOSE-02,Reconciliação de subledgers,4,"Classificar diferença como timing, erro, pendência ou ajuste."
+CLOSE,Fechamento contábil transversal,SM-CLOSE-02,Reconciliação de subledgers,5,"Criar item de reconciliação, responsável e prazo."
+CLOSE,Fechamento contábil transversal,SM-CLOSE-02,Reconciliação de subledgers,6,Exigir explicação ou ajuste para saldo material.
+CLOSE,Fechamento contábil transversal,SM-CLOSE-02,Reconciliação de subledgers,7,Permitir drill-down até documento e evento operacional.
+CLOSE,Fechamento contábil transversal,SM-CLOSE-02,Reconciliação de subledgers,8,Emitir evidência e assinatura da reconciliação.
+CLOSE,Fechamento contábil transversal,SM-CLOSE-03,"Provisões, accruals e câmbio",1,Criar provisões e accruals por documento faltante ou competência.
+CLOSE,Fechamento contábil transversal,SM-CLOSE-03,"Provisões, accruals e câmbio",2,"Definir conta, dimensão, moeda, valor, justificativa e reversão."
+CLOSE,Fechamento contábil transversal,SM-CLOSE-03,"Provisões, accruals e câmbio",3,Aprovar e postar ajustes de fechamento.
+CLOSE,Fechamento contábil transversal,SM-CLOSE-03,"Provisões, accruals e câmbio",4,Executar reavaliação cambial pela taxa de fechamento.
+CLOSE,Fechamento contábil transversal,SM-CLOSE-03,"Provisões, accruals e câmbio",5,Calcular ganho/perda não realizado por saldo monetário.
+CLOSE,Fechamento contábil transversal,SM-CLOSE-03,"Provisões, accruals e câmbio",6,Reverter automaticamente ajustes no período seguinte quando configurado.
+CLOSE,Fechamento contábil transversal,SM-CLOSE-03,"Provisões, accruals e câmbio",7,Comparar provisão versus valor real recebido depois.
+CLOSE,Fechamento contábil transversal,SM-CLOSE-03,"Provisões, accruals e câmbio",8,Manter memória de cálculo e evidência.
+CLOSE,Fechamento contábil transversal,SM-CLOSE-04,Demonstrações e pacote gerencial,1,"Gerar balanço, DRE e fluxo de caixa por período."
+CLOSE,Fechamento contábil transversal,SM-CLOSE-04,Demonstrações e pacote gerencial,2,Apresentar ARS e USD com taxa master.
+CLOSE,Fechamento contábil transversal,SM-CLOSE-04,Demonstrações e pacote gerencial,3,Aplicar mapeamento versionado de contas e linhas.
+CLOSE,Fechamento contábil transversal,SM-CLOSE-04,Demonstrações e pacote gerencial,4,"Gerar comparativos mensal, acumulado e versus período anterior."
+CLOSE,Fechamento contábil transversal,SM-CLOSE-04,Demonstrações e pacote gerencial,5,"Produzir relatórios de custo, margem, despesas, descontos e rentabilidade."
+CLOSE,Fechamento contábil transversal,SM-CLOSE-04,Demonstrações e pacote gerencial,6,Exportar Excel/PDF preservando hierarquia e fórmulas controladas.
+CLOSE,Fechamento contábil transversal,SM-CLOSE-04,Demonstrações e pacote gerencial,7,Permitir drill-down da demonstração ao razão e documento.
+CLOSE,Fechamento contábil transversal,SM-CLOSE-04,Demonstrações e pacote gerencial,8,Preparar pacote gerencial com comentários e evidências.
+CLOSE,Fechamento contábil transversal,SM-CLOSE-05,"Reabertura, auditoria e cockpit",1,Aprovar fechamento do período e bloquear postagens comuns.
+CLOSE,Fechamento contábil transversal,SM-CLOSE-05,"Reabertura, auditoria e cockpit",2,"Reabrir período somente com permissão, motivo e aprovador."
+CLOSE,Fechamento contábil transversal,SM-CLOSE-05,"Reabertura, auditoria e cockpit",3,Registrar toda alteração feita após reabertura.
+CLOSE,Fechamento contábil transversal,SM-CLOSE-05,"Reabertura, auditoria e cockpit",4,Comparar demonstrações antes e depois da reabertura.
+CLOSE,Fechamento contábil transversal,SM-CLOSE-05,"Reabertura, auditoria e cockpit",5,"Manter evidências, assinatura e log imutável."
+CLOSE,Fechamento contábil transversal,SM-CLOSE-05,"Reabertura, auditoria e cockpit",6,"Exibir cockpit com progresso, riscos, variações e tarefas críticas."
+CLOSE,Fechamento contábil transversal,SM-CLOSE-05,"Reabertura, auditoria e cockpit",7,Alertar lançamento tardio e subledger fora de reconciliação.
+CLOSE,Fechamento contábil transversal,SM-CLOSE-05,"Reabertura, auditoria e cockpit",8,Encerrar novamente o período com nova versão do pacote.
+PLATFORM,Plataforma,SM-PLATFORM-01,"Identidade, RBAC e escopos",1,"Provisionar, ativar, bloquear e desativar usuários."
+PLATFORM,Plataforma,SM-PLATFORM-01,"Identidade, RBAC e escopos",2,"Autenticar usuário e controlar sessão, dispositivo e recuperação de acesso."
+PLATFORM,Plataforma,SM-PLATFORM-01,"Identidade, RBAC e escopos",3,"Manter papéis, permissões e escopos por módulo, ação, empresa, depósito e setor."
+PLATFORM,Plataforma,SM-PLATFORM-01,"Identidade, RBAC e escopos",4,"Separar permissões de visualizar, criar, alterar, aprovar, cancelar, reabrir e exportar."
+PLATFORM,Plataforma,SM-PLATFORM-01,"Identidade, RBAC e escopos",5,Aplicar princípio de menor privilégio.
+PLATFORM,Plataforma,SM-PLATFORM-01,"Identidade, RBAC e escopos",6,Controlar usuário master sem permitir quebra de invariantes técnicas.
+PLATFORM,Plataforma,SM-PLATFORM-01,"Identidade, RBAC e escopos",7,"Registrar tentativas, acessos e alterações de permissão."
+PLATFORM,Plataforma,SM-PLATFORM-01,"Identidade, RBAC e escopos",8,Exibir matriz de acesso pesquisável e comparável.
+PLATFORM,Plataforma,SM-PLATFORM-02,"Aprovações, override, auditoria e parâmetros",1,"Configurar políticas de aprovação por operação, valor, setor e condição."
+PLATFORM,Plataforma,SM-PLATFORM-02,"Aprovações, override, auditoria e parâmetros",2,Executar dupla aprovação com pessoas distintas quando exigido.
+PLATFORM,Plataforma,SM-PLATFORM-02,"Aprovações, override, auditoria e parâmetros",3,Permitir criador como um dos aprovadores quando a regra permitir.
+PLATFORM,Plataforma,SM-PLATFORM-02,"Aprovações, override, auditoria e parâmetros",4,Registrar override master com regra ultrapassada e histórico.
+PLATFORM,Plataforma,SM-PLATFORM-02,"Aprovações, override, auditoria e parâmetros",5,"Manter auditoria append-only de dados, ações e integrações."
+PLATFORM,Plataforma,SM-PLATFORM-02,"Aprovações, override, auditoria e parâmetros",6,"Manter parâmetros funcionais e vigências pela interface, sem editar código."
+PLATFORM,Plataforma,SM-PLATFORM-02,"Aprovações, override, auditoria e parâmetros",7,"Controlar feature flags, publicação, rollback e comparação de versões."
+PLATFORM,Plataforma,SM-PLATFORM-02,"Aprovações, override, auditoria e parâmetros",8,Exibir fila de aprovações e trilha de decisão.
+PLATFORM,Plataforma,SM-PLATFORM-03,"Documentos, OCR, busca e notificações",1,Armazenar documentos em object storage com metadados e versão.
+PLATFORM,Plataforma,SM-PLATFORM-03,"Documentos, OCR, busca e notificações",2,"Fazer upload, importação por e-mail/API e vinculação a qualquer entidade."
+PLATFORM,Plataforma,SM-PLATFORM-03,"Documentos, OCR, busca e notificações",3,Executar OCR e extração por campo/linha.
+PLATFORM,Plataforma,SM-PLATFORM-03,"Documentos, OCR, busca e notificações",4,"Permitir revisão humana, aceitação parcial e correção."
+PLATFORM,Plataforma,SM-PLATFORM-03,"Documentos, OCR, busca e notificações",5,"Indexar conteúdo para busca global por texto, número e entidade."
+PLATFORM,Plataforma,SM-PLATFORM-03,"Documentos, OCR, busca e notificações",6,"Controlar acesso, retenção, hash e integridade do arquivo."
+PLATFORM,Plataforma,SM-PLATFORM-03,"Documentos, OCR, busca e notificações",7,"Enviar notificações in-app, e-mail e futuros adapters."
+PLATFORM,Plataforma,SM-PLATFORM-03,"Documentos, OCR, busca e notificações",8,"Manter preferências, prioridade, leitura e escalonamento."
+PLATFORM,Plataforma,SM-PLATFORM-04,"Desktop, offline e sincronização",1,Entregar aplicativo desktop para macOS e Windows.
+PLATFORM,Plataforma,SM-PLATFORM-04,"Desktop, offline e sincronização",2,Manter banco local criptografado e subconjunto de dados autorizado.
+PLATFORM,Plataforma,SM-PLATFORM-04,"Desktop, offline e sincronização",3,"Permitir todas as operações offline previstas, com fila local."
+PLATFORM,Plataforma,SM-PLATFORM-04,"Desktop, offline e sincronização",4,Sincronizar quando a internet retornar usando idempotência e cursor.
+PLATFORM,Plataforma,SM-PLATFORM-04,"Desktop, offline e sincronização",5,Detectar conflito de versão e impedir sobrescrita silenciosa.
+PLATFORM,Plataforma,SM-PLATFORM-04,"Desktop, offline e sincronização",6,Encaminhar conflitos para revisão manual.
+PLATFORM,Plataforma,SM-PLATFORM-04,"Desktop, offline e sincronização",7,"Exibir status de conexão, fila, última sincronização e erros."
+PLATFORM,Plataforma,SM-PLATFORM-04,"Desktop, offline e sincronização",8,Impedir autorização fiscal externa fictícia durante o modo offline.
+PLATFORM,Plataforma,SM-PLATFORM-05,"APIs, jobs, observabilidade e continuidade",1,Publicar APIs versionadas e contratos OpenAPI.
+PLATFORM,Plataforma,SM-PLATFORM-05,"APIs, jobs, observabilidade e continuidade",2,Usar eventos/outbox para integrações e processamento assíncrono.
+PLATFORM,Plataforma,SM-PLATFORM-05,"APIs, jobs, observabilidade e continuidade",3,"Executar jobs com retry, timeout, idempotência e dead-letter queue."
+PLATFORM,Plataforma,SM-PLATFORM-05,"APIs, jobs, observabilidade e continuidade",4,"Gerenciar integrações, credenciais e segredos sem exposição em log."
+PLATFORM,Plataforma,SM-PLATFORM-05,"APIs, jobs, observabilidade e continuidade",5,"Coletar logs estruturados, métricas, traces e alertas."
+PLATFORM,Plataforma,SM-PLATFORM-05,"APIs, jobs, observabilidade e continuidade",6,"Monitorar Vercel, Railway, banco, filas, desktop e integrações."
+PLATFORM,Plataforma,SM-PLATFORM-05,"APIs, jobs, observabilidade e continuidade",7,"Executar backups, retenção, point-in-time recovery e testes de restore."
+PLATFORM,Plataforma,SM-PLATFORM-05,"APIs, jobs, observabilidade e continuidade",8,"Manter runbooks, contingência, RTO/RPO e painel de saúde."
+COMP,Módulos complementares,SM-COMP-01,Qualidade e certificações,1,"Manter certificados por produto, número, organismo, país e vigência."
+COMP,Módulos complementares,SM-COMP-01,Qualidade e certificações,2,Associar certificação ao SKU e despacho.
+COMP,Módulos complementares,SM-COMP-01,Qualidade e certificações,3,"Registrar inspeções, resultados, evidências e não conformidades."
+COMP,Módulos complementares,SM-COMP-01,Qualidade e certificações,4,Bloquear ou alertar produto sem condição de qualidade conforme regra.
+COMP,Módulos complementares,SM-COMP-01,Qualidade e certificações,5,Gerar QR por SKU + despacho e PDF com dados do produto.
+COMP,Módulos complementares,SM-COMP-01,Qualidade e certificações,6,Controlar vencimentos e renovação de certificados.
+COMP,Módulos complementares,SM-COMP-01,Qualidade e certificações,7,Manter histórico sem apagar certificado anterior.
+COMP,Módulos complementares,SM-COMP-01,Qualidade e certificações,8,"Emitir relatórios de conformidade por SKU, lote e fornecedor."
+COMP,Módulos complementares,SM-COMP-02,"Garantia, reclamação e devolução",1,"Abrir reclamação vinculada a cliente, venda, SKU e despacho."
+COMP,Módulos complementares,SM-COMP-02,"Garantia, reclamação e devolução",2,"Registrar sintomas, fotos, documentos, quantidade e data."
+COMP,Módulos complementares,SM-COMP-02,"Garantia, reclamação e devolução",3,"Executar triagem, inspeção e decisão de elegibilidade."
+COMP,Módulos complementares,SM-COMP-02,"Garantia, reclamação e devolução",4,"Aprovar, rejeitar ou solicitar informação adicional."
+COMP,Módulos complementares,SM-COMP-02,"Garantia, reclamação e devolução",5,"Gerar devolução, reposição, crédito ou outra resolução."
+COMP,Módulos complementares,SM-COMP-02,"Garantia, reclamação e devolução",6,"Gerar impacto fiscal, estoque e financeiro somente após decisão."
+COMP,Módulos complementares,SM-COMP-02,"Garantia, reclamação e devolução",7,"Controlar SLA, responsável, custo e causa raiz."
+COMP,Módulos complementares,SM-COMP-02,"Garantia, reclamação e devolução",8,Preservar histórico e evidências do caso.
+COMP,Módulos complementares,SM-COMP-03,Atendimento e SLA,1,"Abrir tickets por cliente, canal, categoria e prioridade."
+COMP,Módulos complementares,SM-COMP-03,Atendimento e SLA,2,Roteá-los para setor ou responsável.
+COMP,Módulos complementares,SM-COMP-03,Atendimento e SLA,3,Controlar SLA de primeira resposta e resolução.
+COMP,Módulos complementares,SM-COMP-03,Atendimento e SLA,4,"Manter comentários, anexos, atividades e comunicação."
+COMP,Módulos complementares,SM-COMP-03,Atendimento e SLA,5,Escalar atraso e reabrir ticket quando necessário.
+COMP,Módulos complementares,SM-COMP-03,Atendimento e SLA,6,"Vincular ticket a pedido, entrega, fatura, pagamento ou garantia."
+COMP,Módulos complementares,SM-COMP-03,Atendimento e SLA,7,"Medir aging, backlog, reabertura e satisfação."
+COMP,Módulos complementares,SM-COMP-03,Atendimento e SLA,8,Criar base de conhecimento e respostas padrão.
+COMP,Módulos complementares,SM-COMP-04,"Ativos, manutenção, RH e jurídico",1,"Manter cadastro básico de ativos, localização, responsável e valor."
+COMP,Módulos complementares,SM-COMP-04,"Ativos, manutenção, RH e jurídico",2,Planejar e registrar manutenção preventiva e corretiva.
+COMP,Módulos complementares,SM-COMP-04,"Ativos, manutenção, RH e jurídico",3,"Manter perfil de colaborador, setor, cargo, acesso e documentos mínimos."
+COMP,Módulos complementares,SM-COMP-04,"Ativos, manutenção, RH e jurídico",4,Integrar admissão/desligamento com provisionamento de usuário.
+COMP,Módulos complementares,SM-COMP-04,"Ativos, manutenção, RH e jurídico",5,"Manter contratos, procurações, documentos legais e vencimentos."
+COMP,Módulos complementares,SM-COMP-04,"Ativos, manutenção, RH e jurídico",6,"Criar alertas de renovação, obrigação e risco jurídico."
+COMP,Módulos complementares,SM-COMP-04,"Ativos, manutenção, RH e jurídico",7,"Controlar anexos, responsável, status e aprovação."
+COMP,Módulos complementares,SM-COMP-04,"Ativos, manutenção, RH e jurídico",8,Permitir ativação gradual por feature flag.
+COMP,Módulos complementares,SM-COMP-05,"BI, KPIs e compliance",1,"Manter catálogo de KPIs com fórmula, fonte, granularidade e vigência."
+COMP,Módulos complementares,SM-COMP-05,"BI, KPIs e compliance",2,Criar dashboards executivos e operacionais por perfil.
+COMP,Módulos complementares,SM-COMP-05,"BI, KPIs e compliance",3,"Calcular vendas, margem, estoque, caixa, custo, atraso e conversão."
+COMP,Módulos complementares,SM-COMP-05,"BI, KPIs e compliance",4,Permitir drill-down do KPI ao dado transacional.
+COMP,Módulos complementares,SM-COMP-05,"BI, KPIs e compliance",5,"Configurar metas, thresholds e alertas."
+COMP,Módulos complementares,SM-COMP-05,"BI, KPIs e compliance",6,"Abrir casos de compliance, risco ou exceção."
+COMP,Módulos complementares,SM-COMP-05,"BI, KPIs e compliance",7,"Controlar plano de ação, responsável, prazo e evidência."
+COMP,Módulos complementares,SM-COMP-05,"BI, KPIs e compliance",8,Publicar indicadores com versão e trilha de auditoria.
+QA,"Testes, migração e implantação",SM-QA-01,Arquitetura de testes e quality gates,1,"Definir pirâmide de testes: unitário, integração, contrato, E2E e UAT."
+QA,"Testes, migração e implantação",SM-QA-01,Arquitetura de testes e quality gates,2,"Manter casos, dados, suites, execuções e evidências."
+QA,"Testes, migração e implantação",SM-QA-01,Arquitetura de testes e quality gates,3,"Criar quality gates de lint, typecheck, testes e segurança no CI."
+QA,"Testes, migração e implantação",SM-QA-01,Arquitetura de testes e quality gates,4,"Testar precisão decimal, arredondamento, idempotência e concorrência."
+QA,"Testes, migração e implantação",SM-QA-01,Arquitetura de testes e quality gates,5,"Testar permissões, auditoria, estados, reversões e acessibilidade."
+QA,"Testes, migração e implantação",SM-QA-01,Arquitetura de testes e quality gates,6,"Triar defeitos por severidade, prioridade e módulo."
+QA,"Testes, migração e implantação",SM-QA-01,Arquitetura de testes e quality gates,7,Bloquear merge/release com falha crítica.
+QA,"Testes, migração e implantação",SM-QA-01,Arquitetura de testes e quality gates,8,Gerar relatório de cobertura e risco residual.
+QA,"Testes, migração e implantação",SM-QA-02,Migração e reconciliação,1,"Definir inventário de dados mestres, saldos e documentos a migrar."
+QA,"Testes, migração e implantação",SM-QA-02,Migração e reconciliação,2,"Criar layouts, regras de transformação e validação."
+QA,"Testes, migração e implantação",SM-QA-02,Migração e reconciliação,3,Importar em batches idempotentes com resultado por registro.
+QA,"Testes, migração e implantação",SM-QA-02,Migração e reconciliação,4,"Manter rejeitados, correções e reprocessamento."
+QA,"Testes, migração e implantação",SM-QA-02,Migração e reconciliação,5,"Reconciliar contagem, valores, saldos e amostras."
+QA,"Testes, migração e implantação",SM-QA-02,Migração e reconciliação,6,Gerar propostas de lançamento a partir de extratos/documentos sem postar automaticamente.
+QA,"Testes, migração e implantação",SM-QA-02,Migração e reconciliação,7,"Preservar origem, arquivo, linha e hash."
+QA,"Testes, migração e implantação",SM-QA-02,Migração e reconciliação,8,Emitir termo de aceite da migração.
+QA,"Testes, migração e implantação",SM-QA-03,"Release, cutover e rollback",1,"Manter catálogo de releases, escopo, dependências e feature flags."
+QA,"Testes, migração e implantação",SM-QA-03,"Release, cutover e rollback",2,"Planejar cutover com tarefas, responsáveis, horário e evidências."
+QA,"Testes, migração e implantação",SM-QA-03,"Release, cutover e rollback",3,Executar ensaios de implantação e rollback.
+QA,"Testes, migração e implantação",SM-QA-03,"Release, cutover e rollback",4,"Controlar migrations, compatibilidade e ordem de deploy."
+QA,"Testes, migração e implantação",SM-QA-03,"Release, cutover e rollback",5,Congelar dados e operações quando necessário.
+QA,"Testes, migração e implantação",SM-QA-03,"Release, cutover e rollback",6,Validar smoke tests após deploy.
+QA,"Testes, migração e implantação",SM-QA-03,"Release, cutover e rollback",7,Aplicar matriz de decisão para rollback.
+QA,"Testes, migração e implantação",SM-QA-03,"Release, cutover e rollback",8,"Registrar aprovação, resultado e lições aprendidas."
+QA,"Testes, migração e implantação",SM-QA-04,"Carga, segurança, offline e DR",1,"Executar testes de carga, volume, concorrência e endurance."
+QA,"Testes, migração e implantação",SM-QA-04,"Carga, segurança, offline e DR",2,"Medir latência, throughput, filas e uso de recursos."
+QA,"Testes, migração e implantação",SM-QA-04,"Carga, segurança, offline e DR",3,"Testar autenticação, autorização, segredos e vulnerabilidades."
+QA,"Testes, migração e implantação",SM-QA-04,"Carga, segurança, offline e DR",4,"Testar desktop offline, sincronização e conflitos."
+QA,"Testes, migração e implantação",SM-QA-04,"Carga, segurança, offline e DR",5,Testar indisponibilidade de integrações externas.
+QA,"Testes, migração e implantação",SM-QA-04,"Carga, segurança, offline e DR",6,"Executar backup, restore e disaster recovery."
+QA,"Testes, migração e implantação",SM-QA-04,"Carga, segurança, offline e DR",7,"Validar RTO, RPO e operação de contingência."
+QA,"Testes, migração e implantação",SM-QA-04,"Carga, segurança, offline e DR",8,Gerar relatório de capacidade e riscos.
+QA,"Testes, migração e implantação",SM-QA-05,"Hypercare, treinamento e incidentes",1,Planejar treinamento por perfil e processo.
+QA,"Testes, migração e implantação",SM-QA-05,"Hypercare, treinamento e incidentes",2,"Manter materiais, ambiente e evidência de conclusão."
+QA,"Testes, migração e implantação",SM-QA-05,"Hypercare, treinamento e incidentes",3,Criar plano de suporte e hypercare pós-go-live.
+QA,"Testes, migração e implantação",SM-QA-05,"Hypercare, treinamento e incidentes",4,"Registrar incidentes, impacto, prioridade e responsável."
+QA,"Testes, migração e implantação",SM-QA-05,"Hypercare, treinamento e incidentes",5,"Executar triagem, contenção, correção e comunicação."
+QA,"Testes, migração e implantação",SM-QA-05,"Hypercare, treinamento e incidentes",6,"Medir volume, tempo de resposta, recorrência e estabilidade."
+QA,"Testes, migração e implantação",SM-QA-05,"Hypercare, treinamento e incidentes",7,Criar base de conhecimento e runbooks.
+QA,"Testes, migração e implantação",SM-QA-05,"Hypercare, treinamento e incidentes",8,Encerrar hypercare somente após critérios de estabilidade.

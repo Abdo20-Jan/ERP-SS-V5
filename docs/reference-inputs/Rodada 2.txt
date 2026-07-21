@@ -1,0 +1,32 @@
+Referente às empresas relacionáveis. Não vamos mapear e nem colocar nada disso no sistema. Ou seja, pergunta 1 e 2, tchau. Pergunta 3. Pergunta 4. Significa o ERP. completo já testado e aprovado. Pergunta 5. Deve gerar uma proposta aguardando revisão e aprovação. Bloco B, pergunta 6. Apenas, despacho, container e SKU. Pergunta 7. Permitida somente com aprovação. Pergunta 8. Quando ele entra em trânsito. Bloco C. Pergunta 9, exatamente. Pergunta 10. A taxa de câmbio pode ser utilizada pela fatura, pelo Banco Central e pela aduana. Pergunta 11. Pergunta 11 confirmo. Pergunta 12. Usa a taxa de fechamento do dia. Se eu tirar um balanço hoje com 1430 no câmbio vai ser Convertido via 1430. Se amanhã tiver 1450, vai ser 1450. Pergunta 15 deve virar despesa do período. Despesa do período. Pergunta 16. Sempre um informe para todos os produtos. Bloco E, pergunta 17. O criador da operação pode ser um dos dois aprovadores. Pergunta 18. Sim. E deve exigir justificativa posterior? Não. Mas deve haver histórico. Pergunta 19. Tudo pode ser ignorado pelo usuário master. Pergunta 20, a confirmação do depósito de uma aprovação humana. Bloco F. Pode chegar a ter 70 usuários simultâneos. No momento nenhum, usuário cadastrado. Pergunta 22. Exatamente. De segunda a sábado. 23. Deve ser aplicativo desktop. As operações devem funcionar offline. São consulta, orçamento, pedidos, recebimentos, históricos. Na verdade, todas devem funcionar offline. Pergunta 25. Revisão manual. Pergunta 27. Ok. A, B e C. Pergunta 28. O usuário pode criar e alterar, visualizar o seu próprio, e o master pode alterar de todos. Pergunta 29, pode enfileirar e emitir uma notinha de venda como comprovante de contingência?
+
+
+03 - TP LOGISTICA - NACIONAL | TP LOGISTICA - FISCAL | MOREIRO - NACIONAL | MOREIRO - FISCAL
+
+13 - 
+	 *INCUILIR*
+	- FOB
+	- Frete Maritimo
+	- Seguro Maritimo
+	- Porto
+	- Despachante
+	- Operador Logistico
+	- Frete Terrestre
+	- Seguro Terrestre
+	- Gastos Agente de Cargas
+	- Gastos Locais de Linha Marítima
+	- DIREITOS ADUANEIROS
+		- DIREITO DE IMPORTAÇÃO
+		- TAXA ESTADÍSTICA
+		- ARANCEL SIM. IMP.
+	OBS: OS IVAS E PERCEPÇÕES DOS GASTOS NÃO DEVEM SER INCLUIDOS NOS CUSTOS.
+
+
+27 - 
+https://soporte.sifactura.com.ar/portal/es/kb/si-factura/integraciones
+https://soporte.sifactura.com.ar/portal/es/kb/articles/como-crear-y-gestionar-api-keys-sifactura
+https://soporte.sifactura.com.ar/portal/es/kb/articles/arca-regimen-transparencia-fiscal-consumidor-5614-2024
+https://soporte.sifactura.com.ar/portal/es/kb/si-factura/errores-y-soluciones
+https://soporte.sifactura.com.ar/portal/es/kb/si-factura/ajustes
+https://soporte.sifactura.com.ar/portal/es/kb/si-factura/importaci%C3%B3n-de-datos
+

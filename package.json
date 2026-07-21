@@ -1,0 +1,31 @@
+{
+  "name": "sunset-erp",
+  "private": true,
+  "version": "0.0.0",
+  "description": "SUNSET ERP - Monorepo para ERP operacional, financeiro, fiscal e contábil",
+  "packageManager": "pnpm@10.0.0",
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=10.0.0"
+  },
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "test:ci": "turbo run test -- --run",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "db:up": "docker-compose up -d",
+    "db:down": "docker-compose down",
+    "db:logs": "docker-compose logs -f postgres",
+    "spec:validate": "python3 scripts/validate-requirements.py",
+    "doctor": "python3 scripts/doctor.py"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "turbo": "^2.3.3",
+    "typescript": "^5.7.2"
+  }
+}

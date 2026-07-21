@@ -1,0 +1,133 @@
+{
+  "agent_count": 21,
+  "agents": [
+    {
+      "name": "orchestrator",
+      "file": ".codex/agents/00-orchestrator.toml",
+      "instruction_lines": 406,
+      "sha256": "fa6df112c0bc6ace4f049e8610cb65abd7832336ce93c21c469c4623210d8cd7"
+    },
+    {
+      "name": "code_explorer",
+      "file": ".codex/agents/01-code-explorer.toml",
+      "instruction_lines": 401,
+      "sha256": "294b09ccde83c043d8fb77161e6da0f5992f9c94bfae1e4cac099091cb8f60ef"
+    },
+    {
+      "name": "requirements_traceability",
+      "file": ".codex/agents/02-requirements-traceability.toml",
+      "instruction_lines": 404,
+      "sha256": "789d5bf1a17569b937b405dd35621c7ce9f1c99b5dc5098bddf3c3fab9ef09b1"
+    },
+    {
+      "name": "architecture",
+      "file": ".codex/agents/03-architecture.toml",
+      "instruction_lines": 413,
+      "sha256": "5beabea06447d1134ce23589107d39753084bc44e09c4c6a4bcd4393021415b5"
+    },
+    {
+      "name": "ux_operations",
+      "file": ".codex/agents/04-ux-operations.toml",
+      "instruction_lines": 411,
+      "sha256": "410fb244ade9f5f941e3a13fe13c556159cb72cefed3d398d6a8d9efe811ca99"
+    },
+    {
+      "name": "domain_model",
+      "file": ".codex/agents/05-domain-model.toml",
+      "instruction_lines": 408,
+      "sha256": "ab18e87d4ab0ea1323a06c21784ae92aaa1f0b75e34f055942229639c5773edc"
+    },
+    {
+      "name": "database",
+      "file": ".codex/agents/06-database.toml",
+      "instruction_lines": 413,
+      "sha256": "67b954c63b748a02c8a591bb62f5dd88de7207e2da7f1bdb9c31df7c86aa3999"
+    },
+    {
+      "name": "api_integration",
+      "file": ".codex/agents/07-api-integration.toml",
+      "instruction_lines": 411,
+      "sha256": "9ae218dd3b50c0951ac0b4fcfefa666955e74b17c79757e4158d624bf04b724d"
+    },
+    {
+      "name": "security",
+      "file": ".codex/agents/08-security.toml",
+      "instruction_lines": 416,
+      "sha256": "5c00d47065605c03550415d04abc809e13f536b0c8e65f2d3cb63342650599fd"
+    },
+    {
+      "name": "testing_quality",
+      "file": ".codex/agents/09-testing-quality.toml",
+      "instruction_lines": 412,
+      "sha256": "edfbf2f9aedb107b61a7a460cf7bff52ace6ccac55ba593b3e7480df3bf898bf"
+    },
+    {
+      "name": "comex",
+      "file": ".codex/agents/10-comex.toml",
+      "instruction_lines": 422,
+      "sha256": "56b7611b619fa673568f55fa0f78486110a04d36e6a7cfe35508455bf23cabea"
+    },
+    {
+      "name": "landed_cost",
+      "file": ".codex/agents/11-landed-cost.toml",
+      "instruction_lines": 413,
+      "sha256": "167359e5c06314732a089abee9ecf35dc7f8b535cc7a42f0d1b3528977d13d54"
+    },
+    {
+      "name": "fiscal",
+      "file": ".codex/agents/12-fiscal.toml",
+      "instruction_lines": 420,
+      "sha256": "740b50b2c98e3a9b183f13ad387ecb00d72809b76baa167d6e53a67a55c397f6"
+    },
+    {
+      "name": "accounting",
+      "file": ".codex/agents/13-accounting.toml",
+      "instruction_lines": 423,
+      "sha256": "7fde8fec5689026ef0b032b1eabc1d6c25546d28446a46b3ab3f7bae85cb765e"
+    },
+    {
+      "name": "inventory_treasury",
+      "file": ".codex/agents/14-inventory-treasury.toml",
+      "instruction_lines": 426,
+      "sha256": "505b79d60fc1506ae64b8f8106bfa230fe6ce9047a8e0e76ea56b17ac65c6b40"
+    },
+    {
+      "name": "commercial",
+      "file": ".codex/agents/15-commercial.toml",
+      "instruction_lines": 429,
+      "sha256": "2fd4109d7430042d73387f29b8c8b34a87751211e0b84b9630fca5bf0ad8bacb"
+    },
+    {
+      "name": "procurement_crm",
+      "file": ".codex/agents/16-procurement-crm.toml",
+      "instruction_lines": 436,
+      "sha256": "d5190e8ca07fc95c2416f2e0a099cf17afa1c7f9e94f4fd491f182f17adf3779"
+    },
+    {
+      "name": "platform_devops",
+      "file": ".codex/agents/17-platform-devops.toml",
+      "instruction_lines": 434,
+      "sha256": "b6d3ec2ad6211acb51ed5d402ca85d417fd77d382a9f270d8860cfb80e2b7861"
+    },
+    {
+      "name": "migration_release",
+      "file": ".codex/agents/18-migration-release.toml",
+      "instruction_lines": 425,
+      "sha256": "27be37fdd31279522cddc4bb6c9ca396ceb56bb0d6640fd08320af69ec970d91"
+    },
+    {
+      "name": "pr_reviewer",
+      "file": ".codex/agents/19-pr-reviewer.toml",
+      "instruction_lines": 415,
+      "sha256": "2d16d0b8da2d2f22d22376f0c1c67f72864db97193fd65682f4f90da719f2482"
+    },
+    {
+      "name": "contradiction_researcher",
+      "file": ".codex/agents/20-contradiction-researcher.toml",
+      "instruction_lines": 408,
+      "sha256": "96a4682a300b93e192b03fb21b2f976eca3ba2a3712d70145ab6616b20de400f"
+    }
+  ],
+  "errors": [],
+  "status": "PASS"
+}

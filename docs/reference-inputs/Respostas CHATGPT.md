@@ -1,0 +1,38 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2870
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww12720\viewh7800\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 (Transcrito por TurboScribe. Atualize para Ilimitado para remover esta mensagem.)\
+\
+First round of questions, block A. There must be only one legal entity in Argentina, in two jurisdictions, being it Buenos Aires and the Federal Capital, but in the future we will be in all jurisdictions. There is only one subsidiary with one office, not being in the same deposits. I will have none of my own deposits, four third-party deposits, being they two national and two customs.\
+\
+And of the four deposits, two will be operational, being they the national. Question 3 It will be a company, only a company, with intercompany, outside the country, and with consolidation. Question 4 There must be Portuguese, English and Spanish as the language.\
+\
+The transitional currency is pesos when the operation is national and dollars when the operation is international. In other words, a purchase from abroad, an import and payment abroad. The issuance must be in dollars, even if at the time of payment it is in pesos, because we will use the exchange rate, but my cost must be issued in dollars, updated according to the exchange rate, from dollars to pesos.\
+\
+Question 5 The functional transactional currency, in general, is pesos, but the presentation currency will always be dollars. Question 5 No, it's a cutting date. Block B Question 6 All of them.\
+\
+Question 7 Today there is a B2B marketplace representative. Question 8 Our exchange rate is always own and in transit, in transit being what is under importation. Question 9 International operations. \
+\
+There are loans, imports, exports, transits, franc zone, special regime, final importation. The service that accompanies a product can be freight, guarantee, storage, financing. Block C Question 11 A need to buy a supply center is born from the lack, that is, I need to print and I run out of paper.\
+\
+I go, I get the car, I go to the stationery, I buy paper, I take the note, I go to the accountant, I launch in the system. An importation is born when I receive the price list of my supplier, I analyze what I need, I send my order to the factory, the factory confirms me, I enter the production, once it is produced, it sends me the commercial invoice, the packing list, the freight options, I define the booking, I embark, I arrive at the port, I pay the cargo agent, I pay the port, I pay the dispatcher, I pay the land freight, I pay the logistics operator, I pay the importation rights, I pay the container washing, I pay the container return, I pay the land insurance, I pay the maritime line, I pay the maritime line, and some extra expenses. And it is only given as a closing after passing the green channel, after being deconsolidated and returned to the container, or after being deconsolidated and returned to the container when it is in the primary zone, that there is no need for the green channel or payment of the fees.\
+\
+A sale is born when a client of mine sends me by e-mail or WhatsApp or calls me saying he needs tires and the price, I send him the tire and the price, he gives me the ok, asks for a discount, tells me the amount, I send him a budget by e-mail, he confirms me by e-mail, when he confirms me, I issue the invoice, when I send him the invoice issued by e-mail, he sends me the payment certificate by e-mail, when he sends me the payment certificate, I wait to pay on my account, when I pay on my account, I issue the remit, depending on whether it is for me to withdraw the deposit, I issue the remit, I coordinate the withdrawal with the deposit, he withdraws and that's it. When I have to deliver, he passes me when he can receive, I coordinate with the transport, coordinate with the deposit, the transport cuts and withdraws, I deliver and after receiving, and when it is delivered, it charges me for transport and insurance. Question 14. \
+\
+Nothing can block an operation. Block D. There must be a report and demonstrations, patrimonial balance, demonstration of the result of the exercise, monthly and daily and weekly cash flow, there must be a report of costs per category and per provider, report of profitability per customer, per product, per sale, per region, per product category, there must be a report of discount per product, per customer, per region, there must be a report of expenses. My stock is valued... Question 17. \
+\
+My stock is valued in the following way. I have my FOB cost, plus the safe freight, the local costs exempt from VAT, the importation right, the statistical rate and the dispatch cost are included as my stock cost. According to the FOB, my stock cost is the CFR or CIF, the local expenses, be it actually all, the port, the deposit, the dispatcher and the maritime, including VAT, my importation rights, including the VAT, deducted in the products by percentage, that is, if my cost is 100 and I spent 10 more to nationalize, that is, 10%, then it is 10% over the 100 that I deducted. \
+\
+I don't deduct it in terms of cubic, quantity, value, I deduct it by percentage. And this must be the cost used to calculate the margin of the operation. Validate the tax rules of the accountant who delivers the monthly VAT declaration, the monthly gross income declaration, the quarterly declaration of assets and assets, balance, question 20, the balance in annexed Excel must be reproduced in detail in the 1 to 1 scale, adapted to our specifications in Argentina.\
+\
+Block E, business papers that require double approval are payments, landings, deliveries, financing. Question 22, at no time. Question 23, at the time of a purchase, a expense, the invoice must exist, at the time of the landing, the Proforma, the Commercial Invoice, the Paquim Liste, the BL must exist.\
+\
+At the costs of the landing, there must be all the invoices and the dispatch, annexed. In the client's record, there must be the consistency of Quid, Statute and Photos. In case the client needs credit, there must be his patrimonial balance.\
+\
+Question 24, skip, question 25, skip, block F. The Cifactura.com.ar must be integrated with my system, invoicing software, the volumes, question 27, the maximum volumes expected in SKU are 3,000, in client 5,000, in orders per day 1,000, items per day 3,000, containers per month 900, simultaneous users 30, launches per month 100,000. The response time must be ultra-short, in question 28, the response time ultra-short, not being able to exceed 0.1 second, 1 thousandth of a second, and the backup must be done every 40 minutes, replacing the backup, and replace every 5 backups, replace the oldest, question 29, desktop, macbook, pro, cell phone, tablet, label printers too, question 30, the system must be installed on my macbook, block G, all modules are mandatory, referring to question 31, question 32, payments if they fail, sales and foreign trade in parks, importations, the highest risk report is the patrimonial balance followed by the DRE right behind the cash flow, referring to question 33, question 34, no issue needs approval from any of the professionals, the final blueprint, who approves it, is me, referring to question 35.\
+\
+(Transcrito por TurboScribe. Atualize para Ilimitado para remover esta mensagem.)}

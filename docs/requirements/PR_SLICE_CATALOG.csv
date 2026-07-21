@@ -1,0 +1,66 @@
+pr_id,module,title,controller
+PR-ACCOUNTING-01,ACCOUNTING,Plano de contas e dimensões,docs/requirements/pr-programs/ACCOUNTING/PR-ACCOUNTING-01/00_CONTROLLER.md
+PR-ACCOUNTING-02,ACCOUNTING,Motor de lançamentos e journals,docs/requirements/pr-programs/ACCOUNTING/PR-ACCOUNTING-02/00_CONTROLLER.md
+PR-ACCOUNTING-03,ACCOUNTING,Moedas e diferenças cambiais,docs/requirements/pr-programs/ACCOUNTING/PR-ACCOUNTING-03/00_CONTROLLER.md
+PR-ACCOUNTING-04,ACCOUNTING,"Livros, períodos e controles",docs/requirements/pr-programs/ACCOUNTING/PR-ACCOUNTING-04/00_CONTROLLER.md
+PR-ACCOUNTING-05,ACCOUNTING,"Razão, balanço, DRE e drill-down",docs/requirements/pr-programs/ACCOUNTING/PR-ACCOUNTING-05/00_CONTROLLER.md
+PR-CLOSE-01,CLOSE,Calendário e tarefas de fechamento,docs/requirements/pr-programs/CLOSE/PR-CLOSE-01/00_CONTROLLER.md
+PR-CLOSE-02,CLOSE,Reconciliação de subledgers,docs/requirements/pr-programs/CLOSE/PR-CLOSE-02/00_CONTROLLER.md
+PR-CLOSE-03,CLOSE,"Provisões, accruals e câmbio",docs/requirements/pr-programs/CLOSE/PR-CLOSE-03/00_CONTROLLER.md
+PR-CLOSE-04,CLOSE,Demonstrações e pacote gerencial,docs/requirements/pr-programs/CLOSE/PR-CLOSE-04/00_CONTROLLER.md
+PR-CLOSE-05,CLOSE,"Reabertura, auditoria e cockpit",docs/requirements/pr-programs/CLOSE/PR-CLOSE-05/00_CONTROLLER.md
+PR-COMEX-01,COMEX,Pedido internacional e produção,docs/requirements/pr-programs/COMEX/PR-COMEX-01/00_CONTROLLER.md
+PR-COMEX-02,COMEX,"Embarque, booking, BL e contêiner",docs/requirements/pr-programs/COMEX/PR-COMEX-02/00_CONTROLLER.md
+PR-COMEX-03,COMEX,Despacho e regimes aduaneiros,docs/requirements/pr-programs/COMEX/PR-COMEX-03/00_CONTROLLER.md
+PR-COMEX-04,COMEX,"Documentos, OCR, ocorrências e prazos",docs/requirements/pr-programs/COMEX/PR-COMEX-04/00_CONTROLLER.md
+PR-COMEX-05,COMEX,"Recebimento, devolução e fechamento",docs/requirements/pr-programs/COMEX/PR-COMEX-05/00_CONTROLLER.md
+PR-COMP-01,COMP,Qualidade e certificações,docs/requirements/pr-programs/COMP/PR-COMP-01/00_CONTROLLER.md
+PR-COMP-02,COMP,"Garantia, reclamação e devolução",docs/requirements/pr-programs/COMP/PR-COMP-02/00_CONTROLLER.md
+PR-COMP-03,COMP,Atendimento e SLA,docs/requirements/pr-programs/COMP/PR-COMP-03/00_CONTROLLER.md
+PR-COMP-04,COMP,"Ativos, manutenção, RH e jurídico",docs/requirements/pr-programs/COMP/PR-COMP-04/00_CONTROLLER.md
+PR-COMP-05,COMP,"BI, KPIs e compliance",docs/requirements/pr-programs/COMP/PR-COMP-05/00_CONTROLLER.md
+PR-CRM-01,CRM,"Entrada, deduplicação e distribuição de leads",docs/requirements/pr-programs/CRM/PR-CRM-01/00_CONTROLLER.md
+PR-CRM-02,CRM,"Contas, contatos e carteira",docs/requirements/pr-programs/CRM/PR-CRM-02/00_CONTROLLER.md
+PR-CRM-03,CRM,"Oportunidades, pipeline e forecast",docs/requirements/pr-programs/CRM/PR-CRM-03/00_CONTROLLER.md
+PR-CRM-04,CRM,"Atividades, WhatsApp, e-mail e tickets",docs/requirements/pr-programs/CRM/PR-CRM-04/00_CONTROLLER.md
+PR-CRM-05,CRM,"Metas, desempenho e offline",docs/requirements/pr-programs/CRM/PR-CRM-05/00_CONTROLLER.md
+PR-FISCAL-01,FISCAL,Motor tributário e vigências,docs/requirements/pr-programs/FISCAL/PR-FISCAL-01/00_CONTROLLER.md
+PR-FISCAL-02,FISCAL,Emissão SI Factura/ARCA,docs/requirements/pr-programs/FISCAL/PR-FISCAL-02/00_CONTROLLER.md
+PR-FISCAL-03,FISCAL,"Notas, remitos e contingência",docs/requirements/pr-programs/FISCAL/PR-FISCAL-03/00_CONTROLLER.md
+PR-FISCAL-04,FISCAL,"Percepções, retenções e obrigações",docs/requirements/pr-programs/FISCAL/PR-FISCAL-04/00_CONTROLLER.md
+PR-FISCAL-05,FISCAL,Reconciliação e auditoria fiscal,docs/requirements/pr-programs/FISCAL/PR-FISCAL-05/00_CONTROLLER.md
+PR-INVENTORY-01,INVENTORY,"Depósitos, posições e disponibilidade",docs/requirements/pr-programs/INVENTORY/PR-INVENTORY-01/00_CONTROLLER.md
+PR-INVENTORY-02,INVENTORY,Recebimentos e movimentos,docs/requirements/pr-programs/INVENTORY/PR-INVENTORY-02/00_CONTROLLER.md
+PR-INVENTORY-03,INVENTORY,"Reserva, alocação e FIFO",docs/requirements/pr-programs/INVENTORY/PR-INVENTORY-03/00_CONTROLLER.md
+PR-INVENTORY-04,INVENTORY,Sincronização com operadores,docs/requirements/pr-programs/INVENTORY/PR-INVENTORY-04/00_CONTROLLER.md
+PR-INVENTORY-05,INVENTORY,"Ajustes, perdas e relatórios",docs/requirements/pr-programs/INVENTORY/PR-INVENTORY-05/00_CONTROLLER.md
+PR-LANDED-01,LANDED,Catálogo de componentes e elegibilidade,docs/requirements/pr-programs/LANDED/PR-LANDED-01/00_CONTROLLER.md
+PR-LANDED-02,LANDED,Pools provisórios e documentos,docs/requirements/pr-programs/LANDED/PR-LANDED-02/00_CONTROLLER.md
+PR-LANDED-03,LANDED,Rateio e simulador,docs/requirements/pr-programs/LANDED/PR-LANDED-03/00_CONTROLLER.md
+PR-LANDED-04,LANDED,Aplicação a estoque e margem,docs/requirements/pr-programs/LANDED/PR-LANDED-04/00_CONTROLLER.md
+PR-LANDED-05,LANDED,Custos tardios e reconciliação,docs/requirements/pr-programs/LANDED/PR-LANDED-05/00_CONTROLLER.md
+PR-PLATFORM-01,PLATFORM,"Identidade, RBAC e escopos",docs/requirements/pr-programs/PLATFORM/PR-PLATFORM-01/00_CONTROLLER.md
+PR-PLATFORM-02,PLATFORM,"Aprovações, override, auditoria e parâmetros",docs/requirements/pr-programs/PLATFORM/PR-PLATFORM-02/00_CONTROLLER.md
+PR-PLATFORM-03,PLATFORM,"Documentos, OCR, busca e notificações",docs/requirements/pr-programs/PLATFORM/PR-PLATFORM-03/00_CONTROLLER.md
+PR-PLATFORM-04,PLATFORM,Desktop offline e sincronização,docs/requirements/pr-programs/PLATFORM/PR-PLATFORM-04/00_CONTROLLER.md
+PR-PLATFORM-05,PLATFORM,"APIs, jobs, observabilidade e continuidade",docs/requirements/pr-programs/PLATFORM/PR-PLATFORM-05/00_CONTROLLER.md
+PR-PURCHASING-01,PURCHASING,Requisições e compras emergenciais,docs/requirements/pr-programs/PURCHASING/PR-PURCHASING-01/00_CONTROLLER.md
+PR-PURCHASING-02,PURCHASING,Cotação e pedido de compra,docs/requirements/pr-programs/PURCHASING/PR-PURCHASING-02/00_CONTROLLER.md
+PR-PURCHASING-03,PURCHASING,Recebimento de bens e serviços,docs/requirements/pr-programs/PURCHASING/PR-PURCHASING-03/00_CONTROLLER.md
+PR-PURCHASING-04,PURCHASING,Fatura e contas a pagar,docs/requirements/pr-programs/PURCHASING/PR-PURCHASING-04/00_CONTROLLER.md
+PR-PURCHASING-05,PURCHASING,"Contratos, reposição e análise",docs/requirements/pr-programs/PURCHASING/PR-PURCHASING-05/00_CONTROLLER.md
+PR-QA-01,QA,Arquitetura de testes e quality gates,docs/requirements/pr-programs/QA/PR-QA-01/00_CONTROLLER.md
+PR-QA-02,QA,Migração e reconciliação,docs/requirements/pr-programs/QA/PR-QA-02/00_CONTROLLER.md
+PR-QA-03,QA,"Release, cutover e rollback",docs/requirements/pr-programs/QA/PR-QA-03/00_CONTROLLER.md
+PR-QA-04,QA,"Carga, segurança, offline e DR",docs/requirements/pr-programs/QA/PR-QA-04/00_CONTROLLER.md
+PR-QA-05,QA,"Hypercare, treinamento e incidentes",docs/requirements/pr-programs/QA/PR-QA-05/00_CONTROLLER.md
+PR-SALES-01,SALES,"Preço, catálogo e margem",docs/requirements/pr-programs/SALES/PR-SALES-01/00_CONTROLLER.md
+PR-SALES-02,SALES,Orçamento e desconto,docs/requirements/pr-programs/SALES/PR-SALES-02/00_CONTROLLER.md
+PR-SALES-03,SALES,"Pedido, reserva e disponibilidade",docs/requirements/pr-programs/SALES/PR-SALES-03/00_CONTROLLER.md
+PR-SALES-04,SALES,"Faturamento, pagamento e liberação",docs/requirements/pr-programs/SALES/PR-SALES-04/00_CONTROLLER.md
+PR-SALES-05,SALES,"Entrega, devolução e comissão",docs/requirements/pr-programs/SALES/PR-SALES-05/00_CONTROLLER.md
+PR-TREASURY-01,TREASURY,Contas bancárias e posição de caixa,docs/requirements/pr-programs/TREASURY/PR-TREASURY-01/00_CONTROLLER.md
+PR-TREASURY-02,TREASURY,Pagamentos e terceiros pagadores,docs/requirements/pr-programs/TREASURY/PR-TREASURY-02/00_CONTROLLER.md
+PR-TREASURY-03,TREASURY,Recebimentos e meios de pagamento,docs/requirements/pr-programs/TREASURY/PR-TREASURY-03/00_CONTROLLER.md
+PR-TREASURY-04,TREASURY,"Câmbio, empréstimos e aportes",docs/requirements/pr-programs/TREASURY/PR-TREASURY-04/00_CONTROLLER.md
+PR-TREASURY-05,TREASURY,Conciliação e previsão de caixa,docs/requirements/pr-programs/TREASURY/PR-TREASURY-05/00_CONTROLLER.md

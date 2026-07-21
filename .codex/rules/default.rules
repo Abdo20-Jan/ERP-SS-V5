@@ -1,0 +1,49 @@
+# Regras de execução fora do sandbox — Sunset ERP
+
+prefix_rule(
+    pattern = ["rm", "-rf", "/"],
+    decision = "forbidden",
+    justification = "Nunca remova a raiz do sistema. Use remoção limitada ao workspace e revisão humana.",
+    match = ["rm -rf /"],
+    not_match = ["rm -rf ./dist"],
+)
+
+prefix_rule(
+    pattern = ["git", "push", ["--force", "-f"], ["origin", "main", "master"]],
+    decision = "forbidden",
+    justification = "Force push em branch principal é proibido; use branch e PR.",
+    match = ["git push --force origin main", "git push -f origin master"],
+    not_match = ["git push origin feature/x"],
+)
+
+prefix_rule(
+    pattern = ["git", "reset", "--hard"],
+    decision = "prompt",
+    justification = "Reset hard pode apagar trabalho local; revise o diff e faça backup antes.",
+    match = ["git reset --hard", "git reset --hard HEAD~1"],
+    not_match = ["git reset --soft HEAD~1"],
+)
+
+prefix_rule(
+    pattern = [["psql", "railway", "vercel"], ["drop", "destroy", "delete", "down", "--prod", "--production"]],
+    decision = "prompt",
+    justification = "Comando pode afetar dados ou produção; exige aprovação explícita e plano de rollback.",
+    match = ["vercel --prod", "railway down", "psql drop database"],
+    not_match = ["vercel env ls", "railway status", "psql --version"],
+)
+
+prefix_rule(
+    pattern = [["pnpm", "npm", "yarn"], ["publish", "unpublish"]],
+    decision = "prompt",
+    justification = "Publicação de pacote é ação externa e potencialmente irreversível.",
+    match = ["npm publish", "pnpm publish"],
+    not_match = ["pnpm test", "npm run lint"],
+)
+
+prefix_rule(
+    pattern = ["git", ["status", "diff", "show", "log"]],
+    decision = "allow",
+    justification = "Comandos Git somente leitura são permitidos.",
+    match = ["git status", "git diff", "git show HEAD", "git log --oneline"],
+    not_match = ["git commit -m x", "git push"],
+)

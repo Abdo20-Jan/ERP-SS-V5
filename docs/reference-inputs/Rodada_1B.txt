@@ -1,0 +1,13 @@
+(Transcrito por TurboScribe. Atualize para Ilimitado para remover esta mensagem.)
+
+Rodada 1B, pergunta 1, a taxa usada em cada evento vai ser fornecida no momento do evento, ou seja, não vou ter uma taxa fixa para todas as invoices no momento de compra, todos os trânsitos, ou seja, tudo terá sua própria taxa de câmbio no momento de realizar seu lançamento no sistema, pagamento ao fornecedor, eu vou ter uma taxa de câmbio na hora que eu fechar o câmbio para o banco, aí eu vou ter que lançar os custos de SWIFT, taxas bancárias, ingressos brutos, comissões e etc. As demonstrações em dólar vão usar o câmbio master para o sistema, tem que ter uma aba de câmbio master, câmbio de sistema, e na hora que eu for fazer cada lançamento, se eu escolher que ele é em dólar, eu tenho que colocar a taxa em câmbio, se eu escolher que ele é em peso, ele vai em peso. Pergunta 2, não existem taxas da fatura.
+
+Pergunta 3, o item arancel sim imp aparece da seguinte maneira no meu despacho no campo conceito, entre parênteses 500, fecha parênteses, arancel sim imp, uma taxa fixa de 10 dólares todo o despacho que eu tenho. Não, tem que ter a combinação, por exemplo, vou lançar o custo porto, então eu tenho a fatura do porto, lá vai ter gastos de terminal, vai ter serviço de carga de importação, vai ter balança, vai ter precinto, aí cada um desses itens vai ter seu valor, e no subtotal vai ter o valor total desses itens, e daí vai ter ali discriminado o IVA, percepção de IVA, ingressos brutos, percepção de ingressos brutos, e o valor total da fatura. Então eu vou lançar o valor cru, ou seja, o valor neto de cada item, aí embaixo vou lançar o IVA, e em outra linha vou lançar o ingresso bruto.
+
+Pergunta 5, confirmo. Pergunta 6, o máximo de usuários cadastrados não existe. Não existe.
+
+Eu vou começar a contratar pessoas agora. O horário usa Argentina, Buenos Aires, referente à pergunta 7. Pergunta 8, todas. Pergunta 9, confirmo.
+
+Pergunta 10, sim. Pergunta 11, sim.
+
+(Transcrito por TurboScribe. Atualize para Ilimitado para remover esta mensagem.)

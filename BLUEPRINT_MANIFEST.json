@@ -1,0 +1,32 @@
+{
+  "package": "SUNSET_ERP_BLUEPRINT_APROVADO_BUILD_READY_v4.0.0",
+  "generated_at": "2026-07-20",
+  "status": "APPROVED_FOR_PLANNING_AND_EXECUTION",
+  "modules": 13,
+  "submodules": 65,
+  "principal_functions": 520,
+  "logical_prs": 65,
+  "physical_slices": 650,
+  "accepted_decisions": 71500,
+  "architecture": {
+    "web": "Next.js/Vercel",
+    "api": "NestJS+Fastify/Railway",
+    "database": "PostgreSQL/Railway",
+    "desktop": "Tauri 2 + SQLite",
+    "workers": "Railway"
+  },
+  "entrypoint": "00_START_HERE.md",
+  "blueprint_index": "docs/blueprint-master/README.md",
+  "reference_inputs": 18,
+  "version": "4.0.0",
+  "agent_system": {
+    "custom_agents": 21,
+    "root_agents_lines": 308,
+    "nested_agents_files": 12,
+    "minimum_custom_agent_instruction_lines": 401,
+    "agent_config_dir": ".codex/agents",
+    "routing_matrix": "docs/agents/01_AGENT_ROUTING_MATRIX.md",
+    "handoff_protocol": "docs/agents/02_HANDOFF_PROTOCOL.md",
+    "source_basis": "docs/agents/SOURCE_BASIS.md"
+  }
+}

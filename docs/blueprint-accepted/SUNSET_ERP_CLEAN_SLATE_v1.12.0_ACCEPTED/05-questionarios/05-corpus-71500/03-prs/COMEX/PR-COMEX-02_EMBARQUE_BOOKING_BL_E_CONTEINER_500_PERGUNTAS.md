@@ -1,0 +1,6120 @@
+---
+id: PR-COMEX-02
+level: PR
+title: PR — Embarque, booking, BL e contêiner
+status: ACCEPTED
+version: 2.0.0
+questions: 500
+accepted_at: 2026-07-17
+acceptance: ALL_SUGGESTIONS_ACCEPTED
+---
+
+# PR — Embarque, booking, BL e contêiner — 500 perguntas
+
+**Módulo:** COMEX
+**Objeto central:** embarque
+**Atores principais:** analista de COMEX, despachante, agente de cargas, fornecedor e financeiro
+**Estados de referência:** rascunho, aprovado, em produção, embarcado, em trânsito, arribado, em despacho, nacionalizado e encerrado
+**Documentos de referência:** proforma, commercial invoice, packing list, BL, booking, despacho e comprovantes de gastos
+
+> Todas as sugestões deste arquivo foram aceitas em 2026-07-17. Em caso de conflito, aplique `docs/governance/DECISION_PRECEDENCE.md`; nenhuma implementação pode escolher silenciosamente entre requisitos incompatíveis.
+
+## OBJ — Objetivo e resultado esperado
+
+### PR-COMEX-02-Q0001 — Escopo do pr
+
+**Pergunta:** Como **objetivo e resultado esperado** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir resultado observável, usuário beneficiado e impacto. Definir o resultado observável e o valor entregue.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **objetivo e resultado esperado** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova resultado observável, usuário beneficiado e impacto; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0002 — Arquitetura e componentes
+
+**Pergunta:** Como **objetivo e resultado esperado** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir resultado observável, usuário beneficiado e impacto. Definir o resultado observável e o valor entregue.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **objetivo e resultado esperado** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova resultado observável, usuário beneficiado e impacto; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0003 — Modelo de dados e migration
+
+**Pergunta:** Como **objetivo e resultado esperado** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir resultado observável, usuário beneficiado e impacto. Definir o resultado observável e o valor entregue.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **objetivo e resultado esperado** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova resultado observável, usuário beneficiado e impacto; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0004 — Api, eventos e erros
+
+**Pergunta:** Como **objetivo e resultado esperado** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir resultado observável, usuário beneficiado e impacto. Definir o resultado observável e o valor entregue.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **objetivo e resultado esperado** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova resultado observável, usuário beneficiado e impacto; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0005 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **objetivo e resultado esperado** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir resultado observável, usuário beneficiado e impacto. Definir o resultado observável e o valor entregue.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **objetivo e resultado esperado** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova resultado observável, usuário beneficiado e impacto; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0006 — Validação, segurança e auditoria
+
+**Pergunta:** Como **objetivo e resultado esperado** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir resultado observável, usuário beneficiado e impacto. Definir o resultado observável e o valor entregue.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **objetivo e resultado esperado** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova resultado observável, usuário beneficiado e impacto; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0007 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **objetivo e resultado esperado** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir resultado observável, usuário beneficiado e impacto. Definir o resultado observável e o valor entregue.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **objetivo e resultado esperado** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova resultado observável, usuário beneficiado e impacto; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0008 — Testes e evidências
+
+**Pergunta:** Como **objetivo e resultado esperado** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir resultado observável, usuário beneficiado e impacto. Definir o resultado observável e o valor entregue.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **objetivo e resultado esperado** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova resultado observável, usuário beneficiado e impacto; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0009 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **objetivo e resultado esperado** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir resultado observável, usuário beneficiado e impacto. Definir o resultado observável e o valor entregue.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **objetivo e resultado esperado** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova resultado observável, usuário beneficiado e impacto; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0010 — Revisão e definição de pronto
+
+**Pergunta:** Como **objetivo e resultado esperado** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir resultado observável, usuário beneficiado e impacto. Definir o resultado observável e o valor entregue.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **objetivo e resultado esperado** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova resultado observável, usuário beneficiado e impacto; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## SCOPE — Limites de escopo e exclusões
+
+### PR-COMEX-02-Q0011 — Escopo do pr
+
+**Pergunta:** Como **limites de escopo e exclusões** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir fronteiras, entradas, saídas e exclusões. Explicitar entradas, saídas e itens fora do escopo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **limites de escopo e exclusões** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fronteiras, entradas, saídas e exclusões; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0012 — Arquitetura e componentes
+
+**Pergunta:** Como **limites de escopo e exclusões** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir fronteiras, entradas, saídas e exclusões. Explicitar entradas, saídas e itens fora do escopo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **limites de escopo e exclusões** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fronteiras, entradas, saídas e exclusões; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0013 — Modelo de dados e migration
+
+**Pergunta:** Como **limites de escopo e exclusões** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir fronteiras, entradas, saídas e exclusões. Explicitar entradas, saídas e itens fora do escopo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **limites de escopo e exclusões** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fronteiras, entradas, saídas e exclusões; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0014 — Api, eventos e erros
+
+**Pergunta:** Como **limites de escopo e exclusões** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir fronteiras, entradas, saídas e exclusões. Explicitar entradas, saídas e itens fora do escopo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **limites de escopo e exclusões** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fronteiras, entradas, saídas e exclusões; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0015 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **limites de escopo e exclusões** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir fronteiras, entradas, saídas e exclusões. Explicitar entradas, saídas e itens fora do escopo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **limites de escopo e exclusões** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fronteiras, entradas, saídas e exclusões; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0016 — Validação, segurança e auditoria
+
+**Pergunta:** Como **limites de escopo e exclusões** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir fronteiras, entradas, saídas e exclusões. Explicitar entradas, saídas e itens fora do escopo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **limites de escopo e exclusões** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fronteiras, entradas, saídas e exclusões; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0017 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **limites de escopo e exclusões** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir fronteiras, entradas, saídas e exclusões. Explicitar entradas, saídas e itens fora do escopo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **limites de escopo e exclusões** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fronteiras, entradas, saídas e exclusões; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0018 — Testes e evidências
+
+**Pergunta:** Como **limites de escopo e exclusões** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir fronteiras, entradas, saídas e exclusões. Explicitar entradas, saídas e itens fora do escopo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **limites de escopo e exclusões** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fronteiras, entradas, saídas e exclusões; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0019 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **limites de escopo e exclusões** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir fronteiras, entradas, saídas e exclusões. Explicitar entradas, saídas e itens fora do escopo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **limites de escopo e exclusões** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fronteiras, entradas, saídas e exclusões; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0020 — Revisão e definição de pronto
+
+**Pergunta:** Como **limites de escopo e exclusões** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir fronteiras, entradas, saídas e exclusões. Explicitar entradas, saídas e itens fora do escopo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **limites de escopo e exclusões** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fronteiras, entradas, saídas e exclusões; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## ACTOR — Atores e responsabilidades
+
+### PR-COMEX-02-Q0021 — Escopo do pr
+
+**Pergunta:** Como **atores e responsabilidades** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir responsabilidades, substituição e escalonamento. Atribuir owner, executor, aprovador e informado.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **atores e responsabilidades** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-13 — Matriz de responsabilidades`. Matriz linhas × papéis/ações com conflitos destacados, filtros por domínio e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-13 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova responsabilidades, substituição e escalonamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0022 — Arquitetura e componentes
+
+**Pergunta:** Como **atores e responsabilidades** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir responsabilidades, substituição e escalonamento. Atribuir owner, executor, aprovador e informado.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **atores e responsabilidades** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-13 — Matriz de responsabilidades`. Matriz linhas × papéis/ações com conflitos destacados, filtros por domínio e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-13 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova responsabilidades, substituição e escalonamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0023 — Modelo de dados e migration
+
+**Pergunta:** Como **atores e responsabilidades** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir responsabilidades, substituição e escalonamento. Atribuir owner, executor, aprovador e informado.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **atores e responsabilidades** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-13 — Matriz de responsabilidades`. Matriz linhas × papéis/ações com conflitos destacados, filtros por domínio e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-13 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova responsabilidades, substituição e escalonamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0024 — Api, eventos e erros
+
+**Pergunta:** Como **atores e responsabilidades** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir responsabilidades, substituição e escalonamento. Atribuir owner, executor, aprovador e informado.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **atores e responsabilidades** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-13 — Matriz de responsabilidades`. Matriz linhas × papéis/ações com conflitos destacados, filtros por domínio e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-13 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova responsabilidades, substituição e escalonamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0025 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **atores e responsabilidades** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir responsabilidades, substituição e escalonamento. Atribuir owner, executor, aprovador e informado.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **atores e responsabilidades** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-13 — Matriz de responsabilidades`. Matriz linhas × papéis/ações com conflitos destacados, filtros por domínio e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-13 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova responsabilidades, substituição e escalonamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0026 — Validação, segurança e auditoria
+
+**Pergunta:** Como **atores e responsabilidades** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir responsabilidades, substituição e escalonamento. Atribuir owner, executor, aprovador e informado.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **atores e responsabilidades** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-13 — Matriz de responsabilidades`. Matriz linhas × papéis/ações com conflitos destacados, filtros por domínio e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-13 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova responsabilidades, substituição e escalonamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0027 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **atores e responsabilidades** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir responsabilidades, substituição e escalonamento. Atribuir owner, executor, aprovador e informado.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **atores e responsabilidades** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-13 — Matriz de responsabilidades`. Matriz linhas × papéis/ações com conflitos destacados, filtros por domínio e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-13 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova responsabilidades, substituição e escalonamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0028 — Testes e evidências
+
+**Pergunta:** Como **atores e responsabilidades** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir responsabilidades, substituição e escalonamento. Atribuir owner, executor, aprovador e informado.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **atores e responsabilidades** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-13 — Matriz de responsabilidades`. Matriz linhas × papéis/ações com conflitos destacados, filtros por domínio e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-13 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova responsabilidades, substituição e escalonamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0029 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **atores e responsabilidades** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir responsabilidades, substituição e escalonamento. Atribuir owner, executor, aprovador e informado.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **atores e responsabilidades** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-13 — Matriz de responsabilidades`. Matriz linhas × papéis/ações com conflitos destacados, filtros por domínio e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-13 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova responsabilidades, substituição e escalonamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0030 — Revisão e definição de pronto
+
+**Pergunta:** Como **atores e responsabilidades** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir responsabilidades, substituição e escalonamento. Atribuir owner, executor, aprovador e informado.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **atores e responsabilidades** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-13 — Matriz de responsabilidades`. Matriz linhas × papéis/ações com conflitos destacados, filtros por domínio e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-13 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova responsabilidades, substituição e escalonamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## MDM — Dados mestres utilizados
+
+### PR-COMEX-02-Q0031 — Escopo do pr
+
+**Pergunta:** Como **dados mestres utilizados** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir identidade, vigência, deduplicação e ownership. Reutilizar cadastros únicos e evitar duplicação.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **dados mestres utilizados** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-01 — List Report denso`. Tabela densa em tela cheia, filtros únicos no topo, tabs horizontais, colunas congeladas, personalização e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-01 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova identidade, vigência, deduplicação e ownership; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0032 — Arquitetura e componentes
+
+**Pergunta:** Como **dados mestres utilizados** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir identidade, vigência, deduplicação e ownership. Reutilizar cadastros únicos e evitar duplicação.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **dados mestres utilizados** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-01 — List Report denso`. Tabela densa em tela cheia, filtros únicos no topo, tabs horizontais, colunas congeladas, personalização e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-01 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova identidade, vigência, deduplicação e ownership; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0033 — Modelo de dados e migration
+
+**Pergunta:** Como **dados mestres utilizados** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir identidade, vigência, deduplicação e ownership. Reutilizar cadastros únicos e evitar duplicação.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **dados mestres utilizados** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-01 — List Report denso`. Tabela densa em tela cheia, filtros únicos no topo, tabs horizontais, colunas congeladas, personalização e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-01 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova identidade, vigência, deduplicação e ownership; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0034 — Api, eventos e erros
+
+**Pergunta:** Como **dados mestres utilizados** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir identidade, vigência, deduplicação e ownership. Reutilizar cadastros únicos e evitar duplicação.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **dados mestres utilizados** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-01 — List Report denso`. Tabela densa em tela cheia, filtros únicos no topo, tabs horizontais, colunas congeladas, personalização e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-01 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova identidade, vigência, deduplicação e ownership; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0035 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **dados mestres utilizados** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir identidade, vigência, deduplicação e ownership. Reutilizar cadastros únicos e evitar duplicação.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **dados mestres utilizados** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-01 — List Report denso`. Tabela densa em tela cheia, filtros únicos no topo, tabs horizontais, colunas congeladas, personalização e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-01 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova identidade, vigência, deduplicação e ownership; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0036 — Validação, segurança e auditoria
+
+**Pergunta:** Como **dados mestres utilizados** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir identidade, vigência, deduplicação e ownership. Reutilizar cadastros únicos e evitar duplicação.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **dados mestres utilizados** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-01 — List Report denso`. Tabela densa em tela cheia, filtros únicos no topo, tabs horizontais, colunas congeladas, personalização e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-01 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova identidade, vigência, deduplicação e ownership; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0037 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **dados mestres utilizados** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir identidade, vigência, deduplicação e ownership. Reutilizar cadastros únicos e evitar duplicação.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **dados mestres utilizados** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-01 — List Report denso`. Tabela densa em tela cheia, filtros únicos no topo, tabs horizontais, colunas congeladas, personalização e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-01 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova identidade, vigência, deduplicação e ownership; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0038 — Testes e evidências
+
+**Pergunta:** Como **dados mestres utilizados** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir identidade, vigência, deduplicação e ownership. Reutilizar cadastros únicos e evitar duplicação.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **dados mestres utilizados** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-01 — List Report denso`. Tabela densa em tela cheia, filtros únicos no topo, tabs horizontais, colunas congeladas, personalização e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-01 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova identidade, vigência, deduplicação e ownership; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0039 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **dados mestres utilizados** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir identidade, vigência, deduplicação e ownership. Reutilizar cadastros únicos e evitar duplicação.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **dados mestres utilizados** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-01 — List Report denso`. Tabela densa em tela cheia, filtros únicos no topo, tabs horizontais, colunas congeladas, personalização e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-01 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova identidade, vigência, deduplicação e ownership; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0040 — Revisão e definição de pronto
+
+**Pergunta:** Como **dados mestres utilizados** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir identidade, vigência, deduplicação e ownership. Reutilizar cadastros únicos e evitar duplicação.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **dados mestres utilizados** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-01 — List Report denso`. Tabela densa em tela cheia, filtros únicos no topo, tabs horizontais, colunas congeladas, personalização e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-01 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova identidade, vigência, deduplicação e ownership; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## HDR — Dados de cabeçalho
+
+### PR-COMEX-02-Q0041 — Escopo do pr
+
+**Pergunta:** Como **dados de cabeçalho** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir identificação, contexto, estado, contraparte, valor e datas. Mostrar apenas dados de contexto usados em toda a transação.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **dados de cabeçalho** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova identificação, contexto, estado, contraparte, valor e datas; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0042 — Arquitetura e componentes
+
+**Pergunta:** Como **dados de cabeçalho** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir identificação, contexto, estado, contraparte, valor e datas. Mostrar apenas dados de contexto usados em toda a transação.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **dados de cabeçalho** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova identificação, contexto, estado, contraparte, valor e datas; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0043 — Modelo de dados e migration
+
+**Pergunta:** Como **dados de cabeçalho** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir identificação, contexto, estado, contraparte, valor e datas. Mostrar apenas dados de contexto usados em toda a transação.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **dados de cabeçalho** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova identificação, contexto, estado, contraparte, valor e datas; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0044 — Api, eventos e erros
+
+**Pergunta:** Como **dados de cabeçalho** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir identificação, contexto, estado, contraparte, valor e datas. Mostrar apenas dados de contexto usados em toda a transação.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **dados de cabeçalho** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova identificação, contexto, estado, contraparte, valor e datas; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0045 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **dados de cabeçalho** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir identificação, contexto, estado, contraparte, valor e datas. Mostrar apenas dados de contexto usados em toda a transação.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **dados de cabeçalho** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova identificação, contexto, estado, contraparte, valor e datas; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0046 — Validação, segurança e auditoria
+
+**Pergunta:** Como **dados de cabeçalho** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir identificação, contexto, estado, contraparte, valor e datas. Mostrar apenas dados de contexto usados em toda a transação.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **dados de cabeçalho** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova identificação, contexto, estado, contraparte, valor e datas; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0047 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **dados de cabeçalho** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir identificação, contexto, estado, contraparte, valor e datas. Mostrar apenas dados de contexto usados em toda a transação.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **dados de cabeçalho** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova identificação, contexto, estado, contraparte, valor e datas; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0048 — Testes e evidências
+
+**Pergunta:** Como **dados de cabeçalho** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir identificação, contexto, estado, contraparte, valor e datas. Mostrar apenas dados de contexto usados em toda a transação.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **dados de cabeçalho** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova identificação, contexto, estado, contraparte, valor e datas; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0049 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **dados de cabeçalho** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir identificação, contexto, estado, contraparte, valor e datas. Mostrar apenas dados de contexto usados em toda a transação.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **dados de cabeçalho** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova identificação, contexto, estado, contraparte, valor e datas; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0050 — Revisão e definição de pronto
+
+**Pergunta:** Como **dados de cabeçalho** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir identificação, contexto, estado, contraparte, valor e datas. Mostrar apenas dados de contexto usados em toda a transação.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **dados de cabeçalho** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova identificação, contexto, estado, contraparte, valor e datas; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## LINE — Linhas e detalhamento
+
+### PR-COMEX-02-Q0051 — Escopo do pr
+
+**Pergunta:** Como **linhas e detalhamento** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir colunas, quantidades, valores, impostos, validações e totais. Usar grid denso com validação por linha e totais fixos.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **linhas e detalhamento** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-07 — Editable Data Grid`. Grid estilo Excel, edição por teclado, colar em massa, validação por célula, totais e resumo de erros.
+- **Otimização de tempo e UX:** Aplicar LAY-07 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova colunas, quantidades, valores, impostos, validações e totais; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0052 — Arquitetura e componentes
+
+**Pergunta:** Como **linhas e detalhamento** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir colunas, quantidades, valores, impostos, validações e totais. Usar grid denso com validação por linha e totais fixos.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **linhas e detalhamento** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-07 — Editable Data Grid`. Grid estilo Excel, edição por teclado, colar em massa, validação por célula, totais e resumo de erros.
+- **Otimização de tempo e UX:** Aplicar LAY-07 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova colunas, quantidades, valores, impostos, validações e totais; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0053 — Modelo de dados e migration
+
+**Pergunta:** Como **linhas e detalhamento** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir colunas, quantidades, valores, impostos, validações e totais. Usar grid denso com validação por linha e totais fixos.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **linhas e detalhamento** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-07 — Editable Data Grid`. Grid estilo Excel, edição por teclado, colar em massa, validação por célula, totais e resumo de erros.
+- **Otimização de tempo e UX:** Aplicar LAY-07 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova colunas, quantidades, valores, impostos, validações e totais; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0054 — Api, eventos e erros
+
+**Pergunta:** Como **linhas e detalhamento** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir colunas, quantidades, valores, impostos, validações e totais. Usar grid denso com validação por linha e totais fixos.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **linhas e detalhamento** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-07 — Editable Data Grid`. Grid estilo Excel, edição por teclado, colar em massa, validação por célula, totais e resumo de erros.
+- **Otimização de tempo e UX:** Aplicar LAY-07 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova colunas, quantidades, valores, impostos, validações e totais; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0055 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **linhas e detalhamento** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir colunas, quantidades, valores, impostos, validações e totais. Usar grid denso com validação por linha e totais fixos.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **linhas e detalhamento** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-07 — Editable Data Grid`. Grid estilo Excel, edição por teclado, colar em massa, validação por célula, totais e resumo de erros.
+- **Otimização de tempo e UX:** Aplicar LAY-07 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova colunas, quantidades, valores, impostos, validações e totais; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0056 — Validação, segurança e auditoria
+
+**Pergunta:** Como **linhas e detalhamento** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir colunas, quantidades, valores, impostos, validações e totais. Usar grid denso com validação por linha e totais fixos.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **linhas e detalhamento** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-07 — Editable Data Grid`. Grid estilo Excel, edição por teclado, colar em massa, validação por célula, totais e resumo de erros.
+- **Otimização de tempo e UX:** Aplicar LAY-07 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova colunas, quantidades, valores, impostos, validações e totais; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0057 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **linhas e detalhamento** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir colunas, quantidades, valores, impostos, validações e totais. Usar grid denso com validação por linha e totais fixos.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **linhas e detalhamento** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-07 — Editable Data Grid`. Grid estilo Excel, edição por teclado, colar em massa, validação por célula, totais e resumo de erros.
+- **Otimização de tempo e UX:** Aplicar LAY-07 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova colunas, quantidades, valores, impostos, validações e totais; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0058 — Testes e evidências
+
+**Pergunta:** Como **linhas e detalhamento** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir colunas, quantidades, valores, impostos, validações e totais. Usar grid denso com validação por linha e totais fixos.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **linhas e detalhamento** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-07 — Editable Data Grid`. Grid estilo Excel, edição por teclado, colar em massa, validação por célula, totais e resumo de erros.
+- **Otimização de tempo e UX:** Aplicar LAY-07 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova colunas, quantidades, valores, impostos, validações e totais; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0059 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **linhas e detalhamento** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir colunas, quantidades, valores, impostos, validações e totais. Usar grid denso com validação por linha e totais fixos.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **linhas e detalhamento** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-07 — Editable Data Grid`. Grid estilo Excel, edição por teclado, colar em massa, validação por célula, totais e resumo de erros.
+- **Otimização de tempo e UX:** Aplicar LAY-07 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova colunas, quantidades, valores, impostos, validações e totais; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0060 — Revisão e definição de pronto
+
+**Pergunta:** Como **linhas e detalhamento** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir colunas, quantidades, valores, impostos, validações e totais. Usar grid denso com validação por linha e totais fixos.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **linhas e detalhamento** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-07 — Editable Data Grid`. Grid estilo Excel, edição por teclado, colar em massa, validação por célula, totais e resumo de erros.
+- **Otimização de tempo e UX:** Aplicar LAY-07 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova colunas, quantidades, valores, impostos, validações e totais; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## STATE — Estados do ciclo de vida
+
+### PR-COMEX-02-Q0061 — Escopo do pr
+
+**Pergunta:** Como **estados do ciclo de vida** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir máquina de estados, invariantes e transições permitidas. Usar máquina de estados explícita e append-only.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **estados do ciclo de vida** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e status`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova máquina de estados, invariantes e transições permitidas; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0062 — Arquitetura e componentes
+
+**Pergunta:** Como **estados do ciclo de vida** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir máquina de estados, invariantes e transições permitidas. Usar máquina de estados explícita e append-only.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **estados do ciclo de vida** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e status`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova máquina de estados, invariantes e transições permitidas; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0063 — Modelo de dados e migration
+
+**Pergunta:** Como **estados do ciclo de vida** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir máquina de estados, invariantes e transições permitidas. Usar máquina de estados explícita e append-only.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **estados do ciclo de vida** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e status`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova máquina de estados, invariantes e transições permitidas; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0064 — Api, eventos e erros
+
+**Pergunta:** Como **estados do ciclo de vida** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir máquina de estados, invariantes e transições permitidas. Usar máquina de estados explícita e append-only.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **estados do ciclo de vida** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e status`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova máquina de estados, invariantes e transições permitidas; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0065 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **estados do ciclo de vida** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir máquina de estados, invariantes e transições permitidas. Usar máquina de estados explícita e append-only.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **estados do ciclo de vida** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e status`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova máquina de estados, invariantes e transições permitidas; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0066 — Validação, segurança e auditoria
+
+**Pergunta:** Como **estados do ciclo de vida** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir máquina de estados, invariantes e transições permitidas. Usar máquina de estados explícita e append-only.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **estados do ciclo de vida** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e status`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova máquina de estados, invariantes e transições permitidas; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0067 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **estados do ciclo de vida** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir máquina de estados, invariantes e transições permitidas. Usar máquina de estados explícita e append-only.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **estados do ciclo de vida** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e status`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova máquina de estados, invariantes e transições permitidas; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0068 — Testes e evidências
+
+**Pergunta:** Como **estados do ciclo de vida** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir máquina de estados, invariantes e transições permitidas. Usar máquina de estados explícita e append-only.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **estados do ciclo de vida** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e status`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova máquina de estados, invariantes e transições permitidas; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0069 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **estados do ciclo de vida** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir máquina de estados, invariantes e transições permitidas. Usar máquina de estados explícita e append-only.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **estados do ciclo de vida** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e status`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova máquina de estados, invariantes e transições permitidas; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0070 — Revisão e definição de pronto
+
+**Pergunta:** Como **estados do ciclo de vida** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir máquina de estados, invariantes e transições permitidas. Usar máquina de estados explícita e append-only.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **estados do ciclo de vida** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e status`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova máquina de estados, invariantes e transições permitidas; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## TRANS — Transições e próxima ação
+
+### PR-COMEX-02-Q0071 — Escopo do pr
+
+**Pergunta:** Como **transições e próxima ação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir ação primária, pré-condição, efeito e reversibilidade. Mostrar uma ação primária coerente com o estado.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **transições e próxima ação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova ação primária, pré-condição, efeito e reversibilidade; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0072 — Arquitetura e componentes
+
+**Pergunta:** Como **transições e próxima ação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir ação primária, pré-condição, efeito e reversibilidade. Mostrar uma ação primária coerente com o estado.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **transições e próxima ação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova ação primária, pré-condição, efeito e reversibilidade; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0073 — Modelo de dados e migration
+
+**Pergunta:** Como **transições e próxima ação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir ação primária, pré-condição, efeito e reversibilidade. Mostrar uma ação primária coerente com o estado.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **transições e próxima ação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova ação primária, pré-condição, efeito e reversibilidade; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0074 — Api, eventos e erros
+
+**Pergunta:** Como **transições e próxima ação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir ação primária, pré-condição, efeito e reversibilidade. Mostrar uma ação primária coerente com o estado.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **transições e próxima ação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova ação primária, pré-condição, efeito e reversibilidade; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0075 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **transições e próxima ação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir ação primária, pré-condição, efeito e reversibilidade. Mostrar uma ação primária coerente com o estado.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **transições e próxima ação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova ação primária, pré-condição, efeito e reversibilidade; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0076 — Validação, segurança e auditoria
+
+**Pergunta:** Como **transições e próxima ação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir ação primária, pré-condição, efeito e reversibilidade. Mostrar uma ação primária coerente com o estado.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **transições e próxima ação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova ação primária, pré-condição, efeito e reversibilidade; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0077 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **transições e próxima ação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir ação primária, pré-condição, efeito e reversibilidade. Mostrar uma ação primária coerente com o estado.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **transições e próxima ação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova ação primária, pré-condição, efeito e reversibilidade; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0078 — Testes e evidências
+
+**Pergunta:** Como **transições e próxima ação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir ação primária, pré-condição, efeito e reversibilidade. Mostrar uma ação primária coerente com o estado.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **transições e próxima ação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova ação primária, pré-condição, efeito e reversibilidade; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0079 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **transições e próxima ação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir ação primária, pré-condição, efeito e reversibilidade. Mostrar uma ação primária coerente com o estado.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **transições e próxima ação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova ação primária, pré-condição, efeito e reversibilidade; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0080 — Revisão e definição de pronto
+
+**Pergunta:** Como **transições e próxima ação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir ação primária, pré-condição, efeito e reversibilidade. Mostrar uma ação primária coerente com o estado.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **transições e próxima ação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova ação primária, pré-condição, efeito e reversibilidade; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## TRIG — Gatilhos e eventos
+
+### PR-COMEX-02-Q0081 — Escopo do pr
+
+**Pergunta:** Como **gatilhos e eventos** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir evento, origem, timestamp, correlação e idempotência. Registrar evento de domínio idempotente ao mudar estado.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **gatilhos e eventos** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e status`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova evento, origem, timestamp, correlação e idempotência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0082 — Arquitetura e componentes
+
+**Pergunta:** Como **gatilhos e eventos** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir evento, origem, timestamp, correlação e idempotência. Registrar evento de domínio idempotente ao mudar estado.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **gatilhos e eventos** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e status`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova evento, origem, timestamp, correlação e idempotência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0083 — Modelo de dados e migration
+
+**Pergunta:** Como **gatilhos e eventos** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir evento, origem, timestamp, correlação e idempotência. Registrar evento de domínio idempotente ao mudar estado.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **gatilhos e eventos** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e status`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova evento, origem, timestamp, correlação e idempotência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0084 — Api, eventos e erros
+
+**Pergunta:** Como **gatilhos e eventos** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir evento, origem, timestamp, correlação e idempotência. Registrar evento de domínio idempotente ao mudar estado.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **gatilhos e eventos** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e status`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova evento, origem, timestamp, correlação e idempotência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0085 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **gatilhos e eventos** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir evento, origem, timestamp, correlação e idempotência. Registrar evento de domínio idempotente ao mudar estado.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **gatilhos e eventos** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e status`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova evento, origem, timestamp, correlação e idempotência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0086 — Validação, segurança e auditoria
+
+**Pergunta:** Como **gatilhos e eventos** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir evento, origem, timestamp, correlação e idempotência. Registrar evento de domínio idempotente ao mudar estado.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **gatilhos e eventos** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e status`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova evento, origem, timestamp, correlação e idempotência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0087 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **gatilhos e eventos** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir evento, origem, timestamp, correlação e idempotência. Registrar evento de domínio idempotente ao mudar estado.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **gatilhos e eventos** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e status`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova evento, origem, timestamp, correlação e idempotência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0088 — Testes e evidências
+
+**Pergunta:** Como **gatilhos e eventos** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir evento, origem, timestamp, correlação e idempotência. Registrar evento de domínio idempotente ao mudar estado.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **gatilhos e eventos** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e status`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova evento, origem, timestamp, correlação e idempotência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0089 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **gatilhos e eventos** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir evento, origem, timestamp, correlação e idempotência. Registrar evento de domínio idempotente ao mudar estado.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **gatilhos e eventos** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e status`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova evento, origem, timestamp, correlação e idempotência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0090 — Revisão e definição de pronto
+
+**Pergunta:** Como **gatilhos e eventos** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir evento, origem, timestamp, correlação e idempotência. Registrar evento de domínio idempotente ao mudar estado.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **gatilhos e eventos** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e status`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova evento, origem, timestamp, correlação e idempotência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## APPR — Aprovações e alçadas
+
+### PR-COMEX-02-Q0091 — Escopo do pr
+
+**Pergunta:** Como **aprovações e alçadas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir alçada, sequência, aprovadores, timeout e delegação. Separar aprovação, execução e override com histórico.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **aprovações e alçadas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-03 — Worklist de aprovações`. Fila ordenada por urgência e SLA, contadores, próxima ação visível, seleção múltipla e atalhos.
+- **Otimização de tempo e UX:** Aplicar LAY-03 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova alçada, sequência, aprovadores, timeout e delegação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0092 — Arquitetura e componentes
+
+**Pergunta:** Como **aprovações e alçadas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir alçada, sequência, aprovadores, timeout e delegação. Separar aprovação, execução e override com histórico.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **aprovações e alçadas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-03 — Worklist de aprovações`. Fila ordenada por urgência e SLA, contadores, próxima ação visível, seleção múltipla e atalhos.
+- **Otimização de tempo e UX:** Aplicar LAY-03 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova alçada, sequência, aprovadores, timeout e delegação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0093 — Modelo de dados e migration
+
+**Pergunta:** Como **aprovações e alçadas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir alçada, sequência, aprovadores, timeout e delegação. Separar aprovação, execução e override com histórico.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **aprovações e alçadas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-03 — Worklist de aprovações`. Fila ordenada por urgência e SLA, contadores, próxima ação visível, seleção múltipla e atalhos.
+- **Otimização de tempo e UX:** Aplicar LAY-03 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova alçada, sequência, aprovadores, timeout e delegação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0094 — Api, eventos e erros
+
+**Pergunta:** Como **aprovações e alçadas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir alçada, sequência, aprovadores, timeout e delegação. Separar aprovação, execução e override com histórico.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **aprovações e alçadas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-03 — Worklist de aprovações`. Fila ordenada por urgência e SLA, contadores, próxima ação visível, seleção múltipla e atalhos.
+- **Otimização de tempo e UX:** Aplicar LAY-03 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova alçada, sequência, aprovadores, timeout e delegação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0095 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **aprovações e alçadas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir alçada, sequência, aprovadores, timeout e delegação. Separar aprovação, execução e override com histórico.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **aprovações e alçadas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-03 — Worklist de aprovações`. Fila ordenada por urgência e SLA, contadores, próxima ação visível, seleção múltipla e atalhos.
+- **Otimização de tempo e UX:** Aplicar LAY-03 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova alçada, sequência, aprovadores, timeout e delegação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0096 — Validação, segurança e auditoria
+
+**Pergunta:** Como **aprovações e alçadas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir alçada, sequência, aprovadores, timeout e delegação. Separar aprovação, execução e override com histórico.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **aprovações e alçadas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-03 — Worklist de aprovações`. Fila ordenada por urgência e SLA, contadores, próxima ação visível, seleção múltipla e atalhos.
+- **Otimização de tempo e UX:** Aplicar LAY-03 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova alçada, sequência, aprovadores, timeout e delegação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0097 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **aprovações e alçadas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir alçada, sequência, aprovadores, timeout e delegação. Separar aprovação, execução e override com histórico.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **aprovações e alçadas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-03 — Worklist de aprovações`. Fila ordenada por urgência e SLA, contadores, próxima ação visível, seleção múltipla e atalhos.
+- **Otimização de tempo e UX:** Aplicar LAY-03 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova alçada, sequência, aprovadores, timeout e delegação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0098 — Testes e evidências
+
+**Pergunta:** Como **aprovações e alçadas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir alçada, sequência, aprovadores, timeout e delegação. Separar aprovação, execução e override com histórico.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **aprovações e alçadas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-03 — Worklist de aprovações`. Fila ordenada por urgência e SLA, contadores, próxima ação visível, seleção múltipla e atalhos.
+- **Otimização de tempo e UX:** Aplicar LAY-03 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova alçada, sequência, aprovadores, timeout e delegação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0099 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **aprovações e alçadas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir alçada, sequência, aprovadores, timeout e delegação. Separar aprovação, execução e override com histórico.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **aprovações e alçadas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-03 — Worklist de aprovações`. Fila ordenada por urgência e SLA, contadores, próxima ação visível, seleção múltipla e atalhos.
+- **Otimização de tempo e UX:** Aplicar LAY-03 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova alçada, sequência, aprovadores, timeout e delegação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0100 — Revisão e definição de pronto
+
+**Pergunta:** Como **aprovações e alçadas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir alçada, sequência, aprovadores, timeout e delegação. Separar aprovação, execução e override com histórico.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **aprovações e alçadas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-03 — Worklist de aprovações`. Fila ordenada por urgência e SLA, contadores, próxima ação visível, seleção múltipla e atalhos.
+- **Otimização de tempo e UX:** Aplicar LAY-03 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova alçada, sequência, aprovadores, timeout e delegação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## OVR — Override do master
+
+### PR-COMEX-02-Q0101 — Escopo do pr
+
+**Pergunta:** Como **override do master** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir motivo, escopo, autoridade, histórico e revisão posterior. Permitir exceção de negócio sem quebrar invariantes técnicas.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **override do master** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-08 — Review & Confirm`. Resumo por seção, comparação antes/depois, impacto, links para alterar e botão final nomeado pelo resultado.
+- **Otimização de tempo e UX:** Aplicar LAY-08 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova motivo, escopo, autoridade, histórico e revisão posterior; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0102 — Arquitetura e componentes
+
+**Pergunta:** Como **override do master** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir motivo, escopo, autoridade, histórico e revisão posterior. Permitir exceção de negócio sem quebrar invariantes técnicas.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **override do master** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-08 — Review & Confirm`. Resumo por seção, comparação antes/depois, impacto, links para alterar e botão final nomeado pelo resultado.
+- **Otimização de tempo e UX:** Aplicar LAY-08 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova motivo, escopo, autoridade, histórico e revisão posterior; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0103 — Modelo de dados e migration
+
+**Pergunta:** Como **override do master** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir motivo, escopo, autoridade, histórico e revisão posterior. Permitir exceção de negócio sem quebrar invariantes técnicas.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **override do master** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-08 — Review & Confirm`. Resumo por seção, comparação antes/depois, impacto, links para alterar e botão final nomeado pelo resultado.
+- **Otimização de tempo e UX:** Aplicar LAY-08 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova motivo, escopo, autoridade, histórico e revisão posterior; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0104 — Api, eventos e erros
+
+**Pergunta:** Como **override do master** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir motivo, escopo, autoridade, histórico e revisão posterior. Permitir exceção de negócio sem quebrar invariantes técnicas.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **override do master** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-08 — Review & Confirm`. Resumo por seção, comparação antes/depois, impacto, links para alterar e botão final nomeado pelo resultado.
+- **Otimização de tempo e UX:** Aplicar LAY-08 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova motivo, escopo, autoridade, histórico e revisão posterior; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0105 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **override do master** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir motivo, escopo, autoridade, histórico e revisão posterior. Permitir exceção de negócio sem quebrar invariantes técnicas.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **override do master** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-08 — Review & Confirm`. Resumo por seção, comparação antes/depois, impacto, links para alterar e botão final nomeado pelo resultado.
+- **Otimização de tempo e UX:** Aplicar LAY-08 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova motivo, escopo, autoridade, histórico e revisão posterior; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0106 — Validação, segurança e auditoria
+
+**Pergunta:** Como **override do master** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir motivo, escopo, autoridade, histórico e revisão posterior. Permitir exceção de negócio sem quebrar invariantes técnicas.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **override do master** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-08 — Review & Confirm`. Resumo por seção, comparação antes/depois, impacto, links para alterar e botão final nomeado pelo resultado.
+- **Otimização de tempo e UX:** Aplicar LAY-08 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova motivo, escopo, autoridade, histórico e revisão posterior; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0107 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **override do master** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir motivo, escopo, autoridade, histórico e revisão posterior. Permitir exceção de negócio sem quebrar invariantes técnicas.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **override do master** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-08 — Review & Confirm`. Resumo por seção, comparação antes/depois, impacto, links para alterar e botão final nomeado pelo resultado.
+- **Otimização de tempo e UX:** Aplicar LAY-08 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova motivo, escopo, autoridade, histórico e revisão posterior; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0108 — Testes e evidências
+
+**Pergunta:** Como **override do master** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir motivo, escopo, autoridade, histórico e revisão posterior. Permitir exceção de negócio sem quebrar invariantes técnicas.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **override do master** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-08 — Review & Confirm`. Resumo por seção, comparação antes/depois, impacto, links para alterar e botão final nomeado pelo resultado.
+- **Otimização de tempo e UX:** Aplicar LAY-08 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova motivo, escopo, autoridade, histórico e revisão posterior; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0109 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **override do master** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir motivo, escopo, autoridade, histórico e revisão posterior. Permitir exceção de negócio sem quebrar invariantes técnicas.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **override do master** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-08 — Review & Confirm`. Resumo por seção, comparação antes/depois, impacto, links para alterar e botão final nomeado pelo resultado.
+- **Otimização de tempo e UX:** Aplicar LAY-08 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova motivo, escopo, autoridade, histórico e revisão posterior; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0110 — Revisão e definição de pronto
+
+**Pergunta:** Como **override do master** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir motivo, escopo, autoridade, histórico e revisão posterior. Permitir exceção de negócio sem quebrar invariantes técnicas.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **override do master** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-08 — Review & Confirm`. Resumo por seção, comparação antes/depois, impacto, links para alterar e botão final nomeado pelo resultado.
+- **Otimização de tempo e UX:** Aplicar LAY-08 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova motivo, escopo, autoridade, histórico e revisão posterior; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## VAL — Validações bloqueantes
+
+### PR-COMEX-02-Q0111 — Escopo do pr
+
+**Pergunta:** Como **validações bloqueantes** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir campos, documentos, saldos, limites e consistência. Bloquear apenas inconsistências que tornam o fato inválido.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **validações bloqueantes** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-08 — Review & Confirm`. Resumo por seção, comparação antes/depois, impacto, links para alterar e botão final nomeado pelo resultado.
+- **Otimização de tempo e UX:** Aplicar LAY-08 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova campos, documentos, saldos, limites e consistência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-04, UX-06
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0112 — Arquitetura e componentes
+
+**Pergunta:** Como **validações bloqueantes** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir campos, documentos, saldos, limites e consistência. Bloquear apenas inconsistências que tornam o fato inválido.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **validações bloqueantes** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-08 — Review & Confirm`. Resumo por seção, comparação antes/depois, impacto, links para alterar e botão final nomeado pelo resultado.
+- **Otimização de tempo e UX:** Aplicar LAY-08 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova campos, documentos, saldos, limites e consistência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-04, UX-06
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0113 — Modelo de dados e migration
+
+**Pergunta:** Como **validações bloqueantes** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir campos, documentos, saldos, limites e consistência. Bloquear apenas inconsistências que tornam o fato inválido.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **validações bloqueantes** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-08 — Review & Confirm`. Resumo por seção, comparação antes/depois, impacto, links para alterar e botão final nomeado pelo resultado.
+- **Otimização de tempo e UX:** Aplicar LAY-08 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova campos, documentos, saldos, limites e consistência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-04, UX-06
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0114 — Api, eventos e erros
+
+**Pergunta:** Como **validações bloqueantes** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir campos, documentos, saldos, limites e consistência. Bloquear apenas inconsistências que tornam o fato inválido.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **validações bloqueantes** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-08 — Review & Confirm`. Resumo por seção, comparação antes/depois, impacto, links para alterar e botão final nomeado pelo resultado.
+- **Otimização de tempo e UX:** Aplicar LAY-08 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova campos, documentos, saldos, limites e consistência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-04, UX-06
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0115 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **validações bloqueantes** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir campos, documentos, saldos, limites e consistência. Bloquear apenas inconsistências que tornam o fato inválido.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **validações bloqueantes** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-08 — Review & Confirm`. Resumo por seção, comparação antes/depois, impacto, links para alterar e botão final nomeado pelo resultado.
+- **Otimização de tempo e UX:** Aplicar LAY-08 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova campos, documentos, saldos, limites e consistência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-04, UX-06
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0116 — Validação, segurança e auditoria
+
+**Pergunta:** Como **validações bloqueantes** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir campos, documentos, saldos, limites e consistência. Bloquear apenas inconsistências que tornam o fato inválido.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **validações bloqueantes** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-08 — Review & Confirm`. Resumo por seção, comparação antes/depois, impacto, links para alterar e botão final nomeado pelo resultado.
+- **Otimização de tempo e UX:** Aplicar LAY-08 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova campos, documentos, saldos, limites e consistência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-04, UX-06
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0117 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **validações bloqueantes** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir campos, documentos, saldos, limites e consistência. Bloquear apenas inconsistências que tornam o fato inválido.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **validações bloqueantes** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-08 — Review & Confirm`. Resumo por seção, comparação antes/depois, impacto, links para alterar e botão final nomeado pelo resultado.
+- **Otimização de tempo e UX:** Aplicar LAY-08 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova campos, documentos, saldos, limites e consistência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-04, UX-06
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0118 — Testes e evidências
+
+**Pergunta:** Como **validações bloqueantes** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir campos, documentos, saldos, limites e consistência. Bloquear apenas inconsistências que tornam o fato inválido.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **validações bloqueantes** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-08 — Review & Confirm`. Resumo por seção, comparação antes/depois, impacto, links para alterar e botão final nomeado pelo resultado.
+- **Otimização de tempo e UX:** Aplicar LAY-08 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova campos, documentos, saldos, limites e consistência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-04, UX-06
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0119 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **validações bloqueantes** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir campos, documentos, saldos, limites e consistência. Bloquear apenas inconsistências que tornam o fato inválido.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **validações bloqueantes** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-08 — Review & Confirm`. Resumo por seção, comparação antes/depois, impacto, links para alterar e botão final nomeado pelo resultado.
+- **Otimização de tempo e UX:** Aplicar LAY-08 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova campos, documentos, saldos, limites e consistência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-04, UX-06
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0120 — Revisão e definição de pronto
+
+**Pergunta:** Como **validações bloqueantes** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir campos, documentos, saldos, limites e consistência. Bloquear apenas inconsistências que tornam o fato inválido.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **validações bloqueantes** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-08 — Review & Confirm`. Resumo por seção, comparação antes/depois, impacto, links para alterar e botão final nomeado pelo resultado.
+- **Otimização de tempo e UX:** Aplicar LAY-08 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova campos, documentos, saldos, limites e consistência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-04, UX-06
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## WARN — Alertas não bloqueantes
+
+### PR-COMEX-02-Q0121 — Escopo do pr
+
+**Pergunta:** Como **alertas não bloqueantes** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir impacto, severidade, responsável e prazo de regularização. Alertar com impacto e permitir continuidade consciente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **alertas não bloqueantes** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-14 — Painel contextual de exceções`. Painel lateral persistente com exceções, anexos, comentários e próxima ação, sem esconder conteúdo principal.
+- **Otimização de tempo e UX:** Aplicar LAY-14 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova impacto, severidade, responsável e prazo de regularização; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-06, UX-08
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0122 — Arquitetura e componentes
+
+**Pergunta:** Como **alertas não bloqueantes** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir impacto, severidade, responsável e prazo de regularização. Alertar com impacto e permitir continuidade consciente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **alertas não bloqueantes** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-14 — Painel contextual de exceções`. Painel lateral persistente com exceções, anexos, comentários e próxima ação, sem esconder conteúdo principal.
+- **Otimização de tempo e UX:** Aplicar LAY-14 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova impacto, severidade, responsável e prazo de regularização; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-06, UX-08
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0123 — Modelo de dados e migration
+
+**Pergunta:** Como **alertas não bloqueantes** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir impacto, severidade, responsável e prazo de regularização. Alertar com impacto e permitir continuidade consciente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **alertas não bloqueantes** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-14 — Painel contextual de exceções`. Painel lateral persistente com exceções, anexos, comentários e próxima ação, sem esconder conteúdo principal.
+- **Otimização de tempo e UX:** Aplicar LAY-14 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova impacto, severidade, responsável e prazo de regularização; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-06, UX-08
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0124 — Api, eventos e erros
+
+**Pergunta:** Como **alertas não bloqueantes** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir impacto, severidade, responsável e prazo de regularização. Alertar com impacto e permitir continuidade consciente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **alertas não bloqueantes** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-14 — Painel contextual de exceções`. Painel lateral persistente com exceções, anexos, comentários e próxima ação, sem esconder conteúdo principal.
+- **Otimização de tempo e UX:** Aplicar LAY-14 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova impacto, severidade, responsável e prazo de regularização; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-06, UX-08
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0125 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **alertas não bloqueantes** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir impacto, severidade, responsável e prazo de regularização. Alertar com impacto e permitir continuidade consciente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **alertas não bloqueantes** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-14 — Painel contextual de exceções`. Painel lateral persistente com exceções, anexos, comentários e próxima ação, sem esconder conteúdo principal.
+- **Otimização de tempo e UX:** Aplicar LAY-14 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova impacto, severidade, responsável e prazo de regularização; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-06, UX-08
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0126 — Validação, segurança e auditoria
+
+**Pergunta:** Como **alertas não bloqueantes** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir impacto, severidade, responsável e prazo de regularização. Alertar com impacto e permitir continuidade consciente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **alertas não bloqueantes** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-14 — Painel contextual de exceções`. Painel lateral persistente com exceções, anexos, comentários e próxima ação, sem esconder conteúdo principal.
+- **Otimização de tempo e UX:** Aplicar LAY-14 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova impacto, severidade, responsável e prazo de regularização; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-06, UX-08
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0127 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **alertas não bloqueantes** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir impacto, severidade, responsável e prazo de regularização. Alertar com impacto e permitir continuidade consciente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **alertas não bloqueantes** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-14 — Painel contextual de exceções`. Painel lateral persistente com exceções, anexos, comentários e próxima ação, sem esconder conteúdo principal.
+- **Otimização de tempo e UX:** Aplicar LAY-14 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova impacto, severidade, responsável e prazo de regularização; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-06, UX-08
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0128 — Testes e evidências
+
+**Pergunta:** Como **alertas não bloqueantes** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir impacto, severidade, responsável e prazo de regularização. Alertar com impacto e permitir continuidade consciente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **alertas não bloqueantes** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-14 — Painel contextual de exceções`. Painel lateral persistente com exceções, anexos, comentários e próxima ação, sem esconder conteúdo principal.
+- **Otimização de tempo e UX:** Aplicar LAY-14 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova impacto, severidade, responsável e prazo de regularização; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-06, UX-08
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0129 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **alertas não bloqueantes** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir impacto, severidade, responsável e prazo de regularização. Alertar com impacto e permitir continuidade consciente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **alertas não bloqueantes** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-14 — Painel contextual de exceções`. Painel lateral persistente com exceções, anexos, comentários e próxima ação, sem esconder conteúdo principal.
+- **Otimização de tempo e UX:** Aplicar LAY-14 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova impacto, severidade, responsável e prazo de regularização; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-06, UX-08
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0130 — Revisão e definição de pronto
+
+**Pergunta:** Como **alertas não bloqueantes** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir impacto, severidade, responsável e prazo de regularização. Alertar com impacto e permitir continuidade consciente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **alertas não bloqueantes** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-14 — Painel contextual de exceções`. Painel lateral persistente com exceções, anexos, comentários e próxima ação, sem esconder conteúdo principal.
+- **Otimização de tempo e UX:** Aplicar LAY-14 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova impacto, severidade, responsável e prazo de regularização; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-06, UX-08
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## ERR — Erros e recuperação
+
+### PR-COMEX-02-Q0131 — Escopo do pr
+
+**Pergunta:** Como **erros e recuperação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir mensagem acionável, preservação dos dados e reprocessamento. Preservar dados e levar foco ao ponto exato de correção.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **erros e recuperação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-15 — Resumo de erros + campos`. Resumo de erros no topo com links e foco; mensagens junto ao campo; nada digitado é perdido.
+- **Otimização de tempo e UX:** Aplicar LAY-15 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova mensagem acionável, preservação dos dados e reprocessamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-06, UX-08
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0132 — Arquitetura e componentes
+
+**Pergunta:** Como **erros e recuperação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir mensagem acionável, preservação dos dados e reprocessamento. Preservar dados e levar foco ao ponto exato de correção.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **erros e recuperação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-15 — Resumo de erros + campos`. Resumo de erros no topo com links e foco; mensagens junto ao campo; nada digitado é perdido.
+- **Otimização de tempo e UX:** Aplicar LAY-15 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova mensagem acionável, preservação dos dados e reprocessamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-06, UX-08
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0133 — Modelo de dados e migration
+
+**Pergunta:** Como **erros e recuperação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir mensagem acionável, preservação dos dados e reprocessamento. Preservar dados e levar foco ao ponto exato de correção.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **erros e recuperação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-15 — Resumo de erros + campos`. Resumo de erros no topo com links e foco; mensagens junto ao campo; nada digitado é perdido.
+- **Otimização de tempo e UX:** Aplicar LAY-15 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova mensagem acionável, preservação dos dados e reprocessamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-06, UX-08
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0134 — Api, eventos e erros
+
+**Pergunta:** Como **erros e recuperação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir mensagem acionável, preservação dos dados e reprocessamento. Preservar dados e levar foco ao ponto exato de correção.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **erros e recuperação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-15 — Resumo de erros + campos`. Resumo de erros no topo com links e foco; mensagens junto ao campo; nada digitado é perdido.
+- **Otimização de tempo e UX:** Aplicar LAY-15 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova mensagem acionável, preservação dos dados e reprocessamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-06, UX-08
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0135 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **erros e recuperação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir mensagem acionável, preservação dos dados e reprocessamento. Preservar dados e levar foco ao ponto exato de correção.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **erros e recuperação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-15 — Resumo de erros + campos`. Resumo de erros no topo com links e foco; mensagens junto ao campo; nada digitado é perdido.
+- **Otimização de tempo e UX:** Aplicar LAY-15 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova mensagem acionável, preservação dos dados e reprocessamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-06, UX-08
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0136 — Validação, segurança e auditoria
+
+**Pergunta:** Como **erros e recuperação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir mensagem acionável, preservação dos dados e reprocessamento. Preservar dados e levar foco ao ponto exato de correção.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **erros e recuperação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-15 — Resumo de erros + campos`. Resumo de erros no topo com links e foco; mensagens junto ao campo; nada digitado é perdido.
+- **Otimização de tempo e UX:** Aplicar LAY-15 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova mensagem acionável, preservação dos dados e reprocessamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-06, UX-08
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0137 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **erros e recuperação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir mensagem acionável, preservação dos dados e reprocessamento. Preservar dados e levar foco ao ponto exato de correção.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **erros e recuperação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-15 — Resumo de erros + campos`. Resumo de erros no topo com links e foco; mensagens junto ao campo; nada digitado é perdido.
+- **Otimização de tempo e UX:** Aplicar LAY-15 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova mensagem acionável, preservação dos dados e reprocessamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-06, UX-08
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0138 — Testes e evidências
+
+**Pergunta:** Como **erros e recuperação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir mensagem acionável, preservação dos dados e reprocessamento. Preservar dados e levar foco ao ponto exato de correção.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **erros e recuperação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-15 — Resumo de erros + campos`. Resumo de erros no topo com links e foco; mensagens junto ao campo; nada digitado é perdido.
+- **Otimização de tempo e UX:** Aplicar LAY-15 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova mensagem acionável, preservação dos dados e reprocessamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-06, UX-08
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0139 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **erros e recuperação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir mensagem acionável, preservação dos dados e reprocessamento. Preservar dados e levar foco ao ponto exato de correção.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **erros e recuperação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-15 — Resumo de erros + campos`. Resumo de erros no topo com links e foco; mensagens junto ao campo; nada digitado é perdido.
+- **Otimização de tempo e UX:** Aplicar LAY-15 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova mensagem acionável, preservação dos dados e reprocessamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-06, UX-08
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0140 — Revisão e definição de pronto
+
+**Pergunta:** Como **erros e recuperação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir mensagem acionável, preservação dos dados e reprocessamento. Preservar dados e levar foco ao ponto exato de correção.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **erros e recuperação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-15 — Resumo de erros + campos`. Resumo de erros no topo com links e foco; mensagens junto ao campo; nada digitado é perdido.
+- **Otimização de tempo e UX:** Aplicar LAY-15 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova mensagem acionável, preservação dos dados e reprocessamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-06, UX-08
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## DOC — Documentos obrigatórios
+
+### PR-COMEX-02-Q0141 — Escopo do pr
+
+**Pergunta:** Como **documentos obrigatórios** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir tipo, número, emissor, data, vigência, status e vínculo. Vincular documento original imutável ao evento correto.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **documentos obrigatórios** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-16 — Visualizador documental lado a lado`. Documento à esquerda e metadados/relacionamentos à direita, zoom, busca, versão e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-16 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova tipo, número, emissor, data, vigência, status e vínculo; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0142 — Arquitetura e componentes
+
+**Pergunta:** Como **documentos obrigatórios** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir tipo, número, emissor, data, vigência, status e vínculo. Vincular documento original imutável ao evento correto.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **documentos obrigatórios** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-16 — Visualizador documental lado a lado`. Documento à esquerda e metadados/relacionamentos à direita, zoom, busca, versão e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-16 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova tipo, número, emissor, data, vigência, status e vínculo; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0143 — Modelo de dados e migration
+
+**Pergunta:** Como **documentos obrigatórios** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir tipo, número, emissor, data, vigência, status e vínculo. Vincular documento original imutável ao evento correto.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **documentos obrigatórios** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-16 — Visualizador documental lado a lado`. Documento à esquerda e metadados/relacionamentos à direita, zoom, busca, versão e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-16 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova tipo, número, emissor, data, vigência, status e vínculo; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0144 — Api, eventos e erros
+
+**Pergunta:** Como **documentos obrigatórios** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir tipo, número, emissor, data, vigência, status e vínculo. Vincular documento original imutável ao evento correto.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **documentos obrigatórios** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-16 — Visualizador documental lado a lado`. Documento à esquerda e metadados/relacionamentos à direita, zoom, busca, versão e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-16 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova tipo, número, emissor, data, vigência, status e vínculo; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0145 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **documentos obrigatórios** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir tipo, número, emissor, data, vigência, status e vínculo. Vincular documento original imutável ao evento correto.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **documentos obrigatórios** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-16 — Visualizador documental lado a lado`. Documento à esquerda e metadados/relacionamentos à direita, zoom, busca, versão e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-16 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova tipo, número, emissor, data, vigência, status e vínculo; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0146 — Validação, segurança e auditoria
+
+**Pergunta:** Como **documentos obrigatórios** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir tipo, número, emissor, data, vigência, status e vínculo. Vincular documento original imutável ao evento correto.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **documentos obrigatórios** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-16 — Visualizador documental lado a lado`. Documento à esquerda e metadados/relacionamentos à direita, zoom, busca, versão e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-16 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova tipo, número, emissor, data, vigência, status e vínculo; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0147 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **documentos obrigatórios** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir tipo, número, emissor, data, vigência, status e vínculo. Vincular documento original imutável ao evento correto.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **documentos obrigatórios** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-16 — Visualizador documental lado a lado`. Documento à esquerda e metadados/relacionamentos à direita, zoom, busca, versão e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-16 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova tipo, número, emissor, data, vigência, status e vínculo; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0148 — Testes e evidências
+
+**Pergunta:** Como **documentos obrigatórios** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir tipo, número, emissor, data, vigência, status e vínculo. Vincular documento original imutável ao evento correto.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **documentos obrigatórios** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-16 — Visualizador documental lado a lado`. Documento à esquerda e metadados/relacionamentos à direita, zoom, busca, versão e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-16 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova tipo, número, emissor, data, vigência, status e vínculo; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0149 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **documentos obrigatórios** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir tipo, número, emissor, data, vigência, status e vínculo. Vincular documento original imutável ao evento correto.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **documentos obrigatórios** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-16 — Visualizador documental lado a lado`. Documento à esquerda e metadados/relacionamentos à direita, zoom, busca, versão e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-16 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova tipo, número, emissor, data, vigência, status e vínculo; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0150 — Revisão e definição de pronto
+
+**Pergunta:** Como **documentos obrigatórios** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir tipo, número, emissor, data, vigência, status e vínculo. Vincular documento original imutável ao evento correto.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **documentos obrigatórios** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-16 — Visualizador documental lado a lado`. Documento à esquerda e metadados/relacionamentos à direita, zoom, busca, versão e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-16 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova tipo, número, emissor, data, vigência, status e vínculo; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## ATT — Anexos e versões
+
+### PR-COMEX-02-Q0151 — Escopo do pr
+
+**Pergunta:** Como **anexos e versões** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir arquivo original, hash, versão, classificação e retenção. Manter versão, hash, origem, tipo e relação com o objeto.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **anexos e versões** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-16 — Visualizador documental lado a lado`. Documento à esquerda e metadados/relacionamentos à direita, zoom, busca, versão e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-16 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova arquivo original, hash, versão, classificação e retenção; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0152 — Arquitetura e componentes
+
+**Pergunta:** Como **anexos e versões** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir arquivo original, hash, versão, classificação e retenção. Manter versão, hash, origem, tipo e relação com o objeto.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **anexos e versões** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-16 — Visualizador documental lado a lado`. Documento à esquerda e metadados/relacionamentos à direita, zoom, busca, versão e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-16 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova arquivo original, hash, versão, classificação e retenção; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0153 — Modelo de dados e migration
+
+**Pergunta:** Como **anexos e versões** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir arquivo original, hash, versão, classificação e retenção. Manter versão, hash, origem, tipo e relação com o objeto.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **anexos e versões** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-16 — Visualizador documental lado a lado`. Documento à esquerda e metadados/relacionamentos à direita, zoom, busca, versão e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-16 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova arquivo original, hash, versão, classificação e retenção; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0154 — Api, eventos e erros
+
+**Pergunta:** Como **anexos e versões** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir arquivo original, hash, versão, classificação e retenção. Manter versão, hash, origem, tipo e relação com o objeto.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **anexos e versões** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-16 — Visualizador documental lado a lado`. Documento à esquerda e metadados/relacionamentos à direita, zoom, busca, versão e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-16 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova arquivo original, hash, versão, classificação e retenção; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0155 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **anexos e versões** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir arquivo original, hash, versão, classificação e retenção. Manter versão, hash, origem, tipo e relação com o objeto.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **anexos e versões** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-16 — Visualizador documental lado a lado`. Documento à esquerda e metadados/relacionamentos à direita, zoom, busca, versão e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-16 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova arquivo original, hash, versão, classificação e retenção; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0156 — Validação, segurança e auditoria
+
+**Pergunta:** Como **anexos e versões** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir arquivo original, hash, versão, classificação e retenção. Manter versão, hash, origem, tipo e relação com o objeto.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **anexos e versões** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-16 — Visualizador documental lado a lado`. Documento à esquerda e metadados/relacionamentos à direita, zoom, busca, versão e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-16 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova arquivo original, hash, versão, classificação e retenção; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0157 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **anexos e versões** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir arquivo original, hash, versão, classificação e retenção. Manter versão, hash, origem, tipo e relação com o objeto.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **anexos e versões** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-16 — Visualizador documental lado a lado`. Documento à esquerda e metadados/relacionamentos à direita, zoom, busca, versão e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-16 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova arquivo original, hash, versão, classificação e retenção; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0158 — Testes e evidências
+
+**Pergunta:** Como **anexos e versões** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir arquivo original, hash, versão, classificação e retenção. Manter versão, hash, origem, tipo e relação com o objeto.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **anexos e versões** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-16 — Visualizador documental lado a lado`. Documento à esquerda e metadados/relacionamentos à direita, zoom, busca, versão e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-16 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova arquivo original, hash, versão, classificação e retenção; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0159 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **anexos e versões** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir arquivo original, hash, versão, classificação e retenção. Manter versão, hash, origem, tipo e relação com o objeto.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **anexos e versões** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-16 — Visualizador documental lado a lado`. Documento à esquerda e metadados/relacionamentos à direita, zoom, busca, versão e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-16 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova arquivo original, hash, versão, classificação e retenção; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0160 — Revisão e definição de pronto
+
+**Pergunta:** Como **anexos e versões** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir arquivo original, hash, versão, classificação e retenção. Manter versão, hash, origem, tipo e relação com o objeto.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **anexos e versões** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-16 — Visualizador documental lado a lado`. Documento à esquerda e metadados/relacionamentos à direita, zoom, busca, versão e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-16 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova arquivo original, hash, versão, classificação e retenção; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## OCR — Ocr e extração
+
+### PR-COMEX-02-Q0161 — Escopo do pr
+
+**Pergunta:** Como **OCR e extração** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir campos extraídos, confiança, comparação e revisão humana. Usar sugestão revisável, nunca postagem cega.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **OCR e extração** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-17 — Documento + extração revisável`. Imagem/PDF ao lado dos campos extraídos, confiança por campo, aceitar/corrigir e histórico da revisão.
+- **Otimização de tempo e UX:** Aplicar LAY-17 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova campos extraídos, confiança, comparação e revisão humana; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0162 — Arquitetura e componentes
+
+**Pergunta:** Como **OCR e extração** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir campos extraídos, confiança, comparação e revisão humana. Usar sugestão revisável, nunca postagem cega.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **OCR e extração** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-17 — Documento + extração revisável`. Imagem/PDF ao lado dos campos extraídos, confiança por campo, aceitar/corrigir e histórico da revisão.
+- **Otimização de tempo e UX:** Aplicar LAY-17 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova campos extraídos, confiança, comparação e revisão humana; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0163 — Modelo de dados e migration
+
+**Pergunta:** Como **OCR e extração** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir campos extraídos, confiança, comparação e revisão humana. Usar sugestão revisável, nunca postagem cega.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **OCR e extração** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-17 — Documento + extração revisável`. Imagem/PDF ao lado dos campos extraídos, confiança por campo, aceitar/corrigir e histórico da revisão.
+- **Otimização de tempo e UX:** Aplicar LAY-17 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova campos extraídos, confiança, comparação e revisão humana; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0164 — Api, eventos e erros
+
+**Pergunta:** Como **OCR e extração** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir campos extraídos, confiança, comparação e revisão humana. Usar sugestão revisável, nunca postagem cega.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **OCR e extração** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-17 — Documento + extração revisável`. Imagem/PDF ao lado dos campos extraídos, confiança por campo, aceitar/corrigir e histórico da revisão.
+- **Otimização de tempo e UX:** Aplicar LAY-17 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova campos extraídos, confiança, comparação e revisão humana; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0165 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **OCR e extração** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir campos extraídos, confiança, comparação e revisão humana. Usar sugestão revisável, nunca postagem cega.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **OCR e extração** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-17 — Documento + extração revisável`. Imagem/PDF ao lado dos campos extraídos, confiança por campo, aceitar/corrigir e histórico da revisão.
+- **Otimização de tempo e UX:** Aplicar LAY-17 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova campos extraídos, confiança, comparação e revisão humana; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0166 — Validação, segurança e auditoria
+
+**Pergunta:** Como **OCR e extração** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir campos extraídos, confiança, comparação e revisão humana. Usar sugestão revisável, nunca postagem cega.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **OCR e extração** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-17 — Documento + extração revisável`. Imagem/PDF ao lado dos campos extraídos, confiança por campo, aceitar/corrigir e histórico da revisão.
+- **Otimização de tempo e UX:** Aplicar LAY-17 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova campos extraídos, confiança, comparação e revisão humana; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0167 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **OCR e extração** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir campos extraídos, confiança, comparação e revisão humana. Usar sugestão revisável, nunca postagem cega.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **OCR e extração** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-17 — Documento + extração revisável`. Imagem/PDF ao lado dos campos extraídos, confiança por campo, aceitar/corrigir e histórico da revisão.
+- **Otimização de tempo e UX:** Aplicar LAY-17 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova campos extraídos, confiança, comparação e revisão humana; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0168 — Testes e evidências
+
+**Pergunta:** Como **OCR e extração** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir campos extraídos, confiança, comparação e revisão humana. Usar sugestão revisável, nunca postagem cega.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **OCR e extração** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-17 — Documento + extração revisável`. Imagem/PDF ao lado dos campos extraídos, confiança por campo, aceitar/corrigir e histórico da revisão.
+- **Otimização de tempo e UX:** Aplicar LAY-17 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova campos extraídos, confiança, comparação e revisão humana; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0169 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **OCR e extração** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir campos extraídos, confiança, comparação e revisão humana. Usar sugestão revisável, nunca postagem cega.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **OCR e extração** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-17 — Documento + extração revisável`. Imagem/PDF ao lado dos campos extraídos, confiança por campo, aceitar/corrigir e histórico da revisão.
+- **Otimização de tempo e UX:** Aplicar LAY-17 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova campos extraídos, confiança, comparação e revisão humana; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0170 — Revisão e definição de pronto
+
+**Pergunta:** Como **OCR e extração** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir campos extraídos, confiança, comparação e revisão humana. Usar sugestão revisável, nunca postagem cega.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **OCR e extração** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-17 — Documento + extração revisável`. Imagem/PDF ao lado dos campos extraídos, confiança por campo, aceitar/corrigir e histórico da revisão.
+- **Otimização de tempo e UX:** Aplicar LAY-17 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova campos extraídos, confiança, comparação e revisão humana; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## SEARCH — Busca global e local
+
+### PR-COMEX-02-Q0171 — Escopo do pr
+
+**Pergunta:** Como **busca global e local** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir identificadores, texto, documento, contraparte e atalhos. Buscar por identificadores, contraparte, documento e texto.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **busca global e local** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-18 — Busca global com command palette`. Busca global e command palette acessível por teclado com ações, recentes e atalhos documentados.
+- **Otimização de tempo e UX:** Aplicar LAY-18 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova identificadores, texto, documento, contraparte e atalhos; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0172 — Arquitetura e componentes
+
+**Pergunta:** Como **busca global e local** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir identificadores, texto, documento, contraparte e atalhos. Buscar por identificadores, contraparte, documento e texto.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **busca global e local** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-18 — Busca global com command palette`. Busca global e command palette acessível por teclado com ações, recentes e atalhos documentados.
+- **Otimização de tempo e UX:** Aplicar LAY-18 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova identificadores, texto, documento, contraparte e atalhos; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0173 — Modelo de dados e migration
+
+**Pergunta:** Como **busca global e local** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir identificadores, texto, documento, contraparte e atalhos. Buscar por identificadores, contraparte, documento e texto.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **busca global e local** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-18 — Busca global com command palette`. Busca global e command palette acessível por teclado com ações, recentes e atalhos documentados.
+- **Otimização de tempo e UX:** Aplicar LAY-18 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova identificadores, texto, documento, contraparte e atalhos; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0174 — Api, eventos e erros
+
+**Pergunta:** Como **busca global e local** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir identificadores, texto, documento, contraparte e atalhos. Buscar por identificadores, contraparte, documento e texto.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **busca global e local** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-18 — Busca global com command palette`. Busca global e command palette acessível por teclado com ações, recentes e atalhos documentados.
+- **Otimização de tempo e UX:** Aplicar LAY-18 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova identificadores, texto, documento, contraparte e atalhos; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0175 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **busca global e local** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir identificadores, texto, documento, contraparte e atalhos. Buscar por identificadores, contraparte, documento e texto.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **busca global e local** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-18 — Busca global com command palette`. Busca global e command palette acessível por teclado com ações, recentes e atalhos documentados.
+- **Otimização de tempo e UX:** Aplicar LAY-18 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova identificadores, texto, documento, contraparte e atalhos; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0176 — Validação, segurança e auditoria
+
+**Pergunta:** Como **busca global e local** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir identificadores, texto, documento, contraparte e atalhos. Buscar por identificadores, contraparte, documento e texto.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **busca global e local** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-18 — Busca global com command palette`. Busca global e command palette acessível por teclado com ações, recentes e atalhos documentados.
+- **Otimização de tempo e UX:** Aplicar LAY-18 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova identificadores, texto, documento, contraparte e atalhos; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0177 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **busca global e local** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir identificadores, texto, documento, contraparte e atalhos. Buscar por identificadores, contraparte, documento e texto.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **busca global e local** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-18 — Busca global com command palette`. Busca global e command palette acessível por teclado com ações, recentes e atalhos documentados.
+- **Otimização de tempo e UX:** Aplicar LAY-18 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova identificadores, texto, documento, contraparte e atalhos; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0178 — Testes e evidências
+
+**Pergunta:** Como **busca global e local** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir identificadores, texto, documento, contraparte e atalhos. Buscar por identificadores, contraparte, documento e texto.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **busca global e local** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-18 — Busca global com command palette`. Busca global e command palette acessível por teclado com ações, recentes e atalhos documentados.
+- **Otimização de tempo e UX:** Aplicar LAY-18 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova identificadores, texto, documento, contraparte e atalhos; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0179 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **busca global e local** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir identificadores, texto, documento, contraparte e atalhos. Buscar por identificadores, contraparte, documento e texto.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **busca global e local** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-18 — Busca global com command palette`. Busca global e command palette acessível por teclado com ações, recentes e atalhos documentados.
+- **Otimização de tempo e UX:** Aplicar LAY-18 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova identificadores, texto, documento, contraparte e atalhos; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0180 — Revisão e definição de pronto
+
+**Pergunta:** Como **busca global e local** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir identificadores, texto, documento, contraparte e atalhos. Buscar por identificadores, contraparte, documento e texto.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **busca global e local** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-18 — Busca global com command palette`. Busca global e command palette acessível por teclado com ações, recentes e atalhos documentados.
+- **Otimização de tempo e UX:** Aplicar LAY-18 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova identificadores, texto, documento, contraparte e atalhos; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## FILTER — Filtros e views salvas
+
+### PR-COMEX-02-Q0181 — Escopo do pr
+
+**Pergunta:** Como **filtros e views salvas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir estado, período, responsável, exceção, moeda e depósito. Oferecer filtros únicos no topo e variantes pessoais.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **filtros e views salvas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-01 — List Report denso`. Tabela densa em tela cheia, filtros únicos no topo, tabs horizontais, colunas congeladas, personalização e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-01 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova estado, período, responsável, exceção, moeda e depósito; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0182 — Arquitetura e componentes
+
+**Pergunta:** Como **filtros e views salvas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir estado, período, responsável, exceção, moeda e depósito. Oferecer filtros únicos no topo e variantes pessoais.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **filtros e views salvas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-01 — List Report denso`. Tabela densa em tela cheia, filtros únicos no topo, tabs horizontais, colunas congeladas, personalização e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-01 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova estado, período, responsável, exceção, moeda e depósito; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0183 — Modelo de dados e migration
+
+**Pergunta:** Como **filtros e views salvas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir estado, período, responsável, exceção, moeda e depósito. Oferecer filtros únicos no topo e variantes pessoais.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **filtros e views salvas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-01 — List Report denso`. Tabela densa em tela cheia, filtros únicos no topo, tabs horizontais, colunas congeladas, personalização e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-01 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova estado, período, responsável, exceção, moeda e depósito; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0184 — Api, eventos e erros
+
+**Pergunta:** Como **filtros e views salvas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir estado, período, responsável, exceção, moeda e depósito. Oferecer filtros únicos no topo e variantes pessoais.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **filtros e views salvas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-01 — List Report denso`. Tabela densa em tela cheia, filtros únicos no topo, tabs horizontais, colunas congeladas, personalização e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-01 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova estado, período, responsável, exceção, moeda e depósito; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0185 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **filtros e views salvas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir estado, período, responsável, exceção, moeda e depósito. Oferecer filtros únicos no topo e variantes pessoais.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **filtros e views salvas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-01 — List Report denso`. Tabela densa em tela cheia, filtros únicos no topo, tabs horizontais, colunas congeladas, personalização e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-01 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova estado, período, responsável, exceção, moeda e depósito; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0186 — Validação, segurança e auditoria
+
+**Pergunta:** Como **filtros e views salvas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir estado, período, responsável, exceção, moeda e depósito. Oferecer filtros únicos no topo e variantes pessoais.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **filtros e views salvas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-01 — List Report denso`. Tabela densa em tela cheia, filtros únicos no topo, tabs horizontais, colunas congeladas, personalização e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-01 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova estado, período, responsável, exceção, moeda e depósito; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0187 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **filtros e views salvas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir estado, período, responsável, exceção, moeda e depósito. Oferecer filtros únicos no topo e variantes pessoais.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **filtros e views salvas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-01 — List Report denso`. Tabela densa em tela cheia, filtros únicos no topo, tabs horizontais, colunas congeladas, personalização e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-01 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova estado, período, responsável, exceção, moeda e depósito; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0188 — Testes e evidências
+
+**Pergunta:** Como **filtros e views salvas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir estado, período, responsável, exceção, moeda e depósito. Oferecer filtros únicos no topo e variantes pessoais.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **filtros e views salvas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-01 — List Report denso`. Tabela densa em tela cheia, filtros únicos no topo, tabs horizontais, colunas congeladas, personalização e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-01 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova estado, período, responsável, exceção, moeda e depósito; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0189 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **filtros e views salvas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir estado, período, responsável, exceção, moeda e depósito. Oferecer filtros únicos no topo e variantes pessoais.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **filtros e views salvas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-01 — List Report denso`. Tabela densa em tela cheia, filtros únicos no topo, tabs horizontais, colunas congeladas, personalização e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-01 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova estado, período, responsável, exceção, moeda e depósito; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0190 — Revisão e definição de pronto
+
+**Pergunta:** Como **filtros e views salvas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir estado, período, responsável, exceção, moeda e depósito. Oferecer filtros únicos no topo e variantes pessoais.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **filtros e views salvas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-01 — List Report denso`. Tabela densa em tela cheia, filtros únicos no topo, tabs horizontais, colunas congeladas, personalização e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-01 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova estado, período, responsável, exceção, moeda e depósito; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## TABLE — Tabela, colunas e ordenação
+
+### PR-COMEX-02-Q0191 — Escopo do pr
+
+**Pergunta:** Como **tabela, colunas e ordenação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir colunas congeladas, densidade, ordenação, totais e personalização. Priorizar informação acionável, densidade e congelamento.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **tabela, colunas e ordenação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-01 — List Report denso`. Tabela densa em tela cheia, filtros únicos no topo, tabs horizontais, colunas congeladas, personalização e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-01 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova colunas congeladas, densidade, ordenação, totais e personalização; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0192 — Arquitetura e componentes
+
+**Pergunta:** Como **tabela, colunas e ordenação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir colunas congeladas, densidade, ordenação, totais e personalização. Priorizar informação acionável, densidade e congelamento.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **tabela, colunas e ordenação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-01 — List Report denso`. Tabela densa em tela cheia, filtros únicos no topo, tabs horizontais, colunas congeladas, personalização e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-01 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova colunas congeladas, densidade, ordenação, totais e personalização; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0193 — Modelo de dados e migration
+
+**Pergunta:** Como **tabela, colunas e ordenação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir colunas congeladas, densidade, ordenação, totais e personalização. Priorizar informação acionável, densidade e congelamento.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **tabela, colunas e ordenação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-01 — List Report denso`. Tabela densa em tela cheia, filtros únicos no topo, tabs horizontais, colunas congeladas, personalização e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-01 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova colunas congeladas, densidade, ordenação, totais e personalização; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0194 — Api, eventos e erros
+
+**Pergunta:** Como **tabela, colunas e ordenação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir colunas congeladas, densidade, ordenação, totais e personalização. Priorizar informação acionável, densidade e congelamento.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **tabela, colunas e ordenação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-01 — List Report denso`. Tabela densa em tela cheia, filtros únicos no topo, tabs horizontais, colunas congeladas, personalização e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-01 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova colunas congeladas, densidade, ordenação, totais e personalização; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0195 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **tabela, colunas e ordenação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir colunas congeladas, densidade, ordenação, totais e personalização. Priorizar informação acionável, densidade e congelamento.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **tabela, colunas e ordenação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-01 — List Report denso`. Tabela densa em tela cheia, filtros únicos no topo, tabs horizontais, colunas congeladas, personalização e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-01 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova colunas congeladas, densidade, ordenação, totais e personalização; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0196 — Validação, segurança e auditoria
+
+**Pergunta:** Como **tabela, colunas e ordenação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir colunas congeladas, densidade, ordenação, totais e personalização. Priorizar informação acionável, densidade e congelamento.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **tabela, colunas e ordenação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-01 — List Report denso`. Tabela densa em tela cheia, filtros únicos no topo, tabs horizontais, colunas congeladas, personalização e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-01 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova colunas congeladas, densidade, ordenação, totais e personalização; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0197 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **tabela, colunas e ordenação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir colunas congeladas, densidade, ordenação, totais e personalização. Priorizar informação acionável, densidade e congelamento.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **tabela, colunas e ordenação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-01 — List Report denso`. Tabela densa em tela cheia, filtros únicos no topo, tabs horizontais, colunas congeladas, personalização e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-01 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova colunas congeladas, densidade, ordenação, totais e personalização; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0198 — Testes e evidências
+
+**Pergunta:** Como **tabela, colunas e ordenação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir colunas congeladas, densidade, ordenação, totais e personalização. Priorizar informação acionável, densidade e congelamento.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **tabela, colunas e ordenação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-01 — List Report denso`. Tabela densa em tela cheia, filtros únicos no topo, tabs horizontais, colunas congeladas, personalização e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-01 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova colunas congeladas, densidade, ordenação, totais e personalização; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0199 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **tabela, colunas e ordenação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir colunas congeladas, densidade, ordenação, totais e personalização. Priorizar informação acionável, densidade e congelamento.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **tabela, colunas e ordenação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-01 — List Report denso`. Tabela densa em tela cheia, filtros únicos no topo, tabs horizontais, colunas congeladas, personalização e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-01 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova colunas congeladas, densidade, ordenação, totais e personalização; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0200 — Revisão e definição de pronto
+
+**Pergunta:** Como **tabela, colunas e ordenação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir colunas congeladas, densidade, ordenação, totais e personalização. Priorizar informação acionável, densidade e congelamento.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **tabela, colunas e ordenação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-01 — List Report denso`. Tabela densa em tela cheia, filtros únicos no topo, tabs horizontais, colunas congeladas, personalização e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-01 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova colunas congeladas, densidade, ordenação, totais e personalização; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## DETAIL — Página de detalhe
+
+### PR-COMEX-02-Q0201 — Escopo do pr
+
+**Pergunta:** Como **página de detalhe** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir cabeçalho, tabs, resumo, histórico, anexos e ações. Usar cabeçalho resumido, tabs estáveis e painel contextual.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **página de detalhe** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova cabeçalho, tabs, resumo, histórico, anexos e ações; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0202 — Arquitetura e componentes
+
+**Pergunta:** Como **página de detalhe** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir cabeçalho, tabs, resumo, histórico, anexos e ações. Usar cabeçalho resumido, tabs estáveis e painel contextual.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **página de detalhe** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova cabeçalho, tabs, resumo, histórico, anexos e ações; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0203 — Modelo de dados e migration
+
+**Pergunta:** Como **página de detalhe** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir cabeçalho, tabs, resumo, histórico, anexos e ações. Usar cabeçalho resumido, tabs estáveis e painel contextual.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **página de detalhe** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova cabeçalho, tabs, resumo, histórico, anexos e ações; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0204 — Api, eventos e erros
+
+**Pergunta:** Como **página de detalhe** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir cabeçalho, tabs, resumo, histórico, anexos e ações. Usar cabeçalho resumido, tabs estáveis e painel contextual.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **página de detalhe** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova cabeçalho, tabs, resumo, histórico, anexos e ações; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0205 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **página de detalhe** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir cabeçalho, tabs, resumo, histórico, anexos e ações. Usar cabeçalho resumido, tabs estáveis e painel contextual.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **página de detalhe** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova cabeçalho, tabs, resumo, histórico, anexos e ações; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0206 — Validação, segurança e auditoria
+
+**Pergunta:** Como **página de detalhe** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir cabeçalho, tabs, resumo, histórico, anexos e ações. Usar cabeçalho resumido, tabs estáveis e painel contextual.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **página de detalhe** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova cabeçalho, tabs, resumo, histórico, anexos e ações; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0207 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **página de detalhe** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir cabeçalho, tabs, resumo, histórico, anexos e ações. Usar cabeçalho resumido, tabs estáveis e painel contextual.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **página de detalhe** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova cabeçalho, tabs, resumo, histórico, anexos e ações; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0208 — Testes e evidências
+
+**Pergunta:** Como **página de detalhe** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir cabeçalho, tabs, resumo, histórico, anexos e ações. Usar cabeçalho resumido, tabs estáveis e painel contextual.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **página de detalhe** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova cabeçalho, tabs, resumo, histórico, anexos e ações; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0209 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **página de detalhe** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir cabeçalho, tabs, resumo, histórico, anexos e ações. Usar cabeçalho resumido, tabs estáveis e painel contextual.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **página de detalhe** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova cabeçalho, tabs, resumo, histórico, anexos e ações; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0210 — Revisão e definição de pronto
+
+**Pergunta:** Como **página de detalhe** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir cabeçalho, tabs, resumo, histórico, anexos e ações. Usar cabeçalho resumido, tabs estáveis e painel contextual.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **página de detalhe** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-02 — Object Page densa`. Cabeçalho compacto com ID, status, datas, valor e exceção; tabs horizontais; ação primária fixa; painel lateral contextual.
+- **Otimização de tempo e UX:** Aplicar LAY-02 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova cabeçalho, tabs, resumo, histórico, anexos e ações; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## CREATE — Criação e edição
+
+### PR-COMEX-02-Q0211 — Escopo do pr
+
+**Pergunta:** Como **criação e edição** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir passos, defaults, salvamento, validação progressiva e revisão. Usar preenchimento progressivo, defaults e salvamento automático.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **criação e edição** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-04 — Wizard curto`. Passos curtos, salvamento automático, validação progressiva, resumo lateral e revisão final.
+- **Otimização de tempo e UX:** Aplicar LAY-04 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova passos, defaults, salvamento, validação progressiva e revisão; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-04, UX-06
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0212 — Arquitetura e componentes
+
+**Pergunta:** Como **criação e edição** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir passos, defaults, salvamento, validação progressiva e revisão. Usar preenchimento progressivo, defaults e salvamento automático.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **criação e edição** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-04 — Wizard curto`. Passos curtos, salvamento automático, validação progressiva, resumo lateral e revisão final.
+- **Otimização de tempo e UX:** Aplicar LAY-04 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova passos, defaults, salvamento, validação progressiva e revisão; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-04, UX-06
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0213 — Modelo de dados e migration
+
+**Pergunta:** Como **criação e edição** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir passos, defaults, salvamento, validação progressiva e revisão. Usar preenchimento progressivo, defaults e salvamento automático.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **criação e edição** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-04 — Wizard curto`. Passos curtos, salvamento automático, validação progressiva, resumo lateral e revisão final.
+- **Otimização de tempo e UX:** Aplicar LAY-04 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova passos, defaults, salvamento, validação progressiva e revisão; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-04, UX-06
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0214 — Api, eventos e erros
+
+**Pergunta:** Como **criação e edição** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir passos, defaults, salvamento, validação progressiva e revisão. Usar preenchimento progressivo, defaults e salvamento automático.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **criação e edição** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-04 — Wizard curto`. Passos curtos, salvamento automático, validação progressiva, resumo lateral e revisão final.
+- **Otimização de tempo e UX:** Aplicar LAY-04 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova passos, defaults, salvamento, validação progressiva e revisão; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-04, UX-06
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0215 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **criação e edição** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir passos, defaults, salvamento, validação progressiva e revisão. Usar preenchimento progressivo, defaults e salvamento automático.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **criação e edição** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-04 — Wizard curto`. Passos curtos, salvamento automático, validação progressiva, resumo lateral e revisão final.
+- **Otimização de tempo e UX:** Aplicar LAY-04 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova passos, defaults, salvamento, validação progressiva e revisão; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-04, UX-06
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0216 — Validação, segurança e auditoria
+
+**Pergunta:** Como **criação e edição** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir passos, defaults, salvamento, validação progressiva e revisão. Usar preenchimento progressivo, defaults e salvamento automático.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **criação e edição** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-04 — Wizard curto`. Passos curtos, salvamento automático, validação progressiva, resumo lateral e revisão final.
+- **Otimização de tempo e UX:** Aplicar LAY-04 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova passos, defaults, salvamento, validação progressiva e revisão; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-04, UX-06
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0217 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **criação e edição** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir passos, defaults, salvamento, validação progressiva e revisão. Usar preenchimento progressivo, defaults e salvamento automático.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **criação e edição** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-04 — Wizard curto`. Passos curtos, salvamento automático, validação progressiva, resumo lateral e revisão final.
+- **Otimização de tempo e UX:** Aplicar LAY-04 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova passos, defaults, salvamento, validação progressiva e revisão; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-04, UX-06
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0218 — Testes e evidências
+
+**Pergunta:** Como **criação e edição** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir passos, defaults, salvamento, validação progressiva e revisão. Usar preenchimento progressivo, defaults e salvamento automático.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **criação e edição** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-04 — Wizard curto`. Passos curtos, salvamento automático, validação progressiva, resumo lateral e revisão final.
+- **Otimização de tempo e UX:** Aplicar LAY-04 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova passos, defaults, salvamento, validação progressiva e revisão; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-04, UX-06
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0219 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **criação e edição** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir passos, defaults, salvamento, validação progressiva e revisão. Usar preenchimento progressivo, defaults e salvamento automático.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **criação e edição** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-04 — Wizard curto`. Passos curtos, salvamento automático, validação progressiva, resumo lateral e revisão final.
+- **Otimização de tempo e UX:** Aplicar LAY-04 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova passos, defaults, salvamento, validação progressiva e revisão; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-04, UX-06
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0220 — Revisão e definição de pronto
+
+**Pergunta:** Como **criação e edição** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir passos, defaults, salvamento, validação progressiva e revisão. Usar preenchimento progressivo, defaults e salvamento automático.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **criação e edição** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-04 — Wizard curto`. Passos curtos, salvamento automático, validação progressiva, resumo lateral e revisão final.
+- **Otimização de tempo e UX:** Aplicar LAY-04 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova passos, defaults, salvamento, validação progressiva e revisão; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-04, UX-06
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## BULK — Ações em lote
+
+### PR-COMEX-02-Q0221 — Escopo do pr
+
+**Pergunta:** Como **ações em lote** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir seleção, pré-validação, execução, resultado por item e desfazer. Permitir lote somente quando a regra é homogênea e reportar por item.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **ações em lote** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-07 — Editable Data Grid`. Grid estilo Excel, edição por teclado, colar em massa, validação por célula, totais e resumo de erros.
+- **Otimização de tempo e UX:** Aplicar LAY-07 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova seleção, pré-validação, execução, resultado por item e desfazer; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0222 — Arquitetura e componentes
+
+**Pergunta:** Como **ações em lote** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir seleção, pré-validação, execução, resultado por item e desfazer. Permitir lote somente quando a regra é homogênea e reportar por item.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **ações em lote** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-07 — Editable Data Grid`. Grid estilo Excel, edição por teclado, colar em massa, validação por célula, totais e resumo de erros.
+- **Otimização de tempo e UX:** Aplicar LAY-07 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova seleção, pré-validação, execução, resultado por item e desfazer; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0223 — Modelo de dados e migration
+
+**Pergunta:** Como **ações em lote** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir seleção, pré-validação, execução, resultado por item e desfazer. Permitir lote somente quando a regra é homogênea e reportar por item.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **ações em lote** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-07 — Editable Data Grid`. Grid estilo Excel, edição por teclado, colar em massa, validação por célula, totais e resumo de erros.
+- **Otimização de tempo e UX:** Aplicar LAY-07 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova seleção, pré-validação, execução, resultado por item e desfazer; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0224 — Api, eventos e erros
+
+**Pergunta:** Como **ações em lote** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir seleção, pré-validação, execução, resultado por item e desfazer. Permitir lote somente quando a regra é homogênea e reportar por item.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **ações em lote** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-07 — Editable Data Grid`. Grid estilo Excel, edição por teclado, colar em massa, validação por célula, totais e resumo de erros.
+- **Otimização de tempo e UX:** Aplicar LAY-07 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova seleção, pré-validação, execução, resultado por item e desfazer; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0225 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **ações em lote** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir seleção, pré-validação, execução, resultado por item e desfazer. Permitir lote somente quando a regra é homogênea e reportar por item.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **ações em lote** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-07 — Editable Data Grid`. Grid estilo Excel, edição por teclado, colar em massa, validação por célula, totais e resumo de erros.
+- **Otimização de tempo e UX:** Aplicar LAY-07 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova seleção, pré-validação, execução, resultado por item e desfazer; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0226 — Validação, segurança e auditoria
+
+**Pergunta:** Como **ações em lote** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir seleção, pré-validação, execução, resultado por item e desfazer. Permitir lote somente quando a regra é homogênea e reportar por item.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **ações em lote** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-07 — Editable Data Grid`. Grid estilo Excel, edição por teclado, colar em massa, validação por célula, totais e resumo de erros.
+- **Otimização de tempo e UX:** Aplicar LAY-07 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova seleção, pré-validação, execução, resultado por item e desfazer; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0227 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **ações em lote** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir seleção, pré-validação, execução, resultado por item e desfazer. Permitir lote somente quando a regra é homogênea e reportar por item.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **ações em lote** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-07 — Editable Data Grid`. Grid estilo Excel, edição por teclado, colar em massa, validação por célula, totais e resumo de erros.
+- **Otimização de tempo e UX:** Aplicar LAY-07 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova seleção, pré-validação, execução, resultado por item e desfazer; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0228 — Testes e evidências
+
+**Pergunta:** Como **ações em lote** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir seleção, pré-validação, execução, resultado por item e desfazer. Permitir lote somente quando a regra é homogênea e reportar por item.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **ações em lote** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-07 — Editable Data Grid`. Grid estilo Excel, edição por teclado, colar em massa, validação por célula, totais e resumo de erros.
+- **Otimização de tempo e UX:** Aplicar LAY-07 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova seleção, pré-validação, execução, resultado por item e desfazer; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0229 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **ações em lote** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir seleção, pré-validação, execução, resultado por item e desfazer. Permitir lote somente quando a regra é homogênea e reportar por item.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **ações em lote** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-07 — Editable Data Grid`. Grid estilo Excel, edição por teclado, colar em massa, validação por célula, totais e resumo de erros.
+- **Otimização de tempo e UX:** Aplicar LAY-07 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova seleção, pré-validação, execução, resultado por item e desfazer; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0230 — Revisão e definição de pronto
+
+**Pergunta:** Como **ações em lote** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir seleção, pré-validação, execução, resultado por item e desfazer. Permitir lote somente quando a regra é homogênea e reportar por item.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **ações em lote** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-07 — Editable Data Grid`. Grid estilo Excel, edição por teclado, colar em massa, validação por célula, totais e resumo de erros.
+- **Otimização de tempo e UX:** Aplicar LAY-07 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova seleção, pré-validação, execução, resultado por item e desfazer; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## KEY — Atalhos e teclado
+
+### PR-COMEX-02-Q0231 — Escopo do pr
+
+**Pergunta:** Como **atalhos e teclado** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir tab order, enter, escape, busca, salvar e ações frequentes. Permitir navegação e ações frequentes sem mouse.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **atalhos e teclado** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-18 — Command palette e atalhos`. Busca global e command palette acessível por teclado com ações, recentes e atalhos documentados.
+- **Otimização de tempo e UX:** Aplicar LAY-18 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova tab order, enter, escape, busca, salvar e ações frequentes; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0232 — Arquitetura e componentes
+
+**Pergunta:** Como **atalhos e teclado** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir tab order, enter, escape, busca, salvar e ações frequentes. Permitir navegação e ações frequentes sem mouse.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **atalhos e teclado** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-18 — Command palette e atalhos`. Busca global e command palette acessível por teclado com ações, recentes e atalhos documentados.
+- **Otimização de tempo e UX:** Aplicar LAY-18 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova tab order, enter, escape, busca, salvar e ações frequentes; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0233 — Modelo de dados e migration
+
+**Pergunta:** Como **atalhos e teclado** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir tab order, enter, escape, busca, salvar e ações frequentes. Permitir navegação e ações frequentes sem mouse.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **atalhos e teclado** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-18 — Command palette e atalhos`. Busca global e command palette acessível por teclado com ações, recentes e atalhos documentados.
+- **Otimização de tempo e UX:** Aplicar LAY-18 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova tab order, enter, escape, busca, salvar e ações frequentes; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0234 — Api, eventos e erros
+
+**Pergunta:** Como **atalhos e teclado** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir tab order, enter, escape, busca, salvar e ações frequentes. Permitir navegação e ações frequentes sem mouse.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **atalhos e teclado** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-18 — Command palette e atalhos`. Busca global e command palette acessível por teclado com ações, recentes e atalhos documentados.
+- **Otimização de tempo e UX:** Aplicar LAY-18 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova tab order, enter, escape, busca, salvar e ações frequentes; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0235 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **atalhos e teclado** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir tab order, enter, escape, busca, salvar e ações frequentes. Permitir navegação e ações frequentes sem mouse.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **atalhos e teclado** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-18 — Command palette e atalhos`. Busca global e command palette acessível por teclado com ações, recentes e atalhos documentados.
+- **Otimização de tempo e UX:** Aplicar LAY-18 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova tab order, enter, escape, busca, salvar e ações frequentes; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0236 — Validação, segurança e auditoria
+
+**Pergunta:** Como **atalhos e teclado** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir tab order, enter, escape, busca, salvar e ações frequentes. Permitir navegação e ações frequentes sem mouse.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **atalhos e teclado** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-18 — Command palette e atalhos`. Busca global e command palette acessível por teclado com ações, recentes e atalhos documentados.
+- **Otimização de tempo e UX:** Aplicar LAY-18 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova tab order, enter, escape, busca, salvar e ações frequentes; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0237 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **atalhos e teclado** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir tab order, enter, escape, busca, salvar e ações frequentes. Permitir navegação e ações frequentes sem mouse.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **atalhos e teclado** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-18 — Command palette e atalhos`. Busca global e command palette acessível por teclado com ações, recentes e atalhos documentados.
+- **Otimização de tempo e UX:** Aplicar LAY-18 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova tab order, enter, escape, busca, salvar e ações frequentes; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0238 — Testes e evidências
+
+**Pergunta:** Como **atalhos e teclado** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir tab order, enter, escape, busca, salvar e ações frequentes. Permitir navegação e ações frequentes sem mouse.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **atalhos e teclado** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-18 — Command palette e atalhos`. Busca global e command palette acessível por teclado com ações, recentes e atalhos documentados.
+- **Otimização de tempo e UX:** Aplicar LAY-18 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova tab order, enter, escape, busca, salvar e ações frequentes; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0239 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **atalhos e teclado** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir tab order, enter, escape, busca, salvar e ações frequentes. Permitir navegação e ações frequentes sem mouse.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **atalhos e teclado** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-18 — Command palette e atalhos`. Busca global e command palette acessível por teclado com ações, recentes e atalhos documentados.
+- **Otimização de tempo e UX:** Aplicar LAY-18 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova tab order, enter, escape, busca, salvar e ações frequentes; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0240 — Revisão e definição de pronto
+
+**Pergunta:** Como **atalhos e teclado** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir tab order, enter, escape, busca, salvar e ações frequentes. Permitir navegação e ações frequentes sem mouse.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **atalhos e teclado** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-18 — Command palette e atalhos`. Busca global e command palette acessível por teclado com ações, recentes e atalhos documentados.
+- **Otimização de tempo e UX:** Aplicar LAY-18 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova tab order, enter, escape, busca, salvar e ações frequentes; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## NOTIF — Notificações
+
+### PR-COMEX-02-Q0241 — Escopo do pr
+
+**Pergunta:** Como **notificações** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir evento, destinatário, canal, prioridade, deduplicação e leitura. Notificar somente mudança relevante, responsável e próxima ação.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **notificações** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-14 — Painel contextual de exceções`. Painel lateral persistente com exceções, anexos, comentários e próxima ação, sem esconder conteúdo principal.
+- **Otimização de tempo e UX:** Aplicar LAY-14 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova evento, destinatário, canal, prioridade, deduplicação e leitura; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0242 — Arquitetura e componentes
+
+**Pergunta:** Como **notificações** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir evento, destinatário, canal, prioridade, deduplicação e leitura. Notificar somente mudança relevante, responsável e próxima ação.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **notificações** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-14 — Painel contextual de exceções`. Painel lateral persistente com exceções, anexos, comentários e próxima ação, sem esconder conteúdo principal.
+- **Otimização de tempo e UX:** Aplicar LAY-14 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova evento, destinatário, canal, prioridade, deduplicação e leitura; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0243 — Modelo de dados e migration
+
+**Pergunta:** Como **notificações** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir evento, destinatário, canal, prioridade, deduplicação e leitura. Notificar somente mudança relevante, responsável e próxima ação.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **notificações** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-14 — Painel contextual de exceções`. Painel lateral persistente com exceções, anexos, comentários e próxima ação, sem esconder conteúdo principal.
+- **Otimização de tempo e UX:** Aplicar LAY-14 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova evento, destinatário, canal, prioridade, deduplicação e leitura; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0244 — Api, eventos e erros
+
+**Pergunta:** Como **notificações** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir evento, destinatário, canal, prioridade, deduplicação e leitura. Notificar somente mudança relevante, responsável e próxima ação.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **notificações** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-14 — Painel contextual de exceções`. Painel lateral persistente com exceções, anexos, comentários e próxima ação, sem esconder conteúdo principal.
+- **Otimização de tempo e UX:** Aplicar LAY-14 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova evento, destinatário, canal, prioridade, deduplicação e leitura; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0245 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **notificações** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir evento, destinatário, canal, prioridade, deduplicação e leitura. Notificar somente mudança relevante, responsável e próxima ação.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **notificações** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-14 — Painel contextual de exceções`. Painel lateral persistente com exceções, anexos, comentários e próxima ação, sem esconder conteúdo principal.
+- **Otimização de tempo e UX:** Aplicar LAY-14 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova evento, destinatário, canal, prioridade, deduplicação e leitura; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0246 — Validação, segurança e auditoria
+
+**Pergunta:** Como **notificações** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir evento, destinatário, canal, prioridade, deduplicação e leitura. Notificar somente mudança relevante, responsável e próxima ação.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **notificações** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-14 — Painel contextual de exceções`. Painel lateral persistente com exceções, anexos, comentários e próxima ação, sem esconder conteúdo principal.
+- **Otimização de tempo e UX:** Aplicar LAY-14 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova evento, destinatário, canal, prioridade, deduplicação e leitura; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0247 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **notificações** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir evento, destinatário, canal, prioridade, deduplicação e leitura. Notificar somente mudança relevante, responsável e próxima ação.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **notificações** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-14 — Painel contextual de exceções`. Painel lateral persistente com exceções, anexos, comentários e próxima ação, sem esconder conteúdo principal.
+- **Otimização de tempo e UX:** Aplicar LAY-14 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova evento, destinatário, canal, prioridade, deduplicação e leitura; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0248 — Testes e evidências
+
+**Pergunta:** Como **notificações** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir evento, destinatário, canal, prioridade, deduplicação e leitura. Notificar somente mudança relevante, responsável e próxima ação.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **notificações** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-14 — Painel contextual de exceções`. Painel lateral persistente com exceções, anexos, comentários e próxima ação, sem esconder conteúdo principal.
+- **Otimização de tempo e UX:** Aplicar LAY-14 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova evento, destinatário, canal, prioridade, deduplicação e leitura; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0249 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **notificações** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir evento, destinatário, canal, prioridade, deduplicação e leitura. Notificar somente mudança relevante, responsável e próxima ação.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **notificações** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-14 — Painel contextual de exceções`. Painel lateral persistente com exceções, anexos, comentários e próxima ação, sem esconder conteúdo principal.
+- **Otimização de tempo e UX:** Aplicar LAY-14 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova evento, destinatário, canal, prioridade, deduplicação e leitura; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0250 — Revisão e definição de pronto
+
+**Pergunta:** Como **notificações** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir evento, destinatário, canal, prioridade, deduplicação e leitura. Notificar somente mudança relevante, responsável e próxima ação.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **notificações** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-14 — Painel contextual de exceções`. Painel lateral persistente com exceções, anexos, comentários e próxima ação, sem esconder conteúdo principal.
+- **Otimização de tempo e UX:** Aplicar LAY-14 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova evento, destinatário, canal, prioridade, deduplicação e leitura; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## TASK — Tarefas, sla e filas
+
+### PR-COMEX-02-Q0251 — Escopo do pr
+
+**Pergunta:** Como **tarefas, SLA e filas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir fila, prioridade, SLA, owner, dependência e escalonamento. Ordenar por urgência, vencimento, impacto e bloqueio.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **tarefas, SLA e filas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-03 — Worklist de tarefas`. Fila ordenada por urgência e SLA, contadores, próxima ação visível, seleção múltipla e atalhos.
+- **Otimização de tempo e UX:** Aplicar LAY-03 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fila, prioridade, SLA, owner, dependência e escalonamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0252 — Arquitetura e componentes
+
+**Pergunta:** Como **tarefas, SLA e filas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir fila, prioridade, SLA, owner, dependência e escalonamento. Ordenar por urgência, vencimento, impacto e bloqueio.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **tarefas, SLA e filas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-03 — Worklist de tarefas`. Fila ordenada por urgência e SLA, contadores, próxima ação visível, seleção múltipla e atalhos.
+- **Otimização de tempo e UX:** Aplicar LAY-03 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fila, prioridade, SLA, owner, dependência e escalonamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0253 — Modelo de dados e migration
+
+**Pergunta:** Como **tarefas, SLA e filas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir fila, prioridade, SLA, owner, dependência e escalonamento. Ordenar por urgência, vencimento, impacto e bloqueio.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **tarefas, SLA e filas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-03 — Worklist de tarefas`. Fila ordenada por urgência e SLA, contadores, próxima ação visível, seleção múltipla e atalhos.
+- **Otimização de tempo e UX:** Aplicar LAY-03 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fila, prioridade, SLA, owner, dependência e escalonamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0254 — Api, eventos e erros
+
+**Pergunta:** Como **tarefas, SLA e filas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir fila, prioridade, SLA, owner, dependência e escalonamento. Ordenar por urgência, vencimento, impacto e bloqueio.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **tarefas, SLA e filas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-03 — Worklist de tarefas`. Fila ordenada por urgência e SLA, contadores, próxima ação visível, seleção múltipla e atalhos.
+- **Otimização de tempo e UX:** Aplicar LAY-03 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fila, prioridade, SLA, owner, dependência e escalonamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0255 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **tarefas, SLA e filas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir fila, prioridade, SLA, owner, dependência e escalonamento. Ordenar por urgência, vencimento, impacto e bloqueio.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **tarefas, SLA e filas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-03 — Worklist de tarefas`. Fila ordenada por urgência e SLA, contadores, próxima ação visível, seleção múltipla e atalhos.
+- **Otimização de tempo e UX:** Aplicar LAY-03 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fila, prioridade, SLA, owner, dependência e escalonamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0256 — Validação, segurança e auditoria
+
+**Pergunta:** Como **tarefas, SLA e filas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir fila, prioridade, SLA, owner, dependência e escalonamento. Ordenar por urgência, vencimento, impacto e bloqueio.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **tarefas, SLA e filas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-03 — Worklist de tarefas`. Fila ordenada por urgência e SLA, contadores, próxima ação visível, seleção múltipla e atalhos.
+- **Otimização de tempo e UX:** Aplicar LAY-03 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fila, prioridade, SLA, owner, dependência e escalonamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0257 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **tarefas, SLA e filas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir fila, prioridade, SLA, owner, dependência e escalonamento. Ordenar por urgência, vencimento, impacto e bloqueio.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **tarefas, SLA e filas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-03 — Worklist de tarefas`. Fila ordenada por urgência e SLA, contadores, próxima ação visível, seleção múltipla e atalhos.
+- **Otimização de tempo e UX:** Aplicar LAY-03 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fila, prioridade, SLA, owner, dependência e escalonamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0258 — Testes e evidências
+
+**Pergunta:** Como **tarefas, SLA e filas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir fila, prioridade, SLA, owner, dependência e escalonamento. Ordenar por urgência, vencimento, impacto e bloqueio.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **tarefas, SLA e filas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-03 — Worklist de tarefas`. Fila ordenada por urgência e SLA, contadores, próxima ação visível, seleção múltipla e atalhos.
+- **Otimização de tempo e UX:** Aplicar LAY-03 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fila, prioridade, SLA, owner, dependência e escalonamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0259 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **tarefas, SLA e filas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir fila, prioridade, SLA, owner, dependência e escalonamento. Ordenar por urgência, vencimento, impacto e bloqueio.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **tarefas, SLA e filas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-03 — Worklist de tarefas`. Fila ordenada por urgência e SLA, contadores, próxima ação visível, seleção múltipla e atalhos.
+- **Otimização de tempo e UX:** Aplicar LAY-03 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fila, prioridade, SLA, owner, dependência e escalonamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0260 — Revisão e definição de pronto
+
+**Pergunta:** Como **tarefas, SLA e filas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir fila, prioridade, SLA, owner, dependência e escalonamento. Ordenar por urgência, vencimento, impacto e bloqueio.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **tarefas, SLA e filas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-03 — Worklist de tarefas`. Fila ordenada por urgência e SLA, contadores, próxima ação visível, seleção múltipla e atalhos.
+- **Otimização de tempo e UX:** Aplicar LAY-03 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fila, prioridade, SLA, owner, dependência e escalonamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## COLLAB — Comentários e colaboração
+
+### PR-COMEX-02-Q0261 — Escopo do pr
+
+**Pergunta:** Como **comentários e colaboração** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir comentário, menção, anexo, decisão e vínculo ao evento. Manter comentários contextuais sem substituir dados estruturados.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **comentários e colaboração** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-14 — Painel contextual`. Painel lateral persistente com exceções, anexos, comentários e próxima ação, sem esconder conteúdo principal.
+- **Otimização de tempo e UX:** Aplicar LAY-14 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova comentário, menção, anexo, decisão e vínculo ao evento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0262 — Arquitetura e componentes
+
+**Pergunta:** Como **comentários e colaboração** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir comentário, menção, anexo, decisão e vínculo ao evento. Manter comentários contextuais sem substituir dados estruturados.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **comentários e colaboração** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-14 — Painel contextual`. Painel lateral persistente com exceções, anexos, comentários e próxima ação, sem esconder conteúdo principal.
+- **Otimização de tempo e UX:** Aplicar LAY-14 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova comentário, menção, anexo, decisão e vínculo ao evento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0263 — Modelo de dados e migration
+
+**Pergunta:** Como **comentários e colaboração** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir comentário, menção, anexo, decisão e vínculo ao evento. Manter comentários contextuais sem substituir dados estruturados.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **comentários e colaboração** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-14 — Painel contextual`. Painel lateral persistente com exceções, anexos, comentários e próxima ação, sem esconder conteúdo principal.
+- **Otimização de tempo e UX:** Aplicar LAY-14 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova comentário, menção, anexo, decisão e vínculo ao evento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0264 — Api, eventos e erros
+
+**Pergunta:** Como **comentários e colaboração** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir comentário, menção, anexo, decisão e vínculo ao evento. Manter comentários contextuais sem substituir dados estruturados.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **comentários e colaboração** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-14 — Painel contextual`. Painel lateral persistente com exceções, anexos, comentários e próxima ação, sem esconder conteúdo principal.
+- **Otimização de tempo e UX:** Aplicar LAY-14 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova comentário, menção, anexo, decisão e vínculo ao evento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0265 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **comentários e colaboração** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir comentário, menção, anexo, decisão e vínculo ao evento. Manter comentários contextuais sem substituir dados estruturados.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **comentários e colaboração** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-14 — Painel contextual`. Painel lateral persistente com exceções, anexos, comentários e próxima ação, sem esconder conteúdo principal.
+- **Otimização de tempo e UX:** Aplicar LAY-14 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova comentário, menção, anexo, decisão e vínculo ao evento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0266 — Validação, segurança e auditoria
+
+**Pergunta:** Como **comentários e colaboração** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir comentário, menção, anexo, decisão e vínculo ao evento. Manter comentários contextuais sem substituir dados estruturados.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **comentários e colaboração** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-14 — Painel contextual`. Painel lateral persistente com exceções, anexos, comentários e próxima ação, sem esconder conteúdo principal.
+- **Otimização de tempo e UX:** Aplicar LAY-14 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova comentário, menção, anexo, decisão e vínculo ao evento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0267 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **comentários e colaboração** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir comentário, menção, anexo, decisão e vínculo ao evento. Manter comentários contextuais sem substituir dados estruturados.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **comentários e colaboração** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-14 — Painel contextual`. Painel lateral persistente com exceções, anexos, comentários e próxima ação, sem esconder conteúdo principal.
+- **Otimização de tempo e UX:** Aplicar LAY-14 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova comentário, menção, anexo, decisão e vínculo ao evento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0268 — Testes e evidências
+
+**Pergunta:** Como **comentários e colaboração** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir comentário, menção, anexo, decisão e vínculo ao evento. Manter comentários contextuais sem substituir dados estruturados.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **comentários e colaboração** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-14 — Painel contextual`. Painel lateral persistente com exceções, anexos, comentários e próxima ação, sem esconder conteúdo principal.
+- **Otimização de tempo e UX:** Aplicar LAY-14 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova comentário, menção, anexo, decisão e vínculo ao evento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0269 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **comentários e colaboração** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir comentário, menção, anexo, decisão e vínculo ao evento. Manter comentários contextuais sem substituir dados estruturados.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **comentários e colaboração** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-14 — Painel contextual`. Painel lateral persistente com exceções, anexos, comentários e próxima ação, sem esconder conteúdo principal.
+- **Otimização de tempo e UX:** Aplicar LAY-14 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova comentário, menção, anexo, decisão e vínculo ao evento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0270 — Revisão e definição de pronto
+
+**Pergunta:** Como **comentários e colaboração** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir comentário, menção, anexo, decisão e vínculo ao evento. Manter comentários contextuais sem substituir dados estruturados.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **comentários e colaboração** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-14 — Painel contextual`. Painel lateral persistente com exceções, anexos, comentários e próxima ação, sem esconder conteúdo principal.
+- **Otimização de tempo e UX:** Aplicar LAY-14 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova comentário, menção, anexo, decisão e vínculo ao evento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## TIME — Timeline e histórico
+
+### PR-COMEX-02-Q0271 — Escopo do pr
+
+**Pergunta:** Como **timeline e histórico** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir sequência, ator, origem, estado, documento e efeito. Mostrar eventos em ordem, ator, origem e efeito.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **timeline e histórico** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e status`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova sequência, ator, origem, estado, documento e efeito; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0272 — Arquitetura e componentes
+
+**Pergunta:** Como **timeline e histórico** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir sequência, ator, origem, estado, documento e efeito. Mostrar eventos em ordem, ator, origem e efeito.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **timeline e histórico** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e status`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova sequência, ator, origem, estado, documento e efeito; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0273 — Modelo de dados e migration
+
+**Pergunta:** Como **timeline e histórico** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir sequência, ator, origem, estado, documento e efeito. Mostrar eventos em ordem, ator, origem e efeito.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **timeline e histórico** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e status`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova sequência, ator, origem, estado, documento e efeito; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0274 — Api, eventos e erros
+
+**Pergunta:** Como **timeline e histórico** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir sequência, ator, origem, estado, documento e efeito. Mostrar eventos em ordem, ator, origem e efeito.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **timeline e histórico** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e status`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova sequência, ator, origem, estado, documento e efeito; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0275 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **timeline e histórico** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir sequência, ator, origem, estado, documento e efeito. Mostrar eventos em ordem, ator, origem e efeito.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **timeline e histórico** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e status`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova sequência, ator, origem, estado, documento e efeito; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0276 — Validação, segurança e auditoria
+
+**Pergunta:** Como **timeline e histórico** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir sequência, ator, origem, estado, documento e efeito. Mostrar eventos em ordem, ator, origem e efeito.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **timeline e histórico** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e status`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova sequência, ator, origem, estado, documento e efeito; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0277 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **timeline e histórico** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir sequência, ator, origem, estado, documento e efeito. Mostrar eventos em ordem, ator, origem e efeito.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **timeline e histórico** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e status`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova sequência, ator, origem, estado, documento e efeito; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0278 — Testes e evidências
+
+**Pergunta:** Como **timeline e histórico** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir sequência, ator, origem, estado, documento e efeito. Mostrar eventos em ordem, ator, origem e efeito.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **timeline e histórico** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e status`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova sequência, ator, origem, estado, documento e efeito; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0279 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **timeline e histórico** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir sequência, ator, origem, estado, documento e efeito. Mostrar eventos em ordem, ator, origem e efeito.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **timeline e histórico** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e status`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova sequência, ator, origem, estado, documento e efeito; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0280 — Revisão e definição de pronto
+
+**Pergunta:** Como **timeline e histórico** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir sequência, ator, origem, estado, documento e efeito. Mostrar eventos em ordem, ator, origem e efeito.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **timeline e histórico** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e status`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova sequência, ator, origem, estado, documento e efeito; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## AUDIT — Auditoria
+
+### PR-COMEX-02-Q0281 — Escopo do pr
+
+**Pergunta:** Como **auditoria** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir antes/depois, regra, ator, dispositivo, origem, motivo e correlação. Registrar antes/depois, ator, dispositivo, origem e motivo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **auditoria** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e auditoria`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova antes/depois, regra, ator, dispositivo, origem, motivo e correlação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0282 — Arquitetura e componentes
+
+**Pergunta:** Como **auditoria** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir antes/depois, regra, ator, dispositivo, origem, motivo e correlação. Registrar antes/depois, ator, dispositivo, origem e motivo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **auditoria** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e auditoria`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova antes/depois, regra, ator, dispositivo, origem, motivo e correlação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0283 — Modelo de dados e migration
+
+**Pergunta:** Como **auditoria** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir antes/depois, regra, ator, dispositivo, origem, motivo e correlação. Registrar antes/depois, ator, dispositivo, origem e motivo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **auditoria** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e auditoria`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova antes/depois, regra, ator, dispositivo, origem, motivo e correlação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0284 — Api, eventos e erros
+
+**Pergunta:** Como **auditoria** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir antes/depois, regra, ator, dispositivo, origem, motivo e correlação. Registrar antes/depois, ator, dispositivo, origem e motivo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **auditoria** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e auditoria`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova antes/depois, regra, ator, dispositivo, origem, motivo e correlação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0285 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **auditoria** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir antes/depois, regra, ator, dispositivo, origem, motivo e correlação. Registrar antes/depois, ator, dispositivo, origem e motivo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **auditoria** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e auditoria`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova antes/depois, regra, ator, dispositivo, origem, motivo e correlação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0286 — Validação, segurança e auditoria
+
+**Pergunta:** Como **auditoria** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir antes/depois, regra, ator, dispositivo, origem, motivo e correlação. Registrar antes/depois, ator, dispositivo, origem e motivo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **auditoria** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e auditoria`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova antes/depois, regra, ator, dispositivo, origem, motivo e correlação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0287 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **auditoria** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir antes/depois, regra, ator, dispositivo, origem, motivo e correlação. Registrar antes/depois, ator, dispositivo, origem e motivo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **auditoria** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e auditoria`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova antes/depois, regra, ator, dispositivo, origem, motivo e correlação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0288 — Testes e evidências
+
+**Pergunta:** Como **auditoria** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir antes/depois, regra, ator, dispositivo, origem, motivo e correlação. Registrar antes/depois, ator, dispositivo, origem e motivo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **auditoria** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e auditoria`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova antes/depois, regra, ator, dispositivo, origem, motivo e correlação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0289 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **auditoria** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir antes/depois, regra, ator, dispositivo, origem, motivo e correlação. Registrar antes/depois, ator, dispositivo, origem e motivo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **auditoria** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e auditoria`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova antes/depois, regra, ator, dispositivo, origem, motivo e correlação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0290 — Revisão e definição de pronto
+
+**Pergunta:** Como **auditoria** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir antes/depois, regra, ator, dispositivo, origem, motivo e correlação. Registrar antes/depois, ator, dispositivo, origem e motivo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **auditoria** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-09 — Timeline e auditoria`. Eventos cronológicos com ator, origem, documento, estado, correlação e drill-down.
+- **Otimização de tempo e UX:** Aplicar LAY-09 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova antes/depois, regra, ator, dispositivo, origem, motivo e correlação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## PERM — Permissões
+
+### PR-COMEX-02-Q0291 — Escopo do pr
+
+**Pergunta:** Como **permissões** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir papel, escopo, ação, condição, vigência e delegação. Separar visualizar, criar, alterar, aprovar, postar, cancelar e exportar.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **permissões** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova papel, escopo, ação, condição, vigência e delegação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0292 — Arquitetura e componentes
+
+**Pergunta:** Como **permissões** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir papel, escopo, ação, condição, vigência e delegação. Separar visualizar, criar, alterar, aprovar, postar, cancelar e exportar.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **permissões** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova papel, escopo, ação, condição, vigência e delegação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0293 — Modelo de dados e migration
+
+**Pergunta:** Como **permissões** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir papel, escopo, ação, condição, vigência e delegação. Separar visualizar, criar, alterar, aprovar, postar, cancelar e exportar.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **permissões** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova papel, escopo, ação, condição, vigência e delegação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0294 — Api, eventos e erros
+
+**Pergunta:** Como **permissões** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir papel, escopo, ação, condição, vigência e delegação. Separar visualizar, criar, alterar, aprovar, postar, cancelar e exportar.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **permissões** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova papel, escopo, ação, condição, vigência e delegação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0295 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **permissões** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir papel, escopo, ação, condição, vigência e delegação. Separar visualizar, criar, alterar, aprovar, postar, cancelar e exportar.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **permissões** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova papel, escopo, ação, condição, vigência e delegação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0296 — Validação, segurança e auditoria
+
+**Pergunta:** Como **permissões** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir papel, escopo, ação, condição, vigência e delegação. Separar visualizar, criar, alterar, aprovar, postar, cancelar e exportar.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **permissões** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova papel, escopo, ação, condição, vigência e delegação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0297 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **permissões** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir papel, escopo, ação, condição, vigência e delegação. Separar visualizar, criar, alterar, aprovar, postar, cancelar e exportar.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **permissões** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova papel, escopo, ação, condição, vigência e delegação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0298 — Testes e evidências
+
+**Pergunta:** Como **permissões** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir papel, escopo, ação, condição, vigência e delegação. Separar visualizar, criar, alterar, aprovar, postar, cancelar e exportar.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **permissões** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova papel, escopo, ação, condição, vigência e delegação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0299 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **permissões** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir papel, escopo, ação, condição, vigência e delegação. Separar visualizar, criar, alterar, aprovar, postar, cancelar e exportar.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **permissões** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova papel, escopo, ação, condição, vigência e delegação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0300 — Revisão e definição de pronto
+
+**Pergunta:** Como **permissões** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir papel, escopo, ação, condição, vigência e delegação. Separar visualizar, criar, alterar, aprovar, postar, cancelar e exportar.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **permissões** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova papel, escopo, ação, condição, vigência e delegação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## SOD — Segregação de funções
+
+### PR-COMEX-02-Q0301 — Escopo do pr
+
+**Pergunta:** Como **segregação de funções** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir combinações incompatíveis, exceção, aprovação e relatório. Detectar combinações de risco e exigir aprovação independente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **segregação de funções** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-13 — Matriz de responsabilidades`. Matriz linhas × papéis/ações com conflitos destacados, filtros por domínio e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-13 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova combinações incompatíveis, exceção, aprovação e relatório; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0302 — Arquitetura e componentes
+
+**Pergunta:** Como **segregação de funções** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir combinações incompatíveis, exceção, aprovação e relatório. Detectar combinações de risco e exigir aprovação independente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **segregação de funções** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-13 — Matriz de responsabilidades`. Matriz linhas × papéis/ações com conflitos destacados, filtros por domínio e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-13 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova combinações incompatíveis, exceção, aprovação e relatório; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0303 — Modelo de dados e migration
+
+**Pergunta:** Como **segregação de funções** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir combinações incompatíveis, exceção, aprovação e relatório. Detectar combinações de risco e exigir aprovação independente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **segregação de funções** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-13 — Matriz de responsabilidades`. Matriz linhas × papéis/ações com conflitos destacados, filtros por domínio e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-13 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova combinações incompatíveis, exceção, aprovação e relatório; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0304 — Api, eventos e erros
+
+**Pergunta:** Como **segregação de funções** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir combinações incompatíveis, exceção, aprovação e relatório. Detectar combinações de risco e exigir aprovação independente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **segregação de funções** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-13 — Matriz de responsabilidades`. Matriz linhas × papéis/ações com conflitos destacados, filtros por domínio e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-13 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova combinações incompatíveis, exceção, aprovação e relatório; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0305 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **segregação de funções** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir combinações incompatíveis, exceção, aprovação e relatório. Detectar combinações de risco e exigir aprovação independente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **segregação de funções** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-13 — Matriz de responsabilidades`. Matriz linhas × papéis/ações com conflitos destacados, filtros por domínio e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-13 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova combinações incompatíveis, exceção, aprovação e relatório; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0306 — Validação, segurança e auditoria
+
+**Pergunta:** Como **segregação de funções** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir combinações incompatíveis, exceção, aprovação e relatório. Detectar combinações de risco e exigir aprovação independente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **segregação de funções** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-13 — Matriz de responsabilidades`. Matriz linhas × papéis/ações com conflitos destacados, filtros por domínio e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-13 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova combinações incompatíveis, exceção, aprovação e relatório; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0307 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **segregação de funções** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir combinações incompatíveis, exceção, aprovação e relatório. Detectar combinações de risco e exigir aprovação independente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **segregação de funções** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-13 — Matriz de responsabilidades`. Matriz linhas × papéis/ações com conflitos destacados, filtros por domínio e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-13 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova combinações incompatíveis, exceção, aprovação e relatório; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0308 — Testes e evidências
+
+**Pergunta:** Como **segregação de funções** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir combinações incompatíveis, exceção, aprovação e relatório. Detectar combinações de risco e exigir aprovação independente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **segregação de funções** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-13 — Matriz de responsabilidades`. Matriz linhas × papéis/ações com conflitos destacados, filtros por domínio e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-13 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova combinações incompatíveis, exceção, aprovação e relatório; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0309 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **segregação de funções** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir combinações incompatíveis, exceção, aprovação e relatório. Detectar combinações de risco e exigir aprovação independente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **segregação de funções** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-13 — Matriz de responsabilidades`. Matriz linhas × papéis/ações com conflitos destacados, filtros por domínio e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-13 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova combinações incompatíveis, exceção, aprovação e relatório; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0310 — Revisão e definição de pronto
+
+**Pergunta:** Como **segregação de funções** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir combinações incompatíveis, exceção, aprovação e relatório. Detectar combinações de risco e exigir aprovação independente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **segregação de funções** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-13 — Matriz de responsabilidades`. Matriz linhas × papéis/ações com conflitos destacados, filtros por domínio e exportação.
+- **Otimização de tempo e UX:** Aplicar LAY-13 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova combinações incompatíveis, exceção, aprovação e relatório; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## OFF — Operação offline
+
+### PR-COMEX-02-Q0311 — Escopo do pr
+
+**Pergunta:** Como **operação offline** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir cache, rascunho, fila, limitação, expiração e indicação visual. Permitir rascunho e trabalho local sem inventar fatos externos.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **operação offline** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-19 — Central offline`. Fila local, itens sincronizados/pendentes/conflitantes, retry, comparação de versões e indicador de conectividade.
+- **Otimização de tempo e UX:** Aplicar LAY-19 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova cache, rascunho, fila, limitação, expiração e indicação visual; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0312 — Arquitetura e componentes
+
+**Pergunta:** Como **operação offline** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir cache, rascunho, fila, limitação, expiração e indicação visual. Permitir rascunho e trabalho local sem inventar fatos externos.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **operação offline** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-19 — Central offline`. Fila local, itens sincronizados/pendentes/conflitantes, retry, comparação de versões e indicador de conectividade.
+- **Otimização de tempo e UX:** Aplicar LAY-19 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova cache, rascunho, fila, limitação, expiração e indicação visual; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0313 — Modelo de dados e migration
+
+**Pergunta:** Como **operação offline** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir cache, rascunho, fila, limitação, expiração e indicação visual. Permitir rascunho e trabalho local sem inventar fatos externos.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **operação offline** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-19 — Central offline`. Fila local, itens sincronizados/pendentes/conflitantes, retry, comparação de versões e indicador de conectividade.
+- **Otimização de tempo e UX:** Aplicar LAY-19 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova cache, rascunho, fila, limitação, expiração e indicação visual; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0314 — Api, eventos e erros
+
+**Pergunta:** Como **operação offline** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir cache, rascunho, fila, limitação, expiração e indicação visual. Permitir rascunho e trabalho local sem inventar fatos externos.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **operação offline** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-19 — Central offline`. Fila local, itens sincronizados/pendentes/conflitantes, retry, comparação de versões e indicador de conectividade.
+- **Otimização de tempo e UX:** Aplicar LAY-19 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova cache, rascunho, fila, limitação, expiração e indicação visual; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0315 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **operação offline** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir cache, rascunho, fila, limitação, expiração e indicação visual. Permitir rascunho e trabalho local sem inventar fatos externos.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **operação offline** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-19 — Central offline`. Fila local, itens sincronizados/pendentes/conflitantes, retry, comparação de versões e indicador de conectividade.
+- **Otimização de tempo e UX:** Aplicar LAY-19 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova cache, rascunho, fila, limitação, expiração e indicação visual; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0316 — Validação, segurança e auditoria
+
+**Pergunta:** Como **operação offline** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir cache, rascunho, fila, limitação, expiração e indicação visual. Permitir rascunho e trabalho local sem inventar fatos externos.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **operação offline** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-19 — Central offline`. Fila local, itens sincronizados/pendentes/conflitantes, retry, comparação de versões e indicador de conectividade.
+- **Otimização de tempo e UX:** Aplicar LAY-19 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova cache, rascunho, fila, limitação, expiração e indicação visual; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0317 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **operação offline** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir cache, rascunho, fila, limitação, expiração e indicação visual. Permitir rascunho e trabalho local sem inventar fatos externos.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **operação offline** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-19 — Central offline`. Fila local, itens sincronizados/pendentes/conflitantes, retry, comparação de versões e indicador de conectividade.
+- **Otimização de tempo e UX:** Aplicar LAY-19 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova cache, rascunho, fila, limitação, expiração e indicação visual; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0318 — Testes e evidências
+
+**Pergunta:** Como **operação offline** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir cache, rascunho, fila, limitação, expiração e indicação visual. Permitir rascunho e trabalho local sem inventar fatos externos.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **operação offline** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-19 — Central offline`. Fila local, itens sincronizados/pendentes/conflitantes, retry, comparação de versões e indicador de conectividade.
+- **Otimização de tempo e UX:** Aplicar LAY-19 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova cache, rascunho, fila, limitação, expiração e indicação visual; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0319 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **operação offline** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir cache, rascunho, fila, limitação, expiração e indicação visual. Permitir rascunho e trabalho local sem inventar fatos externos.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **operação offline** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-19 — Central offline`. Fila local, itens sincronizados/pendentes/conflitantes, retry, comparação de versões e indicador de conectividade.
+- **Otimização de tempo e UX:** Aplicar LAY-19 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova cache, rascunho, fila, limitação, expiração e indicação visual; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0320 — Revisão e definição de pronto
+
+**Pergunta:** Como **operação offline** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir cache, rascunho, fila, limitação, expiração e indicação visual. Permitir rascunho e trabalho local sem inventar fatos externos.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **operação offline** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-19 — Central offline`. Fila local, itens sincronizados/pendentes/conflitantes, retry, comparação de versões e indicador de conectividade.
+- **Otimização de tempo e UX:** Aplicar LAY-19 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova cache, rascunho, fila, limitação, expiração e indicação visual; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## SYNC — Sincronização
+
+### PR-COMEX-02-Q0321 — Escopo do pr
+
+**Pergunta:** Como **sincronização** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir ordem, retry, idempotência, status, conflito e reprocessamento. Usar fila local, idempotência, status e reprocessamento.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **sincronização** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-19 — Central offline`. Fila local, itens sincronizados/pendentes/conflitantes, retry, comparação de versões e indicador de conectividade.
+- **Otimização de tempo e UX:** Aplicar LAY-19 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova ordem, retry, idempotência, status, conflito e reprocessamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0322 — Arquitetura e componentes
+
+**Pergunta:** Como **sincronização** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir ordem, retry, idempotência, status, conflito e reprocessamento. Usar fila local, idempotência, status e reprocessamento.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **sincronização** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-19 — Central offline`. Fila local, itens sincronizados/pendentes/conflitantes, retry, comparação de versões e indicador de conectividade.
+- **Otimização de tempo e UX:** Aplicar LAY-19 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova ordem, retry, idempotência, status, conflito e reprocessamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0323 — Modelo de dados e migration
+
+**Pergunta:** Como **sincronização** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir ordem, retry, idempotência, status, conflito e reprocessamento. Usar fila local, idempotência, status e reprocessamento.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **sincronização** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-19 — Central offline`. Fila local, itens sincronizados/pendentes/conflitantes, retry, comparação de versões e indicador de conectividade.
+- **Otimização de tempo e UX:** Aplicar LAY-19 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova ordem, retry, idempotência, status, conflito e reprocessamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0324 — Api, eventos e erros
+
+**Pergunta:** Como **sincronização** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir ordem, retry, idempotência, status, conflito e reprocessamento. Usar fila local, idempotência, status e reprocessamento.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **sincronização** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-19 — Central offline`. Fila local, itens sincronizados/pendentes/conflitantes, retry, comparação de versões e indicador de conectividade.
+- **Otimização de tempo e UX:** Aplicar LAY-19 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova ordem, retry, idempotência, status, conflito e reprocessamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0325 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **sincronização** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir ordem, retry, idempotência, status, conflito e reprocessamento. Usar fila local, idempotência, status e reprocessamento.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **sincronização** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-19 — Central offline`. Fila local, itens sincronizados/pendentes/conflitantes, retry, comparação de versões e indicador de conectividade.
+- **Otimização de tempo e UX:** Aplicar LAY-19 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova ordem, retry, idempotência, status, conflito e reprocessamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0326 — Validação, segurança e auditoria
+
+**Pergunta:** Como **sincronização** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir ordem, retry, idempotência, status, conflito e reprocessamento. Usar fila local, idempotência, status e reprocessamento.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **sincronização** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-19 — Central offline`. Fila local, itens sincronizados/pendentes/conflitantes, retry, comparação de versões e indicador de conectividade.
+- **Otimização de tempo e UX:** Aplicar LAY-19 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova ordem, retry, idempotência, status, conflito e reprocessamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0327 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **sincronização** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir ordem, retry, idempotência, status, conflito e reprocessamento. Usar fila local, idempotência, status e reprocessamento.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **sincronização** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-19 — Central offline`. Fila local, itens sincronizados/pendentes/conflitantes, retry, comparação de versões e indicador de conectividade.
+- **Otimização de tempo e UX:** Aplicar LAY-19 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova ordem, retry, idempotência, status, conflito e reprocessamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0328 — Testes e evidências
+
+**Pergunta:** Como **sincronização** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir ordem, retry, idempotência, status, conflito e reprocessamento. Usar fila local, idempotência, status e reprocessamento.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **sincronização** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-19 — Central offline`. Fila local, itens sincronizados/pendentes/conflitantes, retry, comparação de versões e indicador de conectividade.
+- **Otimização de tempo e UX:** Aplicar LAY-19 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova ordem, retry, idempotência, status, conflito e reprocessamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0329 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **sincronização** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir ordem, retry, idempotência, status, conflito e reprocessamento. Usar fila local, idempotência, status e reprocessamento.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **sincronização** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-19 — Central offline`. Fila local, itens sincronizados/pendentes/conflitantes, retry, comparação de versões e indicador de conectividade.
+- **Otimização de tempo e UX:** Aplicar LAY-19 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova ordem, retry, idempotência, status, conflito e reprocessamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0330 — Revisão e definição de pronto
+
+**Pergunta:** Como **sincronização** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir ordem, retry, idempotência, status, conflito e reprocessamento. Usar fila local, idempotência, status e reprocessamento.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **sincronização** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-19 — Central offline`. Fila local, itens sincronizados/pendentes/conflitantes, retry, comparação de versões e indicador de conectividade.
+- **Otimização de tempo e UX:** Aplicar LAY-19 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova ordem, retry, idempotência, status, conflito e reprocessamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## CONFLICT — Conflitos de sincronização
+
+### PR-COMEX-02-Q0331 — Escopo do pr
+
+**Pergunta:** Como **conflitos de sincronização** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir versões, diferenças, escolha, merge, responsável e evidência. Comparar versões e exigir resolução consciente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **conflitos de sincronização** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-06 — Workspace de reconciliação`. Duas fontes lado a lado, diferenças destacadas, sugestão de match, justificativa e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-06 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova versões, diferenças, escolha, merge, responsável e evidência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0332 — Arquitetura e componentes
+
+**Pergunta:** Como **conflitos de sincronização** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir versões, diferenças, escolha, merge, responsável e evidência. Comparar versões e exigir resolução consciente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **conflitos de sincronização** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-06 — Workspace de reconciliação`. Duas fontes lado a lado, diferenças destacadas, sugestão de match, justificativa e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-06 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova versões, diferenças, escolha, merge, responsável e evidência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0333 — Modelo de dados e migration
+
+**Pergunta:** Como **conflitos de sincronização** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir versões, diferenças, escolha, merge, responsável e evidência. Comparar versões e exigir resolução consciente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **conflitos de sincronização** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-06 — Workspace de reconciliação`. Duas fontes lado a lado, diferenças destacadas, sugestão de match, justificativa e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-06 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova versões, diferenças, escolha, merge, responsável e evidência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0334 — Api, eventos e erros
+
+**Pergunta:** Como **conflitos de sincronização** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir versões, diferenças, escolha, merge, responsável e evidência. Comparar versões e exigir resolução consciente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **conflitos de sincronização** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-06 — Workspace de reconciliação`. Duas fontes lado a lado, diferenças destacadas, sugestão de match, justificativa e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-06 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova versões, diferenças, escolha, merge, responsável e evidência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0335 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **conflitos de sincronização** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir versões, diferenças, escolha, merge, responsável e evidência. Comparar versões e exigir resolução consciente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **conflitos de sincronização** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-06 — Workspace de reconciliação`. Duas fontes lado a lado, diferenças destacadas, sugestão de match, justificativa e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-06 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova versões, diferenças, escolha, merge, responsável e evidência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0336 — Validação, segurança e auditoria
+
+**Pergunta:** Como **conflitos de sincronização** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir versões, diferenças, escolha, merge, responsável e evidência. Comparar versões e exigir resolução consciente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **conflitos de sincronização** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-06 — Workspace de reconciliação`. Duas fontes lado a lado, diferenças destacadas, sugestão de match, justificativa e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-06 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova versões, diferenças, escolha, merge, responsável e evidência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0337 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **conflitos de sincronização** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir versões, diferenças, escolha, merge, responsável e evidência. Comparar versões e exigir resolução consciente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **conflitos de sincronização** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-06 — Workspace de reconciliação`. Duas fontes lado a lado, diferenças destacadas, sugestão de match, justificativa e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-06 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova versões, diferenças, escolha, merge, responsável e evidência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0338 — Testes e evidências
+
+**Pergunta:** Como **conflitos de sincronização** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir versões, diferenças, escolha, merge, responsável e evidência. Comparar versões e exigir resolução consciente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **conflitos de sincronização** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-06 — Workspace de reconciliação`. Duas fontes lado a lado, diferenças destacadas, sugestão de match, justificativa e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-06 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova versões, diferenças, escolha, merge, responsável e evidência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0339 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **conflitos de sincronização** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir versões, diferenças, escolha, merge, responsável e evidência. Comparar versões e exigir resolução consciente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **conflitos de sincronização** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-06 — Workspace de reconciliação`. Duas fontes lado a lado, diferenças destacadas, sugestão de match, justificativa e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-06 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova versões, diferenças, escolha, merge, responsável e evidência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0340 — Revisão e definição de pronto
+
+**Pergunta:** Como **conflitos de sincronização** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir versões, diferenças, escolha, merge, responsável e evidência. Comparar versões e exigir resolução consciente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **conflitos de sincronização** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-06 — Workspace de reconciliação`. Duas fontes lado a lado, diferenças destacadas, sugestão de match, justificativa e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-06 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova versões, diferenças, escolha, merge, responsável e evidência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## API — Api e contratos
+
+### PR-COMEX-02-Q0341 — Escopo do pr
+
+**Pergunta:** Como **API e contratos** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir recursos, operações, schemas, erros, paginação e versionamento. Usar openapi versionado, erros previsíveis e idempotency key.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **API e contratos** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console técnico`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova recursos, operações, schemas, erros, paginação e versionamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0342 — Arquitetura e componentes
+
+**Pergunta:** Como **API e contratos** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir recursos, operações, schemas, erros, paginação e versionamento. Usar openapi versionado, erros previsíveis e idempotency key.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **API e contratos** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console técnico`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova recursos, operações, schemas, erros, paginação e versionamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0343 — Modelo de dados e migration
+
+**Pergunta:** Como **API e contratos** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir recursos, operações, schemas, erros, paginação e versionamento. Usar openapi versionado, erros previsíveis e idempotency key.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **API e contratos** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console técnico`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova recursos, operações, schemas, erros, paginação e versionamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0344 — Api, eventos e erros
+
+**Pergunta:** Como **API e contratos** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir recursos, operações, schemas, erros, paginação e versionamento. Usar openapi versionado, erros previsíveis e idempotency key.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **API e contratos** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console técnico`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova recursos, operações, schemas, erros, paginação e versionamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0345 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **API e contratos** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir recursos, operações, schemas, erros, paginação e versionamento. Usar openapi versionado, erros previsíveis e idempotency key.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **API e contratos** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console técnico`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova recursos, operações, schemas, erros, paginação e versionamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0346 — Validação, segurança e auditoria
+
+**Pergunta:** Como **API e contratos** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir recursos, operações, schemas, erros, paginação e versionamento. Usar openapi versionado, erros previsíveis e idempotency key.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **API e contratos** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console técnico`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova recursos, operações, schemas, erros, paginação e versionamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0347 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **API e contratos** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir recursos, operações, schemas, erros, paginação e versionamento. Usar openapi versionado, erros previsíveis e idempotency key.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **API e contratos** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console técnico`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova recursos, operações, schemas, erros, paginação e versionamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0348 — Testes e evidências
+
+**Pergunta:** Como **API e contratos** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir recursos, operações, schemas, erros, paginação e versionamento. Usar openapi versionado, erros previsíveis e idempotency key.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **API e contratos** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console técnico`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova recursos, operações, schemas, erros, paginação e versionamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0349 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **API e contratos** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir recursos, operações, schemas, erros, paginação e versionamento. Usar openapi versionado, erros previsíveis e idempotency key.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **API e contratos** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console técnico`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova recursos, operações, schemas, erros, paginação e versionamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0350 — Revisão e definição de pronto
+
+**Pergunta:** Como **API e contratos** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir recursos, operações, schemas, erros, paginação e versionamento. Usar openapi versionado, erros previsíveis e idempotency key.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **API e contratos** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console técnico`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova recursos, operações, schemas, erros, paginação e versionamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## EVENT — Eventos e integrações assíncronas
+
+### PR-COMEX-02-Q0351 — Escopo do pr
+
+**Pergunta:** Como **eventos e integrações assíncronas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir nome, payload, versão, producer, consumer e replay. Publicar eventos versionados e consumíveis novamente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **eventos e integrações assíncronas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console técnico`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova nome, payload, versão, producer, consumer e replay; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0352 — Arquitetura e componentes
+
+**Pergunta:** Como **eventos e integrações assíncronas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir nome, payload, versão, producer, consumer e replay. Publicar eventos versionados e consumíveis novamente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **eventos e integrações assíncronas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console técnico`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova nome, payload, versão, producer, consumer e replay; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0353 — Modelo de dados e migration
+
+**Pergunta:** Como **eventos e integrações assíncronas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir nome, payload, versão, producer, consumer e replay. Publicar eventos versionados e consumíveis novamente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **eventos e integrações assíncronas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console técnico`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova nome, payload, versão, producer, consumer e replay; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0354 — Api, eventos e erros
+
+**Pergunta:** Como **eventos e integrações assíncronas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir nome, payload, versão, producer, consumer e replay. Publicar eventos versionados e consumíveis novamente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **eventos e integrações assíncronas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console técnico`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova nome, payload, versão, producer, consumer e replay; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0355 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **eventos e integrações assíncronas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir nome, payload, versão, producer, consumer e replay. Publicar eventos versionados e consumíveis novamente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **eventos e integrações assíncronas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console técnico`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova nome, payload, versão, producer, consumer e replay; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0356 — Validação, segurança e auditoria
+
+**Pergunta:** Como **eventos e integrações assíncronas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir nome, payload, versão, producer, consumer e replay. Publicar eventos versionados e consumíveis novamente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **eventos e integrações assíncronas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console técnico`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova nome, payload, versão, producer, consumer e replay; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0357 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **eventos e integrações assíncronas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir nome, payload, versão, producer, consumer e replay. Publicar eventos versionados e consumíveis novamente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **eventos e integrações assíncronas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console técnico`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova nome, payload, versão, producer, consumer e replay; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0358 — Testes e evidências
+
+**Pergunta:** Como **eventos e integrações assíncronas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir nome, payload, versão, producer, consumer e replay. Publicar eventos versionados e consumíveis novamente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **eventos e integrações assíncronas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console técnico`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova nome, payload, versão, producer, consumer e replay; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0359 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **eventos e integrações assíncronas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir nome, payload, versão, producer, consumer e replay. Publicar eventos versionados e consumíveis novamente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **eventos e integrações assíncronas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console técnico`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova nome, payload, versão, producer, consumer e replay; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0360 — Revisão e definição de pronto
+
+**Pergunta:** Como **eventos e integrações assíncronas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir nome, payload, versão, producer, consumer e replay. Publicar eventos versionados e consumíveis novamente.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **eventos e integrações assíncronas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console técnico`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova nome, payload, versão, producer, consumer e replay; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## IDEMP — Idempotência e duplicidade
+
+### PR-COMEX-02-Q0361 — Escopo do pr
+
+**Pergunta:** Como **idempotência e duplicidade** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir chave, janela, resultado anterior, concorrência e auditoria. Impedir repetição sem ocultar tentativas e resultados.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **idempotência e duplicidade** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-06 — Workspace de reconciliação`. Duas fontes lado a lado, diferenças destacadas, sugestão de match, justificativa e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-06 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova chave, janela, resultado anterior, concorrência e auditoria; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0362 — Arquitetura e componentes
+
+**Pergunta:** Como **idempotência e duplicidade** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir chave, janela, resultado anterior, concorrência e auditoria. Impedir repetição sem ocultar tentativas e resultados.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **idempotência e duplicidade** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-06 — Workspace de reconciliação`. Duas fontes lado a lado, diferenças destacadas, sugestão de match, justificativa e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-06 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova chave, janela, resultado anterior, concorrência e auditoria; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0363 — Modelo de dados e migration
+
+**Pergunta:** Como **idempotência e duplicidade** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir chave, janela, resultado anterior, concorrência e auditoria. Impedir repetição sem ocultar tentativas e resultados.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **idempotência e duplicidade** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-06 — Workspace de reconciliação`. Duas fontes lado a lado, diferenças destacadas, sugestão de match, justificativa e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-06 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova chave, janela, resultado anterior, concorrência e auditoria; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0364 — Api, eventos e erros
+
+**Pergunta:** Como **idempotência e duplicidade** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir chave, janela, resultado anterior, concorrência e auditoria. Impedir repetição sem ocultar tentativas e resultados.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **idempotência e duplicidade** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-06 — Workspace de reconciliação`. Duas fontes lado a lado, diferenças destacadas, sugestão de match, justificativa e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-06 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova chave, janela, resultado anterior, concorrência e auditoria; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0365 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **idempotência e duplicidade** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir chave, janela, resultado anterior, concorrência e auditoria. Impedir repetição sem ocultar tentativas e resultados.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **idempotência e duplicidade** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-06 — Workspace de reconciliação`. Duas fontes lado a lado, diferenças destacadas, sugestão de match, justificativa e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-06 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova chave, janela, resultado anterior, concorrência e auditoria; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0366 — Validação, segurança e auditoria
+
+**Pergunta:** Como **idempotência e duplicidade** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir chave, janela, resultado anterior, concorrência e auditoria. Impedir repetição sem ocultar tentativas e resultados.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **idempotência e duplicidade** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-06 — Workspace de reconciliação`. Duas fontes lado a lado, diferenças destacadas, sugestão de match, justificativa e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-06 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova chave, janela, resultado anterior, concorrência e auditoria; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0367 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **idempotência e duplicidade** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir chave, janela, resultado anterior, concorrência e auditoria. Impedir repetição sem ocultar tentativas e resultados.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **idempotência e duplicidade** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-06 — Workspace de reconciliação`. Duas fontes lado a lado, diferenças destacadas, sugestão de match, justificativa e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-06 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova chave, janela, resultado anterior, concorrência e auditoria; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0368 — Testes e evidências
+
+**Pergunta:** Como **idempotência e duplicidade** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir chave, janela, resultado anterior, concorrência e auditoria. Impedir repetição sem ocultar tentativas e resultados.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **idempotência e duplicidade** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-06 — Workspace de reconciliação`. Duas fontes lado a lado, diferenças destacadas, sugestão de match, justificativa e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-06 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova chave, janela, resultado anterior, concorrência e auditoria; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0369 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **idempotência e duplicidade** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir chave, janela, resultado anterior, concorrência e auditoria. Impedir repetição sem ocultar tentativas e resultados.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **idempotência e duplicidade** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-06 — Workspace de reconciliação`. Duas fontes lado a lado, diferenças destacadas, sugestão de match, justificativa e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-06 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova chave, janela, resultado anterior, concorrência e auditoria; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0370 — Revisão e definição de pronto
+
+**Pergunta:** Como **idempotência e duplicidade** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir chave, janela, resultado anterior, concorrência e auditoria. Impedir repetição sem ocultar tentativas e resultados.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **idempotência e duplicidade** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-06 — Workspace de reconciliação`. Duas fontes lado a lado, diferenças destacadas, sugestão de match, justificativa e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-06 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova chave, janela, resultado anterior, concorrência e auditoria; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## EXT — Integrações externas
+
+### PR-COMEX-02-Q0371 — Escopo do pr
+
+**Pergunta:** Como **integrações externas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir adapter, credencial, ambiente, timeout, retry, circuit breaker e contingência. Isolar adapter, timeout, retry, circuit breaker e contingência.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **integrações externas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-20 — Cockpit de integrações`. Integrações por ambiente com saúde, latência, erros, fila, credenciais, replay e contingência.
+- **Otimização de tempo e UX:** Aplicar LAY-20 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova adapter, credencial, ambiente, timeout, retry, circuit breaker e contingência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0372 — Arquitetura e componentes
+
+**Pergunta:** Como **integrações externas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir adapter, credencial, ambiente, timeout, retry, circuit breaker e contingência. Isolar adapter, timeout, retry, circuit breaker e contingência.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **integrações externas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-20 — Cockpit de integrações`. Integrações por ambiente com saúde, latência, erros, fila, credenciais, replay e contingência.
+- **Otimização de tempo e UX:** Aplicar LAY-20 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova adapter, credencial, ambiente, timeout, retry, circuit breaker e contingência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0373 — Modelo de dados e migration
+
+**Pergunta:** Como **integrações externas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir adapter, credencial, ambiente, timeout, retry, circuit breaker e contingência. Isolar adapter, timeout, retry, circuit breaker e contingência.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **integrações externas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-20 — Cockpit de integrações`. Integrações por ambiente com saúde, latência, erros, fila, credenciais, replay e contingência.
+- **Otimização de tempo e UX:** Aplicar LAY-20 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova adapter, credencial, ambiente, timeout, retry, circuit breaker e contingência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0374 — Api, eventos e erros
+
+**Pergunta:** Como **integrações externas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir adapter, credencial, ambiente, timeout, retry, circuit breaker e contingência. Isolar adapter, timeout, retry, circuit breaker e contingência.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **integrações externas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-20 — Cockpit de integrações`. Integrações por ambiente com saúde, latência, erros, fila, credenciais, replay e contingência.
+- **Otimização de tempo e UX:** Aplicar LAY-20 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova adapter, credencial, ambiente, timeout, retry, circuit breaker e contingência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0375 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **integrações externas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir adapter, credencial, ambiente, timeout, retry, circuit breaker e contingência. Isolar adapter, timeout, retry, circuit breaker e contingência.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **integrações externas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-20 — Cockpit de integrações`. Integrações por ambiente com saúde, latência, erros, fila, credenciais, replay e contingência.
+- **Otimização de tempo e UX:** Aplicar LAY-20 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova adapter, credencial, ambiente, timeout, retry, circuit breaker e contingência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0376 — Validação, segurança e auditoria
+
+**Pergunta:** Como **integrações externas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir adapter, credencial, ambiente, timeout, retry, circuit breaker e contingência. Isolar adapter, timeout, retry, circuit breaker e contingência.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **integrações externas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-20 — Cockpit de integrações`. Integrações por ambiente com saúde, latência, erros, fila, credenciais, replay e contingência.
+- **Otimização de tempo e UX:** Aplicar LAY-20 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova adapter, credencial, ambiente, timeout, retry, circuit breaker e contingência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0377 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **integrações externas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir adapter, credencial, ambiente, timeout, retry, circuit breaker e contingência. Isolar adapter, timeout, retry, circuit breaker e contingência.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **integrações externas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-20 — Cockpit de integrações`. Integrações por ambiente com saúde, latência, erros, fila, credenciais, replay e contingência.
+- **Otimização de tempo e UX:** Aplicar LAY-20 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova adapter, credencial, ambiente, timeout, retry, circuit breaker e contingência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0378 — Testes e evidências
+
+**Pergunta:** Como **integrações externas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir adapter, credencial, ambiente, timeout, retry, circuit breaker e contingência. Isolar adapter, timeout, retry, circuit breaker e contingência.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **integrações externas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-20 — Cockpit de integrações`. Integrações por ambiente com saúde, latência, erros, fila, credenciais, replay e contingência.
+- **Otimização de tempo e UX:** Aplicar LAY-20 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova adapter, credencial, ambiente, timeout, retry, circuit breaker e contingência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0379 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **integrações externas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir adapter, credencial, ambiente, timeout, retry, circuit breaker e contingência. Isolar adapter, timeout, retry, circuit breaker e contingência.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **integrações externas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-20 — Cockpit de integrações`. Integrações por ambiente com saúde, latência, erros, fila, credenciais, replay e contingência.
+- **Otimização de tempo e UX:** Aplicar LAY-20 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova adapter, credencial, ambiente, timeout, retry, circuit breaker e contingência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0380 — Revisão e definição de pronto
+
+**Pergunta:** Como **integrações externas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir adapter, credencial, ambiente, timeout, retry, circuit breaker e contingência. Isolar adapter, timeout, retry, circuit breaker e contingência.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **integrações externas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-20 — Cockpit de integrações`. Integrações por ambiente com saúde, latência, erros, fila, credenciais, replay e contingência.
+- **Otimização de tempo e UX:** Aplicar LAY-20 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova adapter, credencial, ambiente, timeout, retry, circuit breaker e contingência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-02, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## CALC — Cálculos e fórmulas
+
+### PR-COMEX-02-Q0381 — Escopo do pr
+
+**Pergunta:** Como **cálculos e fórmulas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir fórmula, parâmetros, base, precisão, arredondamento e versão. Versionar fórmula, parâmetros, precisão e memória de cálculo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **cálculos e fórmulas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-21 — Simulador e memória de cálculo`. Entradas editáveis, fórmula e memória lado a lado, cenários, comparação e publicação de versão.
+- **Otimização de tempo e UX:** Aplicar LAY-21 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fórmula, parâmetros, base, precisão, arredondamento e versão; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0382 — Arquitetura e componentes
+
+**Pergunta:** Como **cálculos e fórmulas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir fórmula, parâmetros, base, precisão, arredondamento e versão. Versionar fórmula, parâmetros, precisão e memória de cálculo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **cálculos e fórmulas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-21 — Simulador e memória de cálculo`. Entradas editáveis, fórmula e memória lado a lado, cenários, comparação e publicação de versão.
+- **Otimização de tempo e UX:** Aplicar LAY-21 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fórmula, parâmetros, base, precisão, arredondamento e versão; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0383 — Modelo de dados e migration
+
+**Pergunta:** Como **cálculos e fórmulas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir fórmula, parâmetros, base, precisão, arredondamento e versão. Versionar fórmula, parâmetros, precisão e memória de cálculo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **cálculos e fórmulas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-21 — Simulador e memória de cálculo`. Entradas editáveis, fórmula e memória lado a lado, cenários, comparação e publicação de versão.
+- **Otimização de tempo e UX:** Aplicar LAY-21 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fórmula, parâmetros, base, precisão, arredondamento e versão; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0384 — Api, eventos e erros
+
+**Pergunta:** Como **cálculos e fórmulas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir fórmula, parâmetros, base, precisão, arredondamento e versão. Versionar fórmula, parâmetros, precisão e memória de cálculo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **cálculos e fórmulas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-21 — Simulador e memória de cálculo`. Entradas editáveis, fórmula e memória lado a lado, cenários, comparação e publicação de versão.
+- **Otimização de tempo e UX:** Aplicar LAY-21 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fórmula, parâmetros, base, precisão, arredondamento e versão; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0385 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **cálculos e fórmulas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir fórmula, parâmetros, base, precisão, arredondamento e versão. Versionar fórmula, parâmetros, precisão e memória de cálculo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **cálculos e fórmulas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-21 — Simulador e memória de cálculo`. Entradas editáveis, fórmula e memória lado a lado, cenários, comparação e publicação de versão.
+- **Otimização de tempo e UX:** Aplicar LAY-21 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fórmula, parâmetros, base, precisão, arredondamento e versão; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0386 — Validação, segurança e auditoria
+
+**Pergunta:** Como **cálculos e fórmulas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir fórmula, parâmetros, base, precisão, arredondamento e versão. Versionar fórmula, parâmetros, precisão e memória de cálculo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **cálculos e fórmulas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-21 — Simulador e memória de cálculo`. Entradas editáveis, fórmula e memória lado a lado, cenários, comparação e publicação de versão.
+- **Otimização de tempo e UX:** Aplicar LAY-21 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fórmula, parâmetros, base, precisão, arredondamento e versão; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0387 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **cálculos e fórmulas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir fórmula, parâmetros, base, precisão, arredondamento e versão. Versionar fórmula, parâmetros, precisão e memória de cálculo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **cálculos e fórmulas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-21 — Simulador e memória de cálculo`. Entradas editáveis, fórmula e memória lado a lado, cenários, comparação e publicação de versão.
+- **Otimização de tempo e UX:** Aplicar LAY-21 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fórmula, parâmetros, base, precisão, arredondamento e versão; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0388 — Testes e evidências
+
+**Pergunta:** Como **cálculos e fórmulas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir fórmula, parâmetros, base, precisão, arredondamento e versão. Versionar fórmula, parâmetros, precisão e memória de cálculo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **cálculos e fórmulas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-21 — Simulador e memória de cálculo`. Entradas editáveis, fórmula e memória lado a lado, cenários, comparação e publicação de versão.
+- **Otimização de tempo e UX:** Aplicar LAY-21 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fórmula, parâmetros, base, precisão, arredondamento e versão; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0389 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **cálculos e fórmulas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir fórmula, parâmetros, base, precisão, arredondamento e versão. Versionar fórmula, parâmetros, precisão e memória de cálculo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **cálculos e fórmulas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-21 — Simulador e memória de cálculo`. Entradas editáveis, fórmula e memória lado a lado, cenários, comparação e publicação de versão.
+- **Otimização de tempo e UX:** Aplicar LAY-21 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fórmula, parâmetros, base, precisão, arredondamento e versão; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0390 — Revisão e definição de pronto
+
+**Pergunta:** Como **cálculos e fórmulas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir fórmula, parâmetros, base, precisão, arredondamento e versão. Versionar fórmula, parâmetros, precisão e memória de cálculo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **cálculos e fórmulas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-21 — Simulador e memória de cálculo`. Entradas editáveis, fórmula e memória lado a lado, cenários, comparação e publicação de versão.
+- **Otimização de tempo e UX:** Aplicar LAY-21 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fórmula, parâmetros, base, precisão, arredondamento e versão; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## FX — Moeda, câmbio e arredondamento
+
+### PR-COMEX-02-Q0391 — Escopo do pr
+
+**Pergunta:** Como **moeda, câmbio e arredondamento** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir moeda original, taxa, fonte, data, ARS, USD e diferença. Guardar moeda original, taxa do evento, ars e usd.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **moeda, câmbio e arredondamento** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-21 — Simulador e memória de cálculo`. Entradas editáveis, fórmula e memória lado a lado, cenários, comparação e publicação de versão.
+- **Otimização de tempo e UX:** Aplicar LAY-21 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova moeda original, taxa, fonte, data, ARS, USD e diferença; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0392 — Arquitetura e componentes
+
+**Pergunta:** Como **moeda, câmbio e arredondamento** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir moeda original, taxa, fonte, data, ARS, USD e diferença. Guardar moeda original, taxa do evento, ars e usd.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **moeda, câmbio e arredondamento** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-21 — Simulador e memória de cálculo`. Entradas editáveis, fórmula e memória lado a lado, cenários, comparação e publicação de versão.
+- **Otimização de tempo e UX:** Aplicar LAY-21 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova moeda original, taxa, fonte, data, ARS, USD e diferença; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0393 — Modelo de dados e migration
+
+**Pergunta:** Como **moeda, câmbio e arredondamento** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir moeda original, taxa, fonte, data, ARS, USD e diferença. Guardar moeda original, taxa do evento, ars e usd.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **moeda, câmbio e arredondamento** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-21 — Simulador e memória de cálculo`. Entradas editáveis, fórmula e memória lado a lado, cenários, comparação e publicação de versão.
+- **Otimização de tempo e UX:** Aplicar LAY-21 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova moeda original, taxa, fonte, data, ARS, USD e diferença; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0394 — Api, eventos e erros
+
+**Pergunta:** Como **moeda, câmbio e arredondamento** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir moeda original, taxa, fonte, data, ARS, USD e diferença. Guardar moeda original, taxa do evento, ars e usd.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **moeda, câmbio e arredondamento** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-21 — Simulador e memória de cálculo`. Entradas editáveis, fórmula e memória lado a lado, cenários, comparação e publicação de versão.
+- **Otimização de tempo e UX:** Aplicar LAY-21 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova moeda original, taxa, fonte, data, ARS, USD e diferença; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0395 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **moeda, câmbio e arredondamento** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir moeda original, taxa, fonte, data, ARS, USD e diferença. Guardar moeda original, taxa do evento, ars e usd.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **moeda, câmbio e arredondamento** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-21 — Simulador e memória de cálculo`. Entradas editáveis, fórmula e memória lado a lado, cenários, comparação e publicação de versão.
+- **Otimização de tempo e UX:** Aplicar LAY-21 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova moeda original, taxa, fonte, data, ARS, USD e diferença; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0396 — Validação, segurança e auditoria
+
+**Pergunta:** Como **moeda, câmbio e arredondamento** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir moeda original, taxa, fonte, data, ARS, USD e diferença. Guardar moeda original, taxa do evento, ars e usd.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **moeda, câmbio e arredondamento** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-21 — Simulador e memória de cálculo`. Entradas editáveis, fórmula e memória lado a lado, cenários, comparação e publicação de versão.
+- **Otimização de tempo e UX:** Aplicar LAY-21 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova moeda original, taxa, fonte, data, ARS, USD e diferença; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0397 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **moeda, câmbio e arredondamento** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir moeda original, taxa, fonte, data, ARS, USD e diferença. Guardar moeda original, taxa do evento, ars e usd.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **moeda, câmbio e arredondamento** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-21 — Simulador e memória de cálculo`. Entradas editáveis, fórmula e memória lado a lado, cenários, comparação e publicação de versão.
+- **Otimização de tempo e UX:** Aplicar LAY-21 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova moeda original, taxa, fonte, data, ARS, USD e diferença; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0398 — Testes e evidências
+
+**Pergunta:** Como **moeda, câmbio e arredondamento** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir moeda original, taxa, fonte, data, ARS, USD e diferença. Guardar moeda original, taxa do evento, ars e usd.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **moeda, câmbio e arredondamento** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-21 — Simulador e memória de cálculo`. Entradas editáveis, fórmula e memória lado a lado, cenários, comparação e publicação de versão.
+- **Otimização de tempo e UX:** Aplicar LAY-21 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova moeda original, taxa, fonte, data, ARS, USD e diferença; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0399 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **moeda, câmbio e arredondamento** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir moeda original, taxa, fonte, data, ARS, USD e diferença. Guardar moeda original, taxa do evento, ars e usd.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **moeda, câmbio e arredondamento** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-21 — Simulador e memória de cálculo`. Entradas editáveis, fórmula e memória lado a lado, cenários, comparação e publicação de versão.
+- **Otimização de tempo e UX:** Aplicar LAY-21 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova moeda original, taxa, fonte, data, ARS, USD e diferença; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0400 — Revisão e definição de pronto
+
+**Pergunta:** Como **moeda, câmbio e arredondamento** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir moeda original, taxa, fonte, data, ARS, USD e diferença. Guardar moeda original, taxa do evento, ars e usd.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **moeda, câmbio e arredondamento** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-21 — Simulador e memória de cálculo`. Entradas editáveis, fórmula e memória lado a lado, cenários, comparação e publicação de versão.
+- **Otimização de tempo e UX:** Aplicar LAY-21 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova moeda original, taxa, fonte, data, ARS, USD e diferença; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## ACC — Impacto contábil
+
+### PR-COMEX-02-Q0401 — Escopo do pr
+
+**Pergunta:** Como **impacto contábil** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir contas, dimensões, débito, crédito, data, reversão e origem. Gerar contrato de postagem balanceado e rastreável.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **impacto contábil** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-22 — Razão e drill-down`. Plano/razão hierárquico, débito, crédito, saldo, moeda, dimensões e drill-down até o evento.
+- **Otimização de tempo e UX:** Aplicar LAY-22 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova contas, dimensões, débito, crédito, data, reversão e origem; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0402 — Arquitetura e componentes
+
+**Pergunta:** Como **impacto contábil** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir contas, dimensões, débito, crédito, data, reversão e origem. Gerar contrato de postagem balanceado e rastreável.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **impacto contábil** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-22 — Razão e drill-down`. Plano/razão hierárquico, débito, crédito, saldo, moeda, dimensões e drill-down até o evento.
+- **Otimização de tempo e UX:** Aplicar LAY-22 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova contas, dimensões, débito, crédito, data, reversão e origem; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0403 — Modelo de dados e migration
+
+**Pergunta:** Como **impacto contábil** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir contas, dimensões, débito, crédito, data, reversão e origem. Gerar contrato de postagem balanceado e rastreável.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **impacto contábil** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-22 — Razão e drill-down`. Plano/razão hierárquico, débito, crédito, saldo, moeda, dimensões e drill-down até o evento.
+- **Otimização de tempo e UX:** Aplicar LAY-22 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova contas, dimensões, débito, crédito, data, reversão e origem; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0404 — Api, eventos e erros
+
+**Pergunta:** Como **impacto contábil** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir contas, dimensões, débito, crédito, data, reversão e origem. Gerar contrato de postagem balanceado e rastreável.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **impacto contábil** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-22 — Razão e drill-down`. Plano/razão hierárquico, débito, crédito, saldo, moeda, dimensões e drill-down até o evento.
+- **Otimização de tempo e UX:** Aplicar LAY-22 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova contas, dimensões, débito, crédito, data, reversão e origem; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0405 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **impacto contábil** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir contas, dimensões, débito, crédito, data, reversão e origem. Gerar contrato de postagem balanceado e rastreável.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **impacto contábil** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-22 — Razão e drill-down`. Plano/razão hierárquico, débito, crédito, saldo, moeda, dimensões e drill-down até o evento.
+- **Otimização de tempo e UX:** Aplicar LAY-22 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova contas, dimensões, débito, crédito, data, reversão e origem; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0406 — Validação, segurança e auditoria
+
+**Pergunta:** Como **impacto contábil** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir contas, dimensões, débito, crédito, data, reversão e origem. Gerar contrato de postagem balanceado e rastreável.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **impacto contábil** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-22 — Razão e drill-down`. Plano/razão hierárquico, débito, crédito, saldo, moeda, dimensões e drill-down até o evento.
+- **Otimização de tempo e UX:** Aplicar LAY-22 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova contas, dimensões, débito, crédito, data, reversão e origem; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0407 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **impacto contábil** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir contas, dimensões, débito, crédito, data, reversão e origem. Gerar contrato de postagem balanceado e rastreável.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **impacto contábil** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-22 — Razão e drill-down`. Plano/razão hierárquico, débito, crédito, saldo, moeda, dimensões e drill-down até o evento.
+- **Otimização de tempo e UX:** Aplicar LAY-22 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova contas, dimensões, débito, crédito, data, reversão e origem; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0408 — Testes e evidências
+
+**Pergunta:** Como **impacto contábil** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir contas, dimensões, débito, crédito, data, reversão e origem. Gerar contrato de postagem balanceado e rastreável.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **impacto contábil** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-22 — Razão e drill-down`. Plano/razão hierárquico, débito, crédito, saldo, moeda, dimensões e drill-down até o evento.
+- **Otimização de tempo e UX:** Aplicar LAY-22 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova contas, dimensões, débito, crédito, data, reversão e origem; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0409 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **impacto contábil** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir contas, dimensões, débito, crédito, data, reversão e origem. Gerar contrato de postagem balanceado e rastreável.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **impacto contábil** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-22 — Razão e drill-down`. Plano/razão hierárquico, débito, crédito, saldo, moeda, dimensões e drill-down até o evento.
+- **Otimização de tempo e UX:** Aplicar LAY-22 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova contas, dimensões, débito, crédito, data, reversão e origem; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0410 — Revisão e definição de pronto
+
+**Pergunta:** Como **impacto contábil** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir contas, dimensões, débito, crédito, data, reversão e origem. Gerar contrato de postagem balanceado e rastreável.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **impacto contábil** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-22 — Razão e drill-down`. Plano/razão hierárquico, débito, crédito, saldo, moeda, dimensões e drill-down até o evento.
+- **Otimização de tempo e UX:** Aplicar LAY-22 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova contas, dimensões, débito, crédito, data, reversão e origem; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## TAX — Impacto fiscal
+
+### PR-COMEX-02-Q0411 — Escopo do pr
+
+**Pergunta:** Como **impacto fiscal** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir jurisdição, base, alíquota, percepção, retenção, crédito e vigência. Separar base, alíquota, percepção, retenção, crédito e documento.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **impacto fiscal** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-23 — Tax workspace`. Regras fiscais versionadas, simulação, documento, base, alíquota, percepção/retenção e reconciliação.
+- **Otimização de tempo e UX:** Aplicar LAY-23 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova jurisdição, base, alíquota, percepção, retenção, crédito e vigência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0412 — Arquitetura e componentes
+
+**Pergunta:** Como **impacto fiscal** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir jurisdição, base, alíquota, percepção, retenção, crédito e vigência. Separar base, alíquota, percepção, retenção, crédito e documento.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **impacto fiscal** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-23 — Tax workspace`. Regras fiscais versionadas, simulação, documento, base, alíquota, percepção/retenção e reconciliação.
+- **Otimização de tempo e UX:** Aplicar LAY-23 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova jurisdição, base, alíquota, percepção, retenção, crédito e vigência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0413 — Modelo de dados e migration
+
+**Pergunta:** Como **impacto fiscal** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir jurisdição, base, alíquota, percepção, retenção, crédito e vigência. Separar base, alíquota, percepção, retenção, crédito e documento.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **impacto fiscal** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-23 — Tax workspace`. Regras fiscais versionadas, simulação, documento, base, alíquota, percepção/retenção e reconciliação.
+- **Otimização de tempo e UX:** Aplicar LAY-23 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova jurisdição, base, alíquota, percepção, retenção, crédito e vigência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0414 — Api, eventos e erros
+
+**Pergunta:** Como **impacto fiscal** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir jurisdição, base, alíquota, percepção, retenção, crédito e vigência. Separar base, alíquota, percepção, retenção, crédito e documento.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **impacto fiscal** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-23 — Tax workspace`. Regras fiscais versionadas, simulação, documento, base, alíquota, percepção/retenção e reconciliação.
+- **Otimização de tempo e UX:** Aplicar LAY-23 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova jurisdição, base, alíquota, percepção, retenção, crédito e vigência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0415 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **impacto fiscal** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir jurisdição, base, alíquota, percepção, retenção, crédito e vigência. Separar base, alíquota, percepção, retenção, crédito e documento.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **impacto fiscal** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-23 — Tax workspace`. Regras fiscais versionadas, simulação, documento, base, alíquota, percepção/retenção e reconciliação.
+- **Otimização de tempo e UX:** Aplicar LAY-23 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova jurisdição, base, alíquota, percepção, retenção, crédito e vigência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0416 — Validação, segurança e auditoria
+
+**Pergunta:** Como **impacto fiscal** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir jurisdição, base, alíquota, percepção, retenção, crédito e vigência. Separar base, alíquota, percepção, retenção, crédito e documento.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **impacto fiscal** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-23 — Tax workspace`. Regras fiscais versionadas, simulação, documento, base, alíquota, percepção/retenção e reconciliação.
+- **Otimização de tempo e UX:** Aplicar LAY-23 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova jurisdição, base, alíquota, percepção, retenção, crédito e vigência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0417 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **impacto fiscal** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir jurisdição, base, alíquota, percepção, retenção, crédito e vigência. Separar base, alíquota, percepção, retenção, crédito e documento.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **impacto fiscal** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-23 — Tax workspace`. Regras fiscais versionadas, simulação, documento, base, alíquota, percepção/retenção e reconciliação.
+- **Otimização de tempo e UX:** Aplicar LAY-23 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova jurisdição, base, alíquota, percepção, retenção, crédito e vigência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0418 — Testes e evidências
+
+**Pergunta:** Como **impacto fiscal** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir jurisdição, base, alíquota, percepção, retenção, crédito e vigência. Separar base, alíquota, percepção, retenção, crédito e documento.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **impacto fiscal** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-23 — Tax workspace`. Regras fiscais versionadas, simulação, documento, base, alíquota, percepção/retenção e reconciliação.
+- **Otimização de tempo e UX:** Aplicar LAY-23 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova jurisdição, base, alíquota, percepção, retenção, crédito e vigência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0419 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **impacto fiscal** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir jurisdição, base, alíquota, percepção, retenção, crédito e vigência. Separar base, alíquota, percepção, retenção, crédito e documento.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **impacto fiscal** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-23 — Tax workspace`. Regras fiscais versionadas, simulação, documento, base, alíquota, percepção/retenção e reconciliação.
+- **Otimização de tempo e UX:** Aplicar LAY-23 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova jurisdição, base, alíquota, percepção, retenção, crédito e vigência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0420 — Revisão e definição de pronto
+
+**Pergunta:** Como **impacto fiscal** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir jurisdição, base, alíquota, percepção, retenção, crédito e vigência. Separar base, alíquota, percepção, retenção, crédito e documento.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **impacto fiscal** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-23 — Tax workspace`. Regras fiscais versionadas, simulação, documento, base, alíquota, percepção/retenção e reconciliação.
+- **Otimização de tempo e UX:** Aplicar LAY-23 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova jurisdição, base, alíquota, percepção, retenção, crédito e vigência; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## RECON — Reconciliação
+
+### PR-COMEX-02-Q0421 — Escopo do pr
+
+**Pergunta:** Como **reconciliação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir fontes, chave de match, tolerância, diferença, resolução e aprovação. Comparar fontes lado a lado e registrar resolução da diferença.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **reconciliação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-06 — Workspace de reconciliação`. Duas fontes lado a lado, diferenças destacadas, sugestão de match, justificativa e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-06 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fontes, chave de match, tolerância, diferença, resolução e aprovação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0422 — Arquitetura e componentes
+
+**Pergunta:** Como **reconciliação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir fontes, chave de match, tolerância, diferença, resolução e aprovação. Comparar fontes lado a lado e registrar resolução da diferença.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **reconciliação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-06 — Workspace de reconciliação`. Duas fontes lado a lado, diferenças destacadas, sugestão de match, justificativa e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-06 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fontes, chave de match, tolerância, diferença, resolução e aprovação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0423 — Modelo de dados e migration
+
+**Pergunta:** Como **reconciliação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir fontes, chave de match, tolerância, diferença, resolução e aprovação. Comparar fontes lado a lado e registrar resolução da diferença.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **reconciliação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-06 — Workspace de reconciliação`. Duas fontes lado a lado, diferenças destacadas, sugestão de match, justificativa e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-06 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fontes, chave de match, tolerância, diferença, resolução e aprovação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0424 — Api, eventos e erros
+
+**Pergunta:** Como **reconciliação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir fontes, chave de match, tolerância, diferença, resolução e aprovação. Comparar fontes lado a lado e registrar resolução da diferença.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **reconciliação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-06 — Workspace de reconciliação`. Duas fontes lado a lado, diferenças destacadas, sugestão de match, justificativa e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-06 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fontes, chave de match, tolerância, diferença, resolução e aprovação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0425 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **reconciliação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir fontes, chave de match, tolerância, diferença, resolução e aprovação. Comparar fontes lado a lado e registrar resolução da diferença.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **reconciliação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-06 — Workspace de reconciliação`. Duas fontes lado a lado, diferenças destacadas, sugestão de match, justificativa e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-06 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fontes, chave de match, tolerância, diferença, resolução e aprovação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0426 — Validação, segurança e auditoria
+
+**Pergunta:** Como **reconciliação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir fontes, chave de match, tolerância, diferença, resolução e aprovação. Comparar fontes lado a lado e registrar resolução da diferença.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **reconciliação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-06 — Workspace de reconciliação`. Duas fontes lado a lado, diferenças destacadas, sugestão de match, justificativa e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-06 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fontes, chave de match, tolerância, diferença, resolução e aprovação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0427 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **reconciliação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir fontes, chave de match, tolerância, diferença, resolução e aprovação. Comparar fontes lado a lado e registrar resolução da diferença.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **reconciliação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-06 — Workspace de reconciliação`. Duas fontes lado a lado, diferenças destacadas, sugestão de match, justificativa e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-06 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fontes, chave de match, tolerância, diferença, resolução e aprovação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0428 — Testes e evidências
+
+**Pergunta:** Como **reconciliação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir fontes, chave de match, tolerância, diferença, resolução e aprovação. Comparar fontes lado a lado e registrar resolução da diferença.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **reconciliação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-06 — Workspace de reconciliação`. Duas fontes lado a lado, diferenças destacadas, sugestão de match, justificativa e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-06 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fontes, chave de match, tolerância, diferença, resolução e aprovação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0429 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **reconciliação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir fontes, chave de match, tolerância, diferença, resolução e aprovação. Comparar fontes lado a lado e registrar resolução da diferença.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **reconciliação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-06 — Workspace de reconciliação`. Duas fontes lado a lado, diferenças destacadas, sugestão de match, justificativa e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-06 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fontes, chave de match, tolerância, diferença, resolução e aprovação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0430 — Revisão e definição de pronto
+
+**Pergunta:** Como **reconciliação** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir fontes, chave de match, tolerância, diferença, resolução e aprovação. Comparar fontes lado a lado e registrar resolução da diferença.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **reconciliação** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-06 — Workspace de reconciliação`. Duas fontes lado a lado, diferenças destacadas, sugestão de match, justificativa e aprovação.
+- **Otimização de tempo e UX:** Aplicar LAY-06 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova fontes, chave de match, tolerância, diferença, resolução e aprovação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## REPORT — Relatórios e drill-down
+
+### PR-COMEX-02-Q0431 — Escopo do pr
+
+**Pergunta:** Como **relatórios e drill-down** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir filtros, hierarquia, total, drill-down, exportação e agendamento. Permitir ir do total ao documento e ao evento de origem.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **relatórios e drill-down** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-24 — Relatório com drill-down`. Relatório denso, hierarquia expansível, filtros, comparativos, exportação e drill-down transacional.
+- **Otimização de tempo e UX:** Aplicar LAY-24 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova filtros, hierarquia, total, drill-down, exportação e agendamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0432 — Arquitetura e componentes
+
+**Pergunta:** Como **relatórios e drill-down** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir filtros, hierarquia, total, drill-down, exportação e agendamento. Permitir ir do total ao documento e ao evento de origem.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **relatórios e drill-down** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-24 — Relatório com drill-down`. Relatório denso, hierarquia expansível, filtros, comparativos, exportação e drill-down transacional.
+- **Otimização de tempo e UX:** Aplicar LAY-24 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova filtros, hierarquia, total, drill-down, exportação e agendamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0433 — Modelo de dados e migration
+
+**Pergunta:** Como **relatórios e drill-down** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir filtros, hierarquia, total, drill-down, exportação e agendamento. Permitir ir do total ao documento e ao evento de origem.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **relatórios e drill-down** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-24 — Relatório com drill-down`. Relatório denso, hierarquia expansível, filtros, comparativos, exportação e drill-down transacional.
+- **Otimização de tempo e UX:** Aplicar LAY-24 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova filtros, hierarquia, total, drill-down, exportação e agendamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0434 — Api, eventos e erros
+
+**Pergunta:** Como **relatórios e drill-down** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir filtros, hierarquia, total, drill-down, exportação e agendamento. Permitir ir do total ao documento e ao evento de origem.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **relatórios e drill-down** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-24 — Relatório com drill-down`. Relatório denso, hierarquia expansível, filtros, comparativos, exportação e drill-down transacional.
+- **Otimização de tempo e UX:** Aplicar LAY-24 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova filtros, hierarquia, total, drill-down, exportação e agendamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0435 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **relatórios e drill-down** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir filtros, hierarquia, total, drill-down, exportação e agendamento. Permitir ir do total ao documento e ao evento de origem.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **relatórios e drill-down** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-24 — Relatório com drill-down`. Relatório denso, hierarquia expansível, filtros, comparativos, exportação e drill-down transacional.
+- **Otimização de tempo e UX:** Aplicar LAY-24 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova filtros, hierarquia, total, drill-down, exportação e agendamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0436 — Validação, segurança e auditoria
+
+**Pergunta:** Como **relatórios e drill-down** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir filtros, hierarquia, total, drill-down, exportação e agendamento. Permitir ir do total ao documento e ao evento de origem.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **relatórios e drill-down** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-24 — Relatório com drill-down`. Relatório denso, hierarquia expansível, filtros, comparativos, exportação e drill-down transacional.
+- **Otimização de tempo e UX:** Aplicar LAY-24 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova filtros, hierarquia, total, drill-down, exportação e agendamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0437 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **relatórios e drill-down** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir filtros, hierarquia, total, drill-down, exportação e agendamento. Permitir ir do total ao documento e ao evento de origem.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **relatórios e drill-down** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-24 — Relatório com drill-down`. Relatório denso, hierarquia expansível, filtros, comparativos, exportação e drill-down transacional.
+- **Otimização de tempo e UX:** Aplicar LAY-24 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova filtros, hierarquia, total, drill-down, exportação e agendamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0438 — Testes e evidências
+
+**Pergunta:** Como **relatórios e drill-down** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir filtros, hierarquia, total, drill-down, exportação e agendamento. Permitir ir do total ao documento e ao evento de origem.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **relatórios e drill-down** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-24 — Relatório com drill-down`. Relatório denso, hierarquia expansível, filtros, comparativos, exportação e drill-down transacional.
+- **Otimização de tempo e UX:** Aplicar LAY-24 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova filtros, hierarquia, total, drill-down, exportação e agendamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0439 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **relatórios e drill-down** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir filtros, hierarquia, total, drill-down, exportação e agendamento. Permitir ir do total ao documento e ao evento de origem.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **relatórios e drill-down** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-24 — Relatório com drill-down`. Relatório denso, hierarquia expansível, filtros, comparativos, exportação e drill-down transacional.
+- **Otimização de tempo e UX:** Aplicar LAY-24 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova filtros, hierarquia, total, drill-down, exportação e agendamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0440 — Revisão e definição de pronto
+
+**Pergunta:** Como **relatórios e drill-down** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir filtros, hierarquia, total, drill-down, exportação e agendamento. Permitir ir do total ao documento e ao evento de origem.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **relatórios e drill-down** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-24 — Relatório com drill-down`. Relatório denso, hierarquia expansível, filtros, comparativos, exportação e drill-down transacional.
+- **Otimização de tempo e UX:** Aplicar LAY-24 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova filtros, hierarquia, total, drill-down, exportação e agendamento; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## KPI — Kpis e alertas
+
+### PR-COMEX-02-Q0441 — Escopo do pr
+
+**Pergunta:** Como **KPIs e alertas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir definição, fórmula, owner, meta, limiar, tendência e ação. Usar indicadores acionáveis com definição, owner e limiar.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **KPIs e alertas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-11 — Dashboard operacional`. KPIs somente acionáveis, filas críticas, tendência, exceções e atalhos; sem cards decorativos.
+- **Otimização de tempo e UX:** Aplicar LAY-11 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova definição, fórmula, owner, meta, limiar, tendência e ação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0442 — Arquitetura e componentes
+
+**Pergunta:** Como **KPIs e alertas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir definição, fórmula, owner, meta, limiar, tendência e ação. Usar indicadores acionáveis com definição, owner e limiar.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **KPIs e alertas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-11 — Dashboard operacional`. KPIs somente acionáveis, filas críticas, tendência, exceções e atalhos; sem cards decorativos.
+- **Otimização de tempo e UX:** Aplicar LAY-11 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova definição, fórmula, owner, meta, limiar, tendência e ação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0443 — Modelo de dados e migration
+
+**Pergunta:** Como **KPIs e alertas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir definição, fórmula, owner, meta, limiar, tendência e ação. Usar indicadores acionáveis com definição, owner e limiar.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **KPIs e alertas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-11 — Dashboard operacional`. KPIs somente acionáveis, filas críticas, tendência, exceções e atalhos; sem cards decorativos.
+- **Otimização de tempo e UX:** Aplicar LAY-11 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova definição, fórmula, owner, meta, limiar, tendência e ação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0444 — Api, eventos e erros
+
+**Pergunta:** Como **KPIs e alertas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir definição, fórmula, owner, meta, limiar, tendência e ação. Usar indicadores acionáveis com definição, owner e limiar.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **KPIs e alertas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-11 — Dashboard operacional`. KPIs somente acionáveis, filas críticas, tendência, exceções e atalhos; sem cards decorativos.
+- **Otimização de tempo e UX:** Aplicar LAY-11 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova definição, fórmula, owner, meta, limiar, tendência e ação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0445 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **KPIs e alertas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir definição, fórmula, owner, meta, limiar, tendência e ação. Usar indicadores acionáveis com definição, owner e limiar.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **KPIs e alertas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-11 — Dashboard operacional`. KPIs somente acionáveis, filas críticas, tendência, exceções e atalhos; sem cards decorativos.
+- **Otimização de tempo e UX:** Aplicar LAY-11 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova definição, fórmula, owner, meta, limiar, tendência e ação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0446 — Validação, segurança e auditoria
+
+**Pergunta:** Como **KPIs e alertas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir definição, fórmula, owner, meta, limiar, tendência e ação. Usar indicadores acionáveis com definição, owner e limiar.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **KPIs e alertas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-11 — Dashboard operacional`. KPIs somente acionáveis, filas críticas, tendência, exceções e atalhos; sem cards decorativos.
+- **Otimização de tempo e UX:** Aplicar LAY-11 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova definição, fórmula, owner, meta, limiar, tendência e ação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0447 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **KPIs e alertas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir definição, fórmula, owner, meta, limiar, tendência e ação. Usar indicadores acionáveis com definição, owner e limiar.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **KPIs e alertas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-11 — Dashboard operacional`. KPIs somente acionáveis, filas críticas, tendência, exceções e atalhos; sem cards decorativos.
+- **Otimização de tempo e UX:** Aplicar LAY-11 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova definição, fórmula, owner, meta, limiar, tendência e ação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0448 — Testes e evidências
+
+**Pergunta:** Como **KPIs e alertas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir definição, fórmula, owner, meta, limiar, tendência e ação. Usar indicadores acionáveis com definição, owner e limiar.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **KPIs e alertas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-11 — Dashboard operacional`. KPIs somente acionáveis, filas críticas, tendência, exceções e atalhos; sem cards decorativos.
+- **Otimização de tempo e UX:** Aplicar LAY-11 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova definição, fórmula, owner, meta, limiar, tendência e ação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0449 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **KPIs e alertas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir definição, fórmula, owner, meta, limiar, tendência e ação. Usar indicadores acionáveis com definição, owner e limiar.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **KPIs e alertas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-11 — Dashboard operacional`. KPIs somente acionáveis, filas críticas, tendência, exceções e atalhos; sem cards decorativos.
+- **Otimização de tempo e UX:** Aplicar LAY-11 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova definição, fórmula, owner, meta, limiar, tendência e ação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0450 — Revisão e definição de pronto
+
+**Pergunta:** Como **KPIs e alertas** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir definição, fórmula, owner, meta, limiar, tendência e ação. Usar indicadores acionáveis com definição, owner e limiar.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **KPIs e alertas** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-11 — Dashboard operacional`. KPIs somente acionáveis, filas críticas, tendência, exceções e atalhos; sem cards decorativos.
+- **Otimização de tempo e UX:** Aplicar LAY-11 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova definição, fórmula, owner, meta, limiar, tendência e ação; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## IO — Importação e exportação de dados
+
+### PR-COMEX-02-Q0451 — Escopo do pr
+
+**Pergunta:** Como **importação e exportação de dados** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir template, encoding, versão, prévia, validação, erro e rollback. Validar layout, pré-visualizar e produzir relatório de erros.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **importação e exportação de dados** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-25 — Importação assistida`. Upload, mapeamento de colunas, prévia, validação por linha, correção e relatório final.
+- **Otimização de tempo e UX:** Aplicar LAY-25 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova template, encoding, versão, prévia, validação, erro e rollback; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0452 — Arquitetura e componentes
+
+**Pergunta:** Como **importação e exportação de dados** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir template, encoding, versão, prévia, validação, erro e rollback. Validar layout, pré-visualizar e produzir relatório de erros.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **importação e exportação de dados** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-25 — Importação assistida`. Upload, mapeamento de colunas, prévia, validação por linha, correção e relatório final.
+- **Otimização de tempo e UX:** Aplicar LAY-25 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova template, encoding, versão, prévia, validação, erro e rollback; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0453 — Modelo de dados e migration
+
+**Pergunta:** Como **importação e exportação de dados** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir template, encoding, versão, prévia, validação, erro e rollback. Validar layout, pré-visualizar e produzir relatório de erros.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **importação e exportação de dados** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-25 — Importação assistida`. Upload, mapeamento de colunas, prévia, validação por linha, correção e relatório final.
+- **Otimização de tempo e UX:** Aplicar LAY-25 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova template, encoding, versão, prévia, validação, erro e rollback; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0454 — Api, eventos e erros
+
+**Pergunta:** Como **importação e exportação de dados** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir template, encoding, versão, prévia, validação, erro e rollback. Validar layout, pré-visualizar e produzir relatório de erros.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **importação e exportação de dados** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-25 — Importação assistida`. Upload, mapeamento de colunas, prévia, validação por linha, correção e relatório final.
+- **Otimização de tempo e UX:** Aplicar LAY-25 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova template, encoding, versão, prévia, validação, erro e rollback; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0455 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **importação e exportação de dados** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir template, encoding, versão, prévia, validação, erro e rollback. Validar layout, pré-visualizar e produzir relatório de erros.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **importação e exportação de dados** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-25 — Importação assistida`. Upload, mapeamento de colunas, prévia, validação por linha, correção e relatório final.
+- **Otimização de tempo e UX:** Aplicar LAY-25 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova template, encoding, versão, prévia, validação, erro e rollback; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0456 — Validação, segurança e auditoria
+
+**Pergunta:** Como **importação e exportação de dados** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir template, encoding, versão, prévia, validação, erro e rollback. Validar layout, pré-visualizar e produzir relatório de erros.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **importação e exportação de dados** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-25 — Importação assistida`. Upload, mapeamento de colunas, prévia, validação por linha, correção e relatório final.
+- **Otimização de tempo e UX:** Aplicar LAY-25 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova template, encoding, versão, prévia, validação, erro e rollback; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0457 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **importação e exportação de dados** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir template, encoding, versão, prévia, validação, erro e rollback. Validar layout, pré-visualizar e produzir relatório de erros.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **importação e exportação de dados** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-25 — Importação assistida`. Upload, mapeamento de colunas, prévia, validação por linha, correção e relatório final.
+- **Otimização de tempo e UX:** Aplicar LAY-25 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova template, encoding, versão, prévia, validação, erro e rollback; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0458 — Testes e evidências
+
+**Pergunta:** Como **importação e exportação de dados** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir template, encoding, versão, prévia, validação, erro e rollback. Validar layout, pré-visualizar e produzir relatório de erros.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **importação e exportação de dados** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-25 — Importação assistida`. Upload, mapeamento de colunas, prévia, validação por linha, correção e relatório final.
+- **Otimização de tempo e UX:** Aplicar LAY-25 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova template, encoding, versão, prévia, validação, erro e rollback; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0459 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **importação e exportação de dados** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir template, encoding, versão, prévia, validação, erro e rollback. Validar layout, pré-visualizar e produzir relatório de erros.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **importação e exportação de dados** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-25 — Importação assistida`. Upload, mapeamento de colunas, prévia, validação por linha, correção e relatório final.
+- **Otimização de tempo e UX:** Aplicar LAY-25 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova template, encoding, versão, prévia, validação, erro e rollback; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0460 — Revisão e definição de pronto
+
+**Pergunta:** Como **importação e exportação de dados** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir template, encoding, versão, prévia, validação, erro e rollback. Validar layout, pré-visualizar e produzir relatório de erros.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **importação e exportação de dados** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-25 — Importação assistida`. Upload, mapeamento de colunas, prévia, validação por linha, correção e relatório final.
+- **Otimização de tempo e UX:** Aplicar LAY-25 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova template, encoding, versão, prévia, validação, erro e rollback; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## PERF — Desempenho e volume
+
+### PR-COMEX-02-Q0461 — Escopo do pr
+
+**Pergunta:** Como **desempenho e volume** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir p95/p99, volume, paginação, índice, cache, fila e teste de carga. Definir percentil, carga, paginação, índices e limite de lote.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **desempenho e volume** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-26 — Painel de performance`. p50/p95/p99, volume, erros, filas, dependências e comparação antes/depois do release.
+- **Otimização de tempo e UX:** Aplicar LAY-26 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova p95/p99, volume, paginação, índice, cache, fila e teste de carga; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0462 — Arquitetura e componentes
+
+**Pergunta:** Como **desempenho e volume** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir p95/p99, volume, paginação, índice, cache, fila e teste de carga. Definir percentil, carga, paginação, índices e limite de lote.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **desempenho e volume** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-26 — Painel de performance`. p50/p95/p99, volume, erros, filas, dependências e comparação antes/depois do release.
+- **Otimização de tempo e UX:** Aplicar LAY-26 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova p95/p99, volume, paginação, índice, cache, fila e teste de carga; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0463 — Modelo de dados e migration
+
+**Pergunta:** Como **desempenho e volume** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir p95/p99, volume, paginação, índice, cache, fila e teste de carga. Definir percentil, carga, paginação, índices e limite de lote.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **desempenho e volume** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-26 — Painel de performance`. p50/p95/p99, volume, erros, filas, dependências e comparação antes/depois do release.
+- **Otimização de tempo e UX:** Aplicar LAY-26 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova p95/p99, volume, paginação, índice, cache, fila e teste de carga; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0464 — Api, eventos e erros
+
+**Pergunta:** Como **desempenho e volume** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir p95/p99, volume, paginação, índice, cache, fila e teste de carga. Definir percentil, carga, paginação, índices e limite de lote.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **desempenho e volume** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-26 — Painel de performance`. p50/p95/p99, volume, erros, filas, dependências e comparação antes/depois do release.
+- **Otimização de tempo e UX:** Aplicar LAY-26 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova p95/p99, volume, paginação, índice, cache, fila e teste de carga; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0465 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **desempenho e volume** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir p95/p99, volume, paginação, índice, cache, fila e teste de carga. Definir percentil, carga, paginação, índices e limite de lote.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **desempenho e volume** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-26 — Painel de performance`. p50/p95/p99, volume, erros, filas, dependências e comparação antes/depois do release.
+- **Otimização de tempo e UX:** Aplicar LAY-26 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova p95/p99, volume, paginação, índice, cache, fila e teste de carga; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0466 — Validação, segurança e auditoria
+
+**Pergunta:** Como **desempenho e volume** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir p95/p99, volume, paginação, índice, cache, fila e teste de carga. Definir percentil, carga, paginação, índices e limite de lote.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **desempenho e volume** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-26 — Painel de performance`. p50/p95/p99, volume, erros, filas, dependências e comparação antes/depois do release.
+- **Otimização de tempo e UX:** Aplicar LAY-26 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova p95/p99, volume, paginação, índice, cache, fila e teste de carga; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0467 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **desempenho e volume** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir p95/p99, volume, paginação, índice, cache, fila e teste de carga. Definir percentil, carga, paginação, índices e limite de lote.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **desempenho e volume** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-26 — Painel de performance`. p50/p95/p99, volume, erros, filas, dependências e comparação antes/depois do release.
+- **Otimização de tempo e UX:** Aplicar LAY-26 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova p95/p99, volume, paginação, índice, cache, fila e teste de carga; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0468 — Testes e evidências
+
+**Pergunta:** Como **desempenho e volume** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir p95/p99, volume, paginação, índice, cache, fila e teste de carga. Definir percentil, carga, paginação, índices e limite de lote.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **desempenho e volume** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-26 — Painel de performance`. p50/p95/p99, volume, erros, filas, dependências e comparação antes/depois do release.
+- **Otimização de tempo e UX:** Aplicar LAY-26 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova p95/p99, volume, paginação, índice, cache, fila e teste de carga; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0469 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **desempenho e volume** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir p95/p99, volume, paginação, índice, cache, fila e teste de carga. Definir percentil, carga, paginação, índices e limite de lote.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **desempenho e volume** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-26 — Painel de performance`. p50/p95/p99, volume, erros, filas, dependências e comparação antes/depois do release.
+- **Otimização de tempo e UX:** Aplicar LAY-26 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova p95/p99, volume, paginação, índice, cache, fila e teste de carga; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0470 — Revisão e definição de pronto
+
+**Pergunta:** Como **desempenho e volume** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir p95/p99, volume, paginação, índice, cache, fila e teste de carga. Definir percentil, carga, paginação, índices e limite de lote.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **desempenho e volume** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-26 — Painel de performance`. p50/p95/p99, volume, erros, filas, dependências e comparação antes/depois do release.
+- **Otimização de tempo e UX:** Aplicar LAY-26 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova p95/p99, volume, paginação, índice, cache, fila e teste de carga; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## SEC — Segurança e privacidade
+
+### PR-COMEX-02-Q0471 — Escopo do pr
+
+**Pergunta:** Como **segurança e privacidade** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir autenticação, autorização, segredo, criptografia, retenção e incidente. Aplicar mínimo privilégio, criptografia e proteção de segredos.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **segurança e privacidade** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova autenticação, autorização, segredo, criptografia, retenção e incidente; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0472 — Arquitetura e componentes
+
+**Pergunta:** Como **segurança e privacidade** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir autenticação, autorização, segredo, criptografia, retenção e incidente. Aplicar mínimo privilégio, criptografia e proteção de segredos.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **segurança e privacidade** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova autenticação, autorização, segredo, criptografia, retenção e incidente; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0473 — Modelo de dados e migration
+
+**Pergunta:** Como **segurança e privacidade** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir autenticação, autorização, segredo, criptografia, retenção e incidente. Aplicar mínimo privilégio, criptografia e proteção de segredos.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **segurança e privacidade** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova autenticação, autorização, segredo, criptografia, retenção e incidente; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0474 — Api, eventos e erros
+
+**Pergunta:** Como **segurança e privacidade** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir autenticação, autorização, segredo, criptografia, retenção e incidente. Aplicar mínimo privilégio, criptografia e proteção de segredos.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **segurança e privacidade** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova autenticação, autorização, segredo, criptografia, retenção e incidente; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0475 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **segurança e privacidade** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir autenticação, autorização, segredo, criptografia, retenção e incidente. Aplicar mínimo privilégio, criptografia e proteção de segredos.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **segurança e privacidade** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova autenticação, autorização, segredo, criptografia, retenção e incidente; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0476 — Validação, segurança e auditoria
+
+**Pergunta:** Como **segurança e privacidade** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir autenticação, autorização, segredo, criptografia, retenção e incidente. Aplicar mínimo privilégio, criptografia e proteção de segredos.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **segurança e privacidade** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova autenticação, autorização, segredo, criptografia, retenção e incidente; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0477 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **segurança e privacidade** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir autenticação, autorização, segredo, criptografia, retenção e incidente. Aplicar mínimo privilégio, criptografia e proteção de segredos.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **segurança e privacidade** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova autenticação, autorização, segredo, criptografia, retenção e incidente; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0478 — Testes e evidências
+
+**Pergunta:** Como **segurança e privacidade** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir autenticação, autorização, segredo, criptografia, retenção e incidente. Aplicar mínimo privilégio, criptografia e proteção de segredos.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **segurança e privacidade** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova autenticação, autorização, segredo, criptografia, retenção e incidente; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0479 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **segurança e privacidade** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir autenticação, autorização, segredo, criptografia, retenção e incidente. Aplicar mínimo privilégio, criptografia e proteção de segredos.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **segurança e privacidade** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova autenticação, autorização, segredo, criptografia, retenção e incidente; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0480 — Revisão e definição de pronto
+
+**Pergunta:** Como **segurança e privacidade** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir autenticação, autorização, segredo, criptografia, retenção e incidente. Aplicar mínimo privilégio, criptografia e proteção de segredos.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **segurança e privacidade** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-12 — Admin Console`. Console denso por domínio, busca, matrizes, versões, comparação e publicação controlada.
+- **Otimização de tempo e UX:** Aplicar LAY-12 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova autenticação, autorização, segredo, criptografia, retenção e incidente; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, UX-08, UX-09
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## TEST — Testes e evidências
+
+### PR-COMEX-02-Q0481 — Escopo do pr
+
+**Pergunta:** Como **testes e evidências** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir dados, cenário, precondição, ação, resultado, evidência e regressão. Cobrir happy path, exceções, reversões, permissões e cálculo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **testes e evidências** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-27 — Test cockpit`. Plano, casos, execução, evidências, defeitos, cobertura e gates em um cockpit de QA.
+- **Otimização de tempo e UX:** Aplicar LAY-27 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova dados, cenário, precondição, ação, resultado, evidência e regressão; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0482 — Arquitetura e componentes
+
+**Pergunta:** Como **testes e evidências** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir dados, cenário, precondição, ação, resultado, evidência e regressão. Cobrir happy path, exceções, reversões, permissões e cálculo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **testes e evidências** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-27 — Test cockpit`. Plano, casos, execução, evidências, defeitos, cobertura e gates em um cockpit de QA.
+- **Otimização de tempo e UX:** Aplicar LAY-27 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova dados, cenário, precondição, ação, resultado, evidência e regressão; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0483 — Modelo de dados e migration
+
+**Pergunta:** Como **testes e evidências** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir dados, cenário, precondição, ação, resultado, evidência e regressão. Cobrir happy path, exceções, reversões, permissões e cálculo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **testes e evidências** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-27 — Test cockpit`. Plano, casos, execução, evidências, defeitos, cobertura e gates em um cockpit de QA.
+- **Otimização de tempo e UX:** Aplicar LAY-27 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova dados, cenário, precondição, ação, resultado, evidência e regressão; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0484 — Api, eventos e erros
+
+**Pergunta:** Como **testes e evidências** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir dados, cenário, precondição, ação, resultado, evidência e regressão. Cobrir happy path, exceções, reversões, permissões e cálculo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **testes e evidências** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-27 — Test cockpit`. Plano, casos, execução, evidências, defeitos, cobertura e gates em um cockpit de QA.
+- **Otimização de tempo e UX:** Aplicar LAY-27 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova dados, cenário, precondição, ação, resultado, evidência e regressão; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0485 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **testes e evidências** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir dados, cenário, precondição, ação, resultado, evidência e regressão. Cobrir happy path, exceções, reversões, permissões e cálculo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **testes e evidências** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-27 — Test cockpit`. Plano, casos, execução, evidências, defeitos, cobertura e gates em um cockpit de QA.
+- **Otimização de tempo e UX:** Aplicar LAY-27 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova dados, cenário, precondição, ação, resultado, evidência e regressão; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0486 — Validação, segurança e auditoria
+
+**Pergunta:** Como **testes e evidências** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir dados, cenário, precondição, ação, resultado, evidência e regressão. Cobrir happy path, exceções, reversões, permissões e cálculo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **testes e evidências** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-27 — Test cockpit`. Plano, casos, execução, evidências, defeitos, cobertura e gates em um cockpit de QA.
+- **Otimização de tempo e UX:** Aplicar LAY-27 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova dados, cenário, precondição, ação, resultado, evidência e regressão; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0487 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **testes e evidências** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir dados, cenário, precondição, ação, resultado, evidência e regressão. Cobrir happy path, exceções, reversões, permissões e cálculo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **testes e evidências** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-27 — Test cockpit`. Plano, casos, execução, evidências, defeitos, cobertura e gates em um cockpit de QA.
+- **Otimização de tempo e UX:** Aplicar LAY-27 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova dados, cenário, precondição, ação, resultado, evidência e regressão; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0488 — Testes e evidências
+
+**Pergunta:** Como **testes e evidências** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir dados, cenário, precondição, ação, resultado, evidência e regressão. Cobrir happy path, exceções, reversões, permissões e cálculo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **testes e evidências** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-27 — Test cockpit`. Plano, casos, execução, evidências, defeitos, cobertura e gates em um cockpit de QA.
+- **Otimização de tempo e UX:** Aplicar LAY-27 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova dados, cenário, precondição, ação, resultado, evidência e regressão; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0489 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **testes e evidências** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir dados, cenário, precondição, ação, resultado, evidência e regressão. Cobrir happy path, exceções, reversões, permissões e cálculo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **testes e evidências** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-27 — Test cockpit`. Plano, casos, execução, evidências, defeitos, cobertura e gates em um cockpit de QA.
+- **Otimização de tempo e UX:** Aplicar LAY-27 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova dados, cenário, precondição, ação, resultado, evidência e regressão; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0490 — Revisão e definição de pronto
+
+**Pergunta:** Como **testes e evidências** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir dados, cenário, precondição, ação, resultado, evidência e regressão. Cobrir happy path, exceções, reversões, permissões e cálculo.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **testes e evidências** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-27 — Test cockpit`. Plano, casos, execução, evidências, defeitos, cobertura e gates em um cockpit de QA.
+- **Otimização de tempo e UX:** Aplicar LAY-27 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova dados, cenário, precondição, ação, resultado, evidência e regressão; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+## MIG — Migração, rollout e suporte
+
+### PR-COMEX-02-Q0491 — Escopo do pr
+
+**Pergunta:** Como **migração, rollout e suporte** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **escopo do PR**? Qual resultado testável encerra o PR e o que deve ficar explicitamente fora?
+
+- **Sugestão recomendada:** Limitar o PR a um resultado homologável e listar explicitamente exclusões, dependências e feature flags. Para **embarque**, cobrir origem, transformação, dry-run, reconciliação, cutover, rollback e hypercare. Usar dry-run, reconciliação, feature flag, rollback e hypercare.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **migração, rollout e suporte** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-28 — Cutover cockpit`. Checklist por minuto, responsáveis, dependências, status, reconciliações, rollback e hypercare.
+- **Otimização de tempo e UX:** Aplicar LAY-28 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova origem, transformação, dry-run, reconciliação, cutover, rollback e hypercare; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0492 — Arquitetura e componentes
+
+**Pergunta:** Como **migração, rollout e suporte** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **arquitetura e componentes**? Quais serviços, componentes, hooks, jobs e contratos devem ser criados ou alterados?
+
+- **Sugestão recomendada:** Reusar componentes e contratos compartilhados; evitar lógica de domínio dentro de componentes visuais. Para **embarque**, cobrir origem, transformação, dry-run, reconciliação, cutover, rollback e hypercare. Usar dry-run, reconciliação, feature flag, rollback e hypercare.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **migração, rollout e suporte** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-28 — Cutover cockpit`. Checklist por minuto, responsáveis, dependências, status, reconciliações, rollback e hypercare.
+- **Otimização de tempo e UX:** Aplicar LAY-28 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova origem, transformação, dry-run, reconciliação, cutover, rollback e hypercare; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0493 — Modelo de dados e migration
+
+**Pergunta:** Como **migração, rollout e suporte** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **modelo de dados e migration**? Quais tabelas, colunas, índices, constraints e migrations são necessárias?
+
+- **Sugestão recomendada:** Usar migration reversível, constraints de integridade, índices justificados e nenhuma exclusão destrutiva. Para **embarque**, cobrir origem, transformação, dry-run, reconciliação, cutover, rollback e hypercare. Usar dry-run, reconciliação, feature flag, rollback e hypercare.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **migração, rollout e suporte** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-28 — Cutover cockpit`. Checklist por minuto, responsáveis, dependências, status, reconciliações, rollback e hypercare.
+- **Otimização de tempo e UX:** Aplicar LAY-28 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova origem, transformação, dry-run, reconciliação, cutover, rollback e hypercare; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0494 — Api, eventos e erros
+
+**Pergunta:** Como **migração, rollout e suporte** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **API, eventos e erros**? Quais endpoints, schemas, eventos, códigos de erro e regras de idempotência devem existir?
+
+- **Sugestão recomendada:** Publicar contrato OpenAPI, exemplos, erros, idempotência, autenticação, paginação e testes de contrato. Para **embarque**, cobrir origem, transformação, dry-run, reconciliação, cutover, rollback e hypercare. Usar dry-run, reconciliação, feature flag, rollback e hypercare.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **migração, rollout e suporte** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-28 — Cutover cockpit`. Checklist por minuto, responsáveis, dependências, status, reconciliações, rollback e hypercare.
+- **Otimização de tempo e UX:** Aplicar LAY-28 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova origem, transformação, dry-run, reconciliação, cutover, rollback e hypercare; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0495 — Layout, estados visuais e teclado
+
+**Pergunta:** Como **migração, rollout e suporte** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **layout, estados visuais e teclado**? Quais telas, componentes, estados vazios, atalhos e comportamentos responsivos devem existir?
+
+- **Sugestão recomendada:** Implementar layout denso, teclado, estados vazio/carregando/erro/sucesso, foco previsível e ação primária explícita. Para **embarque**, cobrir origem, transformação, dry-run, reconciliação, cutover, rollback e hypercare. Usar dry-run, reconciliação, feature flag, rollback e hypercare.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **migração, rollout e suporte** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-28 — Cutover cockpit`. Checklist por minuto, responsáveis, dependências, status, reconciliações, rollback e hypercare.
+- **Otimização de tempo e UX:** Aplicar LAY-28 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova origem, transformação, dry-run, reconciliação, cutover, rollback e hypercare; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0496 — Validação, segurança e auditoria
+
+**Pergunta:** Como **migração, rollout e suporte** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **validação, segurança e auditoria**? Quais validações, permissões, logs e proteções devem ser comprovadas?
+
+- **Sugestão recomendada:** Validar no frontend para rapidez e no backend para integridade; auditar antes/depois e decisão aplicada. Para **embarque**, cobrir origem, transformação, dry-run, reconciliação, cutover, rollback e hypercare. Usar dry-run, reconciliação, feature flag, rollback e hypercare.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **migração, rollout e suporte** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-28 — Cutover cockpit`. Checklist por minuto, responsáveis, dependências, status, reconciliações, rollback e hypercare.
+- **Otimização de tempo e UX:** Aplicar LAY-28 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova origem, transformação, dry-run, reconciliação, cutover, rollback e hypercare; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0497 — Desempenho, offline e resiliência
+
+**Pergunta:** Como **migração, rollout e suporte** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **desempenho, offline e resiliência**? Quais SLAs, limites, retries, filas e cenários offline devem ser testados?
+
+- **Sugestão recomendada:** Definir percentis, volume, timeout, retry, fila, comportamento offline e degradação segura. Para **embarque**, cobrir origem, transformação, dry-run, reconciliação, cutover, rollback e hypercare. Usar dry-run, reconciliação, feature flag, rollback e hypercare.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **migração, rollout e suporte** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-28 — Cutover cockpit`. Checklist por minuto, responsáveis, dependências, status, reconciliações, rollback e hypercare.
+- **Otimização de tempo e UX:** Aplicar LAY-28 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova origem, transformação, dry-run, reconciliação, cutover, rollback e hypercare; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0498 — Testes e evidências
+
+**Pergunta:** Como **migração, rollout e suporte** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **testes e evidências**? Quais testes unitários, integração, contrato, E2E e evidências são obrigatórios?
+
+- **Sugestão recomendada:** Exigir testes unitários, integração, contrato, E2E e regressão com evidências automáticas no PR. Para **embarque**, cobrir origem, transformação, dry-run, reconciliação, cutover, rollback e hypercare. Usar dry-run, reconciliação, feature flag, rollback e hypercare.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **migração, rollout e suporte** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-28 — Cutover cockpit`. Checklist por minuto, responsáveis, dependências, status, reconciliações, rollback e hypercare.
+- **Otimização de tempo e UX:** Aplicar LAY-28 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova origem, transformação, dry-run, reconciliação, cutover, rollback e hypercare; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0499 — Rollout, compatibilidade e rollback
+
+**Pergunta:** Como **migração, rollout e suporte** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **rollout, compatibilidade e rollback**? Como liberar, migrar, ativar por feature flag e reverter sem perda?
+
+- **Sugestão recomendada:** Migrar por dry-run, ativar progressivamente, preservar compatibilidade e provar rollback antes do merge. Para **embarque**, cobrir origem, transformação, dry-run, reconciliação, cutover, rollback e hypercare. Usar dry-run, reconciliação, feature flag, rollback e hypercare.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **migração, rollout e suporte** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-28 — Cutover cockpit`. Checklist por minuto, responsáveis, dependências, status, reconciliações, rollback e hypercare.
+- **Otimização de tempo e UX:** Aplicar LAY-28 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova origem, transformação, dry-run, reconciliação, cutover, rollback e hypercare; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.
+
+### PR-COMEX-02-Q0500 — Revisão e definição de pronto
+
+**Pergunta:** Como **migração, rollout e suporte** deve ser definido no PR **Embarque, booking, BL e contêiner** sob a perspectiva de **revisão e definição de pronto**? Quais checklists funcionais, UX, segurança e observabilidade bloqueiam o merge?
+
+- **Sugestão recomendada:** Bloquear merge quando falhar funcional, cálculo, segurança, UX, acessibilidade, observabilidade ou documentação. Para **embarque**, cobrir origem, transformação, dry-run, reconciliação, cutover, rollback e hypercare. Usar dry-run, reconciliação, feature flag, rollback e hypercare.
+- **Exemplo Sunset:** No cenário Sunset, um pedido internacional de pneus gera dois contêineres, desembarca no porto e segue para importação definitiva, trânsito ou Zona Primária Aduaneira. A decisão sobre **migração, rollout e suporte** deve permitir que analista de COMEX, despachante, agente de cargas, fornecedor e financeiro executem **avançar a importação para a próxima etapa** sem recapturar dados e com rastreabilidade.
+- **Layout sugerido:** `LAY-28 — Cutover cockpit`. Checklist por minuto, responsáveis, dependências, status, reconciliações, rollback e hypercare.
+- **Otimização de tempo e UX:** Aplicar LAY-28 reduz procura, alternância de telas e erro de digitação. O usuário deve identificar estado, exceção e próxima ação em até 5 segundos; operações repetitivas devem aceitar teclado, colar em massa ou lote seguro.
+- **Critério de aceite:** Homologação comprova origem, transformação, dry-run, reconciliação, cutover, rollback e hypercare; existe ao menos um teste positivo, um de exceção e um de permissão. A evidência inclui estado final, histórico, impacto e tempo de execução, acompanhando dias de ciclo, atrasos, divergências documentais e custo por processo.
+- **Base de referência:** DOM-01, DOM-04, UX-01, UX-02, UX-03, ARCH-01
+- **Decisão:** ACEITA — aprovação global registrada em 2026-07-17.

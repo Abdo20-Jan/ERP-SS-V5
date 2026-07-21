@@ -1,0 +1,144 @@
+﻿level,unit_id,module,name,questions,path,linked_pr,linked_submodule
+MODULE,M-COMEX,COMEX,COMEX,500,05-questionarios/05-corpus-71500/01-modulos/COMEX/M-COMEX_500_PERGUNTAS.md,,
+MODULE,M-LANDED,Landed cost,Landed cost,500,05-questionarios/05-corpus-71500/01-modulos/LANDED/M-LANDED_500_PERGUNTAS.md,,
+MODULE,M-FISCAL,Fiscal,Fiscal,500,05-questionarios/05-corpus-71500/01-modulos/FISCAL/M-FISCAL_500_PERGUNTAS.md,,
+MODULE,M-ACCOUNTING,Contábil — fundação,Contábil — fundação,500,05-questionarios/05-corpus-71500/01-modulos/ACCOUNTING/M-ACCOUNTING_500_PERGUNTAS.md,,
+MODULE,M-INVENTORY,Estoque,Estoque,500,05-questionarios/05-corpus-71500/01-modulos/INVENTORY/M-INVENTORY_500_PERGUNTAS.md,,
+MODULE,M-TREASURY,Tesouraria,Tesouraria,500,05-questionarios/05-corpus-71500/01-modulos/TREASURY/M-TREASURY_500_PERGUNTAS.md,,
+MODULE,M-SALES,Comercial,Comercial,500,05-questionarios/05-corpus-71500/01-modulos/SALES/M-SALES_500_PERGUNTAS.md,,
+MODULE,M-PURCHASING,Compras,Compras,500,05-questionarios/05-corpus-71500/01-modulos/PURCHASING/M-PURCHASING_500_PERGUNTAS.md,,
+MODULE,M-CRM,CRM,CRM,500,05-questionarios/05-corpus-71500/01-modulos/CRM/M-CRM_500_PERGUNTAS.md,,
+MODULE,M-CLOSE,Fechamento contábil transversal,Fechamento contábil transversal,500,05-questionarios/05-corpus-71500/01-modulos/CLOSE/M-CLOSE_500_PERGUNTAS.md,,
+MODULE,M-PLATFORM,Plataforma,Plataforma,500,05-questionarios/05-corpus-71500/01-modulos/PLATFORM/M-PLATFORM_500_PERGUNTAS.md,,
+MODULE,M-COMP,Módulos complementares,Módulos complementares,500,05-questionarios/05-corpus-71500/01-modulos/COMP/M-COMP_500_PERGUNTAS.md,,
+MODULE,M-QA,"Testes, migração e implantação","Testes, migração e implantação",500,05-questionarios/05-corpus-71500/01-modulos/QA/M-QA_500_PERGUNTAS.md,,
+SUBMODULE,SM-COMEX-01,COMEX,Pedido internacional e produção,500,05-questionarios/05-corpus-71500/02-submodulos/COMEX/SM-COMEX-01_PEDIDO_INTERNACIONAL_E_PRODUCAO_500_PERGUNTAS.md,PR-COMEX-01,
+PR,PR-COMEX-01,COMEX,Pedido internacional e produção,500,05-questionarios/05-corpus-71500/03-prs/COMEX/PR-COMEX-01_PEDIDO_INTERNACIONAL_E_PRODUCAO_500_PERGUNTAS.md,,SM-COMEX-01
+SUBMODULE,SM-COMEX-02,COMEX,"Embarque, booking, BL e contêiner",500,05-questionarios/05-corpus-71500/02-submodulos/COMEX/SM-COMEX-02_EMBARQUE_BOOKING_BL_E_CONTEINER_500_PERGUNTAS.md,PR-COMEX-02,
+PR,PR-COMEX-02,COMEX,"Embarque, booking, BL e contêiner",500,05-questionarios/05-corpus-71500/03-prs/COMEX/PR-COMEX-02_EMBARQUE_BOOKING_BL_E_CONTEINER_500_PERGUNTAS.md,,SM-COMEX-02
+SUBMODULE,SM-COMEX-03,COMEX,Despacho e regimes aduaneiros,500,05-questionarios/05-corpus-71500/02-submodulos/COMEX/SM-COMEX-03_DESPACHO_E_REGIMES_ADUANEIROS_500_PERGUNTAS.md,PR-COMEX-03,
+PR,PR-COMEX-03,COMEX,Despacho e regimes aduaneiros,500,05-questionarios/05-corpus-71500/03-prs/COMEX/PR-COMEX-03_DESPACHO_E_REGIMES_ADUANEIROS_500_PERGUNTAS.md,,SM-COMEX-03
+SUBMODULE,SM-COMEX-04,COMEX,"Documentos, OCR, ocorrências e prazos",500,05-questionarios/05-corpus-71500/02-submodulos/COMEX/SM-COMEX-04_DOCUMENTOS_OCR_OCORRENCIAS_E_PRAZOS_500_PERGUNTAS.md,PR-COMEX-04,
+PR,PR-COMEX-04,COMEX,"Documentos, OCR, ocorrências e prazos",500,05-questionarios/05-corpus-71500/03-prs/COMEX/PR-COMEX-04_DOCUMENTOS_OCR_OCORRENCIAS_E_PRAZOS_500_PERGUNTAS.md,,SM-COMEX-04
+SUBMODULE,SM-COMEX-05,COMEX,"Recebimento, devolução e fechamento",500,05-questionarios/05-corpus-71500/02-submodulos/COMEX/SM-COMEX-05_RECEBIMENTO_DEVOLUCAO_E_FECHAMENTO_500_PERGUNTAS.md,PR-COMEX-05,
+PR,PR-COMEX-05,COMEX,"Recebimento, devolução e fechamento",500,05-questionarios/05-corpus-71500/03-prs/COMEX/PR-COMEX-05_RECEBIMENTO_DEVOLUCAO_E_FECHAMENTO_500_PERGUNTAS.md,,SM-COMEX-05
+SUBMODULE,SM-LANDED-01,Landed cost,Catálogo de componentes e elegibilidade,500,05-questionarios/05-corpus-71500/02-submodulos/LANDED/SM-LANDED-01_CATALOGO_DE_COMPONENTES_E_ELEGIBILIDADE_500_PERGUNTAS.md,PR-LANDED-01,
+PR,PR-LANDED-01,Landed cost,Catálogo de componentes e elegibilidade,500,05-questionarios/05-corpus-71500/03-prs/LANDED/PR-LANDED-01_CATALOGO_DE_COMPONENTES_E_ELEGIBILIDADE_500_PERGUNTAS.md,,SM-LANDED-01
+SUBMODULE,SM-LANDED-02,Landed cost,Pools provisórios e documentos,500,05-questionarios/05-corpus-71500/02-submodulos/LANDED/SM-LANDED-02_POOLS_PROVISORIOS_E_DOCUMENTOS_500_PERGUNTAS.md,PR-LANDED-02,
+PR,PR-LANDED-02,Landed cost,Pools provisórios e documentos,500,05-questionarios/05-corpus-71500/03-prs/LANDED/PR-LANDED-02_POOLS_PROVISORIOS_E_DOCUMENTOS_500_PERGUNTAS.md,,SM-LANDED-02
+SUBMODULE,SM-LANDED-03,Landed cost,Rateio e simulador,500,05-questionarios/05-corpus-71500/02-submodulos/LANDED/SM-LANDED-03_RATEIO_E_SIMULADOR_500_PERGUNTAS.md,PR-LANDED-03,
+PR,PR-LANDED-03,Landed cost,Rateio e simulador,500,05-questionarios/05-corpus-71500/03-prs/LANDED/PR-LANDED-03_RATEIO_E_SIMULADOR_500_PERGUNTAS.md,,SM-LANDED-03
+SUBMODULE,SM-LANDED-04,Landed cost,Aplicação a estoque e margem,500,05-questionarios/05-corpus-71500/02-submodulos/LANDED/SM-LANDED-04_APLICACAO_A_ESTOQUE_E_MARGEM_500_PERGUNTAS.md,PR-LANDED-04,
+PR,PR-LANDED-04,Landed cost,Aplicação a estoque e margem,500,05-questionarios/05-corpus-71500/03-prs/LANDED/PR-LANDED-04_APLICACAO_A_ESTOQUE_E_MARGEM_500_PERGUNTAS.md,,SM-LANDED-04
+SUBMODULE,SM-LANDED-05,Landed cost,Custos tardios e reconciliação,500,05-questionarios/05-corpus-71500/02-submodulos/LANDED/SM-LANDED-05_CUSTOS_TARDIOS_E_RECONCILIACAO_500_PERGUNTAS.md,PR-LANDED-05,
+PR,PR-LANDED-05,Landed cost,Custos tardios e reconciliação,500,05-questionarios/05-corpus-71500/03-prs/LANDED/PR-LANDED-05_CUSTOS_TARDIOS_E_RECONCILIACAO_500_PERGUNTAS.md,,SM-LANDED-05
+SUBMODULE,SM-FISCAL-01,Fiscal,Motor tributário e vigências,500,05-questionarios/05-corpus-71500/02-submodulos/FISCAL/SM-FISCAL-01_MOTOR_TRIBUTARIO_E_VIGENCIAS_500_PERGUNTAS.md,PR-FISCAL-01,
+PR,PR-FISCAL-01,Fiscal,Motor tributário e vigências,500,05-questionarios/05-corpus-71500/03-prs/FISCAL/PR-FISCAL-01_MOTOR_TRIBUTARIO_E_VIGENCIAS_500_PERGUNTAS.md,,SM-FISCAL-01
+SUBMODULE,SM-FISCAL-02,Fiscal,Emissão SI Factura/ARCA,500,05-questionarios/05-corpus-71500/02-submodulos/FISCAL/SM-FISCAL-02_EMISSAO_SI_FACTURA_ARCA_500_PERGUNTAS.md,PR-FISCAL-02,
+PR,PR-FISCAL-02,Fiscal,Emissão SI Factura/ARCA,500,05-questionarios/05-corpus-71500/03-prs/FISCAL/PR-FISCAL-02_EMISSAO_SI_FACTURA_ARCA_500_PERGUNTAS.md,,SM-FISCAL-02
+SUBMODULE,SM-FISCAL-03,Fiscal,"Notas, remitos e contingência",500,05-questionarios/05-corpus-71500/02-submodulos/FISCAL/SM-FISCAL-03_NOTAS_REMITOS_E_CONTINGENCIA_500_PERGUNTAS.md,PR-FISCAL-03,
+PR,PR-FISCAL-03,Fiscal,"Notas, remitos e contingência",500,05-questionarios/05-corpus-71500/03-prs/FISCAL/PR-FISCAL-03_NOTAS_REMITOS_E_CONTINGENCIA_500_PERGUNTAS.md,,SM-FISCAL-03
+SUBMODULE,SM-FISCAL-04,Fiscal,"Percepções, retenções e obrigações",500,05-questionarios/05-corpus-71500/02-submodulos/FISCAL/SM-FISCAL-04_PERCEPCOES_RETENCOES_E_OBRIGACOES_500_PERGUNTAS.md,PR-FISCAL-04,
+PR,PR-FISCAL-04,Fiscal,"Percepções, retenções e obrigações",500,05-questionarios/05-corpus-71500/03-prs/FISCAL/PR-FISCAL-04_PERCEPCOES_RETENCOES_E_OBRIGACOES_500_PERGUNTAS.md,,SM-FISCAL-04
+SUBMODULE,SM-FISCAL-05,Fiscal,Reconciliação e auditoria fiscal,500,05-questionarios/05-corpus-71500/02-submodulos/FISCAL/SM-FISCAL-05_RECONCILIACAO_E_AUDITORIA_FISCAL_500_PERGUNTAS.md,PR-FISCAL-05,
+PR,PR-FISCAL-05,Fiscal,Reconciliação e auditoria fiscal,500,05-questionarios/05-corpus-71500/03-prs/FISCAL/PR-FISCAL-05_RECONCILIACAO_E_AUDITORIA_FISCAL_500_PERGUNTAS.md,,SM-FISCAL-05
+SUBMODULE,SM-ACCOUNTING-01,Contábil — fundação,Plano de contas e dimensões,500,05-questionarios/05-corpus-71500/02-submodulos/ACCOUNTING/SM-ACCOUNTING-01_PLANO_DE_CONTAS_E_DIMENSOES_500_PERGUNTAS.md,PR-ACCOUNTING-01,
+PR,PR-ACCOUNTING-01,Contábil — fundação,Plano de contas e dimensões,500,05-questionarios/05-corpus-71500/03-prs/ACCOUNTING/PR-ACCOUNTING-01_PLANO_DE_CONTAS_E_DIMENSOES_500_PERGUNTAS.md,,SM-ACCOUNTING-01
+SUBMODULE,SM-ACCOUNTING-02,Contábil — fundação,Motor de lançamentos e journals,500,05-questionarios/05-corpus-71500/02-submodulos/ACCOUNTING/SM-ACCOUNTING-02_MOTOR_DE_LANCAMENTOS_E_JOURNALS_500_PERGUNTAS.md,PR-ACCOUNTING-02,
+PR,PR-ACCOUNTING-02,Contábil — fundação,Motor de lançamentos e journals,500,05-questionarios/05-corpus-71500/03-prs/ACCOUNTING/PR-ACCOUNTING-02_MOTOR_DE_LANCAMENTOS_E_JOURNALS_500_PERGUNTAS.md,,SM-ACCOUNTING-02
+SUBMODULE,SM-ACCOUNTING-03,Contábil — fundação,Moedas e diferenças cambiais,500,05-questionarios/05-corpus-71500/02-submodulos/ACCOUNTING/SM-ACCOUNTING-03_MOEDAS_E_DIFERENCAS_CAMBIAIS_500_PERGUNTAS.md,PR-ACCOUNTING-03,
+PR,PR-ACCOUNTING-03,Contábil — fundação,Moedas e diferenças cambiais,500,05-questionarios/05-corpus-71500/03-prs/ACCOUNTING/PR-ACCOUNTING-03_MOEDAS_E_DIFERENCAS_CAMBIAIS_500_PERGUNTAS.md,,SM-ACCOUNTING-03
+SUBMODULE,SM-ACCOUNTING-04,Contábil — fundação,"Livros, períodos e controles",500,05-questionarios/05-corpus-71500/02-submodulos/ACCOUNTING/SM-ACCOUNTING-04_LIVROS_PERIODOS_E_CONTROLES_500_PERGUNTAS.md,PR-ACCOUNTING-04,
+PR,PR-ACCOUNTING-04,Contábil — fundação,"Livros, períodos e controles",500,05-questionarios/05-corpus-71500/03-prs/ACCOUNTING/PR-ACCOUNTING-04_LIVROS_PERIODOS_E_CONTROLES_500_PERGUNTAS.md,,SM-ACCOUNTING-04
+SUBMODULE,SM-ACCOUNTING-05,Contábil — fundação,"Razão, balanço, DRE e drill-down",500,05-questionarios/05-corpus-71500/02-submodulos/ACCOUNTING/SM-ACCOUNTING-05_RAZAO_BALANCO_DRE_E_DRILL_DOWN_500_PERGUNTAS.md,PR-ACCOUNTING-05,
+PR,PR-ACCOUNTING-05,Contábil — fundação,"Razão, balanço, DRE e drill-down",500,05-questionarios/05-corpus-71500/03-prs/ACCOUNTING/PR-ACCOUNTING-05_RAZAO_BALANCO_DRE_E_DRILL_DOWN_500_PERGUNTAS.md,,SM-ACCOUNTING-05
+SUBMODULE,SM-INVENTORY-01,Estoque,"Depósitos, posições e disponibilidade",500,05-questionarios/05-corpus-71500/02-submodulos/INVENTORY/SM-INVENTORY-01_DEPOSITOS_POSICOES_E_DISPONIBILIDADE_500_PERGUNTAS.md,PR-INVENTORY-01,
+PR,PR-INVENTORY-01,Estoque,"Depósitos, posições e disponibilidade",500,05-questionarios/05-corpus-71500/03-prs/INVENTORY/PR-INVENTORY-01_DEPOSITOS_POSICOES_E_DISPONIBILIDADE_500_PERGUNTAS.md,,SM-INVENTORY-01
+SUBMODULE,SM-INVENTORY-02,Estoque,Recebimentos e movimentos,500,05-questionarios/05-corpus-71500/02-submodulos/INVENTORY/SM-INVENTORY-02_RECEBIMENTOS_E_MOVIMENTOS_500_PERGUNTAS.md,PR-INVENTORY-02,
+PR,PR-INVENTORY-02,Estoque,Recebimentos e movimentos,500,05-questionarios/05-corpus-71500/03-prs/INVENTORY/PR-INVENTORY-02_RECEBIMENTOS_E_MOVIMENTOS_500_PERGUNTAS.md,,SM-INVENTORY-02
+SUBMODULE,SM-INVENTORY-03,Estoque,"Reserva, alocação e FIFO",500,05-questionarios/05-corpus-71500/02-submodulos/INVENTORY/SM-INVENTORY-03_RESERVA_ALOCACAO_E_FIFO_500_PERGUNTAS.md,PR-INVENTORY-03,
+PR,PR-INVENTORY-03,Estoque,"Reserva, alocação e FIFO",500,05-questionarios/05-corpus-71500/03-prs/INVENTORY/PR-INVENTORY-03_RESERVA_ALOCACAO_E_FIFO_500_PERGUNTAS.md,,SM-INVENTORY-03
+SUBMODULE,SM-INVENTORY-04,Estoque,Sincronização com operadores,500,05-questionarios/05-corpus-71500/02-submodulos/INVENTORY/SM-INVENTORY-04_SINCRONIZACAO_COM_OPERADORES_500_PERGUNTAS.md,PR-INVENTORY-04,
+PR,PR-INVENTORY-04,Estoque,Sincronização com operadores,500,05-questionarios/05-corpus-71500/03-prs/INVENTORY/PR-INVENTORY-04_SINCRONIZACAO_COM_OPERADORES_500_PERGUNTAS.md,,SM-INVENTORY-04
+SUBMODULE,SM-INVENTORY-05,Estoque,"Ajustes, perdas e relatórios",500,05-questionarios/05-corpus-71500/02-submodulos/INVENTORY/SM-INVENTORY-05_AJUSTES_PERDAS_E_RELATORIOS_500_PERGUNTAS.md,PR-INVENTORY-05,
+PR,PR-INVENTORY-05,Estoque,"Ajustes, perdas e relatórios",500,05-questionarios/05-corpus-71500/03-prs/INVENTORY/PR-INVENTORY-05_AJUSTES_PERDAS_E_RELATORIOS_500_PERGUNTAS.md,,SM-INVENTORY-05
+SUBMODULE,SM-TREASURY-01,Tesouraria,Contas bancárias e posição de caixa,500,05-questionarios/05-corpus-71500/02-submodulos/TREASURY/SM-TREASURY-01_CONTAS_BANCARIAS_E_POSICAO_DE_CAIXA_500_PERGUNTAS.md,PR-TREASURY-01,
+PR,PR-TREASURY-01,Tesouraria,Contas bancárias e posição de caixa,500,05-questionarios/05-corpus-71500/03-prs/TREASURY/PR-TREASURY-01_CONTAS_BANCARIAS_E_POSICAO_DE_CAIXA_500_PERGUNTAS.md,,SM-TREASURY-01
+SUBMODULE,SM-TREASURY-02,Tesouraria,Pagamentos e terceiros pagadores,500,05-questionarios/05-corpus-71500/02-submodulos/TREASURY/SM-TREASURY-02_PAGAMENTOS_E_TERCEIROS_PAGADORES_500_PERGUNTAS.md,PR-TREASURY-02,
+PR,PR-TREASURY-02,Tesouraria,Pagamentos e terceiros pagadores,500,05-questionarios/05-corpus-71500/03-prs/TREASURY/PR-TREASURY-02_PAGAMENTOS_E_TERCEIROS_PAGADORES_500_PERGUNTAS.md,,SM-TREASURY-02
+SUBMODULE,SM-TREASURY-03,Tesouraria,Recebimentos e meios de pagamento,500,05-questionarios/05-corpus-71500/02-submodulos/TREASURY/SM-TREASURY-03_RECEBIMENTOS_E_MEIOS_DE_PAGAMENTO_500_PERGUNTAS.md,PR-TREASURY-03,
+PR,PR-TREASURY-03,Tesouraria,Recebimentos e meios de pagamento,500,05-questionarios/05-corpus-71500/03-prs/TREASURY/PR-TREASURY-03_RECEBIMENTOS_E_MEIOS_DE_PAGAMENTO_500_PERGUNTAS.md,,SM-TREASURY-03
+SUBMODULE,SM-TREASURY-04,Tesouraria,"Câmbio, empréstimos e aportes",500,05-questionarios/05-corpus-71500/02-submodulos/TREASURY/SM-TREASURY-04_CAMBIO_EMPRESTIMOS_E_APORTES_500_PERGUNTAS.md,PR-TREASURY-04,
+PR,PR-TREASURY-04,Tesouraria,"Câmbio, empréstimos e aportes",500,05-questionarios/05-corpus-71500/03-prs/TREASURY/PR-TREASURY-04_CAMBIO_EMPRESTIMOS_E_APORTES_500_PERGUNTAS.md,,SM-TREASURY-04
+SUBMODULE,SM-TREASURY-05,Tesouraria,Conciliação e previsão de caixa,500,05-questionarios/05-corpus-71500/02-submodulos/TREASURY/SM-TREASURY-05_CONCILIACAO_E_PREVISAO_DE_CAIXA_500_PERGUNTAS.md,PR-TREASURY-05,
+PR,PR-TREASURY-05,Tesouraria,Conciliação e previsão de caixa,500,05-questionarios/05-corpus-71500/03-prs/TREASURY/PR-TREASURY-05_CONCILIACAO_E_PREVISAO_DE_CAIXA_500_PERGUNTAS.md,,SM-TREASURY-05
+SUBMODULE,SM-SALES-01,Comercial,"Preço, catálogo e margem",500,05-questionarios/05-corpus-71500/02-submodulos/SALES/SM-SALES-01_PRECO_CATALOGO_E_MARGEM_500_PERGUNTAS.md,PR-SALES-01,
+PR,PR-SALES-01,Comercial,"Preço, catálogo e margem",500,05-questionarios/05-corpus-71500/03-prs/SALES/PR-SALES-01_PRECO_CATALOGO_E_MARGEM_500_PERGUNTAS.md,,SM-SALES-01
+SUBMODULE,SM-SALES-02,Comercial,Orçamento e desconto,500,05-questionarios/05-corpus-71500/02-submodulos/SALES/SM-SALES-02_ORCAMENTO_E_DESCONTO_500_PERGUNTAS.md,PR-SALES-02,
+PR,PR-SALES-02,Comercial,Orçamento e desconto,500,05-questionarios/05-corpus-71500/03-prs/SALES/PR-SALES-02_ORCAMENTO_E_DESCONTO_500_PERGUNTAS.md,,SM-SALES-02
+SUBMODULE,SM-SALES-03,Comercial,"Pedido, reserva e disponibilidade",500,05-questionarios/05-corpus-71500/02-submodulos/SALES/SM-SALES-03_PEDIDO_RESERVA_E_DISPONIBILIDADE_500_PERGUNTAS.md,PR-SALES-03,
+PR,PR-SALES-03,Comercial,"Pedido, reserva e disponibilidade",500,05-questionarios/05-corpus-71500/03-prs/SALES/PR-SALES-03_PEDIDO_RESERVA_E_DISPONIBILIDADE_500_PERGUNTAS.md,,SM-SALES-03
+SUBMODULE,SM-SALES-04,Comercial,"Faturamento, pagamento e liberação",500,05-questionarios/05-corpus-71500/02-submodulos/SALES/SM-SALES-04_FATURAMENTO_PAGAMENTO_E_LIBERACAO_500_PERGUNTAS.md,PR-SALES-04,
+PR,PR-SALES-04,Comercial,"Faturamento, pagamento e liberação",500,05-questionarios/05-corpus-71500/03-prs/SALES/PR-SALES-04_FATURAMENTO_PAGAMENTO_E_LIBERACAO_500_PERGUNTAS.md,,SM-SALES-04
+SUBMODULE,SM-SALES-05,Comercial,"Entrega, devolução e comissão",500,05-questionarios/05-corpus-71500/02-submodulos/SALES/SM-SALES-05_ENTREGA_DEVOLUCAO_E_COMISSAO_500_PERGUNTAS.md,PR-SALES-05,
+PR,PR-SALES-05,Comercial,"Entrega, devolução e comissão",500,05-questionarios/05-corpus-71500/03-prs/SALES/PR-SALES-05_ENTREGA_DEVOLUCAO_E_COMISSAO_500_PERGUNTAS.md,,SM-SALES-05
+SUBMODULE,SM-PURCHASING-01,Compras,Requisições e compras emergenciais,500,05-questionarios/05-corpus-71500/02-submodulos/PURCHASING/SM-PURCHASING-01_REQUISICOES_E_COMPRAS_EMERGENCIAIS_500_PERGUNTAS.md,PR-PURCHASING-01,
+PR,PR-PURCHASING-01,Compras,Requisições e compras emergenciais,500,05-questionarios/05-corpus-71500/03-prs/PURCHASING/PR-PURCHASING-01_REQUISICOES_E_COMPRAS_EMERGENCIAIS_500_PERGUNTAS.md,,SM-PURCHASING-01
+SUBMODULE,SM-PURCHASING-02,Compras,Cotação e pedido de compra,500,05-questionarios/05-corpus-71500/02-submodulos/PURCHASING/SM-PURCHASING-02_COTACAO_E_PEDIDO_DE_COMPRA_500_PERGUNTAS.md,PR-PURCHASING-02,
+PR,PR-PURCHASING-02,Compras,Cotação e pedido de compra,500,05-questionarios/05-corpus-71500/03-prs/PURCHASING/PR-PURCHASING-02_COTACAO_E_PEDIDO_DE_COMPRA_500_PERGUNTAS.md,,SM-PURCHASING-02
+SUBMODULE,SM-PURCHASING-03,Compras,Recebimento de bens e serviços,500,05-questionarios/05-corpus-71500/02-submodulos/PURCHASING/SM-PURCHASING-03_RECEBIMENTO_DE_BENS_E_SERVICOS_500_PERGUNTAS.md,PR-PURCHASING-03,
+PR,PR-PURCHASING-03,Compras,Recebimento de bens e serviços,500,05-questionarios/05-corpus-71500/03-prs/PURCHASING/PR-PURCHASING-03_RECEBIMENTO_DE_BENS_E_SERVICOS_500_PERGUNTAS.md,,SM-PURCHASING-03
+SUBMODULE,SM-PURCHASING-04,Compras,Fatura e contas a pagar,500,05-questionarios/05-corpus-71500/02-submodulos/PURCHASING/SM-PURCHASING-04_FATURA_E_CONTAS_A_PAGAR_500_PERGUNTAS.md,PR-PURCHASING-04,
+PR,PR-PURCHASING-04,Compras,Fatura e contas a pagar,500,05-questionarios/05-corpus-71500/03-prs/PURCHASING/PR-PURCHASING-04_FATURA_E_CONTAS_A_PAGAR_500_PERGUNTAS.md,,SM-PURCHASING-04
+SUBMODULE,SM-PURCHASING-05,Compras,"Contratos, reposição e análise",500,05-questionarios/05-corpus-71500/02-submodulos/PURCHASING/SM-PURCHASING-05_CONTRATOS_REPOSICAO_E_ANALISE_500_PERGUNTAS.md,PR-PURCHASING-05,
+PR,PR-PURCHASING-05,Compras,"Contratos, reposição e análise",500,05-questionarios/05-corpus-71500/03-prs/PURCHASING/PR-PURCHASING-05_CONTRATOS_REPOSICAO_E_ANALISE_500_PERGUNTAS.md,,SM-PURCHASING-05
+SUBMODULE,SM-CRM-01,CRM,"Entrada, deduplicação e distribuição de leads",500,05-questionarios/05-corpus-71500/02-submodulos/CRM/SM-CRM-01_ENTRADA_DEDUPLICACAO_E_DISTRIBUICAO_DE_LEADS_500_PERGUNTAS.md,PR-CRM-01,
+PR,PR-CRM-01,CRM,"Entrada, deduplicação e distribuição de leads",500,05-questionarios/05-corpus-71500/03-prs/CRM/PR-CRM-01_ENTRADA_DEDUPLICACAO_E_DISTRIBUICAO_DE_LEADS_500_PERGUNTAS.md,,SM-CRM-01
+SUBMODULE,SM-CRM-02,CRM,"Contas, contatos e carteira",500,05-questionarios/05-corpus-71500/02-submodulos/CRM/SM-CRM-02_CONTAS_CONTATOS_E_CARTEIRA_500_PERGUNTAS.md,PR-CRM-02,
+PR,PR-CRM-02,CRM,"Contas, contatos e carteira",500,05-questionarios/05-corpus-71500/03-prs/CRM/PR-CRM-02_CONTAS_CONTATOS_E_CARTEIRA_500_PERGUNTAS.md,,SM-CRM-02
+SUBMODULE,SM-CRM-03,CRM,"Oportunidades, pipeline e forecast",500,05-questionarios/05-corpus-71500/02-submodulos/CRM/SM-CRM-03_OPORTUNIDADES_PIPELINE_E_FORECAST_500_PERGUNTAS.md,PR-CRM-03,
+PR,PR-CRM-03,CRM,"Oportunidades, pipeline e forecast",500,05-questionarios/05-corpus-71500/03-prs/CRM/PR-CRM-03_OPORTUNIDADES_PIPELINE_E_FORECAST_500_PERGUNTAS.md,,SM-CRM-03
+SUBMODULE,SM-CRM-04,CRM,"Atividades, WhatsApp, e-mail e tickets",500,05-questionarios/05-corpus-71500/02-submodulos/CRM/SM-CRM-04_ATIVIDADES_WHATSAPP_E_MAIL_E_TICKETS_500_PERGUNTAS.md,PR-CRM-04,
+PR,PR-CRM-04,CRM,"Atividades, WhatsApp, e-mail e tickets",500,05-questionarios/05-corpus-71500/03-prs/CRM/PR-CRM-04_ATIVIDADES_WHATSAPP_E_MAIL_E_TICKETS_500_PERGUNTAS.md,,SM-CRM-04
+SUBMODULE,SM-CRM-05,CRM,"Metas, desempenho e offline",500,05-questionarios/05-corpus-71500/02-submodulos/CRM/SM-CRM-05_METAS_DESEMPENHO_E_OFFLINE_500_PERGUNTAS.md,PR-CRM-05,
+PR,PR-CRM-05,CRM,"Metas, desempenho e offline",500,05-questionarios/05-corpus-71500/03-prs/CRM/PR-CRM-05_METAS_DESEMPENHO_E_OFFLINE_500_PERGUNTAS.md,,SM-CRM-05
+SUBMODULE,SM-CLOSE-01,Fechamento contábil transversal,Calendário e tarefas de fechamento,500,05-questionarios/05-corpus-71500/02-submodulos/CLOSE/SM-CLOSE-01_CALENDARIO_E_TAREFAS_DE_FECHAMENTO_500_PERGUNTAS.md,PR-CLOSE-01,
+PR,PR-CLOSE-01,Fechamento contábil transversal,Calendário e tarefas de fechamento,500,05-questionarios/05-corpus-71500/03-prs/CLOSE/PR-CLOSE-01_CALENDARIO_E_TAREFAS_DE_FECHAMENTO_500_PERGUNTAS.md,,SM-CLOSE-01
+SUBMODULE,SM-CLOSE-02,Fechamento contábil transversal,Reconciliação de subledgers,500,05-questionarios/05-corpus-71500/02-submodulos/CLOSE/SM-CLOSE-02_RECONCILIACAO_DE_SUBLEDGERS_500_PERGUNTAS.md,PR-CLOSE-02,
+PR,PR-CLOSE-02,Fechamento contábil transversal,Reconciliação de subledgers,500,05-questionarios/05-corpus-71500/03-prs/CLOSE/PR-CLOSE-02_RECONCILIACAO_DE_SUBLEDGERS_500_PERGUNTAS.md,,SM-CLOSE-02
+SUBMODULE,SM-CLOSE-03,Fechamento contábil transversal,"Provisões, accruals e câmbio",500,05-questionarios/05-corpus-71500/02-submodulos/CLOSE/SM-CLOSE-03_PROVISOES_ACCRUALS_E_CAMBIO_500_PERGUNTAS.md,PR-CLOSE-03,
+PR,PR-CLOSE-03,Fechamento contábil transversal,"Provisões, accruals e câmbio",500,05-questionarios/05-corpus-71500/03-prs/CLOSE/PR-CLOSE-03_PROVISOES_ACCRUALS_E_CAMBIO_500_PERGUNTAS.md,,SM-CLOSE-03
+SUBMODULE,SM-CLOSE-04,Fechamento contábil transversal,Demonstrações e pacote gerencial,500,05-questionarios/05-corpus-71500/02-submodulos/CLOSE/SM-CLOSE-04_DEMONSTRACOES_E_PACOTE_GERENCIAL_500_PERGUNTAS.md,PR-CLOSE-04,
+PR,PR-CLOSE-04,Fechamento contábil transversal,Demonstrações e pacote gerencial,500,05-questionarios/05-corpus-71500/03-prs/CLOSE/PR-CLOSE-04_DEMONSTRACOES_E_PACOTE_GERENCIAL_500_PERGUNTAS.md,,SM-CLOSE-04
+SUBMODULE,SM-CLOSE-05,Fechamento contábil transversal,"Reabertura, auditoria e cockpit",500,05-questionarios/05-corpus-71500/02-submodulos/CLOSE/SM-CLOSE-05_REABERTURA_AUDITORIA_E_COCKPIT_500_PERGUNTAS.md,PR-CLOSE-05,
+PR,PR-CLOSE-05,Fechamento contábil transversal,"Reabertura, auditoria e cockpit",500,05-questionarios/05-corpus-71500/03-prs/CLOSE/PR-CLOSE-05_REABERTURA_AUDITORIA_E_COCKPIT_500_PERGUNTAS.md,,SM-CLOSE-05
+SUBMODULE,SM-PLATFORM-01,Plataforma,"Identidade, RBAC e escopos",500,05-questionarios/05-corpus-71500/02-submodulos/PLATFORM/SM-PLATFORM-01_IDENTIDADE_RBAC_E_ESCOPOS_500_PERGUNTAS.md,PR-PLATFORM-01,
+PR,PR-PLATFORM-01,Plataforma,"Identidade, RBAC e escopos",500,05-questionarios/05-corpus-71500/03-prs/PLATFORM/PR-PLATFORM-01_IDENTIDADE_RBAC_E_ESCOPOS_500_PERGUNTAS.md,,SM-PLATFORM-01
+SUBMODULE,SM-PLATFORM-02,Plataforma,"Aprovações, override, auditoria e parâmetros",500,05-questionarios/05-corpus-71500/02-submodulos/PLATFORM/SM-PLATFORM-02_APROVACOES_OVERRIDE_AUDITORIA_E_PARAMETROS_500_PERGUNTAS.md,PR-PLATFORM-02,
+PR,PR-PLATFORM-02,Plataforma,"Aprovações, override, auditoria e parâmetros",500,05-questionarios/05-corpus-71500/03-prs/PLATFORM/PR-PLATFORM-02_APROVACOES_OVERRIDE_AUDITORIA_E_PARAMETROS_500_PERGUNTAS.md,,SM-PLATFORM-02
+SUBMODULE,SM-PLATFORM-03,Plataforma,"Documentos, OCR, busca e notificações",500,05-questionarios/05-corpus-71500/02-submodulos/PLATFORM/SM-PLATFORM-03_DOCUMENTOS_OCR_BUSCA_E_NOTIFICACOES_500_PERGUNTAS.md,PR-PLATFORM-03,
+PR,PR-PLATFORM-03,Plataforma,"Documentos, OCR, busca e notificações",500,05-questionarios/05-corpus-71500/03-prs/PLATFORM/PR-PLATFORM-03_DOCUMENTOS_OCR_BUSCA_E_NOTIFICACOES_500_PERGUNTAS.md,,SM-PLATFORM-03
+SUBMODULE,SM-PLATFORM-04,Plataforma,Desktop offline e sincronização,500,05-questionarios/05-corpus-71500/02-submodulos/PLATFORM/SM-PLATFORM-04_DESKTOP_OFFLINE_E_SINCRONIZACAO_500_PERGUNTAS.md,PR-PLATFORM-04,
+PR,PR-PLATFORM-04,Plataforma,Desktop offline e sincronização,500,05-questionarios/05-corpus-71500/03-prs/PLATFORM/PR-PLATFORM-04_DESKTOP_OFFLINE_E_SINCRONIZACAO_500_PERGUNTAS.md,,SM-PLATFORM-04
+SUBMODULE,SM-PLATFORM-05,Plataforma,"APIs, jobs, observabilidade e continuidade",500,05-questionarios/05-corpus-71500/02-submodulos/PLATFORM/SM-PLATFORM-05_APIS_JOBS_OBSERVABILIDADE_E_CONTINUIDADE_500_PERGUNTAS.md,PR-PLATFORM-05,
+PR,PR-PLATFORM-05,Plataforma,"APIs, jobs, observabilidade e continuidade",500,05-questionarios/05-corpus-71500/03-prs/PLATFORM/PR-PLATFORM-05_APIS_JOBS_OBSERVABILIDADE_E_CONTINUIDADE_500_PERGUNTAS.md,,SM-PLATFORM-05
+SUBMODULE,SM-COMP-01,Módulos complementares,Qualidade e certificações,500,05-questionarios/05-corpus-71500/02-submodulos/COMP/SM-COMP-01_QUALIDADE_E_CERTIFICACOES_500_PERGUNTAS.md,PR-COMP-01,
+PR,PR-COMP-01,Módulos complementares,Qualidade e certificações,500,05-questionarios/05-corpus-71500/03-prs/COMP/PR-COMP-01_QUALIDADE_E_CERTIFICACOES_500_PERGUNTAS.md,,SM-COMP-01
+SUBMODULE,SM-COMP-02,Módulos complementares,"Garantia, reclamação e devolução",500,05-questionarios/05-corpus-71500/02-submodulos/COMP/SM-COMP-02_GARANTIA_RECLAMACAO_E_DEVOLUCAO_500_PERGUNTAS.md,PR-COMP-02,
+PR,PR-COMP-02,Módulos complementares,"Garantia, reclamação e devolução",500,05-questionarios/05-corpus-71500/03-prs/COMP/PR-COMP-02_GARANTIA_RECLAMACAO_E_DEVOLUCAO_500_PERGUNTAS.md,,SM-COMP-02
+SUBMODULE,SM-COMP-03,Módulos complementares,Atendimento e SLA,500,05-questionarios/05-corpus-71500/02-submodulos/COMP/SM-COMP-03_ATENDIMENTO_E_SLA_500_PERGUNTAS.md,PR-COMP-03,
+PR,PR-COMP-03,Módulos complementares,Atendimento e SLA,500,05-questionarios/05-corpus-71500/03-prs/COMP/PR-COMP-03_ATENDIMENTO_E_SLA_500_PERGUNTAS.md,,SM-COMP-03
+SUBMODULE,SM-COMP-04,Módulos complementares,"Ativos, manutenção, RH e jurídico",500,05-questionarios/05-corpus-71500/02-submodulos/COMP/SM-COMP-04_ATIVOS_MANUTENCAO_RH_E_JURIDICO_500_PERGUNTAS.md,PR-COMP-04,
+PR,PR-COMP-04,Módulos complementares,"Ativos, manutenção, RH e jurídico",500,05-questionarios/05-corpus-71500/03-prs/COMP/PR-COMP-04_ATIVOS_MANUTENCAO_RH_E_JURIDICO_500_PERGUNTAS.md,,SM-COMP-04
+SUBMODULE,SM-COMP-05,Módulos complementares,"BI, KPIs e compliance",500,05-questionarios/05-corpus-71500/02-submodulos/COMP/SM-COMP-05_BI_KPIS_E_COMPLIANCE_500_PERGUNTAS.md,PR-COMP-05,
+PR,PR-COMP-05,Módulos complementares,"BI, KPIs e compliance",500,05-questionarios/05-corpus-71500/03-prs/COMP/PR-COMP-05_BI_KPIS_E_COMPLIANCE_500_PERGUNTAS.md,,SM-COMP-05
+SUBMODULE,SM-QA-01,"Testes, migração e implantação",Arquitetura de testes e quality gates,500,05-questionarios/05-corpus-71500/02-submodulos/QA/SM-QA-01_ARQUITETURA_DE_TESTES_E_QUALITY_GATES_500_PERGUNTAS.md,PR-QA-01,
+PR,PR-QA-01,"Testes, migração e implantação",Arquitetura de testes e quality gates,500,05-questionarios/05-corpus-71500/03-prs/QA/PR-QA-01_ARQUITETURA_DE_TESTES_E_QUALITY_GATES_500_PERGUNTAS.md,,SM-QA-01
+SUBMODULE,SM-QA-02,"Testes, migração e implantação",Migração e reconciliação,500,05-questionarios/05-corpus-71500/02-submodulos/QA/SM-QA-02_MIGRACAO_E_RECONCILIACAO_500_PERGUNTAS.md,PR-QA-02,
+PR,PR-QA-02,"Testes, migração e implantação",Migração e reconciliação,500,05-questionarios/05-corpus-71500/03-prs/QA/PR-QA-02_MIGRACAO_E_RECONCILIACAO_500_PERGUNTAS.md,,SM-QA-02
+SUBMODULE,SM-QA-03,"Testes, migração e implantação","Release, cutover e rollback",500,05-questionarios/05-corpus-71500/02-submodulos/QA/SM-QA-03_RELEASE_CUTOVER_E_ROLLBACK_500_PERGUNTAS.md,PR-QA-03,
+PR,PR-QA-03,"Testes, migração e implantação","Release, cutover e rollback",500,05-questionarios/05-corpus-71500/03-prs/QA/PR-QA-03_RELEASE_CUTOVER_E_ROLLBACK_500_PERGUNTAS.md,,SM-QA-03
+SUBMODULE,SM-QA-04,"Testes, migração e implantação","Carga, segurança, offline e DR",500,05-questionarios/05-corpus-71500/02-submodulos/QA/SM-QA-04_CARGA_SEGURANCA_OFFLINE_E_DR_500_PERGUNTAS.md,PR-QA-04,
+PR,PR-QA-04,"Testes, migração e implantação","Carga, segurança, offline e DR",500,05-questionarios/05-corpus-71500/03-prs/QA/PR-QA-04_CARGA_SEGURANCA_OFFLINE_E_DR_500_PERGUNTAS.md,,SM-QA-04
+SUBMODULE,SM-QA-05,"Testes, migração e implantação","Hypercare, treinamento e incidentes",500,05-questionarios/05-corpus-71500/02-submodulos/QA/SM-QA-05_HYPERCARE_TREINAMENTO_E_INCIDENTES_500_PERGUNTAS.md,PR-QA-05,
+PR,PR-QA-05,"Testes, migração e implantação","Hypercare, treinamento e incidentes",500,05-questionarios/05-corpus-71500/03-prs/QA/PR-QA-05_HYPERCARE_TREINAMENTO_E_INCIDENTES_500_PERGUNTAS.md,,SM-QA-05

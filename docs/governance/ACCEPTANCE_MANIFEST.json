@@ -1,0 +1,30 @@
+{
+  "package": "SUNSET_ERP_BUILD_START_v2.0.0",
+  "accepted_at": "2026-07-17",
+  "source_package": "SUNSET_ERP_CLEAN_SLATE_v1.12.0",
+  "accepted_files": 143,
+  "accepted_questions": 71500,
+  "unique_question_ids": 71500,
+  "unique_suggestion_hashes": 71500,
+  "counts_by_level": {
+    "MODULE": 6500,
+    "SUBMODULE": 32500,
+    "PR": 32500
+  },
+  "counts_by_module_folder": {
+    "ACCOUNTING": 5500,
+    "CLOSE": 5500,
+    "COMEX": 5500,
+    "COMP": 5500,
+    "CRM": 5500,
+    "FISCAL": 5500,
+    "INVENTORY": 5500,
+    "LANDED": 5500,
+    "PLATFORM": 5500,
+    "PURCHASING": 5500,
+    "QA": 5500,
+    "SALES": 5500,
+    "TREASURY": 5500
+  },
+  "precedence": "docs/governance/DECISION_PRECEDENCE.md"
+}
