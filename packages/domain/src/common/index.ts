@@ -25,4 +25,7 @@ export {
   InvalidCuitError,
   PartyValidationError,
   PartyInactiveError,
+  InvalidNcmError,
+  ProductValidationError,
+  ProductInactiveError,
 } from "./errors";

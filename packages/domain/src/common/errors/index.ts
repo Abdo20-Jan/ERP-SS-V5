@@ -8,4 +8,7 @@ export {
   InvalidCuitError,
   PartyValidationError,
   PartyInactiveError,
+  InvalidNcmError,
+  ProductValidationError,
+  ProductInactiveError,
 } from "./domain-error";

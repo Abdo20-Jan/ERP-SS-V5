@@ -62,3 +62,21 @@ export class PartyInactiveError extends DomainError {
     super(message, "PARTY_INACTIVE", details);
   }
 }
+
+export class InvalidNcmError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "INVALID_NCM", details);
+  }
+}
+
+export class ProductValidationError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "VALIDATION_ERROR", details);
+  }
+}
+
+export class ProductInactiveError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "PRODUCT_INACTIVE", details);
+  }
+}

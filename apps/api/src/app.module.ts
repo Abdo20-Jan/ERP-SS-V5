@@ -9,6 +9,7 @@ import { CorrelationIdInterceptor } from "./common/correlation-id.interceptor";
 import { HealthModule } from "./health/health.module";
 import { ParametersModule } from "./parameters/parameters.module";
 import { PartyModule } from "./party/party.module";
+import { ProductModule } from "./product/product.module";
 import { PrismaModule } from "./prisma/prisma.module";
 
 @Module({
@@ -25,6 +26,7 @@ import { PrismaModule } from "./prisma/prisma.module";
     AuditModule,
     ParametersModule,
     PartyModule,
+    ProductModule,
   ],
   providers: [
     {

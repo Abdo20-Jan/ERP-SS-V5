@@ -52,6 +52,8 @@ async function main() {
     { action: "health:read", description: "Ver health checks detalhados" },
     { action: "party:read", description: "Listar/ver partes (clientes, fornecedores)" },
     { action: "party:write", description: "Criar/editar/ativar/desativar partes" },
+    { action: "product:read", description: "Listar/ver produtos" },
+    { action: "product:write", description: "Criar/editar/ativar/desativar produtos" },
   ];
 
   for (const perm of permissions) {
@@ -144,6 +146,32 @@ async function main() {
   }
 
   console.log("✅ Default parameters created:", defaultParameters.length);
+
+  // Product categories sample
+  const catPneus = await prisma.productCategory.upsert({
+    where: { code: "01" },
+    update: {},
+    create: { code: "01", name: "Pneus", level: 1, path: "01" },
+  });
+  for (const child of [
+    { code: "01.01", name: "PCR" },
+    { code: "01.02", name: "TBR" },
+    { code: "01.03", name: "OTR" },
+    { code: "01.04", name: "LTR" },
+  ]) {
+    await prisma.productCategory.upsert({
+      where: { code: child.code },
+      update: {},
+      create: {
+        code: child.code,
+        name: child.name,
+        parentId: catPneus.id,
+        level: 2,
+        path: child.code,
+      },
+    });
+  }
+  console.log("✅ Product categories seeded");
 
   console.log("🎉 Seed completed successfully!");
 }

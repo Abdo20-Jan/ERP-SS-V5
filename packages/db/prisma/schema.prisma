@@ -205,3 +205,91 @@ model FiscalClassification {
 
   @@map("fiscal_classifications")
 }
+
+// ============================================
+// PRODUCT MDM (MS-01-SS3)
+// ============================================
+
+model ProductCategory {
+  id        String            @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  code      String            @unique
+  name      String
+  parentId  String?           @map("parent_id") @db.Uuid
+  level     Int
+  path      String
+  isActive  Boolean           @default(true) @map("is_active")
+  createdAt DateTime          @default(now()) @map("created_at") @db.Timestamptz
+
+  parent   ProductCategory?  @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children ProductCategory[] @relation("CategoryHierarchy")
+  products Product[]
+
+  @@index([parentId])
+  @@map("product_categories")
+}
+
+model Product {
+  id              String    @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  organizationId  String    @default("org_001") @map("organization_id")
+  sku             String    @unique
+  name            String
+  brand           String
+  productType     String    @map("product_type")
+  description     String?
+  categoryId      String?   @map("category_id") @db.Uuid
+  ncmCode         String    @map("ncm_code")
+  ncmDescription  String?   @map("ncm_description")
+  ncmSource       String    @default("MANUAL") @map("ncm_source")
+  unitOfMeasure   String    @map("unit_of_measure")
+  weight          Decimal?  @db.Decimal(10, 3)
+  weightNet       Decimal?  @map("weight_net") @db.Decimal(10, 3)
+  weightGross     Decimal?  @map("weight_gross") @db.Decimal(10, 3)
+  packagingLength Decimal?  @map("packaging_length") @db.Decimal(8, 2)
+  packagingWidth  Decimal?  @map("packaging_width") @db.Decimal(8, 2)
+  packagingHeight Decimal?  @map("packaging_height") @db.Decimal(8, 2)
+  originCountry   String    @default("AR") @map("origin_country")
+  isActive        Boolean   @default(true) @map("is_active")
+  createdAt       DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt       DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+
+  category       ProductCategory?       @relation(fields: [categoryId], references: [id])
+  tireSpecs      TireSpecification?
+  certifications ProductCertification[]
+
+  @@index([organizationId])
+  @@index([brand])
+  @@index([ncmCode])
+  @@index([isActive])
+  @@map("products")
+}
+
+model TireSpecification {
+  id          String  @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  productId   String  @unique @map("product_id") @db.Uuid
+  width       Int
+  profile     Int
+  rimDiameter Decimal @map("rim_diameter") @db.Decimal(5, 2)
+  measure     String
+  loadIndex   Int?    @map("load_index")
+  speedIndex  String? @map("speed_index")
+  tireType    String? @map("tire_type")
+  season      String?
+  dot         String?
+  product     Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@map("tire_specifications")
+}
+
+model ProductCertification {
+  id                String   @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  productId         String   @map("product_id") @db.Uuid
+  certificateNumber String   @map("certificate_number")
+  type              String
+  issuingBody       String   @map("issuing_body")
+  issueDate         DateTime @map("issue_date") @db.Date
+  expiryDate        DateTime @map("expiry_date") @db.Date
+  product           Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+  @@map("product_certifications")
+}
