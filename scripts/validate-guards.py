@@ -25,6 +25,8 @@ SCOPE = [
     "inventory/inventory-detail.controller.ts",
     "inventory/inventory-task.controller.ts",
     "inventory/inventory-sod.controller.ts",
+    "inventory/inventory-import.controller.ts",
+    "inventory/inventory-export.controller.ts",
     "inventory/inventory-posting.controller.ts",
     "inventory/inventory-event.controller.ts",
 ]
@@ -57,6 +59,8 @@ def family(rel: str) -> tuple[str, str] | None:
         or rel.startswith("inventory/inventory-document")
         or rel.startswith("inventory/inventory-task")
         or rel.startswith("inventory/inventory-sod")
+        or rel.startswith("inventory/inventory-import")
+        or rel.startswith("inventory/inventory-export")
         or rel.startswith("inventory/inventory-posting")
         or rel.startswith("inventory/inventory-event")
     ):

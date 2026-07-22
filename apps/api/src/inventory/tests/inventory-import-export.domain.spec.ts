@@ -1,0 +1,10 @@
+import { describe, expect, it } from "vitest";
+import { InventoryImportJob, InventoryExportJob, ImportJobStatus, ExportJobStatus, parseCSV, sanitizeCSVCell } from "@sunset/domain";
+describe("ImportExport Domain", () => {
+  it("creates import job", () => { const j = InventoryImportJob.create({ kind: "WAREHOUSE", fileName: "f.csv", fileMimeType: "text/csv", fileSize: 100, fileHash: "abc", correlationId: "c1", requestedByUserId: "u1" }); expect(j.status).toBe(ImportJobStatus.PENDING); });
+  it("validate sets rows and errors", () => { const j = InventoryImportJob.create({ kind: "WAREHOUSE", fileName: "f.csv", fileMimeType: "text/csv", fileSize: 100, fileHash: "abc", correlationId: "c1", requestedByUserId: "u1" }); j.validate({ jobId: j.id, actorId: "u1", expectedVersion: 1 }, 10, [{ rowNumber: 2, field: null, code: "INVALID", message: "err", severity: "ERROR" }]); expect(j.validRows).toBe(9); expect(j.invalidRows).toBe(1); });
+  it("applied is terminal", () => { const j = InventoryImportJob.create({ kind: "WAREHOUSE", fileName: "f.csv", fileMimeType: "text/csv", fileSize: 100, fileHash: "abc", correlationId: "c1", requestedByUserId: "u1" }); j.validate({ jobId: j.id, actorId: "u1", expectedVersion: 1 }, 5, []); j.markReadyToApply({ jobId: j.id, actorId: "u1", expectedVersion: 2 }); j.apply({ jobId: j.id, actorId: "u1", expectedVersion: 3 }); expect(j.status).toBe(ImportJobStatus.APPLIED); expect(() => j.cancel({ jobId: j.id, actorId: "u1", reason: "nope", expectedVersion: 4 })).toThrow("Cannot cancel applied"); });
+  it("creates export job", () => { const j = InventoryExportJob.create({ kind: "WAREHOUSE", format: "csv", correlationId: "c1", requestedByUserId: "u1" }); expect(j.status).toBe(ExportJobStatus.PENDING); });
+  it("CSV parser works", () => { const { headers, rows } = parseCSV("code;name\nWH1;Depo 1\nWH2;Depo 2"); expect(headers).toEqual(["code", "name"]); expect(rows).toHaveLength(2); });
+  it("sanitizeCSVCell blocks injection", () => { expect(sanitizeCSVCell("=cmd")).toBe("'=cmd"); expect(sanitizeCSVCell("normal")).toBe("normal"); });
+});

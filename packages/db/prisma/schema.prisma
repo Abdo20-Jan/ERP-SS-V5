@@ -915,3 +915,77 @@ model InventoryPostingProposalLine {
   @@index([proposalId])
   @@map("inventory_posting_proposal_lines")
 }
+
+
+// ============================================
+// INVENTORY — IMPORT/EXPORT JOBS (PR-INVENTORY-01-S10)
+// ============================================
+
+model InventoryImportJob {
+  id                String    @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  organizationId    String    @default("org_001") @map("organization_id")
+  kind              String
+  status            String
+  fileName          String    @map("file_name")
+  fileMimeType      String    @map("file_mime_type")
+  fileSize          Int       @map("file_size")
+  fileHash          String    @map("file_hash")
+  fileStorageKey    String?   @map("file_storage_key")
+  totalRows         Int       @default(0) @map("total_rows")
+  validRows         Int       @default(0) @map("valid_rows")
+  invalidRows       Int       @default(0) @map("invalid_rows")
+  appliedRows       Int       @default(0) @map("applied_rows")
+  requestedByUserId String    @map("requested_by_user_id") @db.Uuid
+  confirmedByUserId String?   @map("confirmed_by_user_id") @db.Uuid
+  startedAt         DateTime? @map("started_at") @db.Timestamptz
+  validatedAt       DateTime? @map("validated_at") @db.Timestamptz
+  appliedAt         DateTime? @map("applied_at") @db.Timestamptz
+  failedAt          DateTime? @map("failed_at") @db.Timestamptz
+  cancelledAt       DateTime? @map("cancelled_at") @db.Timestamptz
+  correlationId     String    @map("correlation_id")
+  idempotencyKey    String?   @unique @map("idempotency_key")
+  version           Int       @default(1)
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt         DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+  errors            InventoryImportJobError[]
+  @@index([organizationId, status, createdAt])
+  @@index([kind, status])
+  @@map("inventory_import_jobs")
+}
+
+model InventoryImportJobError {
+  id         String  @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  jobId      String  @map("job_id") @db.Uuid
+  rowNumber  Int     @map("row_number")
+  field      String?
+  code       String
+  message    String
+  severity   String  @default("ERROR")
+  job        InventoryImportJob @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  @@index([jobId, rowNumber])
+  @@map("inventory_import_job_errors")
+}
+
+model InventoryExportJob {
+  id                String    @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  organizationId    String    @default("org_001") @map("organization_id")
+  kind              String
+  status            String
+  format            String
+  filters           Json?
+  fileName          String    @map("file_name")
+  fileHash          String?   @map("file_hash")
+  fileStorageKey    String?   @map("file_storage_key")
+  rowCount          Int       @default(0) @map("row_count")
+  requestedByUserId String    @map("requested_by_user_id") @db.Uuid
+  completedAt       DateTime? @map("completed_at") @db.Timestamptz
+  failedAt          DateTime? @map("failed_at") @db.Timestamptz
+  cancelledAt       DateTime? @map("cancelled_at") @db.Timestamptz
+  correlationId     String    @map("correlation_id")
+  version           Int       @default(1)
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt         DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+  @@index([organizationId, status, createdAt])
+  @@index([kind, status])
+  @@map("inventory_export_jobs")
+}

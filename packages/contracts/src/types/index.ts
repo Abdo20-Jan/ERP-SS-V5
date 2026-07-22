@@ -11,3 +11,4 @@ export * from "./inventory-task.types";
 export * from "./inventory-sod.types";
 export * from "./inventory-event.types";
 export * from "./inventory-posting.types";
+export * from "./inventory-import-export.types";

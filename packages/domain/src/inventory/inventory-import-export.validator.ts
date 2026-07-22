@@ -1,0 +1,4 @@
+import { VALID_IMPORT_KINDS, VALID_EXPORT_KINDS } from "./inventory-import-export.enums";
+export function validateKind(kind: string, validKinds: string[]): string { const k = (kind || "").trim().toUpperCase(); if (!validKinds.includes(k)) throw new Error(`Invalid kind: ${k}. Valid: ${validKinds.join(",")}`); return k }
+export function parseCSV(content: string): { headers: string[]; rows: string[][] } { const allLines = content.split(/\r?\n/).filter(l => l.trim()); if (allLines.length < 2) throw new Error("CSV must have header and at least one data row"); const split = (s: string) => s.split(";").map(c => c.trim()); const first = allLines[0]!; const headers = split(first).map(h => h.toLowerCase()); const dataLines = allLines.slice(1); return { headers, rows: dataLines.map(split) } }
+export function sanitizeCSVCell(value: string): string { const s = String(value); return /^[=+\-@]/.test(s) ? "'" + s : s }

@@ -82,6 +82,17 @@ async function main() {
     { action: "inventory:posting:validate", description: "Validar proposta de lancamento de estoque" },
     { action: "inventory:posting:reverse", description: "Reverter proposta de lancamento de estoque" },
     { action: "inventory:posting:cancel", description: "Cancelar proposta de lancamento de estoque" },
+    { action: "inventory:import:create", description: "Criar job de importacao de estoque" },
+    { action: "inventory:import:read", description: "Consultar jobs de importacao de estoque" },
+    { action: "inventory:import:validate", description: "Validar job de importacao de estoque" },
+    { action: "inventory:import:apply", description: "Aplicar job de importacao de estoque" },
+    { action: "inventory:import:cancel", description: "Cancelar job de importacao de estoque" },
+    { action: "inventory:import:error:read", description: "Consultar erros de importacao de estoque" },
+    { action: "inventory:export:create", description: "Criar job de exportacao de estoque" },
+    { action: "inventory:export:read", description: "Consultar jobs de exportacao de estoque" },
+    { action: "inventory:export:download", description: "Download de arquivo exportado de estoque" },
+    { action: "inventory:export:cancel", description: "Cancelar job de exportacao de estoque" },
+
 
 
 
