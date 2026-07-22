@@ -110,3 +110,163 @@ API retorna composição Object-Page para warehouse e location (header, tabs est
 ## Status
 
 **READY_WITH_RISKS** — balance stub + OpenAPI deferred + branch not on main
+
+
+---
+
+## S05-UI — Warehouse Object Page (LAY-02)
+
+**Slice:** PR-INVENTORY-01-S05-UI  
+**Branch:** `codex/pr-inventory-01-s05-warehouse-detail-ui`  
+**Base:** S05 API BFF @ 883963d  
+**Agent:** ux_operations  
+**Sources:** [PROJECT-UX] `docs/blueprint-master/02_UX_LAYOUT_SYSTEM.md`, [WCAG22], [NIST-SSDF], prompt S05-UI
+
+### Objetivo testável
+
+Operador abre `/inventory/warehouses`, clica em um depósito e vê Object Page LAY-02 com header compacto, 5 abas horizontais (Posições, Saldo, Documentos, Timeline, Auditoria), ação primária fixa, painel contextual e estados loading/empty/error/no-permission/offline/conflict — identifica estado e próxima ação em ≤5s.
+
+### Escopo OUT
+
+- Formulários create/edit warehouse (view + primary action desabilitada)
+- Location detail page
+- Saldo físico real (`balanceAvailable=false`, mensagem D-003.14)
+- Dark mode / mobile polish avançado
+- Playwright E2E (deferred — monorepo sem playwright neste slice)
+- Escrita de activate/deactivate/upload via UI
+
+### Rotas
+
+| Path | Página |
+|---|---|
+| `/inventory/warehouses` | List Report simples (código, nome, tipo, ativo, updatedAt) + busca/filtros client-side |
+| `/inventory/warehouses/[id]` | Object Page LAY-02 |
+| `?tab=locations\|balance\|documents\|timeline\|audit` | Deep-link de aba |
+
+### Componentes `@sunset/ui` (novos)
+
+| Arquivo | Papel |
+|---|---|
+| `packages/ui/src/components/tabs.tsx` | Tabs horizontais role=tablist/tab/tabpanel, badge count, setas |
+| `packages/ui/src/components/status-badge.tsx` | ACTIVE/INACTIVE (isActive ou status) |
+| `packages/ui/src/components/skeleton-rows.tsx` | Skeleton de tabela |
+| `packages/ui/src/components/object-page-header.tsx` | Header compacto + primaryAction |
+| `packages/ui/src/hooks/use-online-status.ts` | navigator.onLine |
+| `packages/ui/src/layout/top-nav.tsx` | `navItems` + `renderNavLink` opcionais (compatível) |
+
+Estados reutilizados (sem duplicar): EmptyState, ErrorState, LoadingState, NoPermissionState, ConflictState, OfflineState, SuccessState.
+
+### Implementação web
+
+| Arquivo | Papel |
+|---|---|
+| `apps/web/src/lib/api.ts` | `apiRequest` exportado + re-export inventory |
+| `apps/web/src/lib/api/inventory.ts` | listWarehouses, getWarehouseDetail, listLocations, listWarehouseDocuments, listAudit |
+| `apps/web/src/app/(authenticated)/inventory/warehouses/page.tsx` | Lista |
+| `apps/web/src/app/(authenticated)/inventory/warehouses/[id]/page.tsx` | Rota detalhe |
+| `.../[id]/components/warehouse-detail-page.tsx` | Object page orquestrador |
+| `.../location-tab.tsx` | Posições (preview + lazy list) |
+| `.../saldo-tab.tsx` | Deferred D-003.14 |
+| `.../document-tab.tsx` | Documentos |
+| `.../timeline-tab.tsx` | recentHistory |
+| `.../audit-tab.tsx` | /v1/audit ou fallback history; 403 → NoPermission/fallback |
+| `.../context-panel.tsx` | Métricas summary |
+| `.../hooks/use-warehouse-detail.ts` | Fetch detail BFF |
+| `apps/web/src/app/(authenticated)/layout.tsx` | Nav Depósitos |
+
+### Wireflow (resumo)
+
+1. Login → shell autenticado → TopNav "Depósitos"
+2. Lista GET `/v1/inventory/warehouses` → filtro client-side → click row
+3. Detail GET `/v1/inventory/warehouses/:id/detail` → header + tabs + panel
+4. Tab focus → lazy fetch locations/documents/audit quando necessário
+5. Offline → OfflineState banner; 403 → NoPermissionState; 409 → ConflictState; erro → ErrorState+retry
+
+### Matriz de estados
+
+| Estado | Trigger | UI | Próxima ação |
+|---|---|---|---|
+| loading | mount fetch | LoadingState + SkeletonRows | aguardar |
+| success | 200 detail | header+tabs+panel | operar abas |
+| empty (tab) | lista vazia | EmptyState s/ botão se sem ação | mudar filtro/aba |
+| error | 5xx/network | ErrorState + retry | Tentar novamente |
+| no-permission | 403 | NoPermissionState | Voltar lista |
+| conflict | 409 | ConflictState | Recarregar |
+| offline | navigator.onLine=false | OfflineState banner | reconectar |
+| saldo deferred | balanceAvailable=false | EmptyState D-003.14 | aguardar slice saldo |
+
+### Atalhos
+
+| Atalho | Ação |
+|---|---|
+| Alt+1..5 | Abas Posições/Saldo/Documentos/Timeline/Auditoria |
+| Escape | Fecha painel contextual (mobile/drawer) |
+| Ctrl/Cmd+N | Toast "em breve" (create fora de escopo) |
+| Ctrl/Cmd+U | Foca aba Documentos |
+| Setas ←/→ no tablist | Navega abas (a11y) |
+
+### Checklist WCAG 2.2 AA (baseline)
+
+- [x] role=tablist / tab / tabpanel + aria-selected
+- [x] Status não só por cor (texto Ativo/Inativo + dot)
+- [x] Focus ring em tabs e botões
+- [x] Offline/erro com role=alert / aria-live
+- [x] Labels em filtros da lista (aria-label)
+- [x] Primary action com title quando disabled
+- [ ] Contraste automatizado axe/playwright — deferred E2E
+- [ ] Screen reader full pass manual — deferred
+
+### Métricas de tarefa (alvo)
+
+| Métrica | Alvo | Como medir |
+|---|---|---|
+| Tempo até identificar estado | ≤5s | stopwatch / future analytics |
+| Cliques lista → detalhe | 1 | row click |
+| Cliques para trocar aba | 1 ou atalho Alt+n | UI |
+| Retrabalho por erro recuperável | retry 1-click | ErrorState onAction |
+
+### Testes
+
+| Suite | Arquivo | Cobertura |
+|---|---|---|
+| @sunset/ui | `packages/ui/src/components/tabs.test.tsx` | StatusBadge, Tabs a11y/switch, EmptyState, ObjectPageHeader, Offline |
+| @sunset/web | `apps/web/.../__tests__/warehouse-detail-page.test.tsx` | 5 tabs, offline banner, saldo deferred, location empty |
+
+### DEFERRED (UI)
+
+| Item | Motivo |
+|---|---|
+| Playwright E2E | não há playwright no monorepo neste slice |
+| Write actions UI | fora de escopo; botão primary disabled |
+| Saldo real | D-003.14 / balanceAvailable stub API |
+| Location object page | slice futuro |
+| Salvar visualização lista | v1 filtros locais apenas |
+
+### Evidence 2026-07-21 (S05-UI)
+
+| Gate | Result |
+|---|---|
+| packages/ui vitest | **9 passed** (`tabs.test.tsx`) |
+| apps/web vitest | **5 passed** (`warehouse-detail-page.test.tsx`) |
+| packages/ui typecheck | tsc OK |
+| apps/web typecheck | tsc OK |
+| Playwright E2E | deferred |
+
+### Risks
+
+| Risk | Severity | Mitigation |
+|---|---|---|
+| E2E ausente | medium | testes unitários + manual checklist |
+| Primary action disabled pode confundir | low | title tooltip + doc |
+| Document list exige inventory:document:read | low | fallback preview do BFF |
+| Audit exige audit:read | low | fallback recentHistory do BFF |
+| Tailwind success-* classes | low | tokens já definem success |
+
+### Rollback
+
+1. `git revert <commit>` — sem migration
+2. Remover rotas inventory e nav item se hotfix parcial
+
+### Status S05-UI
+
+**READY_WITH_RISKS** — E2E playwright deferred; write UI deferred; saldo stub

@@ -2,4 +2,8 @@ export * from "./button";
 export * from "./card";
 export * from "./dialog";
 export * from "./input";
+export * from "./object-page-header";
+export * from "./skeleton-rows";
+export * from "./status-badge";
 export * from "./table";
+export * from "./tabs";

@@ -7,6 +7,7 @@ export interface ApiError {
     message: string;
     correlationId?: string;
   };
+  status?: number;
 }
 
 function getCorrelationId(): string {
@@ -22,7 +23,7 @@ function getCorrelationId(): string {
   return crypto.randomUUID();
 }
 
-async function request<T>(
+export async function apiRequest<T>(
   path: string,
   options: RequestInit = {},
 ): Promise<T> {
@@ -31,23 +32,50 @@ async function request<T>(
 
   const correlationId = getCorrelationId();
 
-  const response = await fetch(`${API_URL}${path}`, {
-    ...options,
-    headers: {
-      "Content-Type": "application/json",
-      "x-correlation-id": correlationId,
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      ...options.headers,
-    },
-  });
-
-  if (!response.ok) {
-    const error: ApiError = await response.json().catch(() => ({
+  let response: Response;
+  try {
+    response = await fetch(`${API_URL}${path}`, {
+      ...options,
+      headers: {
+        "Content-Type": "application/json",
+        "x-correlation-id": correlationId,
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...options.headers,
+      },
+    });
+  } catch {
+    const networkError: ApiError = {
       error: {
         code: "NETWORK_ERROR",
         message: "Erro de comunicação com o servidor.",
+        correlationId,
       },
-    }));
+      status: 0,
+    };
+    throw networkError;
+  }
+
+  if (!response.ok) {
+    const body = await response.json().catch(() => null);
+    const error: ApiError = {
+      error: {
+        code:
+          body?.error?.code ??
+          (response.status === 403
+            ? "FORBIDDEN"
+            : response.status === 404
+              ? "NOT_FOUND"
+              : response.status === 409
+                ? "CONFLICT"
+                : "HTTP_ERROR"),
+        message:
+          body?.error?.message ??
+          body?.message ??
+          "Erro de comunicação com o servidor.",
+        correlationId: body?.error?.correlationId ?? correlationId,
+      },
+      status: response.status,
+    };
     throw error;
   }
 
@@ -56,17 +84,19 @@ async function request<T>(
 
 export const api = {
   login: (email: string, password: string) =>
-    request<{ access_token: string; user: unknown }>("/v1/auth/login", {
+    apiRequest<{ access_token: string; user: unknown }>("/v1/auth/login", {
       method: "POST",
       body: JSON.stringify({ email, password }),
     }),
 
   logout: () =>
-    request<{ message: string }>("/v1/auth/logout", { method: "POST" }),
+    apiRequest<{ message: string }>("/v1/auth/logout", { method: "POST" }),
 
-  me: () => request<unknown>("/v1/auth/me"),
+  me: () => apiRequest<unknown>("/v1/auth/me"),
 
-  health: () => request<{ status: string }>("/health"),
+  health: () => apiRequest<{ status: string }>("/health"),
 
-  ready: () => request<{ status: string }>("/ready"),
+  ready: () => apiRequest<{ status: string }>("/ready"),
 };
+
+export * from "./api/inventory";
