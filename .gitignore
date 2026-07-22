@@ -58,3 +58,7 @@ opencode.json.backup-*
 # Ephemeral dev artifacts
 scripts/validate-*
 test.txt
+
+# Temp session artifacts
+scripts/.*
+scripts/_*
