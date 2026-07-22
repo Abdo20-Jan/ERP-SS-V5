@@ -1,0 +1,1 @@
+const {execSync}=require("child_process");const r=__dirname;const env={...process.env};if(!env.DATABASE_URL)env.DATABASE_URL="postgresql://erp:erp_dev_password@localhost:5432/sunset_erp?schema=public";try{execSync("npx prisma generate",{cwd:r,env,stdio:"inherit"});}catch(e){}try{execSync("npx prisma migrate deploy",{cwd:r,env,stdio:"inherit"});}catch(e){}

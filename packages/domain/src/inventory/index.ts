@@ -18,4 +18,11 @@ export * from "./override-request.validator";
 export * from "./override-request.repository";
 export * from "./override-request.aggregate";
 export * from "./inventory-balance.port";
-
+export * from "./inventory-document.enums";
+export * from "./inventory-document.commands";
+export * from "./inventory-document.events";
+export * from "./inventory-document.validator";
+export * from "./inventory-document.repository";
+export * from "./inventory-document.aggregate";
+export * from "./file-storage.port";
+export * from "./local-file-storage.adapter";

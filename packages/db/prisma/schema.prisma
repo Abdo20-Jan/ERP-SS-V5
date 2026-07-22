@@ -571,6 +571,7 @@ model Warehouse {
 
   locationConfig WarehouseLocationConfig?
   locations      WarehouseLocation[]
+  documents      InventoryDocument[]
 
   @@unique([organizationId, code])
   @@index([organizationId])
@@ -628,6 +629,7 @@ model WarehouseLocation {
   warehouse Warehouse @relation(fields: [warehouseId], references: [id], onDelete: Restrict)
   parent    WarehouseLocation?  @relation("LocationHierarchy", fields: [parentId], references: [id], onDelete: Restrict)
   children  WarehouseLocation[] @relation("LocationHierarchy")
+  documents InventoryDocument[]
 
   @@unique([warehouseId, parentKey, code])
   @@index([warehouseId, level])
@@ -670,4 +672,44 @@ model OverrideRequest {
   @@index([resourceType, resourceId])
   @@index([organizationId, requestedAt])
   @@map("override_requests")
+}
+
+// ============================================
+// INVENTORY — DOCUMENTS (PR-INVENTORY-01-S04)
+// ============================================
+
+model InventoryDocument {
+  id                String    @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  organizationId    String    @default("org_001") @map("organization_id")
+  warehouseId       String?   @map("warehouse_id") @db.Uuid
+  locationId        String?   @map("location_id") @db.Uuid
+  documentType      String    @map("document_type")
+  fileName          String    @map("file_name")
+  fileSize          Int       @map("file_size")
+  mimeType          String    @map("mime_type")
+  sha256Hash        String    @map("sha256_hash")
+  storagePath       String    @map("storage_path")
+  version           Int       @default(1)
+  previousVersionId String?   @map("previous_version_id") @db.Uuid
+  classification    String?
+  retentionDays     Int?      @map("retention_days")
+  description       String?
+  tags              String[]  @default([])
+  uploadedById      String    @map("uploaded_by_id") @db.Uuid
+  uploadedAt        DateTime  @default(now()) @map("uploaded_at") @db.Timestamptz
+  isArchived        Boolean   @default(false) @map("is_archived")
+  archivedAt        DateTime? @map("archived_at") @db.Timestamptz
+  archivedById      String?   @map("archived_by_id") @db.Uuid
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt         DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+
+  warehouse Warehouse?         @relation(fields: [warehouseId], references: [id], onDelete: Restrict)
+  location  WarehouseLocation? @relation(fields: [locationId], references: [id], onDelete: Restrict)
+
+  @@index([warehouseId])
+  @@index([locationId])
+  @@index([sha256Hash])
+  @@index([documentType, warehouseId, locationId, version])
+  @@index([isArchived])
+  @@map("inventory_documents")
 }

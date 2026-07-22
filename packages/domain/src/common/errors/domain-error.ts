@@ -309,3 +309,28 @@ export class WarehouseHasPositiveBalanceError extends DomainError {
     super(message, "WAREHOUSE_HAS_POSITIVE_BALANCE", details);
   }
 }
+
+// Inventory documents (PR-INVENTORY-01-S04)
+export class InventoryDocumentValidationError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "VALIDATION_ERROR", details);
+  }
+}
+
+export class InventoryDocumentNotFoundError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "NOT_FOUND", details);
+  }
+}
+
+export class InventoryDocumentFileTooLargeError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "FILE_TOO_LARGE", details);
+  }
+}
+
+export class InventoryDocumentMimeNotAllowedError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "MIME_NOT_ALLOWED", details);
+  }
+}

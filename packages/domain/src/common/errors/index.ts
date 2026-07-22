@@ -48,4 +48,8 @@ export {
   OverrideConcurrencyError,
   WarehouseHasActiveLocationsError,
   WarehouseHasPositiveBalanceError,
+  InventoryDocumentValidationError,
+  InventoryDocumentNotFoundError,
+  InventoryDocumentFileTooLargeError,
+  InventoryDocumentMimeNotAllowedError,
 } from "./domain-error";

@@ -62,6 +62,9 @@ async function main() {
     { action: "inventory:override:approve", description: "Aprovar/rejeitar override de master de estoque" },
     { action: "inventory:override:execute", description: "Executar override aprovado de master de estoque" },
     { action: "inventory:override:view", description: "Consultar overrides de master de estoque" },
+    { action: "inventory:document:upload", description: "Upload documentos deposito/posicao" },
+    { action: "inventory:document:read", description: "Leitura documentos deposito/posicao" },
+    { action: "inventory:document:archive", description: "Arquivar documentos deposito/posicao" },
 
   ];
 

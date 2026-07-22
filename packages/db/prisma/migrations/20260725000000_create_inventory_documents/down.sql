@@ -1,0 +1,1 @@
+-- reverse: remove inventory_documents table
