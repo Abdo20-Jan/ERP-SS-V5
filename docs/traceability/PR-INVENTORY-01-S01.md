@@ -2,9 +2,10 @@
 
 **Slice:** PR-INVENTORY-01-S01  
 **Module:** INVENTORY  
-**Status:** IMPLEMENTED (pending CI evidence)  
+**Branch:** `codex/pr-inventory-01-s01-warehouses`  
+**Commit:** `dc6352e` (+ hotfix seed `update: {}`)  
+**PR:** https://github.com/Abdo20-Jan/ERP-SS-V5/pull/1  
 **Base:** main@8678085  
-**Decisions locked:** D-A…D-F (execution plan)
 
 ## Objective
 
@@ -19,69 +20,50 @@ Cadastro mestre Warehouse: domínio + migration reversível + repositório + API
 - UI frontend + E2E (**DEFERRED** — D-E)
 - Idempotency-Key store replay→200 (**DEFERRED** — D-A)
 
-## Decisions
+## Decisions locked
 
 | ID | Choice |
 |----|--------|
 | D-A | Natural unique(org,code) → 409; no idempotency store |
 | D-B | `version` column + optional `expectedVersion` → 409 |
-| D-C | `inventory:read` / `inventory:write` (repo pattern) |
+| D-C | `inventory:read` / `inventory:write` |
 | D-D | Offset pagination `{data,total,page,limit}` |
 | D-E | UI/E2E DEFERRED |
 | D-F | Seeds type=`TERCEIRIZADO`; NAC/ZPA only in code/name |
 
 ## Inferences (E5)
 
-1. Model fields (code/type/address/zones/capacity) from SM-INVENTORY-01 functions 1–2.
+1. Model fields from SM-INVENTORY-01 functions 1–2.
 2. WarehouseType enum NACIONAL|FISCAL|TERCEIRIZADO|PROPRIO from SM function 1.
 3. `zones` as simple string labels (not hierarchy).
 
-## Files
+## Evidence (E1)
 
-### Created
-- `packages/domain/src/inventory/*`
-- `packages/domain/tests/inventory/warehouse.spec.ts`
-- `packages/contracts/src/types/warehouse.types.ts`
-- `packages/contracts/src/events/inventory-warehouse.events.ts`
-- `packages/db/prisma/migrations/20260722000000_create_warehouses/{migration.sql,down.sql}`
-- `packages/db/ensure-warehouse-migration.cjs`
-- `packages/db/src/repositories/warehouse.repository.prisma.ts`
-- `packages/db/tests/warehouse.repository.spec.ts`
-- `apps/api/src/inventory/*`
-- `apps/api/src/inventory/tests/*`
+| Gate | Result |
+|------|--------|
+| Migration apply `20260722000000_create_warehouses` | Applied successfully |
+| `@sunset/domain` test | **209 passed** (incl. 11 warehouse) |
+| `@sunset/db` test | **48 passed** (incl. 6 warehouse) |
+| `@sunset/api` test | **173 passed** (incl. warehouse auth/service/contract) |
+| `python3 scripts/validate-guards.py` | **✅ 59 endpoints / 9 controllers** (inventory covered) |
+| lint (`packages/db`) | Failures preexistentes em ensure-*.cjs (node: protocol); não bloqueiam testes |
+| psql down/up com `?schema=` | URI inválida no psql nativo — usar URL sem query ou `prisma migrate` |
 
-### Modified
-- `packages/domain/src/index.ts`, `common/errors/*`
-- `packages/contracts/src/types/index.ts`, `events/index.ts`
-- `packages/db/prisma/schema.prisma` (append Warehouse)
-- `packages/db/prisma/seed.ts`
-- `packages/db/package.json`, `packages/db/src/index.ts`
-- `apps/api/src/app.module.ts`
-- `scripts/validate-guards.py`, `scripts/verify-guards.mjs`
+## Hotfix pós-commit
 
-## Requirements coverage Q0001–Q0050
-
-| Group | Status |
-|-------|--------|
-| Scope/arch/data/API/security/rollout backend | COVERED |
-| Limits Q0011–20 | COVERED (no position/balance routes) |
-| Actors/RBAC Q0021–30 | COVERED |
-| Master data Q0031–40 | COVERED |
-| Layout/UI Q0005/15/25/35/45 | DEFERRED |
-| E2E part of Q0008/18/28/38/48 | DEFERRED |
-| Offline | COVERED as online-only |
+- `packages/db/prisma/seed.ts` linha warehouse upsert: `update: {}` (estava corrompido com path absoluto). **Deve ser commitado e pushado no PR.**
 
 ## Permissions
 
 - `inventory:read` — list/get
 - `inventory:write` — create/update/activate/deactivate
 
-## Audit actions
+## Audit (mesma tx)
 
-- `warehouse.created` / `warehouse.updated` / `warehouse.activated` / `warehouse.deactivated`
-- Same transaction as mutation; before/after + correlationId; deactivate includes metadata.reason
+- `warehouse.created` / `updated` / `activated` / `deactivated`
+- before/after + correlationId; deactivate + metadata.reason
 
-## Seeds
+## Seeds (D-F)
 
 | code | name | type |
 |------|------|------|
@@ -90,33 +72,27 @@ Cadastro mestre Warehouse: domínio + migration reversível + repositório + API
 | MOR_NAC | Depósito Moreiro Nacional | TERCEIRIZADO |
 | MOR_ZPA | Depósito Moreiro Zona Primária | TERCEIRIZADO |
 
-## Tests
-
-- Domain: `packages/domain/tests/inventory/warehouse.spec.ts` (≥10 cases)
-- DB: `packages/db/tests/warehouse.repository.spec.ts` (gated DATABASE_URL)
-- API auth/service/contract specs under `apps/api/src/inventory/tests/`
-
-## Gates (executor evidence)
-
-```bash
-export DATABASE_URL="postgresql://erp:erp_dev_password@localhost:5432/sunset_erp?schema=public"
-pnpm --filter @sunset/db db:generate
-pnpm --filter @sunset/domain test
-pnpm --filter @sunset/db test
-pnpm --filter @sunset/api test
-pnpm run verify:guards
-pnpm validate:invariants
-```
-
 ## Rollback
 
-1. git revert merge commit
-2. Apply `down.sql` (DROP warehouses table)
-3. prisma migrate status clean
+1. git revert merge commit  
+2. `down.sql` → DROP warehouses  
+3. prisma migrate status clean  
+
+## Requirements Q0001–Q0050
+
+| Group | Status |
+|-------|--------|
+| Backend scope/arch/data/API/security | COVERED |
+| Limits Q0011–20 | COVERED |
+| RBAC Q0021–30 | COVERED |
+| Master data Q0031–40 | COVERED |
+| UI Q0005/15/25/35/45 | DEFERRED |
+| E2E | DEFERRED |
+| Offline | online-only declared |
 
 ## Sources
 
-- [PROJECT-SCOPE] docs/blueprint-master/00_ACCEPTED_SCOPE_AND_PRECEDENCE.md
-- SM-INVENTORY-01 functions 1–2
-- PR-INVENTORY-01-S01.md
-- party module pattern (MS-01)
+- SM-INVENTORY-01 functions 1–2  
+- PR-INVENTORY-01-S01.md  
+- party module pattern (MS-01)  
+- [PROJECT-SCOPE]

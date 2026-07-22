@@ -375,7 +375,7 @@ async function main() {
           code: wh.code,
         },
       },
-      update: /Users/abdochamseddine/Projects/ERP-OPENCODE,
+      update: {},
       create: {
         organizationId: "org_001",
         code: wh.code,
