@@ -1,1 +1,1 @@
--- reverse: remove inventory_documents table
+DROP TABLE IF EXISTS "inventory_documents";
