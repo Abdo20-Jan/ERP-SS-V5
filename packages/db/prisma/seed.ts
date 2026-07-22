@@ -77,6 +77,12 @@ async function main() {
     { action: "inventory:event:replay", description: "Solicitar reprocessamento de evento de estoque" },
     { action: "inventory:event:dead-letter", description: "Mover evento de estoque para dead-letter" },
     { action: "inventory:event:cancel", description: "Cancelar evento de estoque" },
+    { action: "inventory:posting:create", description: "Criar proposta de lancamento de estoque" },
+    { action: "inventory:posting:read", description: "Consultar propostas de lancamento de estoque" },
+    { action: "inventory:posting:validate", description: "Validar proposta de lancamento de estoque" },
+    { action: "inventory:posting:reverse", description: "Reverter proposta de lancamento de estoque" },
+    { action: "inventory:posting:cancel", description: "Cancelar proposta de lancamento de estoque" },
+
 
 
   ];

@@ -4,6 +4,10 @@ export enum DimensionType {
   REGION = "REGION",
   CHANNEL = "CHANNEL",
   CATEGORY = "CATEGORY",
+  WAREHOUSE = "WAREHOUSE",
+  SKU = "SKU",
+  DESPACHO = "DESPACHO",
+  CONTAINER = "CONTAINER",
 }
 
 export const KNOWN_DIMENSION_TYPES = Object.values(DimensionType);

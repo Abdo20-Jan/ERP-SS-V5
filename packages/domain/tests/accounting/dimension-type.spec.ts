@@ -23,6 +23,6 @@ describe("DimensionType", () => {
   });
   it("isValidDimensionType rejects INVALID", () => {
     expect(isValidDimensionType("INVALID")).toBe(false);
-    expect(KNOWN_DIMENSION_TYPES).toHaveLength(5);
+    expect(KNOWN_DIMENSION_TYPES).toHaveLength(9);
   });
 });

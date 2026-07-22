@@ -868,3 +868,50 @@ model InventoryEventOutbox {
   @@index([correlationId])
   @@map("inventory_event_outbox")
 }
+
+
+// ============================================
+// INVENTORY — POSTING PROPOSALS (PR-INVENTORY-01-S09)
+// ============================================
+
+model InventoryPostingProposal {
+  id                String    @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  organizationId    String    @default("org_001") @map("organization_id")
+  sourceType        String    @map("source_type")
+  sourceId          String    @map("source_id") @db.Uuid
+  status            String
+  postingDate       DateTime  @map("posting_date") @db.Date
+  description       String
+  correlationId     String    @map("correlation_id")
+  idempotencyKey    String?   @unique @map("idempotency_key")
+  currencyOriginal  String?   @map("currency_original")
+  amountOriginal    Decimal?  @map("amount_original") @db.Decimal(19,2)
+  fxRate            Decimal?  @map("fx_rate") @db.Decimal(19,6)
+  amountFunctional  Decimal   @map("amount_functional") @db.Decimal(19,2)
+  reversalOfId      String?   @map("reversal_of_id") @db.Uuid
+  version           Int       @default(1)
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt         DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+
+  lines             InventoryPostingProposalLine[]
+
+  @@index([organizationId, status])
+  @@index([sourceType, sourceId])
+  @@index([correlationId])
+  @@map("inventory_posting_proposals")
+}
+
+model InventoryPostingProposalLine {
+  id             String  @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  proposalId     String  @map("proposal_id") @db.Uuid
+  accountCode    String  @map("account_code")
+  debit          Decimal @db.Decimal(19,2)
+  credit         Decimal @db.Decimal(19,2)
+  memo           String?
+  dimensionRefs  Json?   @map("dimension_refs")
+
+  proposal       InventoryPostingProposal @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+
+  @@index([proposalId])
+  @@map("inventory_posting_proposal_lines")
+}

@@ -10,3 +10,4 @@ export * from "./inventory-detail.types";
 export * from "./inventory-task.types";
 export * from "./inventory-sod.types";
 export * from "./inventory-event.types";
+export * from "./inventory-posting.types";

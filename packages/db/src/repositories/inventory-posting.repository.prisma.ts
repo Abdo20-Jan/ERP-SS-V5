@@ -1,0 +1,21 @@
+import { InventoryPostingProposal, type PostingProposalListFilters, type PostingProposalListResult, type PostingProposalRepository, type PostingProposalSnapshot } from "@sunset/domain";
+import { Prisma, type PrismaClient } from "@prisma/client";
+import { prisma as defaultPrisma } from "../client";
+type DbClient = PrismaClient | Prisma.TransactionClient;
+export class PrismaPostingProposalRepository implements PostingProposalRepository {
+  constructor(private readonly db: DbClient = defaultPrisma) {}
+  async save(proposal: InventoryPostingProposal, db?: DbClient): Promise<void> {
+    const client = db ?? this.db; const snap = proposal.toSnapshot();
+    await (client as any).inventoryPostingProposal.upsert({ where: { id: snap.id }, create: { id: snap.id, organizationId: snap.organizationId, sourceType: snap.sourceType, sourceId: snap.sourceId, status: snap.status, postingDate: new Date(snap.postingDate), description: snap.description, correlationId: snap.correlationId, idempotencyKey: snap.idempotencyKey, currencyOriginal: snap.currencyOriginal, amountOriginal: snap.amountOriginal, fxRate: snap.fxRate, amountFunctional: snap.amountFunctional, reversalOfId: snap.reversalOfId, version: snap.version, createdAt: new Date(snap.createdAt), updatedAt: new Date(snap.updatedAt), lines: { deleteMany: {}, create: snap.lines.map((l: any) => ({ accountCode: l.accountCode, debit: l.debit, credit: l.credit, memo: l.memo, dimensionRefs: l.dimensionRefs })) } }, update: { status: snap.status, description: snap.description, version: snap.version, reversalOfId: snap.reversalOfId, updatedAt: new Date(snap.updatedAt), lines: { deleteMany: {}, create: snap.lines.map((l: any) => ({ accountCode: l.accountCode, debit: l.debit, credit: l.credit, memo: l.memo, dimensionRefs: l.dimensionRefs })) } } });
+  }
+  async findById(id: string): Promise<InventoryPostingProposal | null> { const row = await (this.db as any).inventoryPostingProposal.findUnique({ where: { id }, include: { lines: true } }); return row ? InventoryPostingProposal.rehydrate(this.toSnapshot(row)) : null; }
+  async findByIdempotencyKey(key: string): Promise<PostingProposalSnapshot | null> { const row = await (this.db as any).inventoryPostingProposal.findUnique({ where: { idempotencyKey: key }, include: { lines: true } }); return row ? this.toSnapshot(row) : null; }
+  async findAll(filters: PostingProposalListFilters = {}, page = 1, limit = 20): Promise<PostingProposalListResult> {
+    const where: any = {}; if (filters.organizationId) where.organizationId = filters.organizationId; if (filters.sourceType) where.sourceType = filters.sourceType; if (filters.sourceId) where.sourceId = filters.sourceId; if (filters.status) where.status = filters.status; if (filters.dateFrom || filters.dateTo) { where.postingDate = {}; if (filters.dateFrom) where.postingDate.gte = new Date(filters.dateFrom); if (filters.dateTo) where.postingDate.lte = new Date(filters.dateTo); }
+    const take = Math.min(Math.max(limit, 1), 100); const skip = (Math.max(page, 1) - 1) * take;
+    const total = await (this.db as any).inventoryPostingProposal.count({ where });
+    const rows = await (this.db as any).inventoryPostingProposal.findMany({ where, take, skip, include: { lines: true }, orderBy: { createdAt: "desc" } });
+    return { data: rows.map((r: any) => InventoryPostingProposal.rehydrate(this.toSnapshot(r))), total };
+  }
+  private toSnapshot(row: any): PostingProposalSnapshot { return { id: row.id, organizationId: row.organizationId, sourceType: row.sourceType, sourceId: row.sourceId, status: row.status, postingDate: row.postingDate.toISOString(), description: row.description, correlationId: row.correlationId, idempotencyKey: row.idempotencyKey, currencyOriginal: row.currencyOriginal, amountOriginal: row.amountOriginal?.toString() ?? null, fxRate: row.fxRate?.toString() ?? null, amountFunctional: row.amountFunctional.toString(), lines: (row.lines ?? []).map((l: any) => ({ accountCode: l.accountCode, debit: l.debit.toString(), credit: l.credit.toString(), memo: l.memo, dimensionRefs: Array.isArray(l.dimensionRefs) ? l.dimensionRefs : [] })), reversalOfId: row.reversalOfId, version: row.version, createdAt: row.createdAt.toISOString(), updatedAt: row.updatedAt.toISOString() }; }
+}
