@@ -54,3 +54,7 @@ opencode.json.backup-*
 
 # Backup
 .gitignore.opencode-army
+
+# Ephemeral dev artifacts
+scripts/validate-*
+test.txt
