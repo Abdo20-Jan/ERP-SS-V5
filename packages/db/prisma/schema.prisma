@@ -756,3 +756,80 @@ model InventoryTask {
   @@index([locationId])
   @@map("inventory_tasks")
 }
+
+// ============================================
+// INVENTORY — SEGREGATION OF DUTIES (PR-INVENTORY-01-S07)
+// ============================================
+
+model SoDRule {
+  id                          String   @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  organizationId              String   @default("org_001") @map("organization_id")
+  code                        String
+  name                        String
+  description                 String?
+  scope                       String?
+  action                      String
+  resourceType                String   @map("resource_type")
+  incompatibleAction          String?  @map("incompatible_action")
+  incompatibleRole            String?  @map("incompatible_role")
+  incompatiblePermission      String?  @map("incompatible_permission")
+  requiresIndependentApproval Boolean  @default(false) @map("requires_independent_approval")
+  severity                    String
+  status                      String
+  version                     Int      @default(1)
+  createdAt                   DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt                   DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  @@unique([organizationId, code])
+  @@index([organizationId, action, resourceType, status])
+  @@map("sod_rules")
+}
+
+model SoDViolation {
+  id               String    @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  organizationId   String    @default("org_001") @map("organization_id")
+  ruleId           String    @map("rule_id") @db.Uuid
+  ruleCode         String    @map("rule_code")
+  actorUserId      String    @map("actor_user_id") @db.Uuid
+  action           String
+  resourceType     String    @map("resource_type")
+  resourceId       String    @map("resource_id") @db.Uuid
+  result           String
+  status           String
+  resolution       String?
+  resolvedByUserId String?   @map("resolved_by_user_id") @db.Uuid
+  resolvedAt       DateTime? @map("resolved_at") @db.Timestamptz
+  version          Int       @default(1)
+  createdAt        DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt        DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+
+  @@index([organizationId, actorUserId, status])
+  @@index([organizationId, resourceType, resourceId])
+  @@map("sod_violations")
+}
+
+model SoDException {
+  id                String    @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  organizationId    String    @default("org_001") @map("organization_id")
+  violationId       String    @map("violation_id") @db.Uuid
+  requestedByUserId String    @map("requested_by_user_id") @db.Uuid
+  reason            String
+  expiresAt         DateTime? @map("expires_at") @db.Timestamptz
+  status            String
+  approvedByUserId  String?   @map("approved_by_user_id") @db.Uuid
+  approvedReason    String?   @map("approved_reason")
+  approvedAt        DateTime? @map("approved_at") @db.Timestamptz
+  rejectedByUserId  String?   @map("rejected_by_user_id") @db.Uuid
+  rejectedReason    String?   @map("rejected_reason")
+  rejectedAt        DateTime? @map("rejected_at") @db.Timestamptz
+  revokedByUserId   String?   @map("revoked_by_user_id") @db.Uuid
+  revokedReason     String?   @map("revoked_reason")
+  revokedAt         DateTime? @map("revoked_at") @db.Timestamptz
+  version           Int       @default(1)
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt         DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+
+  @@index([organizationId, violationId, status])
+  @@index([organizationId, requestedByUserId])
+  @@map("sod_exceptions")
+}
