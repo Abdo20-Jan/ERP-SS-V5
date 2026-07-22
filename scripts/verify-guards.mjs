@@ -25,6 +25,7 @@ const SCOPE_GLOBS = [
   "accounting/ledger.controller.ts",
   "accounting/posting-rule.controller.ts",
   "inventory/warehouse.controller.ts",
+  "inventory/location.controller.ts",
 ];
 
 const HTTP_DECORATORS = ["Get", "Post", "Patch", "Put", "Delete"];

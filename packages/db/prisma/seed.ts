@@ -56,8 +56,8 @@ async function main() {
     { action: "product:write", description: "Criar/editar/ativar/desativar produtos" },
     { action: "accounting:read", description: "Consultar plano de contas, moedas, dimensões e lançamentos" },
     { action: "accounting:write", description: "Criar/alterar contas, moedas, dimensões e lançamentos" },
-    { action: "inventory:read", description: "Listar/ver depósitos" },
-    { action: "inventory:write", description: "Criar/editar/ativar/desativar depósitos" },
+    { action: "inventory:read", description: "Listar/ver depósitos e locais" },
+    { action: "inventory:write", description: "Criar/editar/ativar/desativar depósitos e locais" },
   ];
 
   for (const perm of permissions) {
@@ -389,6 +389,61 @@ async function main() {
     });
   }
   console.log("✅ Warehouses seeded:", warehouses.map((w) => w.code).join(", "));
+
+
+
+  for (const wh of warehouses) {
+  // Location config + virtuals (PR-INVENTORY-01-S02)
+
+    const row = await prisma.warehouse.findUnique({
+      where: { organizationId_code: { organizationId: "org_001", code: wh.code } },
+    });
+    if (!row) continue;
+    await prisma.warehouseLocationConfig.upsert({
+      where: { warehouseId: row.id },
+      update: {},
+      create: {
+        warehouseId: row.id,
+        maxLevels: 1,
+        level1Name: "Zona",
+        level2Name: "Rua",
+        level3Name: "Rack",
+        level4Name: "Nível",
+        level5Name: "Posição",
+        useLevel2: false,
+        useLevel3: false,
+        useLevel4: false,
+        useLevel5: false,
+        version: 0,
+      },
+    });
+    for (const v of [
+      { code: "V-TRANSIT", name: "Em trânsito", virtualType: "TRANSIT" },
+      { code: "V-PORT", name: "Porto", virtualType: "PORT" },
+    ]) {
+      const existing = await prisma.warehouseLocation.findFirst({
+        where: { warehouseId: row.id, parentKey: "ROOT", code: v.code },
+      });
+      if (!existing) {
+        await prisma.warehouseLocation.create({
+          data: {
+            warehouseId: row.id,
+            parentId: null,
+            parentKey: "ROOT",
+            level: 0,
+            code: v.code,
+            name: v.name,
+            path: v.code,
+            isVirtual: true,
+            virtualType: v.virtualType,
+            isActive: true,
+            version: 0,
+          },
+        });
+      }
+    }
+  }
+  console.log("✅ Warehouse location configs + virtuals seeded");
 
   console.log("🎉 Seed completed successfully!");
 

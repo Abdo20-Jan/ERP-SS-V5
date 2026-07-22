@@ -235,3 +235,28 @@ export class WarehouseConcurrencyError extends DomainError {
     super(message, "VERSION_CONFLICT", details);
   }
 }
+
+// Inventory warehouse locations (PR-INVENTORY-01-S02)
+export class LocationValidationError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "VALIDATION_ERROR", details);
+  }
+}
+
+export class LocationInactiveError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "LOCATION_INACTIVE", details);
+  }
+}
+
+export class LocationConcurrencyError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "VERSION_CONFLICT", details);
+  }
+}
+
+export class LocationHasChildrenError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "LOCATION_HAS_ACTIVE_CHILDREN", details);
+  }
+}

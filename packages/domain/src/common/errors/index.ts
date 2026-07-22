@@ -36,4 +36,8 @@ export {
   WarehouseValidationError,
   WarehouseInactiveError,
   WarehouseConcurrencyError,
+  LocationValidationError,
+  LocationInactiveError,
+  LocationConcurrencyError,
+  LocationHasChildrenError,
 } from "./domain-error";

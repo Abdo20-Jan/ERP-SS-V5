@@ -569,6 +569,9 @@ model Warehouse {
   createdAt         DateTime @default(now()) @map("created_at") @db.Timestamptz
   updatedAt         DateTime @updatedAt @map("updated_at") @db.Timestamptz
 
+  locationConfig WarehouseLocationConfig?
+  locations      WarehouseLocation[]
+
   @@unique([organizationId, code])
   @@index([organizationId])
   @@index([type])
@@ -576,3 +579,60 @@ model Warehouse {
   @@map("warehouses")
 }
 
+
+
+// ============================================
+// INVENTORY — WAREHOUSE LOCATIONS (PR-INVENTORY-01-S02)
+// ============================================
+
+model WarehouseLocationConfig {
+  id           String   @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  warehouseId  String   @unique @map("warehouse_id") @db.Uuid
+  maxLevels    Int      @default(1) @map("max_levels")
+  level1Name   String   @default("Zona") @map("level1_name")
+  level2Name   String   @default("Rua") @map("level2_name")
+  level3Name   String   @default("Rack") @map("level3_name")
+  level4Name   String   @default("Nível") @map("level4_name")
+  level5Name   String   @default("Posição") @map("level5_name")
+  useLevel2    Boolean  @default(false) @map("use_level2")
+  useLevel3    Boolean  @default(false) @map("use_level3")
+  useLevel4    Boolean  @default(false) @map("use_level4")
+  useLevel5    Boolean  @default(false) @map("use_level5")
+  version      Int      @default(0)
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  warehouse Warehouse @relation(fields: [warehouseId], references: [id], onDelete: Restrict)
+
+  @@map("warehouse_location_configs")
+}
+
+model WarehouseLocation {
+  id           String   @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  warehouseId  String   @map("warehouse_id") @db.Uuid
+  parentId     String?  @map("parent_id") @db.Uuid
+  parentKey    String   @map("parent_key")
+  level        Int
+  code         String
+  name         String
+  path         String
+  isVirtual    Boolean  @default(false) @map("is_virtual")
+  virtualType  String?  @map("virtual_type")
+  isActive     Boolean  @default(true) @map("is_active")
+  capacity     Decimal? @db.Decimal(14, 2)
+  capacityUnit String?  @map("capacity_unit")
+  version      Int      @default(0)
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  warehouse Warehouse @relation(fields: [warehouseId], references: [id], onDelete: Restrict)
+  parent    WarehouseLocation?  @relation("LocationHierarchy", fields: [parentId], references: [id], onDelete: Restrict)
+  children  WarehouseLocation[] @relation("LocationHierarchy")
+
+  @@unique([warehouseId, parentKey, code])
+  @@index([warehouseId, level])
+  @@index([warehouseId, parentId])
+  @@index([warehouseId, path])
+  @@index([warehouseId, isActive])
+  @@map("warehouse_locations")
+}
