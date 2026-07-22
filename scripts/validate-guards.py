@@ -19,6 +19,7 @@ SCOPE = [
     "accounting/ledger.controller.ts",
     "accounting/posting-rule.controller.ts",
     "inventory/warehouse.controller.ts",
+    "inventory/location.controller.ts",
 ]
 
 HTTP = ("Get", "Post", "Patch", "Put", "Delete")
