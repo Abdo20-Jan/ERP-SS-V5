@@ -216,3 +216,22 @@ export class DuplicatePostingRuleError extends DomainError {
     super(message, "DUPLICATE_RULE", details);
   }
 }
+
+// Inventory warehouses (PR-INVENTORY-01-S01)
+export class WarehouseValidationError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "VALIDATION_ERROR", details);
+  }
+}
+
+export class WarehouseInactiveError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "WAREHOUSE_INACTIVE", details);
+  }
+}
+
+export class WarehouseConcurrencyError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "VERSION_CONFLICT", details);
+  }
+}

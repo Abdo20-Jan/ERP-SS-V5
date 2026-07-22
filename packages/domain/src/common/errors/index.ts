@@ -33,4 +33,7 @@ export {
   InvalidPlaceholderError,
   InvalidSequenceError,
   DuplicatePostingRuleError,
+  WarehouseValidationError,
+  WarehouseInactiveError,
+  WarehouseConcurrencyError,
 } from "./domain-error";

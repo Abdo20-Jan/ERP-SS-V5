@@ -18,6 +18,7 @@ SCOPE = [
     "accounting/dimension.controller.ts",
     "accounting/ledger.controller.ts",
     "accounting/posting-rule.controller.ts",
+    "inventory/warehouse.controller.ts",
 ]
 
 HTTP = ("Get", "Post", "Patch", "Put", "Delete")
@@ -42,6 +43,8 @@ def family(rel: str) -> tuple[str, str] | None:
         return ("product:read", "product:write")
     if rel.startswith("accounting/"):
         return ("accounting:read", "accounting:write")
+    if rel.startswith("inventory/"):
+        return ("inventory:read", "inventory:write")
     return None
 
 

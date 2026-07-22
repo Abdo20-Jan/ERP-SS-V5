@@ -11,6 +11,7 @@ import { ParametersModule } from "./parameters/parameters.module";
 import { PartyModule } from "./party/party.module";
 import { ProductModule } from "./product/product.module";
 import { AccountingModule } from "./accounting/accounting.module";
+import { WarehouseModule } from "./inventory/warehouse.module";
 import { PrismaModule } from "./prisma/prisma.module";
 
 @Module({
@@ -29,6 +30,7 @@ import { PrismaModule } from "./prisma/prisma.module";
     PartyModule,
     ProductModule,
     AccountingModule,
+    WarehouseModule,
   ],
   providers: [
     {

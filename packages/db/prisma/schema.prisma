@@ -544,3 +544,35 @@ model PostingRuleLine {
   @@index([ruleId])
   @@map("posting_rule_lines")
 }
+
+// ============================================
+// INVENTORY — WAREHOUSES (PR-INVENTORY-01-S01)
+// ============================================
+
+model Warehouse {
+  id                String   @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  organizationId    String   @default("org_001") @map("organization_id")
+  code              String
+  name              String
+  type              String
+  addressStreet     String?  @map("address_street")
+  addressNumber     String?  @map("address_number")
+  addressCity       String?  @map("address_city")
+  addressProvince   String?  @map("address_province")
+  addressCountry    String   @default("AR") @map("address_country")
+  addressPostalCode String?  @map("address_postal_code")
+  zones             String[] @default([])
+  capacity          Decimal? @db.Decimal(14, 2)
+  capacityUnit      String?  @map("capacity_unit")
+  isActive          Boolean  @default(true) @map("is_active")
+  version           Int      @default(0)
+  createdAt         DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt         DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  @@unique([organizationId, code])
+  @@index([organizationId])
+  @@index([type])
+  @@index([isActive])
+  @@map("warehouses")
+}
+

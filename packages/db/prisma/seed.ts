@@ -56,6 +56,8 @@ async function main() {
     { action: "product:write", description: "Criar/editar/ativar/desativar produtos" },
     { action: "accounting:read", description: "Consultar plano de contas, moedas, dimensões e lançamentos" },
     { action: "accounting:write", description: "Criar/alterar contas, moedas, dimensões e lançamentos" },
+    { action: "inventory:read", description: "Listar/ver depósitos" },
+    { action: "inventory:write", description: "Criar/editar/ativar/desativar depósitos" },
   ];
 
   for (const perm of permissions) {
@@ -358,7 +360,38 @@ async function main() {
     console.log("✅ Posting rule Sales already present");
   }
 
+  // Warehouses (PR-INVENTORY-01-S01) — D-F: TERCEIRIZADO; NAC/ZPA only in code/name
+  const warehouses = [
+    { code: "TP_NAC", name: "Depósito TP Nacional" },
+    { code: "TP_ZPA", name: "Depósito TP Zona Primária" },
+    { code: "MOR_NAC", name: "Depósito Moreiro Nacional" },
+    { code: "MOR_ZPA", name: "Depósito Moreiro Zona Primária" },
+  ];
+  for (const wh of warehouses) {
+    await prisma.warehouse.upsert({
+      where: {
+        organizationId_code: {
+          organizationId: "org_001",
+          code: wh.code,
+        },
+      },
+      update: /Users/abdochamseddine/Projects/ERP-OPENCODE,
+      create: {
+        organizationId: "org_001",
+        code: wh.code,
+        name: wh.name,
+        type: "TERCEIRIZADO",
+        addressCountry: "AR",
+        zones: [],
+        isActive: true,
+        version: 0,
+      },
+    });
+  }
+  console.log("✅ Warehouses seeded:", warehouses.map((w) => w.code).join(", "));
+
   console.log("🎉 Seed completed successfully!");
+
 }
 
 main()
