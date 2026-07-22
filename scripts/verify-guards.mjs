@@ -29,6 +29,7 @@ const SCOPE_GLOBS = [
   "inventory/override.controller.ts",
   "inventory/inventory-document.controller.ts",
   "inventory/inventory-detail.controller.ts",
+  "inventory/inventory-task.controller.ts",
 ];
 
 const HTTP_DECORATORS = ["Get", "Post", "Patch", "Put", "Delete"];
@@ -105,7 +106,12 @@ function expectedPermissionFamily(fileRel) {
     return { read: "product:read", write: "product:write" };
   if (fileRel.includes("accounting/"))
     return { read: "accounting:read", write: "accounting:write" };
-  if (fileRel.includes("inventory/override") || fileRel.includes("inventory/inventory-document")) return null;
+  if (
+    fileRel.includes("inventory/override") ||
+    fileRel.includes("inventory/inventory-document") ||
+    fileRel.includes("inventory/inventory-task")
+  )
+    return null;
   if (fileRel.includes("inventory/"))
     return { read: "inventory:read", write: "inventory:write" };
   return null;

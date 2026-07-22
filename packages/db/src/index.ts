@@ -10,3 +10,4 @@ export * from "./repositories/warehouse.repository.prisma";
 export * from "./repositories/warehouse-location.repository.prisma";
 export * from "./repositories/override-request.repository.prisma";
 export * from "./repositories/inventory-document.repository.prisma";
+export * from "./repositories/inventory-task.repository.prisma";

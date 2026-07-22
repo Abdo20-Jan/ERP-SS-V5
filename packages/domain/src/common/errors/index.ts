@@ -52,4 +52,7 @@ export {
   InventoryDocumentNotFoundError,
   InventoryDocumentFileTooLargeError,
   InventoryDocumentMimeNotAllowedError,
+  InventoryTaskValidationError,
+  InventoryTaskStateError,
+  InventoryTaskConcurrencyError,
 } from "./domain-error";

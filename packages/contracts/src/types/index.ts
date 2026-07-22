@@ -7,3 +7,4 @@ export * from "./warehouse-location.types";
 export * from "./override-request.types";
 export * from "./inventory-document.types";
 export * from "./inventory-detail.types";
+export * from "./inventory-task.types";

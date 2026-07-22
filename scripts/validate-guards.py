@@ -23,6 +23,7 @@ SCOPE = [
     "inventory/override.controller.ts",
     "inventory/inventory-document.controller.ts",
     "inventory/inventory-detail.controller.ts",
+    "inventory/inventory-task.controller.ts",
 ]
 
 HTTP = ("Get", "Post", "Patch", "Put", "Delete")
@@ -48,7 +49,11 @@ def family(rel: str) -> tuple[str, str] | None:
     if rel.startswith("accounting/"):
         return ("accounting:read", "accounting:write")
     # Override uses inventory:override:* — presence-only check (no read/write pair).
-    if rel.startswith("inventory/override") or rel.startswith("inventory/inventory-document"):
+    if (
+        rel.startswith("inventory/override")
+        or rel.startswith("inventory/inventory-document")
+        or rel.startswith("inventory/inventory-task")
+    ):
         return None
     if rel.startswith("inventory/"):
         return ("inventory:read", "inventory:write")

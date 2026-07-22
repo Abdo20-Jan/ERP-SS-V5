@@ -65,6 +65,13 @@ async function main() {
     { action: "inventory:document:upload", description: "Upload documentos deposito/posicao" },
     { action: "inventory:document:read", description: "Leitura documentos deposito/posicao" },
     { action: "inventory:document:archive", description: "Arquivar documentos deposito/posicao" },
+    { action: "inventory:task:create", description: "Criar tarefas operacionais de estoque" },
+    { action: "inventory:task:read", description: "Consultar worklist e tarefas de estoque" },
+    { action: "inventory:task:assign", description: "Atribuir dono de tarefa de estoque" },
+    { action: "inventory:task:update", description: "Iniciar/bloquear/desbloquear tarefa de estoque" },
+    { action: "inventory:task:escalate", description: "Escalar tarefa de estoque" },
+    { action: "inventory:task:complete", description: "Concluir tarefa de estoque" },
+    { action: "inventory:task:cancel", description: "Cancelar tarefa de estoque" },
 
   ];
 

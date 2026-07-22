@@ -4,6 +4,7 @@ import {
   FILE_STORAGE_PORT,
   INVENTORY_BALANCE_PORT,
   INVENTORY_DOCUMENT_REPOSITORY,
+  INVENTORY_TASK_REPOSITORY,
   LocalFileStorageAdapter,
   OVERRIDE_REQUEST_REPOSITORY,
   WAREHOUSE_LOCATION_REPOSITORY,
@@ -11,6 +12,7 @@ import {
 } from "@sunset/domain";
 import {
   PrismaInventoryDocumentRepository,
+  PrismaInventoryTaskRepository,
   PrismaOverrideRequestRepository,
   PrismaWarehouseLocationRepository,
   PrismaWarehouseRepository,
@@ -19,6 +21,8 @@ import { InventoryDetailController } from "./inventory-detail.controller";
 import { InventoryDetailService } from "./inventory-detail.service";
 import { InventoryDocumentController } from "./inventory-document.controller";
 import { InventoryDocumentService } from "./inventory-document.service";
+import { InventoryTaskController } from "./inventory-task.controller";
+import { InventoryTaskService } from "./inventory-task.service";
 import { LocationController } from "./location.controller";
 import { LocationService } from "./location.service";
 import { OverrideController } from "./override.controller";
@@ -33,6 +37,7 @@ import { WarehouseService } from "./warehouse.service";
     OverrideController,
     InventoryDocumentController,
     InventoryDetailController,
+    InventoryTaskController,
   ],
   providers: [
     WarehouseService,
@@ -40,10 +45,12 @@ import { WarehouseService } from "./warehouse.service";
     OverrideService,
     InventoryDocumentService,
     InventoryDetailService,
+    InventoryTaskService,
     { provide: WAREHOUSE_REPOSITORY, useClass: PrismaWarehouseRepository },
     { provide: WAREHOUSE_LOCATION_REPOSITORY, useClass: PrismaWarehouseLocationRepository },
     { provide: OVERRIDE_REQUEST_REPOSITORY, useClass: PrismaOverrideRequestRepository },
     { provide: INVENTORY_DOCUMENT_REPOSITORY, useClass: PrismaInventoryDocumentRepository },
+    { provide: INVENTORY_TASK_REPOSITORY, useClass: PrismaInventoryTaskRepository },
     { provide: INVENTORY_BALANCE_PORT, useClass: AlwaysFalseInventoryBalancePort },
     { provide: FILE_STORAGE_PORT, useClass: LocalFileStorageAdapter },
   ],
@@ -53,6 +60,7 @@ import { WarehouseService } from "./warehouse.service";
     OverrideService,
     InventoryDocumentService,
     InventoryDetailService,
+    InventoryTaskService,
   ],
 })
 export class WarehouseModule {}

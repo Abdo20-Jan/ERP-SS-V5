@@ -334,3 +334,22 @@ export class InventoryDocumentMimeNotAllowedError extends DomainError {
     super(message, "MIME_NOT_ALLOWED", details);
   }
 }
+
+// Inventory tasks (PR-INVENTORY-01-S06)
+export class InventoryTaskValidationError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "VALIDATION_ERROR", details);
+  }
+}
+
+export class InventoryTaskStateError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "INVENTORY_TASK_INVALID_STATE", details);
+  }
+}
+
+export class InventoryTaskConcurrencyError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "VERSION_CONFLICT", details);
+  }
+}
