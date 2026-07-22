@@ -72,6 +72,12 @@ async function main() {
     { action: "inventory:task:escalate", description: "Escalar tarefa de estoque" },
     { action: "inventory:task:complete", description: "Concluir tarefa de estoque" },
     { action: "inventory:task:cancel", description: "Cancelar tarefa de estoque" },
+    { action: "inventory:event:read", description: "Consultar eventos de estoque" },
+    { action: "inventory:event:payload:read", description: "Visualizar payload completo de eventos de estoque" },
+    { action: "inventory:event:replay", description: "Solicitar reprocessamento de evento de estoque" },
+    { action: "inventory:event:dead-letter", description: "Mover evento de estoque para dead-letter" },
+    { action: "inventory:event:cancel", description: "Cancelar evento de estoque" },
+
 
   ];
 

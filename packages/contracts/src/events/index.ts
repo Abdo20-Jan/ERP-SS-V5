@@ -5,3 +5,4 @@ export * from "./inventory-override.events";
 export * from "./inventory-document.events";
 export * from "./inventory-task.events";
 export * from "./inventory-sod.events";
+export * from "./inventory-event.events";

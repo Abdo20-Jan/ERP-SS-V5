@@ -833,3 +833,38 @@ model SoDException {
   @@index([organizationId, requestedByUserId])
   @@map("sod_exceptions")
 }
+
+// ============================================
+// INVENTORY — EVENT OUTBOX (PR-INVENTORY-01-S08)
+// ============================================
+
+model InventoryEventOutbox {
+  id               String    @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  organizationId   String    @default("org_001") @map("organization_id")
+  eventType        String    @map("event_type")
+  eventVersion     Int       @map("event_version")
+  aggregateType    String    @map("aggregate_type")
+  aggregateId      String    @map("aggregate_id") @db.Uuid
+  producer         String
+  payload          Json
+  status           String
+  correlationId    String    @map("correlation_id")
+  idempotencyKey   String?   @unique @map("idempotency_key")
+  occurredAt       DateTime  @map("occurred_at") @db.Timestamptz
+  availableAt      DateTime? @map("available_at") @db.Timestamptz
+  publishedAt      DateTime? @map("published_at") @db.Timestamptz
+  consumedAt       DateTime? @map("consumed_at") @db.Timestamptz
+  failedAt         DateTime? @map("failed_at") @db.Timestamptz
+  retryCount       Int       @default(0) @map("retry_count")
+  lastErrorCode    String?   @map("last_error_code")
+  lastErrorMessage String?   @map("last_error_message")
+  version          Int       @default(1)
+  createdAt        DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt        DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+
+  @@index([organizationId, status, occurredAt])
+  @@index([eventType, eventVersion])
+  @@index([aggregateType, aggregateId])
+  @@index([correlationId])
+  @@map("inventory_event_outbox")
+}

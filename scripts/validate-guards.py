@@ -25,6 +25,7 @@ SCOPE = [
     "inventory/inventory-detail.controller.ts",
     "inventory/inventory-task.controller.ts",
     "inventory/inventory-sod.controller.ts",
+    "inventory/inventory-event.controller.ts",
 ]
 
 HTTP = ("Get", "Post", "Patch", "Put", "Delete")
@@ -55,6 +56,7 @@ def family(rel: str) -> tuple[str, str] | None:
         or rel.startswith("inventory/inventory-document")
         or rel.startswith("inventory/inventory-task")
         or rel.startswith("inventory/inventory-sod")
+        or rel.startswith("inventory/inventory-event")
     ):
         return None
     if rel.startswith("inventory/"):

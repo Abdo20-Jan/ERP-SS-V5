@@ -20,7 +20,7 @@ describe("SoD Domain", () => {
 
   it("evaluates blocked when rule matches and no approval required", () => {
     const rule = SoDRule.create({
-      code: "R1", name: "R1", action: "test", resourceType: "wh",
+      code: "R1", name: "Rule 1", action: "test", resourceType: "wh",
       incompatiblePermission: "other:write", severity: "HIGH", organizationId: "org1",
     });
     const outcome = SoDEvaluator.evaluate({
@@ -32,7 +32,7 @@ describe("SoD Domain", () => {
 
   it("evaluates approval required when rule matches and approval required", () => {
     const rule = SoDRule.create({
-      code: "R1", name: "R1", action: "test", resourceType: "wh",
+      code: "R1", name: "Rule 1", action: "test", resourceType: "wh",
       incompatiblePermission: "other:write", requiresIndependentApproval: true,
       severity: "HIGH", organizationId: "org1",
     });
@@ -45,11 +45,11 @@ describe("SoD Domain", () => {
 
   it("exception approval prevents self-approval", () => {
     const exc = SoDException.request({
-      violationId: "v1", requestedByUserId: "u1", reason: "test",
+      violationId: "v1", requestedByUserId: "u1", reason: "valid reason for exception",
     }, "org1");
-    expect(() => exc.approve({ exceptionId: exc.id, approvedByUserId: "u1", reason: "ok" }))
+    expect(() => exc.approve({ exceptionId: exc.id, approvedByUserId: "u1", reason: "valid reason for approval" }))
       .toThrow(SoDApprovalNotAllowedError);
-    exc.approve({ exceptionId: exc.id, approvedByUserId: "u2", reason: "ok" });
+    exc.approve({ exceptionId: exc.id, approvedByUserId: "u2", reason: "valid reason for approval" });
     expect(exc.status).toBe(SoDExceptionStatus.APPROVED);
   });
 });

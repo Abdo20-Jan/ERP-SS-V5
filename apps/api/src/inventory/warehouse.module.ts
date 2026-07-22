@@ -8,6 +8,7 @@ import {
   LocalFileStorageAdapter,
   OVERRIDE_REQUEST_REPOSITORY,
   WAREHOUSE_LOCATION_REPOSITORY,
+  INVENTORY_EVENT_REPOSITORY,
   SOD_REPOSITORY,\n  WAREHOUSE_REPOSITORY,
 } from "@sunset/domain";
 import {
@@ -23,6 +24,8 @@ import { InventoryDocumentController } from "./inventory-document.controller";
 import { InventoryDocumentService } from "./inventory-document.service";
 import { InventoryTaskController } from "./inventory-task.controller";
 import { InventoryTaskService } from "./inventory-task.service";\nimport { InventorySoDController } from "./inventory-sod.controller";\nimport { InventorySoDService } from "./inventory-sod.service";
+import { InventoryEventController } from "./inventory-event.controller";
+import { InventoryEventService } from "./inventory-event.service";
 import { LocationController } from "./location.controller";
 import { LocationService } from "./location.service";
 import { OverrideController } from "./override.controller";
@@ -38,6 +41,7 @@ import { WarehouseService } from "./warehouse.service";
     InventoryDocumentController,
     InventoryDetailController,
     InventoryTaskController,\n    InventorySoDController,
+    InventoryEventController,
   ],
   providers: [
     WarehouseService,
@@ -46,11 +50,14 @@ import { WarehouseService } from "./warehouse.service";
     InventoryDocumentService,
     InventoryDetailService,
     InventoryTaskService,\n    InventorySoDService,
-    { provide: SOD_REPOSITORY,\n  WAREHOUSE_REPOSITORY, useClass: PrismaWarehouseRepository },
+    InventoryEventService,
+    { provide: INVENTORY_EVENT_REPOSITORY,
+  SOD_REPOSITORY,\n  WAREHOUSE_REPOSITORY, useClass: PrismaWarehouseRepository },
     { provide: WAREHOUSE_LOCATION_REPOSITORY, useClass: PrismaWarehouseLocationRepository },
     { provide: OVERRIDE_REQUEST_REPOSITORY, useClass: PrismaOverrideRequestRepository },
     { provide: INVENTORY_DOCUMENT_REPOSITORY, useClass: PrismaInventoryDocumentRepository },
-    { provide: INVENTORY_TASK_REPOSITORY, useClass: PrismaInventoryTaskRepository },\n    { provide: SOD_REPOSITORY, useClass: PrismaSoDRepository },
+    { provide: INVENTORY_TASK_REPOSITORY, useClass: PrismaInventoryTaskRepository },\n    { provide: INVENTORY_EVENT_REPOSITORY,
+  SOD_REPOSITORY, useClass: PrismaSoDRepository },
     { provide: INVENTORY_BALANCE_PORT, useClass: AlwaysFalseInventoryBalancePort },
     { provide: FILE_STORAGE_PORT, useClass: LocalFileStorageAdapter },
   ],
@@ -61,6 +68,7 @@ import { WarehouseService } from "./warehouse.service";
     InventoryDocumentService,
     InventoryDetailService,
     InventoryTaskService,\n    InventorySoDService,
+    InventoryEventService,
   ],
 })
 export class WarehouseModule {}

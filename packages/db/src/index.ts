@@ -12,3 +12,5 @@ export * from "./repositories/override-request.repository.prisma";
 export * from "./repositories/inventory-document.repository.prisma";
 export * from "./repositories/inventory-task.repository.prisma";
 export * from "./repositories/inventory-sod.repository.prisma";
+export * from "./repositories/inventory-event.repository.prisma";
+export * from "./repositories/inventory-sod.repository.prisma";

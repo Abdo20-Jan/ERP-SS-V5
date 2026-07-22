@@ -36,7 +36,7 @@ describe("InventorySoDService", () => {
 
   it("creates rule", async () => {
     const res = await service.createRule({
-      code: "R1", name: "R1", action: "test", resourceType: "wh", severity: "HIGH",
+      code: "R1", name: "Rule 1", action: "test", resourceType: "wh", severity: "HIGH", incompatiblePermission: "other:write",
     }, "u1");
     expect(res.code).toBe("R1");
     expect(repo.saveRule).toHaveBeenCalled();
