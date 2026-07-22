@@ -353,3 +353,34 @@ export class InventoryTaskConcurrencyError extends DomainError {
     super(message, "VERSION_CONFLICT", details);
   }
 }
+
+// Inventory segregation of duties (PR-INVENTORY-01-S07)
+export class SoDValidationError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "VALIDATION_ERROR", details);
+  }
+}
+
+export class SoDStateError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "SOD_INVALID_STATE", details);
+  }
+}
+
+export class SoDConcurrencyError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "VERSION_CONFLICT", details);
+  }
+}
+
+export class SoDApprovalNotAllowedError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "SOD_APPROVAL_NOT_ALLOWED", details);
+  }
+}
+
+export class SoDAutoApprovalError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "SOD_AUTO_APPROVAL_NOT_ALLOWED", details);
+  }
+}

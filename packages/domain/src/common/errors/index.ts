@@ -55,4 +55,9 @@ export {
   InventoryTaskValidationError,
   InventoryTaskStateError,
   InventoryTaskConcurrencyError,
+  SoDValidationError,
+  SoDStateError,
+  SoDConcurrencyError,
+  SoDApprovalNotAllowedError,
+  SoDAutoApprovalError,
 } from "./domain-error";
