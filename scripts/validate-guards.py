@@ -22,6 +22,7 @@ SCOPE = [
     "inventory/location.controller.ts",
     "inventory/override.controller.ts",
     "inventory/inventory-document.controller.ts",
+    "inventory/inventory-detail.controller.ts",
 ]
 
 HTTP = ("Get", "Post", "Patch", "Put", "Delete")

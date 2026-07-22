@@ -15,6 +15,8 @@ import {
   PrismaWarehouseLocationRepository,
   PrismaWarehouseRepository,
 } from "@sunset/db";
+import { InventoryDetailController } from "./inventory-detail.controller";
+import { InventoryDetailService } from "./inventory-detail.service";
 import { InventoryDocumentController } from "./inventory-document.controller";
 import { InventoryDocumentService } from "./inventory-document.service";
 import { LocationController } from "./location.controller";
@@ -30,12 +32,14 @@ import { WarehouseService } from "./warehouse.service";
     LocationController,
     OverrideController,
     InventoryDocumentController,
+    InventoryDetailController,
   ],
   providers: [
     WarehouseService,
     LocationService,
     OverrideService,
     InventoryDocumentService,
+    InventoryDetailService,
     { provide: WAREHOUSE_REPOSITORY, useClass: PrismaWarehouseRepository },
     { provide: WAREHOUSE_LOCATION_REPOSITORY, useClass: PrismaWarehouseLocationRepository },
     { provide: OVERRIDE_REQUEST_REPOSITORY, useClass: PrismaOverrideRequestRepository },
@@ -43,6 +47,12 @@ import { WarehouseService } from "./warehouse.service";
     { provide: INVENTORY_BALANCE_PORT, useClass: AlwaysFalseInventoryBalancePort },
     { provide: FILE_STORAGE_PORT, useClass: LocalFileStorageAdapter },
   ],
-  exports: [WarehouseService, LocationService, OverrideService, InventoryDocumentService],
+  exports: [
+    WarehouseService,
+    LocationService,
+    OverrideService,
+    InventoryDocumentService,
+    InventoryDetailService,
+  ],
 })
 export class WarehouseModule {}

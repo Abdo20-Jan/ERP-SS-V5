@@ -28,6 +28,7 @@ const SCOPE_GLOBS = [
   "inventory/location.controller.ts",
   "inventory/override.controller.ts",
   "inventory/inventory-document.controller.ts",
+  "inventory/inventory-detail.controller.ts",
 ];
 
 const HTTP_DECORATORS = ["Get", "Post", "Patch", "Put", "Delete"];
