@@ -20,6 +20,7 @@ SCOPE = [
     "accounting/posting-rule.controller.ts",
     "inventory/warehouse.controller.ts",
     "inventory/location.controller.ts",
+    "inventory/override.controller.ts",
 ]
 
 HTTP = ("Get", "Post", "Patch", "Put", "Delete")
@@ -44,6 +45,9 @@ def family(rel: str) -> tuple[str, str] | None:
         return ("product:read", "product:write")
     if rel.startswith("accounting/"):
         return ("accounting:read", "accounting:write")
+    # Override uses inventory:override:* — presence-only check (no read/write pair).
+    if rel.startswith("inventory/override"):
+        return None
     if rel.startswith("inventory/"):
         return ("inventory:read", "inventory:write")
     return None

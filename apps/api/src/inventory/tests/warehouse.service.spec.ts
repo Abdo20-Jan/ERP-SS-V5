@@ -37,6 +37,12 @@ describe("WarehouseService", () => {
     findByCode: ReturnType<typeof vi.fn>;
     findAll: ReturnType<typeof vi.fn>;
   };
+  let locationRepo: {
+    countActivePhysicalLocations: ReturnType<typeof vi.fn>;
+  };
+  let balancePort: {
+    hasPositiveBalance: ReturnType<typeof vi.fn>;
+  };
 
   beforeEach(() => {
     repo = {
@@ -45,7 +51,15 @@ describe("WarehouseService", () => {
       findByCode: vi.fn(),
       findAll: vi.fn(),
     };
-    service = new WarehouseService(repo as never);
+    locationRepo = {
+      countActivePhysicalLocations: vi.fn().mockResolvedValue(0),
+    };
+    balancePort = { hasPositiveBalance: vi.fn().mockResolvedValue(false) };
+    service = new WarehouseService(
+      repo as never,
+      locationRepo as never,
+      balancePort as never,
+    );
   });
 
   it("create returns warehouse dto", async () => {
@@ -84,6 +98,15 @@ describe("WarehouseService", () => {
     repo.findById.mockResolvedValue(w);
     const result = await service.deactivate(w.id, "closed");
     expect(result.isActive).toBe(false);
+  });
+
+  it("deactivate with active locations maps to ConflictError", async () => {
+    const w = makeWarehouse();
+    repo.findById.mockResolvedValue(w);
+    locationRepo.countActivePhysicalLocations.mockResolvedValue(2);
+    await expect(service.deactivate(w.id, "closed")).rejects.toBeInstanceOf(
+      ConflictError,
+    );
   });
 
   it("update maps inactive to ValidationError", async () => {

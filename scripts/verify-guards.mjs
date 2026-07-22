@@ -26,6 +26,7 @@ const SCOPE_GLOBS = [
   "accounting/posting-rule.controller.ts",
   "inventory/warehouse.controller.ts",
   "inventory/location.controller.ts",
+  "inventory/override.controller.ts",
 ];
 
 const HTTP_DECORATORS = ["Get", "Post", "Patch", "Put", "Delete"];
@@ -102,6 +103,7 @@ function expectedPermissionFamily(fileRel) {
     return { read: "product:read", write: "product:write" };
   if (fileRel.includes("accounting/"))
     return { read: "accounting:read", write: "accounting:write" };
+  if (fileRel.includes("inventory/override")) return null;
   if (fileRel.includes("inventory/"))
     return { read: "inventory:read", write: "inventory:write" };
   return null;

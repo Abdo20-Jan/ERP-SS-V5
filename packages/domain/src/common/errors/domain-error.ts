@@ -260,3 +260,52 @@ export class LocationHasChildrenError extends DomainError {
     super(message, "LOCATION_HAS_ACTIVE_CHILDREN", details);
   }
 }
+
+// Inventory override (PR-INVENTORY-01-S03)
+export class OverrideValidationError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "VALIDATION_ERROR", details);
+  }
+}
+
+export class OverrideStateError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "OVERRIDE_INVALID_STATE", details);
+  }
+}
+
+export class OverrideExpiredError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "OVERRIDE_EXPIRED", details);
+  }
+}
+
+export class OverrideSoDError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "OVERRIDE_SOD_VIOLATION", details);
+  }
+}
+
+export class OverridePendingExistsError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "OVERRIDE_ALREADY_PENDING", details);
+  }
+}
+
+export class OverrideConcurrencyError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "VERSION_CONFLICT", details);
+  }
+}
+
+export class WarehouseHasActiveLocationsError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "WAREHOUSE_HAS_ACTIVE_LOCATIONS", details);
+  }
+}
+
+export class WarehouseHasPositiveBalanceError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "WAREHOUSE_HAS_POSITIVE_BALANCE", details);
+  }
+}

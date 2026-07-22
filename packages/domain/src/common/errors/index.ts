@@ -40,4 +40,12 @@ export {
   LocationInactiveError,
   LocationConcurrencyError,
   LocationHasChildrenError,
+  OverrideValidationError,
+  OverrideStateError,
+  OverrideExpiredError,
+  OverrideSoDError,
+  OverridePendingExistsError,
+  OverrideConcurrencyError,
+  WarehouseHasActiveLocationsError,
+  WarehouseHasPositiveBalanceError,
 } from "./domain-error";

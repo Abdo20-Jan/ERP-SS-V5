@@ -57,6 +57,17 @@ export interface WarehouseLocationRepository {
   findPathChain(locationId: string): Promise<WarehouseLocation[]>;
 
   findHighestPhysicalLevel(warehouseId: string): Promise<number>;
+
+  countActivePhysicalLocations(warehouseId: string): Promise<number>;
+
+  findActiveSubtreeOrderedForCascade(
+    rootLocationId: string,
+  ): Promise<WarehouseLocation[]>;
+
+  findActivePhysicalAboveLevel(
+    warehouseId: string,
+    minLevel: number,
+  ): Promise<WarehouseLocation[]>;
 }
 
 export const WAREHOUSE_LOCATION_REPOSITORY = Symbol(

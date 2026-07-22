@@ -193,7 +193,7 @@ export class WarehouseLocationConfig {
 
   configure(
     cmd: ConfigureWarehouseLevelsCommand,
-    opts?: { highestExistingPhysicalLevel?: number },
+    opts?: { highestExistingPhysicalLevel?: number; skipHighestLevelGuard?: boolean },
   ): void {
     if (
       cmd.expectedVersion !== undefined &&
@@ -214,7 +214,9 @@ export class WarehouseLocationConfig {
     validateMaxLevels(maxLevels);
 
     const highest = opts?.highestExistingPhysicalLevel ?? 0;
+    if (!opts?.skipHighestLevelGuard) {
     this.assertCanReduceTo(maxLevels, highest);
+    }
 
     const useLevel2 = cmd.useLevel2 ?? false;
     const useLevel3 = cmd.useLevel3 ?? false;

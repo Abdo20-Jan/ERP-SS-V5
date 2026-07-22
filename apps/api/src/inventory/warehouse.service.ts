@@ -10,12 +10,17 @@ import {
 } from "@sunset/contracts";
 import {
   DomainError,
+  INVENTORY_BALANCE_PORT,
+  type InventoryBalancePort,
+  WAREHOUSE_LOCATION_REPOSITORY,
   WAREHOUSE_REPOSITORY,
   Warehouse,
+  type WarehouseLocationRepository,
   type WarehouseRepository,
 } from "@sunset/domain";
 import { prisma } from "@sunset/db";
 import { createLogger, getCorrelationId } from "@sunset/observability";
+import { assertWarehouseDeactivateAllowed } from "./override.service";
 
 @Injectable()
 export class WarehouseService {
@@ -24,6 +29,10 @@ export class WarehouseService {
   constructor(
     @Inject(WAREHOUSE_REPOSITORY)
     private readonly warehouseRepository: WarehouseRepository,
+    @Inject(WAREHOUSE_LOCATION_REPOSITORY)
+    private readonly locationRepository: WarehouseLocationRepository,
+    @Inject(INVENTORY_BALANCE_PORT)
+    private readonly balancePort: InventoryBalancePort,
   ) {}
 
   async create(
@@ -197,6 +206,11 @@ export class WarehouseService {
       if (!warehouse) {
         throw new NotFoundException(`Warehouse not found: ${id}`);
       }
+      await assertWarehouseDeactivateAllowed(
+        id,
+        this.locationRepository,
+        this.balancePort,
+      );
       const before = warehouse.toSnapshot();
       warehouse.deactivate(reason);
       const after = warehouse.toSnapshot();
@@ -240,6 +254,48 @@ export class WarehouseService {
     }
     if (err instanceof DomainError) {
       if (err.code === "VERSION_CONFLICT") {
+        throw new ConflictError(err.message, "Warehouse");
+      }
+      if (
+        err.code === "WAREHOUSE_HAS_ACTIVE_LOCATIONS" ||
+        err.code === "WAREHOUSE_HAS_POSITIVE_BALANCE"
+      ) {
+        throw new ConflictError(err.message, "Warehouse");
+      }
+      if (
+        err.code === "WAREHOUSE_HAS_ACTIVE_LOCATIONS" ||
+        err.code === "WAREHOUSE_HAS_POSITIVE_BALANCE"
+      ) {
+        throw new ConflictError(err.message, "Warehouse");
+      }
+      if (
+        err.code === "WAREHOUSE_HAS_ACTIVE_LOCATIONS" ||
+        err.code === "WAREHOUSE_HAS_POSITIVE_BALANCE"
+      ) {
+        throw new ConflictError(err.message, "Warehouse");
+      }
+      if (
+        err.code === "WAREHOUSE_HAS_ACTIVE_LOCATIONS" ||
+        err.code === "WAREHOUSE_HAS_POSITIVE_BALANCE"
+      ) {
+        throw new ConflictError(err.message, "Warehouse");
+      }
+      if (
+        err.code === "WAREHOUSE_HAS_ACTIVE_LOCATIONS" ||
+        err.code === "WAREHOUSE_HAS_POSITIVE_BALANCE"
+      ) {
+        throw new ConflictError(err.message, "Warehouse");
+      }
+      if (
+        err.code === "WAREHOUSE_HAS_ACTIVE_LOCATIONS" ||
+        err.code === "WAREHOUSE_HAS_POSITIVE_BALANCE"
+      ) {
+        throw new ConflictError(err.message, "Warehouse");
+      }
+      if (
+        err.code === "WAREHOUSE_HAS_ACTIVE_LOCATIONS" ||
+        err.code === "WAREHOUSE_HAS_POSITIVE_BALANCE"
+      ) {
         throw new ConflictError(err.message, "Warehouse");
       }
       if (

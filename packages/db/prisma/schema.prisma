@@ -636,3 +636,38 @@ model WarehouseLocation {
   @@index([warehouseId, isActive])
   @@map("warehouse_locations")
 }
+
+// ============================================
+// INVENTORY — OVERRIDE REQUESTS (PR-INVENTORY-01-S03)
+// ============================================
+
+model OverrideRequest {
+  id               String    @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  organizationId   String    @default("org_001") @map("organization_id")
+  action           String
+  resourceType     String    @map("resource_type")
+  resourceId       String    @map("resource_id") @db.Uuid
+  reason           String
+  evidenceUrl      String?   @map("evidence_url")
+  requestedById    String    @map("requested_by_id") @db.Uuid
+  requestedAt      DateTime  @default(now()) @map("requested_at") @db.Timestamptz
+  approvedById     String?   @map("approved_by_id") @db.Uuid
+  approvedAt       DateTime? @map("approved_at") @db.Timestamptz
+  rejectedById     String?   @map("rejected_by_id") @db.Uuid
+  rejectedAt       DateTime? @map("rejected_at") @db.Timestamptz
+  rejectionReason  String?   @map("rejection_reason")
+  cancelledById    String?   @map("cancelled_by_id") @db.Uuid
+  cancelledAt      DateTime? @map("cancelled_at") @db.Timestamptz
+  status           String    @default("PENDING")
+  executedById     String?   @map("executed_by_id") @db.Uuid
+  executedAt       DateTime? @map("executed_at") @db.Timestamptz
+  expiresAt        DateTime? @map("expires_at") @db.Timestamptz
+  version          Int       @default(0)
+  createdAt        DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt        DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+
+  @@index([status, expiresAt])
+  @@index([resourceType, resourceId])
+  @@index([organizationId, requestedAt])
+  @@map("override_requests")
+}

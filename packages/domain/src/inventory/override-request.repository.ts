@@ -1,0 +1,35 @@
+import type { OverrideRequest } from "./override-request.aggregate";
+
+export interface OverrideRequestListFilters {
+  status?: string;
+  action?: string;
+  requestedById?: string;
+  resourceType?: string;
+  resourceId?: string;
+  organizationId?: string;
+}
+
+export interface OverrideRequestListResult {
+  data: OverrideRequest[];
+  total: number;
+}
+
+export type OverrideRequestDbClient = unknown;
+
+export interface OverrideRequestRepository {
+  save(override: OverrideRequest, db?: OverrideRequestDbClient): Promise<void>;
+  findById(id: string): Promise<OverrideRequest | null>;
+  findPending(
+    organizationId: string,
+    action: string,
+    resourceType: string,
+    resourceId: string,
+  ): Promise<OverrideRequest | null>;
+  findAll(
+    filters?: OverrideRequestListFilters,
+    page?: number,
+    limit?: number,
+  ): Promise<OverrideRequestListResult>;
+}
+
+export const OVERRIDE_REQUEST_REPOSITORY = Symbol("OverrideRequestRepository");

@@ -8,3 +8,4 @@ export * from "./repositories/journal-entry.repository.prisma";
 export * from "./repositories/posting-rule.repository.prisma";
 export * from "./repositories/warehouse.repository.prisma";
 export * from "./repositories/warehouse-location.repository.prisma";
+export * from "./repositories/override-request.repository.prisma";

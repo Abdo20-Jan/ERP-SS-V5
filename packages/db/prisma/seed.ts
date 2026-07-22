@@ -58,6 +58,11 @@ async function main() {
     { action: "accounting:write", description: "Criar/alterar contas, moedas, dimensões e lançamentos" },
     { action: "inventory:read", description: "Listar/ver depósitos e locais" },
     { action: "inventory:write", description: "Criar/editar/ativar/desativar depósitos e locais" },
+    { action: "inventory:override:request", description: "Solicitar override de master de estoque" },
+    { action: "inventory:override:approve", description: "Aprovar/rejeitar override de master de estoque" },
+    { action: "inventory:override:execute", description: "Executar override aprovado de master de estoque" },
+    { action: "inventory:override:view", description: "Consultar overrides de master de estoque" },
+
   ];
 
   for (const perm of permissions) {

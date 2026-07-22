@@ -293,6 +293,47 @@ export class PrismaWarehouseLocationRepository
     return result._max.level ?? 0;
   }
 
+  async countActivePhysicalLocations(warehouseId: string): Promise<number> {
+    return locationDelegate(this.db).count({
+      where: { warehouseId, isVirtual: false, isActive: true },
+    });
+  }
+
+  async findActiveSubtreeOrderedForCascade(
+    rootLocationId: string,
+  ): Promise<WarehouseLocation[]> {
+    const root = await this.findById(rootLocationId);
+    if (!root) return [];
+    const all = await locationDelegate(this.db).findMany({
+      where: {
+        warehouseId: root.warehouseId,
+        isActive: true,
+        OR: [
+          { id: rootLocationId },
+          { path: { startsWith: root.path + ">" } },
+        ],
+      },
+      orderBy: [{ level: "desc" }, { path: "desc" }],
+    });
+    return all.map((r) => this.locationToDomain(r));
+  }
+
+  async findActivePhysicalAboveLevel(
+    warehouseId: string,
+    minLevel: number,
+  ): Promise<WarehouseLocation[]> {
+    const rows = await locationDelegate(this.db).findMany({
+      where: {
+        warehouseId,
+        isVirtual: false,
+        isActive: true,
+        level: { gt: minLevel },
+      },
+      orderBy: [{ level: "desc" }, { path: "desc" }],
+    });
+    return rows.map((r) => this.locationToDomain(r));
+  }
+
   private configToDomain(row: ConfigRow): WarehouseLocationConfig {
     const snapshot: WarehouseLocationConfigSnapshot = {
       id: row.id,
