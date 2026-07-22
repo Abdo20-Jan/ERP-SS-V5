@@ -8,7 +8,7 @@ import type {
   ApproveSoDExceptionCommand,
   RejectSoDExceptionCommand,
   RevokeSoDExceptionCommand,
-} from "@sunset/contracts";
+} from "@sunset/domain";
 
 export type CreateSoDRuleDto = CreateSoDRuleCommand;
 export type UpdateSoDRuleDto = Omit<UpdateSoDRuleCommand, "ruleId">;

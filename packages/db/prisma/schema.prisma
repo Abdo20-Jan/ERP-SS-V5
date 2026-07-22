@@ -15,6 +15,8 @@ datasource db {
 // ============================================
 
 model User {
+  ordersResponsible InternationalOrder[] @relation("OrderResponsible")
+  ordersCreated     InternationalOrder[] @relation("OrderCreator")
   id           String   @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
   email        String   @unique
   name         String
@@ -128,6 +130,9 @@ model Parameter {
 // ============================================
 
 model Party {
+  ordersAsSupplier     InternationalOrder[] @relation("OrderSupplier")
+  ordersAsExporter     InternationalOrder[] @relation("OrderExporter")
+  ordersAsManufacturer InternationalOrder[] @relation("OrderManufacturer")
   id             String   @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
   organizationId String   @default("org_001") @map("organization_id")
   partyType      String   @map("party_type")
@@ -232,6 +237,7 @@ model ProductCategory {
 }
 
 model Product {
+  orderLines InternationalOrderLine[]
   id              String    @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
   organizationId  String    @default("org_001") @map("organization_id")
   sku             String    @unique
@@ -988,4 +994,176 @@ model InventoryExportJob {
   @@index([organizationId, status, createdAt])
   @@index([kind, status])
   @@map("inventory_export_jobs")
+}
+// ─── COMEX Module (PR-COMEX-01 T1) ───
+
+model InternationalOrder {
+  id                 String   @id @default(uuid()) @db.Uuid
+  organizationId     String   @default("org_001") @map("organization_id")
+  code               String
+  operationType      String   @map("operation_type")
+  status             String   @default("DRAFT")
+  previousStatus     String?  @map("previous_status")
+  supplierPartyId    String   @map("supplier_party_id") @db.Uuid
+  exporterPartyId    String?  @map("exporter_party_id") @db.Uuid
+  manufacturerPartyId String? @map("manufacturer_party_id") @db.Uuid
+  incoterm           String?
+  paymentTerms       String?  @map("payment_terms")
+  originCountry      String?  @map("origin_country")
+  currencyCode       String?  @map("currency_code")
+  expectedReadyDate  DateTime? @map("expected_ready_date") @db.Date
+  responsibleUserId  String?  @map("responsible_user_id") @db.Uuid
+  subtotalOriginal   Decimal? @map("subtotal_original") @db.Decimal(19,2)
+  fxRate             Decimal? @map("fx_rate") @db.Decimal(19,6)
+  fxRateDate         DateTime? @map("fx_rate_date") @db.Timestamptz(6)
+  fxSource           String?  @map("fx_source")
+  subtotalFunctional Decimal? @map("subtotal_functional") @db.Decimal(19,2)
+  idempotencyKey     String?  @map("idempotency_key")
+  version            Int      @default(0)
+  cancelledAt        DateTime? @map("cancelled_at") @db.Timestamptz(6)
+  cancelledBy        String?  @map("cancelled_by") @db.Uuid
+  cancelReason       String?  @map("cancel_reason")
+  suspendedAt        DateTime? @map("suspended_at") @db.Timestamptz(6)
+  suspendedBy        String?  @map("suspended_by") @db.Uuid
+  suspendReason      String?  @map("suspend_reason")
+  resumedAt          DateTime? @map("resumed_at") @db.Timestamptz(6)
+  createdBy          String   @map("created_by") @db.Uuid
+  createdAt          DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt          DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  supplier     Party  @relation("OrderSupplier", fields: [supplierPartyId], references: [id], onDelete: Restrict)
+  exporter     Party? @relation("OrderExporter", fields: [exporterPartyId], references: [id], onDelete: Restrict)
+  manufacturer Party? @relation("OrderManufacturer", fields: [manufacturerPartyId], references: [id], onDelete: Restrict)
+  responsible  User?  @relation("OrderResponsible", fields: [responsibleUserId], references: [id], onDelete: Restrict)
+  creator      User   @relation("OrderCreator", fields: [createdBy], references: [id], onDelete: Restrict)
+
+  lines       InternationalOrderLine[]
+  proformas   ProformaVersion[]
+  transitions InternationalOrderStateTransition[]
+  alerts      InternationalOrderAlert[]
+
+  @@index([organizationId, code], map: "io_org_code_idx")
+  @@index([organizationId, status], map: "io_org_status_idx")
+  @@index([organizationId, supplierPartyId], map: "io_org_supplier_idx")
+  @@index([organizationId, createdAt], map: "io_org_created_idx")
+  @@map("international_orders")
+}
+
+model InternationalOrderLine {
+  id                  String   @id @default(uuid()) @db.Uuid
+  orderId             String   @map("order_id") @db.Uuid
+  lineNumber          Int      @map("line_number")
+  productId           String   @map("product_id") @db.Uuid
+  skuSnapshot         String   @map("sku_snapshot")
+  descriptionSnapshot String?  @map("description_snapshot")
+  quantityOrdered     Decimal  @map("quantity_ordered") @db.Decimal(14,3)
+  quantityConfirmed   Decimal  @default(0) @map("quantity_confirmed") @db.Decimal(14,3)
+  quantityProduced    Decimal  @default(0) @map("quantity_produced") @db.Decimal(14,3)
+  quantityCancelled   Decimal  @default(0) @map("quantity_cancelled") @db.Decimal(14,3)
+  unitPrice           Decimal  @map("unit_price") @db.Decimal(19,4)
+  lineTotalOriginal   Decimal  @map("line_total_original") @db.Decimal(19,2)
+  version             Int      @default(0)
+  createdAt           DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt           DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  order   InternationalOrder @relation(fields: [orderId], references: [id], onDelete: Restrict)
+  product Product            @relation(fields: [productId], references: [id], onDelete: Restrict)
+
+  @@unique([orderId, lineNumber], map: "iol_order_line_idx")
+  @@index([productId], map: "iol_product_idx")
+  @@map("international_order_lines")
+}
+
+model ProformaVersion {
+  id              String   @id @default(uuid()) @db.Uuid
+  orderId         String   @map("order_id") @db.Uuid
+  organizationId  String   @map("organization_id")
+  supplierPartyId String   @map("supplier_party_id") @db.Uuid
+  proformaNumber  String   @map("proforma_number")
+  versionNumber   Int      @map("version_number")
+  issueDate       DateTime? @map("issue_date") @db.Date
+  totalAmount     Decimal? @map("total_amount") @db.Decimal(19,2)
+  currencyCode    String?  @map("currency_code")
+  status          String   @default("REGISTERED")
+  createdBy       String?  @map("created_by") @db.Uuid
+  confirmedBy     String?  @map("confirmed_by") @db.Uuid
+  confirmedAt     DateTime? @map("confirmed_at") @db.Timestamptz(6)
+  correlationId   String?  @map("correlation_id")
+  createdAt       DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  order InternationalOrder @relation(fields: [orderId], references: [id], onDelete: Restrict)
+
+  @@unique([organizationId, supplierPartyId, proformaNumber], map: "pv_org_sup_num_idx")
+  @@unique([orderId, versionNumber], map: "pv_order_ver_idx")
+  @@map("proforma_versions")
+}
+
+model InternationalOrderStateTransition {
+  id                String   @id @default(uuid()) @db.Uuid
+  orderId           String   @map("order_id") @db.Uuid
+  fromStatus        String   @map("from_status")
+  toStatus          String   @map("to_status")
+  actorUserId       String   @map("actor_user_id") @db.Uuid
+  reason            String?
+  evidenceUrl       String?  @map("evidence_url")
+  overrideRequestId String?  @map("override_request_id") @db.Uuid
+  correlationId     String   @map("correlation_id")
+  idempotencyKey    String?  @map("idempotency_key")
+  createdAt         DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  order InternationalOrder @relation(fields: [orderId], references: [id], onDelete: Restrict)
+
+  @@index([orderId, createdAt], map: "iost_order_time_idx")
+  @@map("international_order_state_transitions")
+}
+
+model InternationalOrderAlert {
+  id               String   @id @default(uuid()) @db.Uuid
+  orderId          String   @map("order_id") @db.Uuid
+  code             String
+  severity         String   @default("WARN")
+  message          String
+  status           String   @default("OPEN")
+  acknowledgedBy   String?  @map("acknowledged_by") @db.Uuid
+  acknowledgedAt   DateTime? @map("acknowledged_at") @db.Timestamptz(6)
+  resolvedBy       String?  @map("resolved_by") @db.Uuid
+  resolvedAt       DateTime? @map("resolved_at") @db.Timestamptz(6)
+  resolutionReason String?  @map("resolution_reason")
+  createdAt        DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  order InternationalOrder @relation(fields: [orderId], references: [id], onDelete: Restrict)
+
+  @@index([orderId, status], map: "ioa_order_status_idx")
+  @@map("international_order_alerts")
+}
+
+model ComexEventOutbox {
+  id               String   @id @default(uuid()) @db.Uuid
+  organizationId   String   @default("org_001") @map("organization_id")
+  eventType        String   @map("event_type")
+  eventVersion     Int      @map("event_version")
+  aggregateType    String   @map("aggregate_type")
+  aggregateId      String   @map("aggregate_id") @db.Uuid
+  producer         String   @default("comex")
+  payload          Json
+  status           String   @default("PENDING")
+  correlationId    String   @map("correlation_id")
+  idempotencyKey   String?  @map("idempotency_key")
+  occurredAt       DateTime @map("occurred_at") @db.Timestamptz(6)
+  availableAt      DateTime? @map("available_at") @db.Timestamptz(6)
+  publishedAt      DateTime? @map("published_at") @db.Timestamptz(6)
+  consumedAt       DateTime? @map("consumed_at") @db.Timestamptz(6)
+  failedAt         DateTime? @map("failed_at") @db.Timestamptz(6)
+  retryCount       Int      @default(0) @map("retry_count")
+  lastErrorCode    String?  @map("last_error_code")
+  lastErrorMessage String?  @map("last_error_message")
+  version          Int      @default(1)
+  createdAt        DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt        DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@index([organizationId, status, occurredAt], map: "ceo_status_time_idx")
+  @@index([eventType, eventVersion], map: "ceo_evt_type_idx")
+  @@index([aggregateType, aggregateId], map: "ceo_aggr_idx")
+  @@index([correlationId], map: "ceo_correlation_idx")
+  @@map("comex_event_outbox")
 }

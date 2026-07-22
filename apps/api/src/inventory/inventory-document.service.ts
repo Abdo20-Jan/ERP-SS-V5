@@ -116,7 +116,6 @@ export class InventoryDocumentService {
             action: "inventory.document.uploaded",
             entityType: "inventory_document",
             entityId: doc.id,
-            before: null,
             after: snap as object,
             metadata: { version: nextVersion, sha256Hash: hash },
             correlationId: getCorrelationId() ?? null,

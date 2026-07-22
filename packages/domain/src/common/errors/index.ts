@@ -60,4 +60,6 @@ export {
   SoDConcurrencyError,
   SoDApprovalNotAllowedError,
   SoDAutoApprovalError,
+  OrderValidationError,
+  InvalidOrderStateError,
 } from "./domain-error";

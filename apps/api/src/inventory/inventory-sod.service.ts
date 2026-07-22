@@ -53,7 +53,7 @@ export class InventorySoDService {
         await tx.auditLog.create({
           data: {
             userId, action: "sod.rule.created", entityType: "sod_rule", entityId: rule.id,
-            before: null, after: snap as object, correlationId: getCorrelationId() ?? null,
+            after: snap as object, correlationId: getCorrelationId() ?? null,
           },
         });
       });
@@ -144,7 +144,7 @@ export class InventorySoDService {
       const violation = SoDViolation.detect({
         actorUserId: userId, action: dto.action, resourceType: dto.resourceType, resourceId: dto.resourceId,
         actorRoles: roles, actorPermissions: permissions, organizationId: org,
-      }, rule, outcome.result);
+      }, rule!, outcome.result);
 
       const snap = violation.toSnapshot();
       await prisma.$transaction(async (tx) => {
@@ -152,7 +152,7 @@ export class InventorySoDService {
         await tx.auditLog.create({
           data: {
             userId, action: "sod.violation.detected", entityType: "sod_violation", entityId: violation.id,
-            before: null, after: snap as object, correlationId: getCorrelationId() ?? null,
+            after: snap as object, correlationId: getCorrelationId() ?? null,
           },
         });
       });
@@ -203,7 +203,7 @@ export class InventorySoDService {
         await tx.auditLog.create({
           data: {
             userId, action: "sod.exception.requested", entityType: "sod_exception", entityId: exc.id,
-            before: null, after: snap as object, correlationId: getCorrelationId() ?? null,
+            after: snap as object, correlationId: getCorrelationId() ?? null,
           },
         });
       });

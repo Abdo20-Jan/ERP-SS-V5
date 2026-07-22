@@ -13,6 +13,7 @@ import { ProductModule } from "./product/product.module";
 import { AccountingModule } from "./accounting/accounting.module";
 import { WarehouseModule } from "./inventory/warehouse.module";
 import { PrismaModule } from "./prisma/prisma.module";
+import { ComexModule } from "./comex/comex.module";
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { PrismaModule } from "./prisma/prisma.module";
       },
     ]),
     PrismaModule,
+    ComexModule,
     HealthModule,
     AuthModule,
     AuditModule,

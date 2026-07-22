@@ -15,7 +15,7 @@ export class InventoryImportExportService {
       if (dto.idempotencyKey) { const ex = await this.repo.findImportJobByIdempotencyKey(dto.idempotencyKey); if (ex) return ex as ImportJobDto; }
       const job = InventoryImportJob.create({ kind: dto.kind, fileName: dto.fileName, fileMimeType: dto.fileMimeType, fileSize: dto.fileSize, fileHash: dto.fileHash, idempotencyKey: dto.idempotencyKey, correlationId: dto.correlationId || getCorrelationId() || "unknown", requestedByUserId: userId });
       const snap = job.toSnapshot();
-      await prisma.$transaction(async (tx) => { await this.repo.saveImportJob(job, tx); await tx.auditLog.create({ data: { userId, action: "inventory.import.created", entityType: "inventory_import_job", entityId: job.id, before: null, after: snap as object, correlationId: getCorrelationId() || null } }); });
+      await prisma.$transaction(async (tx) => { await this.repo.saveImportJob(job, tx); await tx.auditLog.create({ data: { userId, action: "inventory.import.created", entityType: "inventory_import_job", entityId: job.id, after: snap as object, correlationId: getCorrelationId() || null } }); });
       job.pullEvents(); return snap as ImportJobDto;
     } catch (err) { this.rethrow(err); }
   }
@@ -55,7 +55,7 @@ export class InventoryImportExportService {
     try {
       const job = InventoryExportJob.create({ kind: dto.kind, format: dto.format, filters: dto.filters, correlationId: dto.correlationId || getCorrelationId() || "unknown", requestedByUserId: userId });
       const snap = job.toSnapshot();
-      await prisma.$transaction(async (tx) => { await this.repo.saveExportJob(job, tx); await tx.auditLog.create({ data: { userId, action: "inventory.export.created", entityType: "inventory_export_job", entityId: job.id, before: null, after: snap as object, correlationId: getCorrelationId() || null } }); });
+      await prisma.$transaction(async (tx) => { await this.repo.saveExportJob(job, tx); await tx.auditLog.create({ data: { userId, action: "inventory.export.created", entityType: "inventory_export_job", entityId: job.id, after: snap as object, correlationId: getCorrelationId() || null } }); });
       job.pullEvents(); return snap as ExportJobDto;
     } catch (err) { this.rethrow(err); }
   }

@@ -27,7 +27,7 @@ export class InventoryPostingService {
       const snap = proposal.toSnapshot();
       await prisma.$transaction(async (tx) => {
         await this.repo.save(proposal, tx);
-        await tx.auditLog.create({ data: { userId, action: "inventory.posting.created", entityType: "inventory_posting_proposal", entityId: proposal.id, before: null, after: snap as object, correlationId: getCorrelationId() || null } });
+        await tx.auditLog.create({ data: { userId, action: "inventory.posting.created", entityType: "inventory_posting_proposal", entityId: proposal.id, after: snap as object, correlationId: getCorrelationId() || null } });
       });
       proposal.pullEvents();
       return snap as PostingProposalDto;

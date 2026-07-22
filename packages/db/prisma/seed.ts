@@ -92,6 +92,22 @@ async function main() {
     { action: "inventory:export:read", description: "Consultar jobs de exportacao de estoque" },
     { action: "inventory:export:download", description: "Download de arquivo exportado de estoque" },
     { action: "inventory:export:cancel", description: "Cancelar job de exportacao de estoque" },
+    { action: "comex:order:read", description: "Listar/ver pedidos internacionais" },
+    { action: "comex:order:create", description: "Criar pedido internacional" },
+    { action: "comex:order:update", description: "Editar pedido internacional (DRAFT/suspend/resume)" },
+    { action: "comex:order:submit", description: "Submeter pedido internacional para aprovacao" },
+    { action: "comex:order:approve", description: "Aprovar/rejeitar pedido internacional" },
+    { action: "comex:order:send", description: "Enviar pedido ao fornecedor" },
+    { action: "comex:order:cancel", description: "Cancelar pedido internacional" },
+    { action: "comex:order:production:update", description: "Atualizar progresso de producao do pedido" },
+    { action: "comex:proforma:register", description: "Registrar versao de proforma" },
+    { action: "comex:proforma:confirm", description: "Confirmar proforma" },
+    { action: "comex:override:request", description: "Solicitar override COMEX" },
+    { action: "comex:override:approve", description: "Aprovar/rejeitar override COMEX" },
+    { action: "comex:override:execute", description: "Executar override COMEX aprovado" },
+    { action: "comex:override:view", description: "Consultar overrides COMEX" },
+    { action: "comex:alert:read", description: "Consultar alertas do pedido" },
+    { action: "comex:alert:resolve", description: "Reconhecer/resolver alertas do pedido" },
 
 
 

@@ -8,3 +8,4 @@ export * from "./inventory-sod.events";
 export * from "./inventory-event.events";
 export * from "./inventory-posting.events";
 export * from "./inventory-import-export.events";
+export * from "./comex-order.events";

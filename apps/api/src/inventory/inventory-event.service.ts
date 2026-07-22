@@ -64,7 +64,7 @@ export class InventoryEventService {
     await prisma.auditLog.create({
       data: {
         userId, action: "inventory.event.payload.viewed", entityType: "inventory_event_outbox", entityId: e.id,
-        before: null, after: null, correlationId: getCorrelationId() ?? null,
+        correlationId: getCorrelationId() ?? null,
       },
     });
     return e.toSnapshot() as InventoryEventWithPayloadDto;

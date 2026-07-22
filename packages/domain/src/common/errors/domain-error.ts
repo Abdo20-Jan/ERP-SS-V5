@@ -384,3 +384,16 @@ export class SoDAutoApprovalError extends DomainError {
     super(message, "SOD_AUTO_APPROVAL_NOT_ALLOWED", details);
   }
 }
+
+// COMEX orders (PR-COMEX-01)
+export class OrderValidationError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "VALIDATION_ERROR", details);
+  }
+}
+
+export class InvalidOrderStateError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "INVALID_STATE", details);
+  }
+}

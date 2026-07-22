@@ -68,7 +68,7 @@ export class OverrideService {
         await tx.auditLog.create({
           data: {
             userId, action: "override.requested", entityType: "override_request", entityId: override.id,
-            before: null, after: snap as object, metadata: { warnings },
+            after: snap as object, metadata: { warnings } as object,
             correlationId: getCorrelationId() ?? null,
           },
         });
@@ -180,7 +180,7 @@ export class OverrideService {
         await this.overrideRepository.save(o, tx);
         await tx.auditLog.create({ data: {
           userId, action: "override.executed", entityType: "override_request", entityId: o.id,
-          before: before as object, after: after as object, metadata: { result },
+          before: before as object, after: after as object, metadata: { result } as object,
           correlationId: getCorrelationId() ?? null,
         }});
       });

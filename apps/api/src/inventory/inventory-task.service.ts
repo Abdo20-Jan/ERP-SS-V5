@@ -72,7 +72,6 @@ export class InventoryTaskService {
             action: "inventory.task.created",
             entityType: "inventory_task",
             entityId: task.id,
-            before: null,
             after: snap as object,
             correlationId: getCorrelationId() ?? null,
           },
