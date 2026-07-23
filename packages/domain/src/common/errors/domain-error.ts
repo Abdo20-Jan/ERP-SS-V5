@@ -397,3 +397,9 @@ export class InvalidOrderStateError extends DomainError {
     super(message, "INVALID_STATE", details);
   }
 }
+
+export class OrderConcurrencyError extends DomainError {
+  constructor(message: string, details?: Record<string, unknown>) {
+    super(message, "VERSION_CONFLICT", details);
+  }
+}

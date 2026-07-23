@@ -1,4 +1,16 @@
 import { Module } from "@nestjs/common";
+import {
+  COMEX_OUTBOX_REPOSITORY,
+  INTERNATIONAL_ORDER_REPOSITORY,
+  ORDER_ALERT_REPOSITORY,
+  PROFORMA_VERSION_REPOSITORY,
+} from "@sunset/domain";
+import {
+  InternationalOrderRepositoryPrisma,
+  OrderAlertRepositoryPrisma,
+  PrismaComexOutboxRepository,
+  ProformaVersionRepositoryPrisma,
+} from "@sunset/db";
 import { PrismaModule } from "../prisma/prisma.module";
 import { InternationalOrderController } from "./international-order.controller";
 import { InternationalOrderService } from "./international-order.service";
@@ -12,12 +24,21 @@ import { ComexOverrideService } from "./comex-override.service";
 @Module({
   imports: [PrismaModule],
   controllers: [
-    InternationalOrderController, ProformaController,
-    OrderAlertController, ComexOverrideController,
+    InternationalOrderController,
+    ProformaController,
+    OrderAlertController,
+    ComexOverrideController,
   ],
   providers: [
-    InternationalOrderService, ProformaService,
-    OrderAlertService, ComexOverrideService,
+    InternationalOrderService,
+    ProformaService,
+    OrderAlertService,
+    ComexOverrideService,
+    { provide: INTERNATIONAL_ORDER_REPOSITORY, useClass: InternationalOrderRepositoryPrisma },
+    { provide: PROFORMA_VERSION_REPOSITORY, useClass: ProformaVersionRepositoryPrisma },
+    { provide: ORDER_ALERT_REPOSITORY, useClass: OrderAlertRepositoryPrisma },
+    { provide: COMEX_OUTBOX_REPOSITORY, useClass: PrismaComexOutboxRepository },
   ],
+  exports: [InternationalOrderService, ProformaService, OrderAlertService, ComexOverrideService],
 })
 export class ComexModule {}

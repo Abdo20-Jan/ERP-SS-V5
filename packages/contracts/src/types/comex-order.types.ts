@@ -1,4 +1,3 @@
-// ─── DTOs / Schemas ───
 export interface CreateInternationalOrderDto {
   operationType: string;
   supplierPartyId: string;
@@ -30,24 +29,27 @@ export interface AddOrderLineDto {
   productId: string;
   sku: string;
   description?: string;
-  quantity: number;
-  unitPrice: number;
+  quantity: string;
+  unitPrice: string;
+  expectedVersion: number;
 }
 
 export interface UpdateOrderLineDto {
-  quantity?: number;
-  unitPrice?: number;
+  quantity?: string;
+  unitPrice?: string;
+  expectedVersion: number;
   expectedLineVersion: number;
 }
 
 export interface ProductionProgressDto {
-  lines: { lineNumber: number; quantityProduced: number }[];
+  lines: { lineNumber: number; quantityProduced: string }[];
   expectedVersion: number;
 }
 
 export interface TransitionDto {
   reason?: string;
   expectedVersion: number;
+  idempotencyKey?: string;
 }
 
 export interface OrderLineDto {
@@ -87,6 +89,7 @@ export interface InternationalOrderDto {
   fxSource: string | null;
   subtotalFunctional: string | null;
   idempotencyKey: string | null;
+  idempotencyPayloadHash: string | null;
   version: number;
   createdBy: string;
   cancelledAt: string | null;
@@ -111,12 +114,15 @@ export interface InternationalOrderListDto {
 export interface RegisterProformaDto {
   proformaNumber: string;
   issueDate?: string;
-  totalAmount?: number;
+  totalAmount?: string;
   currencyCode?: string;
+  expectedOrderVersion: number;
 }
 
 export interface ConfirmProformaDto {
   expectedVersion: number;
+  expectedOrderVersion: number;
+  idempotencyKey?: string;
 }
 
 export interface ProformaVersionDto {
@@ -139,6 +145,7 @@ export interface ProformaVersionDto {
 
 export interface OrderAlertDto {
   id: string;
+  organizationId?: string;
   orderId: string;
   code: string;
   severity: string;
@@ -152,3 +159,8 @@ export interface OrderAlertDto {
   createdAt: string;
 }
 
+export interface CreateOrderAlertDto {
+  code: string;
+  severity: "INFO" | "WARN" | "HIGH";
+  message: string;
+}

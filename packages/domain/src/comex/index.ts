@@ -3,8 +3,9 @@ export { ProformaVersion, type ProformaVersionSnapshot } from "./proforma-versio
 export { OrderAlert, type OrderAlertSnapshot } from "./order-alert.aggregate";
 export * from "./international-order.enums";
 export * from "./international-order.commands";
-export { type InternationalOrderDomainEvent, type OrderLineSnapshot } from "./international-order.events";
+export * from "./international-order.events";
 export { type InternationalOrderRepository, INTERNATIONAL_ORDER_REPOSITORY } from "./international-order.repository";
 export { type ProformaVersionRepository, PROFORMA_VERSION_REPOSITORY } from "./proforma-version.repository";
 export { type OrderAlertRepository, ORDER_ALERT_REPOSITORY } from "./order-alert.repository";
+export { type ComexOutboxRepository, COMEX_OUTBOX_REPOSITORY } from "./comex-outbox.repository";
 export { isActive } from "./international-order.state-machine";

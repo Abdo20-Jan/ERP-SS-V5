@@ -62,4 +62,5 @@ export {
   SoDAutoApprovalError,
   OrderValidationError,
   InvalidOrderStateError,
+  OrderConcurrencyError,
 } from "./domain-error";

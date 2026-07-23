@@ -1,301 +1,635 @@
 import { Decimal } from "../common/decimal.vo";
 import { createEntityId, generateEntityId, type EntityId } from "../common/entity-id";
-import { OrderValidationError } from "../common/errors";
+import { OrderConcurrencyError, OrderValidationError } from "../common/errors";
 import type { InternationalOrderDomainEvent, OrderLineSnapshot } from "./international-order.events";
 import {
-  orderCreatedEvent, orderSubmittedEvent, orderApprovedEvent, orderRejectedEvent,
-  orderSentEvent, orderProformaConfirmedEvent, orderProductionStartedEvent,
-  orderProductionUpdatedEvent, orderReadyToShipEvent, orderSuspendedEvent,
-  orderResumedEvent, orderCancelledEvent, orderUpdatedEvent,
-  orderLineAddedEvent, orderLineUpdatedEvent, orderLineCancelledEvent,
+  orderApprovedEvent,
+  orderCancelledEvent,
+  orderCreatedEvent,
+  orderLineAddedEvent,
+  orderLineCancelledEvent,
+  orderLineUpdatedEvent,
+  orderProductionStartedEvent,
+  orderProductionUpdatedEvent,
+  orderProformaConfirmedEvent,
+  orderReadyToShipEvent,
+  orderRejectedEvent,
+  orderResumedEvent,
+  orderSentEvent,
+  orderSubmittedEvent,
+  orderSuspendedEvent,
+  orderUpdatedEvent,
 } from "./international-order.events";
-import { AlertSeverity, OrderStatus, isValidOperationType, type OperationType } from "./international-order.enums";
+import { OrderStatus, type OperationType } from "./international-order.enums";
 import { assertTransition, canSuspend } from "./international-order.state-machine";
 import { validateApprovalReady, validateCreateOrder } from "./international-order.validator";
 import type {
-  CreateInternationalOrderCommand, UpdateInternationalOrderCommand,
-  AddOrderLineCommand, UpdateOrderLineCommand, ProductionProgressCommand,
+  AddOrderLineCommand,
+  CancelOrderLineCommand,
+  CreateInternationalOrderCommand,
+  ProductionProgressCommand,
+  UpdateInternationalOrderCommand,
+  UpdateOrderLineCommand,
 } from "./international-order.commands";
 
 const SCALE_QTY = 3;
 const SCALE_PRICE = 4;
 const SCALE_MONEY = 2;
 
-function toDec(v: string | number, s: number): Decimal {
-  const d = new Decimal(v);
-  if (!d.unwrap().isFinite()) throw new OrderValidationError("Invalid decimal: "+v);
-  return d;
+function toDecimal(value: string, scale: number, field: string): Decimal {
+  if (typeof value !== "string" || value.trim() === "") {
+    throw new OrderValidationError(`${field} must be a decimal string`);
+  }
+  let decimal: Decimal;
+  try {
+    decimal = new Decimal(value.trim());
+  } catch {
+    throw new OrderValidationError(`${field} is not a valid decimal`);
+  }
+  if (decimal.unwrap().decimalPlaces() > scale) {
+    throw new OrderValidationError(`${field} supports at most ${scale} decimal places`);
+  }
+  return decimal;
 }
 
 class OrderLine {
   constructor(
-    readonly id: EntityId, private _ln: number, readonly productId: string,
-    readonly skuSnapshot: string, readonly descSnapshot: string | null,
-    private _qtyOrd: Decimal, private _qtyConf: Decimal,
-    private _qtyProd: Decimal, private _qtyCanc: Decimal,
-    private _price: Decimal, private _total: Decimal,
-    private _ver: number,
+    readonly id: EntityId,
+    private _lineNumber: number,
+    readonly productId: string,
+    readonly skuSnapshot: string,
+    readonly descriptionSnapshot: string | null,
+    private _quantityOrdered: Decimal,
+    private _quantityConfirmed: Decimal,
+    private _quantityProduced: Decimal,
+    private _quantityCancelled: Decimal,
+    private _unitPrice: Decimal,
+    private _lineTotalOriginal: Decimal,
+    private _version: number,
   ) {}
-  get lineNumber(): number { return this._ln; }
-  get quantityOrdered(): Decimal { return this._qtyOrd; }
-  get quantityConfirmed(): Decimal { return this._qtyConf; }
-  get quantityProduced(): Decimal { return this._qtyProd; }
-  get quantityCancelled(): Decimal { return this._qtyCanc; }
-  get unitPrice(): Decimal { return this._price; }
-  get lineTotalOriginal(): Decimal { return this._total; }
-  get version(): number { return this._ver; }
-  get openBalance(): Decimal { return this._qtyOrd.subtract(this._qtyCanc); }
-  get pendingProduction(): Decimal { return this._qtyConf.subtract(this._qtyProd); }
 
-  update(qty: string|number, price: string|number): void {
-    const nQ = toDec(qty, SCALE_QTY); if (!nQ.isPositive()) throw new OrderValidationError("qty > 0");
-    const nP = toDec(price, SCALE_PRICE); if (nP.unwrap().isNegative()) throw new OrderValidationError("price >= 0");
-    this._qtyOrd = nQ; this._qtyConf = nQ; this._price = nP;
-    this._total = nQ.multiply(nP).round(SCALE_MONEY); this._ver++;
+  get lineNumber(): number { return this._lineNumber; }
+  get quantityOrdered(): Decimal { return this._quantityOrdered; }
+  get quantityConfirmed(): Decimal { return this._quantityConfirmed; }
+  get quantityProduced(): Decimal { return this._quantityProduced; }
+  get quantityCancelled(): Decimal { return this._quantityCancelled; }
+  get unitPrice(): Decimal { return this._unitPrice; }
+  get lineTotalOriginal(): Decimal { return this._lineTotalOriginal; }
+  get version(): number { return this._version; }
+  get openBalance(): Decimal { return this._quantityOrdered.subtract(this._quantityCancelled); }
+  get pendingProduction(): Decimal {
+    return this._quantityConfirmed.subtract(this._quantityProduced).subtract(this._quantityCancelled);
   }
 
-  produce(add: string|number): void {
-    const a = toDec(add, SCALE_QTY); if (!a.isPositive()) throw new OrderValidationError("produce > 0");
-    const np = this._qtyProd.add(a);
-    const max = this._qtyConf.subtract(this._qtyCanc);
-    if (np.unwrap().greaterThan(max.unwrap())) throw new OrderValidationError(`produced ${np} > max ${max}`);
-    this._qtyProd = np; this._ver++;
+  private assertVersion(expected: number): void {
+    if (expected !== this._version) {
+      throw new OrderConcurrencyError(
+        `Line version mismatch: expected ${expected}, current ${this._version}`,
+        { lineNumber: this._lineNumber, expectedVersion: expected, currentVersion: this._version },
+      );
+    }
   }
 
-  cancel(): void {
-    const r = this.openBalance; if (r.isZero()) return;
-    this._qtyCanc = this._qtyCanc.add(r); this._ver++;
+  update(quantity: string, unitPrice: string, expectedVersion: number): void {
+    this.assertVersion(expectedVersion);
+    const nextQuantity = toDecimal(quantity, SCALE_QTY, "quantity");
+    const nextPrice = toDecimal(unitPrice, SCALE_PRICE, "unitPrice");
+    if (!nextQuantity.isPositive()) throw new OrderValidationError("quantity must be greater than zero");
+    if (nextPrice.isNegative()) throw new OrderValidationError("unitPrice must be greater than or equal to zero");
+    if (nextQuantity.lessThan(this._quantityProduced.add(this._quantityCancelled))) {
+      throw new OrderValidationError("quantity cannot be lower than produced plus cancelled quantity");
+    }
+    this._quantityOrdered = nextQuantity;
+    this._quantityConfirmed = nextQuantity;
+    this._unitPrice = nextPrice;
+    this._lineTotalOriginal = nextQuantity.multiply(nextPrice).round(SCALE_MONEY);
+    this._version += 1;
+  }
+
+  produce(additional: string): void {
+    const quantity = toDecimal(additional, SCALE_QTY, "quantityProduced");
+    if (!quantity.isPositive()) throw new OrderValidationError("quantityProduced must be greater than zero");
+    const nextProduced = this._quantityProduced.add(quantity);
+    const maximum = this._quantityConfirmed.subtract(this._quantityCancelled);
+    if (nextProduced.greaterThan(maximum)) {
+      throw new OrderValidationError(`produced ${nextProduced.toString()} exceeds maximum ${maximum.toString()}`);
+    }
+    this._quantityProduced = nextProduced;
+    this._version += 1;
+  }
+
+  cancel(expectedVersion?: number): void {
+    if (expectedVersion !== undefined) this.assertVersion(expectedVersion);
+    const remaining = this._quantityConfirmed
+      .subtract(this._quantityProduced)
+      .subtract(this._quantityCancelled);
+    if (!remaining.isPositive()) return;
+    this._quantityCancelled = this._quantityCancelled.add(remaining);
+    this._version += 1;
   }
 
   snapshot(): OrderLineSnapshot {
-    return { id:String(this.id), lineNumber:this._ln, productId:this.productId,
-      skuSnapshot:this.skuSnapshot, descriptionSnapshot:this.descSnapshot,
-      quantityOrdered:this._qtyOrd.toString(), quantityConfirmed:this._qtyConf.toString(),
-      quantityProduced:this._qtyProd.toString(), quantityCancelled:this._qtyCanc.toString(),
-      unitPrice:this._price.toString(), lineTotalOriginal:this._total.toString(), version:this._ver };
+    return {
+      id: String(this.id),
+      lineNumber: this._lineNumber,
+      productId: this.productId,
+      skuSnapshot: this.skuSnapshot,
+      descriptionSnapshot: this.descriptionSnapshot,
+      quantityOrdered: this._quantityOrdered.toString(),
+      quantityConfirmed: this._quantityConfirmed.toString(),
+      quantityProduced: this._quantityProduced.toString(),
+      quantityCancelled: this._quantityCancelled.toString(),
+      unitPrice: this._unitPrice.toString(),
+      lineTotalOriginal: this._lineTotalOriginal.toString(),
+      version: this._version,
+    };
   }
-  static rehydrate(s: OrderLineSnapshot): OrderLine {
-    return new OrderLine(createEntityId(s.id), s.lineNumber, s.productId, s.skuSnapshot,
-      s.descriptionSnapshot, toDec(s.quantityOrdered,SCALE_QTY), toDec(s.quantityConfirmed,SCALE_QTY),
-      toDec(s.quantityProduced,SCALE_QTY), toDec(s.quantityCancelled,SCALE_QTY),
-      toDec(s.unitPrice,SCALE_PRICE), toDec(s.lineTotalOriginal,SCALE_MONEY), s.version);
-  }
-}
 
-function checkVer(order: InternationalOrder, e?: number): void {
-  if (e !== undefined && e !== order._ver) throw new OrderValidationError(`Version mismatch: expected ${e}, current ${order._ver}`);
+  static rehydrate(snapshot: OrderLineSnapshot): OrderLine {
+    return new OrderLine(
+      createEntityId(snapshot.id),
+      snapshot.lineNumber,
+      snapshot.productId,
+      snapshot.skuSnapshot,
+      snapshot.descriptionSnapshot,
+      toDecimal(snapshot.quantityOrdered, SCALE_QTY, "quantityOrdered"),
+      toDecimal(snapshot.quantityConfirmed, SCALE_QTY, "quantityConfirmed"),
+      toDecimal(snapshot.quantityProduced, SCALE_QTY, "quantityProduced"),
+      toDecimal(snapshot.quantityCancelled, SCALE_QTY, "quantityCancelled"),
+      toDecimal(snapshot.unitPrice, SCALE_PRICE, "unitPrice"),
+      toDecimal(snapshot.lineTotalOriginal, SCALE_MONEY, "lineTotalOriginal"),
+      snapshot.version,
+    );
+  }
 }
 
 export interface InternationalOrderSnapshot {
-  id: string; organizationId: string; code: string; operationType: string;
-  status: string; previousStatus: string|null; supplierPartyId: string;
-  exporterPartyId: string|null; manufacturerPartyId: string|null;
-  incoterm: string|null; paymentTerms: string|null; originCountry: string|null;
-  currencyCode: string|null; expectedReadyDate: string|null;
-  responsibleUserId: string|null; subtotalOriginal: string|null;
-  fxRate: string|null; fxRateDate: string|null; fxSource: string|null;
-  subtotalFunctional: string|null; idempotencyKey: string|null;
-  version: number; createdBy: string;
-  cancelledAt: string|null; cancelledBy: string|null; cancelReason: string|null;
-  suspendedAt: string|null; suspendedBy: string|null; suspendReason: string|null;
-  resumedAt: string|null; lines: OrderLineSnapshot[];
-  createdAt: string; updatedAt: string;
+  id: string;
+  organizationId: string;
+  code: string;
+  operationType: string;
+  status: string;
+  previousStatus: string | null;
+  supplierPartyId: string;
+  exporterPartyId: string | null;
+  manufacturerPartyId: string | null;
+  incoterm: string | null;
+  paymentTerms: string | null;
+  originCountry: string | null;
+  currencyCode: string | null;
+  expectedReadyDate: string | null;
+  responsibleUserId: string | null;
+  subtotalOriginal: string | null;
+  fxRate: string | null;
+  fxRateDate: string | null;
+  fxSource: string | null;
+  subtotalFunctional: string | null;
+  idempotencyKey: string | null;
+  idempotencyPayloadHash: string | null;
+  version: number;
+  createdBy: string;
+  cancelledAt: string | null;
+  cancelledBy: string | null;
+  cancelReason: string | null;
+  suspendedAt: string | null;
+  suspendedBy: string | null;
+  suspendReason: string | null;
+  resumedAt: string | null;
+  lines: OrderLineSnapshot[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+function assertVersion(order: InternationalOrder, expected: number): void {
+  if (expected !== order._version) {
+    throw new OrderConcurrencyError(
+      `Version mismatch: expected ${expected}, current ${order._version}`,
+      { orderId: String(order.id), expectedVersion: expected, currentVersion: order._version },
+    );
+  }
 }
 
 export class InternationalOrder {
-  private _evts: InternationalOrderDomainEvent[] = [];
-  private _lines: OrderLine[] = [];
-  constructor(
-    readonly id: EntityId, readonly orgId: string, readonly code: string,
-    private _opType: OperationType, private _status: OrderStatus, private _prev: OrderStatus|null,
-    private _sup: string, private _exp: string|null, private _mfr: string|null,
-    private _inc: string|null, private _pay: string|null, private _orig: string|null,
-    private _cur: string|null, private _ready: string|null, private _resp: string|null,
-    private _sub: Decimal|null, private _fxR: Decimal|null, private _fxD: Date|null,
-    private _fxS: string|null, private _subF: Decimal|null,
-    readonly idemKey: string|null, public _ver: number, readonly createdBy: string,
-    private _cAt: Date|null, private _cBy: string|null, private _cR: string|null,
-    private _sAt: Date|null, private _sBy: string|null, private _sR: string|null,
-    private _resAt: Date|null, readonly createdAt: Date, private _upd: Date,
+  private events: InternationalOrderDomainEvent[] = [];
+  private orderLines: OrderLine[];
+
+  private constructor(
+    readonly id: EntityId,
+    readonly orgId: string,
+    readonly code: string,
+    private operation: OperationType,
+    private currentStatus: OrderStatus,
+    private priorStatus: OrderStatus | null,
+    private supplierId: string,
+    private exporterId: string | null,
+    private manufacturerId: string | null,
+    private currentIncoterm: string | null,
+    private currentPaymentTerms: string | null,
+    private origin: string | null,
+    private currency: string | null,
+    private readyDate: string | null,
+    private responsibleId: string | null,
+    private subtotal: Decimal | null,
+    private exchangeRate: Decimal | null,
+    private exchangeRateDate: Date | null,
+    private exchangeRateSource: string | null,
+    private functionalSubtotal: Decimal | null,
+    readonly idemKey: string | null,
+    readonly idemPayloadHash: string | null,
+    public _version: number,
+    readonly createdBy: string,
+    private cancelledAt: Date | null,
+    private cancelledBy: string | null,
+    private cancelReason: string | null,
+    private suspendedAt: Date | null,
+    private suspendedBy: string | null,
+    private suspendReason: string | null,
+    private resumedAt: Date | null,
+    readonly createdAt: Date,
+    private updatedAt: Date,
     lines: OrderLine[],
-  ) { this._lines = lines; }
-
-  get status(): OrderStatus { return this._status; }
-  get operationType(): OperationType { return this._opType; }
-  get supplierPartyId(): string { return this._sup; }
-  get incoterm(): string|null { return this._inc; }
-  get paymentTerms(): string|null { return this._pay; }
-  get originCountry(): string|null { return this._orig; }
-  get currencyCode(): string|null { return this._cur; }
-  get expectedReadyDate(): string|null { return this._ready; }
-  get responsibleUserId(): string|null { return this._resp; }
-  get lines(): readonly OrderLine[] { return this._lines; }
-  get version(): number { return this._ver; }
-  get previousStatus(): OrderStatus|null { return this._prev; }
-  get exporterPartyId(): string|null { return this._exp; }
-  get manufacturerPartyId(): string|null { return this._mfr; }
-
-  pullEvents(): InternationalOrderDomainEvent[] { const e=this._evts; this._evts=[]; return e; }
-  private push(e: InternationalOrderDomainEvent): void { this._evts.push(e); }
-  private bump(): void { this._ver++; this._upd=new Date(); }
-  private recalc(): void {
-    let t=new Decimal(0); for(const l of this._lines) t=t.add(l.lineTotalOriginal); this._sub=t;
+  ) {
+    this.orderLines = lines;
   }
-  private getLn(n: number): OrderLine {
-    const l=this._lines.find(x=>x.lineNumber===n); if(!l)throw new OrderValidationError(`Line ${n} not found`); return l;
+
+  get status(): OrderStatus { return this.currentStatus; }
+  get operationType(): OperationType { return this.operation; }
+  get supplierPartyId(): string { return this.supplierId; }
+  get incoterm(): string | null { return this.currentIncoterm; }
+  get paymentTerms(): string | null { return this.currentPaymentTerms; }
+  get originCountry(): string | null { return this.origin; }
+  get currencyCode(): string | null { return this.currency; }
+  get expectedReadyDate(): string | null { return this.readyDate; }
+  get responsibleUserId(): string | null { return this.responsibleId; }
+  get lines(): readonly OrderLine[] { return this.orderLines; }
+  get version(): number { return this._version; }
+  get previousStatus(): OrderStatus | null { return this.priorStatus; }
+  get exporterPartyId(): string | null { return this.exporterId; }
+  get manufacturerPartyId(): string | null { return this.manufacturerId; }
+
+  pullEvents(): InternationalOrderDomainEvent[] {
+    const pending = [...this.events];
+    this.events = [];
+    return pending;
   }
+
+  private push(event: InternationalOrderDomainEvent): void {
+    event.organizationId = this.orgId;
+    event.aggregateVersion = this._version;
+    this.events.push(event);
+  }
+
+  private bump(): void {
+    this._version += 1;
+    this.updatedAt = new Date();
+  }
+
+  private recalculate(): void {
+    let total = new Decimal("0");
+    for (const line of this.orderLines) total = total.add(line.lineTotalOriginal);
+    this.subtotal = total.round(SCALE_MONEY);
+  }
+
+  private line(number: number): OrderLine {
+    const found = this.orderLines.find((item) => item.lineNumber === number);
+    if (!found) throw new OrderValidationError(`Line ${number} not found`);
+    return found;
+  }
+
   private assertDraft(): void {
-    if(this._status!==OrderStatus.DRAFT) throw new OrderValidationError(`Order not in DRAFT (${this._status})`);
+    if (this.currentStatus !== OrderStatus.DRAFT) {
+      throw new OrderValidationError(`Order not in DRAFT (${this.currentStatus})`);
+    }
   }
 
-  static create(cmd: CreateInternationalOrderCommand): InternationalOrder {
-    validateCreateOrder({ operationType: cmd.operationType });
-    const now=new Date(); const id=cmd.id?createEntityId(cmd.id):generateEntityId();
-    const o=new InternationalOrder(id, cmd.organizationId??"org_001", "", cmd.operationType as OperationType,
-      OrderStatus.DRAFT, null, cmd.supplierPartyId, cmd.exporterPartyId??null,
-      cmd.manufacturerPartyId??null, cmd.incoterm??null, cmd.paymentTerms??null,
-      cmd.originCountry??null, cmd.currencyCode??null, cmd.expectedReadyDate??null,
-      cmd.responsibleUserId??null, null, null, null, null, null,
-      cmd.idempotencyKey??null, 0, cmd.createdBy, null,null,null,null,null,null,null,
-      now,now,[]);
-    o.push(orderCreatedEvent(id, {orgId:o.orgId, opType:o._opType, supplierId:o._sup, idemKey:cmd.idempotencyKey??null}));
-    return o;
+  static create(command: CreateInternationalOrderCommand): InternationalOrder {
+    validateCreateOrder({ operationType: command.operationType });
+    if (!command.organizationId.trim()) throw new OrderValidationError("organizationId is required");
+    if (!command.code.trim()) throw new OrderValidationError("code is required");
+    const now = new Date();
+    const id = command.id ? createEntityId(command.id) : generateEntityId();
+    const order = new InternationalOrder(
+      id,
+      command.organizationId.trim(),
+      command.code.trim(),
+      command.operationType as OperationType,
+      OrderStatus.DRAFT,
+      null,
+      command.supplierPartyId,
+      command.exporterPartyId ?? null,
+      command.manufacturerPartyId ?? null,
+      command.incoterm ?? null,
+      command.paymentTerms ?? null,
+      command.originCountry ?? null,
+      command.currencyCode ?? null,
+      command.expectedReadyDate ?? null,
+      command.responsibleUserId ?? null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      command.idempotencyKey ?? null,
+      command.idempotencyPayloadHash ?? null,
+      0,
+      command.createdBy,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      now,
+      now,
+      [],
+    );
+    order.push(orderCreatedEvent(id, {
+      organizationId: order.orgId,
+      operationType: order.operation,
+      supplierPartyId: order.supplierId,
+      code: order.code,
+    }));
+    return order;
   }
 
-  addLine(c: AddOrderLineCommand): OrderLine {
+  addLine(command: AddOrderLineCommand): OrderLine {
     this.assertDraft();
-    const mx=this._lines.length===0?0:Math.max(...this._lines.map(l=>l.lineNumber));
-    const q=toDec(c.quantity,SCALE_QTY); const p=toDec(c.unitPrice,SCALE_PRICE);
-    const l=new OrderLine(generateEntityId(),mx+1,c.productId,c.sku,c.description??null,
-      q,q,new Decimal(0),new Decimal(0),p,q.multiply(p).round(SCALE_MONEY),0);
-    this._lines.push(l); this.bump(); this.recalc(); this.push(orderLineAddedEvent(this.id,l.snapshot())); return l;
+    assertVersion(this, command.expectedVersion);
+    const quantity = toDecimal(command.quantity, SCALE_QTY, "quantity");
+    const price = toDecimal(command.unitPrice, SCALE_PRICE, "unitPrice");
+    if (!quantity.isPositive()) throw new OrderValidationError("quantity must be greater than zero");
+    if (price.isNegative()) throw new OrderValidationError("unitPrice must be greater than or equal to zero");
+    const max = this.orderLines.length === 0 ? 0 : Math.max(...this.orderLines.map((item) => item.lineNumber));
+    const line = new OrderLine(
+      generateEntityId(),
+      max + 1,
+      command.productId,
+      command.sku,
+      command.description ?? null,
+      quantity,
+      quantity,
+      new Decimal("0"),
+      new Decimal("0"),
+      price,
+      quantity.multiply(price).round(SCALE_MONEY),
+      0,
+    );
+    this.orderLines.push(line);
+    this.bump();
+    this.recalculate();
+    this.push(orderLineAddedEvent(this.id, line.snapshot()));
+    return line;
   }
 
-  updateLine(n: number, c: UpdateOrderLineCommand): OrderLine {
-    this.assertDraft(); const l=this.getLn(n); l.update(c.quantity??l.quantityOrdered.toString(),c.unitPrice??l.unitPrice.toString());
-    this.bump(); this.recalc(); this.push(orderLineUpdatedEvent(this.id,l.snapshot())); return l;
-  }
-
-  cancelLine(n: number): OrderLine {
-    this.assertDraft(); const l=this.getLn(n); l.cancel();
-    this.bump(); this.recalc(); this.push(orderLineCancelledEvent(this.id,l.snapshot())); return l;
-  }
-
-  update(c: UpdateInternationalOrderCommand): void {
+  updateLine(number: number, command: UpdateOrderLineCommand): OrderLine {
     this.assertDraft();
-    if(c.incoterm!==undefined)this._inc=c.incoterm; if(c.paymentTerms!==undefined)this._pay=c.paymentTerms;
-    if(c.originCountry!==undefined)this._orig=c.originCountry; if(c.currencyCode!==undefined)this._cur=c.currencyCode;
-    if(c.expectedReadyDate!==undefined)this._ready=c.expectedReadyDate;
-    if(c.responsibleUserId!==undefined)this._resp=c.responsibleUserId;
-    if(c.supplierPartyId!==undefined)this._sup=c.supplierPartyId;
-    if(c.exporterPartyId!==undefined)this._exp=c.exporterPartyId;
-    if(c.manufacturerPartyId!==undefined)this._mfr=c.manufacturerPartyId;
-    this.bump(); this.push(orderUpdatedEvent(this.id));
+    assertVersion(this, command.expectedVersion);
+    const line = this.line(number);
+    line.update(
+      command.quantity ?? line.quantityOrdered.toString(),
+      command.unitPrice ?? line.unitPrice.toString(),
+      command.expectedLineVersion,
+    );
+    this.bump();
+    this.recalculate();
+    this.push(orderLineUpdatedEvent(this.id, line.snapshot()));
+    return line;
   }
 
-  submit(ev: number): void {
-    checkVer(this,ev); assertTransition(this._status,OrderStatus.PENDING_APPROVAL);
-    const errs=validateApprovalReady({operationType:this._opType,supplierPartyId:this._sup,incoterm:this._inc,
-      paymentTerms:this._pay,originCountry:this._orig,currencyCode:this._cur,expectedReadyDate:this._ready,
-      responsibleUserId:this._resp,hasLines:this._lines.some(l=>l.openBalance.isPositive())});
-    if(errs.length>0)throw new OrderValidationError(`Submit blocked: ${errs.join("; ")}`);
-    const f=this._status; this._status=OrderStatus.PENDING_APPROVAL; this.bump(); this.push(orderSubmittedEvent(this.id,f));
+  cancelLine(number: number, command: CancelOrderLineCommand): OrderLine {
+    this.assertDraft();
+    assertVersion(this, command.expectedVersion);
+    const line = this.line(number);
+    line.cancel(command.expectedLineVersion);
+    this.bump();
+    this.recalculate();
+    this.push(orderLineCancelledEvent(this.id, line.snapshot()));
+    return line;
   }
 
-  approve(actor: string, ev: number): void {
-    checkVer(this,ev); assertTransition(this._status,OrderStatus.APPROVED);
-    if(actor===this.createdBy)throw new OrderValidationError("SOD_VIOLATION: creator cannot approve own order");
-    const errs=validateApprovalReady({operationType:this._opType,supplierPartyId:this._sup,incoterm:this._inc,
-      paymentTerms:this._pay,originCountry:this._orig,currencyCode:this._cur,expectedReadyDate:this._ready,
-      responsibleUserId:this._resp,hasLines:this._lines.some(l=>l.openBalance.isPositive())});
-    if(errs.length>0)throw new OrderValidationError(`Approve blocked: ${errs.join("; ")}`);
-    this._status=OrderStatus.APPROVED; this.bump(); this.push(orderApprovedEvent(this.id,actor));
+  update(command: UpdateInternationalOrderCommand): void {
+    this.assertDraft();
+    assertVersion(this, command.expectedVersion);
+    if (command.incoterm !== undefined) this.currentIncoterm = command.incoterm;
+    if (command.paymentTerms !== undefined) this.currentPaymentTerms = command.paymentTerms;
+    if (command.originCountry !== undefined) this.origin = command.originCountry;
+    if (command.currencyCode !== undefined) this.currency = command.currencyCode;
+    if (command.expectedReadyDate !== undefined) this.readyDate = command.expectedReadyDate;
+    if (command.responsibleUserId !== undefined) this.responsibleId = command.responsibleUserId;
+    if (command.supplierPartyId !== undefined) this.supplierId = command.supplierPartyId;
+    if (command.exporterPartyId !== undefined) this.exporterId = command.exporterPartyId;
+    if (command.manufacturerPartyId !== undefined) this.manufacturerId = command.manufacturerPartyId;
+    this.bump();
+    this.push(orderUpdatedEvent(this.id));
   }
 
-  reject(reason: string, ev: number): void {
-    checkVer(this,ev); assertTransition(this._status,OrderStatus.DRAFT);
-    this._status=OrderStatus.DRAFT; this.bump(); this.push(orderRejectedEvent(this.id,reason));
+  submit(expectedVersion: number): void {
+    assertVersion(this, expectedVersion);
+    assertTransition(this.currentStatus, OrderStatus.PENDING_APPROVAL);
+    const errors = validateApprovalReady({
+      operationType: this.operation,
+      supplierPartyId: this.supplierId,
+      incoterm: this.currentIncoterm,
+      paymentTerms: this.currentPaymentTerms,
+      originCountry: this.origin,
+      currencyCode: this.currency,
+      expectedReadyDate: this.readyDate,
+      responsibleUserId: this.responsibleId,
+      hasLines: this.orderLines.some((line) => line.openBalance.isPositive()),
+    });
+    if (errors.length > 0) throw new OrderValidationError(`Submit blocked: ${errors.join("; ")}`);
+    const from = this.currentStatus;
+    this.currentStatus = OrderStatus.PENDING_APPROVAL;
+    this.bump();
+    this.push(orderSubmittedEvent(this.id, from));
   }
 
-  send(ev: number): void {
-    checkVer(this,ev); assertTransition(this._status,OrderStatus.ORDER_SENT);
-    this._status=OrderStatus.ORDER_SENT; this.bump(); this.push(orderSentEvent(this.id));
+  approve(actor: string, expectedVersion: number): void {
+    assertVersion(this, expectedVersion);
+    assertTransition(this.currentStatus, OrderStatus.APPROVED);
+    if (actor === this.createdBy) throw new OrderValidationError("SOD_VIOLATION: creator cannot approve own order");
+    this.currentStatus = OrderStatus.APPROVED;
+    this.bump();
+    this.push(orderApprovedEvent(this.id, actor));
   }
 
-  confirmProforma(ev: number): void {
-    checkVer(this,ev); assertTransition(this._status,OrderStatus.PROFORMA_CONFIRMED);
-    this._status=OrderStatus.PROFORMA_CONFIRMED; this.bump(); this.push(orderProformaConfirmedEvent(this.id));
+  reject(reason: string, expectedVersion: number): void {
+    assertVersion(this, expectedVersion);
+    assertTransition(this.currentStatus, OrderStatus.DRAFT);
+    this.currentStatus = OrderStatus.DRAFT;
+    this.bump();
+    this.push(orderRejectedEvent(this.id, reason));
   }
 
-  startProduction(ev: number): void {
-    checkVer(this,ev); assertTransition(this._status,OrderStatus.IN_PRODUCTION);
-    this._status=OrderStatus.IN_PRODUCTION; this.bump(); this.push(orderProductionStartedEvent(this.id));
+  send(expectedVersion: number): void {
+    assertVersion(this, expectedVersion);
+    assertTransition(this.currentStatus, OrderStatus.ORDER_SENT);
+    this.currentStatus = OrderStatus.ORDER_SENT;
+    this.bump();
+    this.push(orderSentEvent(this.id));
   }
 
-  productionProgress(c: ProductionProgressCommand): void {
-    checkVer(this,c.expectedVersion);
-    if(this._status!==OrderStatus.IN_PRODUCTION)throw new OrderValidationError(`production requires IN_PRODUCTION (${this._status})`);
-    for(const u of c.lines)this.getLn(u.lineNumber).produce(u.quantityProduced);
-    this.bump(); this.push(orderProductionUpdatedEvent(this.id,this._lines.map(l=>l.snapshot())));
+  confirmProforma(expectedVersion: number, proformaVersion?: number): void {
+    assertVersion(this, expectedVersion);
+    assertTransition(this.currentStatus, OrderStatus.PROFORMA_CONFIRMED);
+    this.currentStatus = OrderStatus.PROFORMA_CONFIRMED;
+    this.bump();
+    this.push(orderProformaConfirmedEvent(this.id, proformaVersion));
   }
 
-  readyToShip(ev: number): void {
-    checkVer(this,ev); assertTransition(this._status,OrderStatus.READY_TO_SHIP);
-    const inc=this._lines.some(l=>!l.pendingProduction.isZero());
-    if(inc)throw new OrderValidationError("All lines must be fully produced. Use override for partial.");
-    this._status=OrderStatus.READY_TO_SHIP; this.bump(); this.push(orderReadyToShipEvent(this.id));
+  startProduction(expectedVersion: number): void {
+    assertVersion(this, expectedVersion);
+    assertTransition(this.currentStatus, OrderStatus.IN_PRODUCTION);
+    this.currentStatus = OrderStatus.IN_PRODUCTION;
+    this.bump();
+    this.push(orderProductionStartedEvent(this.id));
   }
 
-  suspend(reason: string, ev: number): void {
-    checkVer(this,ev); if(!canSuspend(this._status))throw new OrderValidationError(`Cannot suspend ${this._status}`);
-    this._prev=this._status; this._status=OrderStatus.SUSPENDED;
-    this._sAt=new Date(); this._sR=reason; this.bump();
-    this.push(orderSuspendedEvent(this.id,reason,this._prev));
+  productionProgress(command: ProductionProgressCommand): void {
+    assertVersion(this, command.expectedVersion);
+    if (this.currentStatus !== OrderStatus.IN_PRODUCTION) {
+      throw new OrderValidationError(`production requires IN_PRODUCTION (${this.currentStatus})`);
+    }
+    for (const update of command.lines) this.line(update.lineNumber).produce(update.quantityProduced);
+    this.bump();
+    this.push(orderProductionUpdatedEvent(this.id, this.orderLines.map((line) => line.snapshot())));
   }
 
-  resume(ev: number): void {
-    checkVer(this,ev);
-    if(this._status!==OrderStatus.SUSPENDED||!this._prev)throw new OrderValidationError("Cannot resume");
-    const t=this._prev; this._status=t; this._prev=null; this._resAt=new Date(); this.bump();
-    this.push(orderResumedEvent(this.id,t));
+  readyToShip(expectedVersion: number): void {
+    assertVersion(this, expectedVersion);
+    assertTransition(this.currentStatus, OrderStatus.READY_TO_SHIP);
+    if (this.orderLines.some((line) => !line.pendingProduction.isZero())) {
+      throw new OrderValidationError("All lines must be fully produced. Use approved override for partial shipment.");
+    }
+    this.currentStatus = OrderStatus.READY_TO_SHIP;
+    this.bump();
+    this.push(orderReadyToShipEvent(this.id));
   }
 
-  cancel(reason: string, ev: number): void {
-    checkVer(this,ev); if(this._status===OrderStatus.CANCELLED)return;
-    const f=this._status; for(const l of this._lines)l.cancel();
-    this._status=OrderStatus.CANCELLED; this._cAt=new Date(); this._cR=reason; this.bump();
-    this.push(orderCancelledEvent(this.id,f,reason));
+  readyToShipWithOverride(expectedVersion: number, overrideRequestId: string): void {
+    assertVersion(this, expectedVersion);
+    assertTransition(this.currentStatus, OrderStatus.READY_TO_SHIP);
+    const produced = this.orderLines.some((line) => line.quantityProduced.isPositive());
+    if (!produced) throw new OrderValidationError("Partial shipment override requires produced quantity");
+    this.currentStatus = OrderStatus.READY_TO_SHIP;
+    this.bump();
+    this.push(orderReadyToShipEvent(this.id, overrideRequestId));
+  }
+
+  suspend(reason: string, expectedVersion: number, actor: string): void {
+    assertVersion(this, expectedVersion);
+    if (!canSuspend(this.currentStatus)) throw new OrderValidationError(`Cannot suspend ${this.currentStatus}`);
+    this.priorStatus = this.currentStatus;
+    this.currentStatus = OrderStatus.SUSPENDED;
+    this.suspendedAt = new Date();
+    this.suspendedBy = actor;
+    this.suspendReason = reason;
+    this.bump();
+    this.push(orderSuspendedEvent(this.id, reason, this.priorStatus));
+  }
+
+  resume(expectedVersion: number): void {
+    assertVersion(this, expectedVersion);
+    if (this.currentStatus !== OrderStatus.SUSPENDED || !this.priorStatus) {
+      throw new OrderValidationError("Cannot resume order");
+    }
+    const target = this.priorStatus;
+    this.currentStatus = target;
+    this.priorStatus = null;
+    this.resumedAt = new Date();
+    this.bump();
+    this.push(orderResumedEvent(this.id, target));
+  }
+
+  cancel(reason: string, expectedVersion: number, actor: string): void {
+    assertVersion(this, expectedVersion);
+    if (this.currentStatus === OrderStatus.CANCELLED) return;
+    const from = this.currentStatus;
+    for (const line of this.orderLines) line.cancel();
+    this.currentStatus = OrderStatus.CANCELLED;
+    this.cancelledAt = new Date();
+    this.cancelledBy = actor;
+    this.cancelReason = reason;
+    this.bump();
+    this.push(orderCancelledEvent(this.id, from, reason));
   }
 
   snapshot(): InternationalOrderSnapshot {
-    return {id:String(this.id),organizationId:this.orgId,code:this.code,operationType:this._opType,
-      status:this._status,previousStatus:this._prev,supplierPartyId:this._sup,
-      exporterPartyId:this._exp,manufacturerPartyId:this._mfr,incoterm:this._inc,
-      paymentTerms:this._pay,originCountry:this._orig,currencyCode:this._cur,
-      expectedReadyDate:this._ready,responsibleUserId:this._resp,
-      subtotalOriginal:this._sub?.toString()??null,fxRate:this._fxR?.toString()??null,
-      fxRateDate:this._fxD?.toISOString()??null,fxSource:this._fxS,
-      subtotalFunctional:this._subF?.toString()??null,idempotencyKey:this.idemKey,
-      version:this._ver,createdBy:this.createdBy,
-      cancelledAt:this._cAt?.toISOString()??null,cancelledBy:this._cBy,cancelReason:this._cR,
-      suspendedAt:this._sAt?.toISOString()??null,suspendedBy:this._sBy,suspendReason:this._sR,
-      resumedAt:this._resAt?.toISOString()??null,
-      lines:this._lines.map(l=>l.snapshot()),createdAt:this.createdAt.toISOString(),
-      updatedAt:this._upd.toISOString()};
+    return {
+      id: String(this.id),
+      organizationId: this.orgId,
+      code: this.code,
+      operationType: this.operation,
+      status: this.currentStatus,
+      previousStatus: this.priorStatus,
+      supplierPartyId: this.supplierId,
+      exporterPartyId: this.exporterId,
+      manufacturerPartyId: this.manufacturerId,
+      incoterm: this.currentIncoterm,
+      paymentTerms: this.currentPaymentTerms,
+      originCountry: this.origin,
+      currencyCode: this.currency,
+      expectedReadyDate: this.readyDate,
+      responsibleUserId: this.responsibleId,
+      subtotalOriginal: this.subtotal?.toString() ?? null,
+      fxRate: this.exchangeRate?.toString() ?? null,
+      fxRateDate: this.exchangeRateDate?.toISOString() ?? null,
+      fxSource: this.exchangeRateSource,
+      subtotalFunctional: this.functionalSubtotal?.toString() ?? null,
+      idempotencyKey: this.idemKey,
+      idempotencyPayloadHash: this.idemPayloadHash,
+      version: this._version,
+      createdBy: this.createdBy,
+      cancelledAt: this.cancelledAt?.toISOString() ?? null,
+      cancelledBy: this.cancelledBy,
+      cancelReason: this.cancelReason,
+      suspendedAt: this.suspendedAt?.toISOString() ?? null,
+      suspendedBy: this.suspendedBy,
+      suspendReason: this.suspendReason,
+      resumedAt: this.resumedAt?.toISOString() ?? null,
+      lines: this.orderLines.map((line) => line.snapshot()),
+      createdAt: this.createdAt.toISOString(),
+      updatedAt: this.updatedAt.toISOString(),
+    };
   }
 
-  static rehydrate(s: InternationalOrderSnapshot): InternationalOrder {
-    return new InternationalOrder(createEntityId(s.id),s.organizationId,s.code,s.operationType as OperationType,
-      s.status as OrderStatus,s.previousStatus as OrderStatus|null,s.supplierPartyId,
-      s.exporterPartyId,s.manufacturerPartyId,s.incoterm,s.paymentTerms,s.originCountry,
-      s.currencyCode,s.expectedReadyDate,s.responsibleUserId,
-      s.subtotalOriginal?new Decimal(s.subtotalOriginal):null,
-      s.fxRate?new Decimal(s.fxRate):null,s.fxRateDate?new Date(s.fxRateDate):null,
-      s.fxSource,s.subtotalFunctional?new Decimal(s.subtotalFunctional):null,
-      s.idempotencyKey,s.version,s.createdBy,
-      s.cancelledAt?new Date(s.cancelledAt):null,s.cancelledBy,s.cancelReason,
-      s.suspendedAt?new Date(s.suspendedAt):null,s.suspendedBy,s.suspendReason,
-      s.resumedAt?new Date(s.resumedAt):null,new Date(s.createdAt),new Date(s.updatedAt),
-      s.lines.map(l=>OrderLine.rehydrate(l)));
+  static rehydrate(snapshot: InternationalOrderSnapshot): InternationalOrder {
+    return new InternationalOrder(
+      createEntityId(snapshot.id),
+      snapshot.organizationId,
+      snapshot.code,
+      snapshot.operationType as OperationType,
+      snapshot.status as OrderStatus,
+      snapshot.previousStatus as OrderStatus | null,
+      snapshot.supplierPartyId,
+      snapshot.exporterPartyId,
+      snapshot.manufacturerPartyId,
+      snapshot.incoterm,
+      snapshot.paymentTerms,
+      snapshot.originCountry,
+      snapshot.currencyCode,
+      snapshot.expectedReadyDate,
+      snapshot.responsibleUserId,
+      snapshot.subtotalOriginal ? new Decimal(snapshot.subtotalOriginal) : null,
+      snapshot.fxRate ? new Decimal(snapshot.fxRate) : null,
+      snapshot.fxRateDate ? new Date(snapshot.fxRateDate) : null,
+      snapshot.fxSource,
+      snapshot.subtotalFunctional ? new Decimal(snapshot.subtotalFunctional) : null,
+      snapshot.idempotencyKey,
+      snapshot.idempotencyPayloadHash ?? null,
+      snapshot.version,
+      snapshot.createdBy,
+      snapshot.cancelledAt ? new Date(snapshot.cancelledAt) : null,
+      snapshot.cancelledBy,
+      snapshot.cancelReason,
+      snapshot.suspendedAt ? new Date(snapshot.suspendedAt) : null,
+      snapshot.suspendedBy,
+      snapshot.suspendReason,
+      snapshot.resumedAt ? new Date(snapshot.resumedAt) : null,
+      new Date(snapshot.createdAt),
+      new Date(snapshot.updatedAt),
+      snapshot.lines.map((line) => OrderLine.rehydrate(line)),
+    );
   }
 }

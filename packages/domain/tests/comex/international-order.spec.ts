@@ -3,11 +3,14 @@ import {
   InternationalOrder,
   OrderValidationError,
   InvalidOrderStateError,
+  OrderConcurrencyError,
   OperationType,
   OrderStatus,
 } from "../../src";
 
 const baseCmd = () => ({
+  organizationId: "org_001",
+  code: "PI-000001",
   operationType: OperationType.IMPORTACAO_DEFINITIVA,
   supplierPartyId: "11111111-1111-1111-1111-111111111111",
   createdBy: "user-creator",
@@ -29,7 +32,7 @@ function makeOrder() {
 
 function makeFullOrder() {
   const o = InternationalOrder.create(fullCmd());
-  o.addLine({ productId: "p1", sku: "SKU-001", quantity: 100, unitPrice: 12.5 });
+  o.addLine({ productId: "p1", sku: "SKU-001", quantity: "100", unitPrice: "12.5", expectedVersion: 0 });
   return o;
 }
 
@@ -38,6 +41,7 @@ describe("InternationalOrder aggregate", () => {
     const o = makeOrder();
     expect(o.status).toBe(OrderStatus.DRAFT);
     expect(o.version).toBe(0);
+    expect(o.code).toBe("PI-000001");
     expect(o.pullEvents().map((e) => e.eventType)).toContain("international-order.created.v1");
   });
 
@@ -49,15 +53,22 @@ describe("InternationalOrder aggregate", () => {
 
   it("addLine computes line total with decimal precision (no float)", () => {
     const o = makeOrder();
-    o.addLine({ productId: "p1", sku: "SKU-001", quantity: 100.5, unitPrice: 12.5555 });
+    o.addLine({ productId: "p1", sku: "SKU-001", quantity: "100.5", unitPrice: "12.5555", expectedVersion: 0 });
     const line = o.lines[0];
     expect(line.lineTotalOriginal.toString()).toBe("1261.83");
     expect(o.snapshot().subtotalOriginal).toBe("1261.83");
   });
 
+  it("rejects binary number quantity inputs", () => {
+    const o = makeOrder();
+    expect(() =>
+      o.addLine({ productId: "p1", sku: "SKU-001", quantity: 10 as never, unitPrice: "5", expectedVersion: 0 }),
+    ).toThrow(OrderValidationError);
+  });
+
   it("submit blocks when approval-required fields are missing (P0-START-45)", () => {
     const o = makeOrder();
-    o.addLine({ productId: "p1", sku: "SKU-001", quantity: 10, unitPrice: 5 });
+    o.addLine({ productId: "p1", sku: "SKU-001", quantity: "10", unitPrice: "5", expectedVersion: 0 });
     expect(() => o.submit(1)).toThrow(OrderValidationError);
   });
 
@@ -78,7 +89,7 @@ describe("InternationalOrder aggregate", () => {
     expect(o.status).toBe(OrderStatus.PROFORMA_CONFIRMED);
     o.startProduction(5);
     expect(o.status).toBe(OrderStatus.IN_PRODUCTION);
-    o.productionProgress({ lines: [{ lineNumber: 1, quantityProduced: 100 }], expectedVersion: 6 });
+    o.productionProgress({ lines: [{ lineNumber: 1, quantityProduced: "100" }], expectedVersion: 6 });
     o.readyToShip(7);
     expect(o.status).toBe(OrderStatus.READY_TO_SHIP);
   });
@@ -100,15 +111,23 @@ describe("InternationalOrder aggregate", () => {
     const o = makeFullOrder();
     o.submit(1); o.approve("user-approver", 2); o.send(3); o.confirmProforma(4); o.startProduction(5);
     expect(() =>
-      o.productionProgress({ lines: [{ lineNumber: 1, quantityProduced: 101 }], expectedVersion: 6 }),
+      o.productionProgress({ lines: [{ lineNumber: 1, quantityProduced: "101" }], expectedVersion: 6 }),
     ).toThrow(OrderValidationError);
   });
 
   it("readyToShip blocks when production incomplete", () => {
     const o = makeFullOrder();
     o.submit(1); o.approve("user-approver", 2); o.send(3); o.confirmProforma(4); o.startProduction(5);
-    o.productionProgress({ lines: [{ lineNumber: 1, quantityProduced: 50 }], expectedVersion: 6 });
+    o.productionProgress({ lines: [{ lineNumber: 1, quantityProduced: "50" }], expectedVersion: 6 });
     expect(() => o.readyToShip(7)).toThrow(OrderValidationError);
+  });
+
+  it("readyToShipWithOverride allows partial production", () => {
+    const o = makeFullOrder();
+    o.submit(1); o.approve("user-approver", 2); o.send(3); o.confirmProforma(4); o.startProduction(5);
+    o.productionProgress({ lines: [{ lineNumber: 1, quantityProduced: "50" }], expectedVersion: 6 });
+    o.readyToShipWithOverride(7, "ovr-1");
+    expect(o.status).toBe(OrderStatus.READY_TO_SHIP);
   });
 
   it("invalid transition throws InvalidOrderStateError", () => {
@@ -116,23 +135,23 @@ describe("InternationalOrder aggregate", () => {
     expect(() => o.approve("someone", 0)).toThrow(InvalidOrderStateError);
   });
 
-  it("version mismatch throws OrderValidationError", () => {
+  it("version mismatch throws OrderConcurrencyError", () => {
     const o = makeFullOrder();
-    expect(() => o.submit(99)).toThrow(OrderValidationError);
+    expect(() => o.submit(99)).toThrow(OrderConcurrencyError);
   });
 
   it("suspend and resume returns to previous status", () => {
     const o = makeFullOrder();
     o.submit(1); o.approve("user-approver", 2); o.send(3);
-    o.suspend("Aguardando docs", 4);
+    o.suspend("Aguardando docs", 4, "user-ops");
     expect(o.status).toBe(OrderStatus.SUSPENDED);
     o.resume(5);
     expect(o.status).toBe(OrderStatus.ORDER_SENT);
   });
 
-  it("cancel is terminal and cancels all lines", () => {
+  it("cancel is terminal and cancels open balances", () => {
     const o = makeFullOrder();
-    o.cancel("Fornecedor cancelou", 1);
+    o.cancel("Fornecedor cancelou", 1, "user-ops");
     expect(o.status).toBe(OrderStatus.CANCELLED);
     expect(o.lines[0].quantityCancelled.toString()).toBe("100");
     expect(() => o.submit(2)).toThrow(InvalidOrderStateError);

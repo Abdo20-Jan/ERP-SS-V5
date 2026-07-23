@@ -1018,7 +1018,8 @@ model InternationalOrder {
   fxRateDate         DateTime? @map("fx_rate_date") @db.Timestamptz(6)
   fxSource           String?  @map("fx_source")
   subtotalFunctional Decimal? @map("subtotal_functional") @db.Decimal(19,2)
-  idempotencyKey     String?  @map("idempotency_key")
+  idempotencyKey         String?  @map("idempotency_key")
+  idempotencyPayloadHash String?  @map("idempotency_payload_hash")
   version            Int      @default(0)
   cancelledAt        DateTime? @map("cancelled_at") @db.Timestamptz(6)
   cancelledBy        String?  @map("cancelled_by") @db.Uuid
@@ -1042,7 +1043,8 @@ model InternationalOrder {
   transitions InternationalOrderStateTransition[]
   alerts      InternationalOrderAlert[]
 
-  @@index([organizationId, code], map: "io_org_code_idx")
+  @@unique([organizationId, code], map: "io_org_code_idx")
+  @@unique([organizationId, idempotencyKey], map: "io_org_idem_idx")
   @@index([organizationId, status], map: "io_org_status_idx")
   @@index([organizationId, supplierPartyId], map: "io_org_supplier_idx")
   @@index([organizationId, createdAt], map: "io_org_created_idx")
@@ -1093,13 +1095,14 @@ model ProformaVersion {
 
   order InternationalOrder @relation(fields: [orderId], references: [id], onDelete: Restrict)
 
-  @@unique([organizationId, supplierPartyId, proformaNumber], map: "pv_org_sup_num_idx")
+  @@unique([organizationId, supplierPartyId, proformaNumber, versionNumber], map: "pv_org_sup_num_ver_idx")
   @@unique([orderId, versionNumber], map: "pv_order_ver_idx")
   @@map("proforma_versions")
 }
 
 model InternationalOrderStateTransition {
   id                String   @id @default(uuid()) @db.Uuid
+  organizationId    String   @default("org_001") @map("organization_id")
   orderId           String   @map("order_id") @db.Uuid
   fromStatus        String   @map("from_status")
   toStatus          String   @map("to_status")
@@ -1109,16 +1112,19 @@ model InternationalOrderStateTransition {
   overrideRequestId String?  @map("override_request_id") @db.Uuid
   correlationId     String   @map("correlation_id")
   idempotencyKey    String?  @map("idempotency_key")
+  requestHash       String?  @map("request_hash")
   createdAt         DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
 
   order InternationalOrder @relation(fields: [orderId], references: [id], onDelete: Restrict)
 
   @@index([orderId, createdAt], map: "iost_order_time_idx")
+  @@unique([organizationId, idempotencyKey], map: "iost_org_idem_idx")
   @@map("international_order_state_transitions")
 }
 
 model InternationalOrderAlert {
   id               String   @id @default(uuid()) @db.Uuid
+  organizationId   String   @default("org_001") @map("organization_id")
   orderId          String   @map("order_id") @db.Uuid
   code             String
   severity         String   @default("WARN")

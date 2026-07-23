@@ -23,6 +23,7 @@ CREATE TABLE "international_orders" (
     "fx_source" TEXT,
     "subtotal_functional" DECIMAL(19,2),
     "idempotency_key" TEXT,
+    "idempotency_payload_hash" TEXT,
     "version" INTEGER NOT NULL DEFAULT 0,
     "cancelled_at" TIMESTAMPTZ(6),
     "cancelled_by" UUID,
@@ -92,6 +93,7 @@ CREATE TABLE "proforma_versions" (
 );
 
 CREATE TABLE "international_order_state_transitions" (
+    "organization_id" TEXT NOT NULL DEFAULT 'org_001',
     "id" UUID NOT NULL DEFAULT uuid_generate_v7(),
     "order_id" UUID NOT NULL,
     "from_status" TEXT NOT NULL,
@@ -102,6 +104,7 @@ CREATE TABLE "international_order_state_transitions" (
     "override_request_id" UUID,
     "correlation_id" TEXT NOT NULL,
     "idempotency_key" TEXT,
+    "request_hash" TEXT,
     "created_at" TIMESTAMPTZ(6) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT international_order_state_transitions_pkey PRIMARY KEY ("id"),
     CONSTRAINT iost_order_fk FOREIGN KEY ("order_id") REFERENCES "international_orders"("id") ON DELETE RESTRICT
@@ -110,6 +113,7 @@ CREATE TABLE "international_order_state_transitions" (
 CREATE TABLE "international_order_alerts" (
     "id" UUID NOT NULL DEFAULT uuid_generate_v7(),
     "order_id" UUID NOT NULL,
+    "organization_id" TEXT NOT NULL DEFAULT 'org_001',
     "code" TEXT NOT NULL,
     "severity" TEXT NOT NULL DEFAULT 'WARN',
     "message" TEXT NOT NULL,
@@ -159,10 +163,10 @@ CREATE INDEX io_org_supplier_idx ON international_orders("organization_id", "sup
 CREATE INDEX io_org_created_idx ON international_orders("organization_id", "created_at");
 CREATE UNIQUE INDEX iol_order_line_idx ON international_order_lines("order_id", "line_number");
 CREATE INDEX iol_product_idx ON international_order_lines("product_id");
-CREATE UNIQUE INDEX pv_org_sup_num_idx ON proforma_versions("organization_id", "supplier_party_id", "proforma_number");
+CREATE UNIQUE INDEX pv_org_sup_num_ver_idx ON proforma_versions("organization_id", "supplier_party_id", "proforma_number", "version_number");
 CREATE UNIQUE INDEX pv_order_ver_idx ON proforma_versions("order_id", "version_number");
 CREATE INDEX iost_order_time_idx ON international_order_state_transitions("order_id", "created_at");
-CREATE UNIQUE INDEX iost_idem_idx ON international_order_state_transitions("idempotency_key") WHERE "idempotency_key" IS NOT NULL;
+CREATE UNIQUE INDEX iost_org_idem_idx ON international_order_state_transitions("organization_id", "idempotency_key") WHERE "idempotency_key" IS NOT NULL;
 CREATE INDEX ioa_order_status_idx ON international_order_alerts("order_id", "status");
 CREATE INDEX ceo_status_time_idx ON comex_event_outbox("organization_id", "status", "occurred_at");
 CREATE UNIQUE INDEX ceo_idem_idx ON comex_event_outbox("idempotency_key") WHERE "idempotency_key" IS NOT NULL;

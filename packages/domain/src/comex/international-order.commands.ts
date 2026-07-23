@@ -1,8 +1,11 @@
-import type { OrderStatus, OperationType } from "./international-order.enums";
+import type { OperationType } from "./international-order.enums";
+
+export type DecimalInput = string;
 
 export interface CreateInternationalOrderCommand {
   id?: string;
-  organizationId?: string;
+  organizationId: string;
+  code: string;
   operationType: OperationType | string;
   supplierPartyId: string;
   exporterPartyId?: string | null;
@@ -15,6 +18,7 @@ export interface CreateInternationalOrderCommand {
   responsibleUserId?: string | null;
   createdBy: string;
   idempotencyKey?: string;
+  idempotencyPayloadHash?: string;
 }
 
 export interface UpdateInternationalOrderCommand {
@@ -34,33 +38,26 @@ export interface AddOrderLineCommand {
   productId: string;
   sku: string;
   description?: string | null;
-  quantity: string | number;
-  unitPrice: string | number;
-  expectedVersion?: number;
+  quantity: DecimalInput;
+  unitPrice: DecimalInput;
+  expectedVersion: number;
 }
 
 export interface UpdateOrderLineCommand {
-  quantity?: string | number;
-  unitPrice?: string | number;
+  quantity?: DecimalInput;
+  unitPrice?: DecimalInput;
+  expectedVersion: number;
+  expectedLineVersion: number;
+}
+
+export interface CancelOrderLineCommand {
+  expectedVersion: number;
   expectedLineVersion: number;
 }
 
 export interface ProductionUpdateCommand {
   lineNumber: number;
-  quantityProduced: string | number;
-}
-
-export interface SubmitOrderCommand {
-  expectedVersion: number;
-}
-
-export interface ApproveOrderCommand {
-  actorUserId: string;
-  expectedVersion: number;
-}
-
-export interface SendOrderCommand {
-  expectedVersion: number;
+  quantityProduced: DecimalInput;
 }
 
 export interface ProductionProgressCommand {
@@ -71,7 +68,7 @@ export interface ProductionProgressCommand {
 export interface TransitionCommand {
   reason?: string;
   expectedVersion: number;
-  idempotencyKey?: string;
+  idempotencyKey: string;
 }
 
 export interface SuspendCommand extends TransitionCommand {}
