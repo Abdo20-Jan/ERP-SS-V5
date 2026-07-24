@@ -20,6 +20,31 @@ export interface RejectOverrideDto {
   reason: string;
 }
 
+/** HTTP body for POST /comex/override-requests. Idempotency-Key is a header. */
+export interface CreateComexOverrideRequestDto {
+  resourceId: string;
+  action: string;
+  reason: string;
+  evidenceUrl?: string | null;
+}
+
+/** HTTP body for POST /comex/override-requests/:id/approve. */
+export interface ApproveComexOverrideRequestDto {
+  expectedOverrideVersion: number;
+}
+
+/** HTTP body for POST /comex/override-requests/:id/reject. */
+export interface RejectComexOverrideRequestDto {
+  reason: string;
+  expectedOverrideVersion: number;
+}
+
+/** HTTP body for POST /comex/override-requests/:id/execute. */
+export interface ExecuteComexOverrideRequestDto {
+  expectedOverrideVersion: number;
+  expectedOrderVersion: number;
+}
+
 export interface ExecuteOverrideDto {
   /** Required when action is reconfigure_levels */
   reconfigure?: {

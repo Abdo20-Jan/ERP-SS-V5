@@ -122,7 +122,6 @@ export interface RegisterProformaDto {
 export interface ConfirmProformaDto {
   expectedVersion: number;
   expectedOrderVersion: number;
-  idempotencyKey?: string;
 }
 
 export interface ProformaVersionDto {
@@ -163,4 +162,14 @@ export interface CreateOrderAlertDto {
   code: string;
   severity: "INFO" | "WARN" | "HIGH";
   message: string;
+  expectedOrderVersion: number;
+}
+
+export interface AcknowledgeOrderAlertDto {
+  expectedVersion: number;
+}
+
+export interface ResolveOrderAlertDto {
+  expectedVersion: number;
+  reason?: string;
 }

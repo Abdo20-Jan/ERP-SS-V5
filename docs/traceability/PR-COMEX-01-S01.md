@@ -53,3 +53,16 @@ down.sql dropa as 6 tabelas + sequence em ordem reversa; tabelas novas sem dados
 - R1: política de snapshot FX pendente (bloqueia W2, não T1) — dono: produto
 - R2: outbox comex sem consumidor (dispatch → T3) — aceito no masterplan
 - R3: override reuso de inventory (dívida: promover a shared/platform)
+
+## Gate corretivo 2026-07-22 (commit d4b8461)
+- ADR-0001 aceito: fronteiras, org scope server-side, outbox transacional, decimal string, CAS.
+- DI ComexModule com 4 ports + adapters Prisma exportados.
+- Código PI-NNNNNN via sequência dentro da transação.
+- Idempotency-Key em header com hash de payload (conflict em payload divergente).
+- Evidência: domain 21/21, api 26/26, typecheck limpo.
+
+## Review independente posterior a d4b8461
+- Review encontrou P1: outbox ausente em proforma/alert/override e CAS ausente em override.
+- Correção em working tree: eventos `.v1` + enqueue transacional em proforma, alertas e lifecycle de override; updateMany com version no approve/reject.
+- Ainda pendente: migration aditiva de `override_requests.idempotency_key/request_hash`; sem isso a idempotência persistente do override não está concluída.
+- Testes pós-correção: não executados neste checkpoint.

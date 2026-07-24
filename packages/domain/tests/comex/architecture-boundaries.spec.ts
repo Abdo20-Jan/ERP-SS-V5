@@ -9,12 +9,17 @@ function read(rel: string): string {
 }
 
 describe("COMEX architecture boundaries", () => {
-  it("has accepted ADR for COMEX foundation boundaries", () => {
-    expect(existsSync(resolve(root, "docs/adr/ADR-0001-comex-order-foundation-boundaries.md"))).toBe(true);
-    expect(read("docs/adr/ADR-0001-comex-order-foundation-boundaries.md")).toContain("ACCEPTED");
+  it("has accepted ADRs for foundation and command receipts/CAS", () => {
+    for (const adr of [
+      "docs/adr/ADR-0001-comex-order-foundation-boundaries.md",
+      "docs/adr/ADR-0002-comex-command-receipts-and-cas.md",
+    ]) {
+      expect(existsSync(resolve(root, adr))).toBe(true);
+      expect(read(adr)).toContain("ACCEPTED");
+    }
   });
 
-  it("ComexModule binds all repository ports", () => {
+  it("ComexModule binds all current repository ports", () => {
     const mod = read("apps/api/src/comex/comex.module.ts");
     for (const token of [
       "INTERNATIONAL_ORDER_REPOSITORY",
@@ -26,10 +31,23 @@ describe("COMEX architecture boundaries", () => {
     }
   });
 
-  it("db package exports COMEX adapters", () => {
+  it("db package exports current COMEX adapters", () => {
     const idx = read("packages/db/src/index.ts");
     expect(idx).toContain("international-order.repository.prisma");
     expect(idx).toContain("comex-outbox.repository.prisma");
+  });
+
+  it("keeps the COMEX receipt behind a domain port without Inventory or db imports", () => {
+    const port = read(
+      "packages/domain/src/comex/comex-command-receipt.repository.ts",
+    );
+    const index = read("packages/domain/src/comex/index.ts");
+
+    expect(port).toContain("ComexCommandReceiptRepository");
+    expect(port).toContain("COMEX_COMMAND_RECEIPT_REPOSITORY");
+    expect(port).not.toMatch(/from ["']\.\.\/inventory/);
+    expect(port).not.toContain("@sunset/db");
+    expect(index).toContain("comex-command-receipt.repository");
   });
 
   it("order service does not discard events without outbox", () => {

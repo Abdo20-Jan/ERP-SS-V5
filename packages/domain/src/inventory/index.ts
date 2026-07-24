@@ -16,6 +16,7 @@ export * from "./override-request.commands";
 export * from "./override-request.events";
 export * from "./override-request.validator";
 export * from "./override-request.repository";
+export * from "./override-command-receipt.repository";
 export * from "./override-request.aggregate";
 export * from "./inventory-balance.port";
 export * from "./inventory-document.enums";

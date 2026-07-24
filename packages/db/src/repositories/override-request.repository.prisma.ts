@@ -1,10 +1,12 @@
 import { ConflictError } from "@sunset/contracts";
 import {
+  OverrideConcurrencyError,
   OverrideRequest,
+  type OverrideRequestDbClient,
   type OverrideRequestListFilters,
   type OverrideRequestListResult,
-  type OverrideRequestRepository,
   type OverrideRequestSnapshot,
+  type StrictOverrideRequestRepository,
 } from "@sunset/domain";
 import { Prisma, type PrismaClient } from "@prisma/client";
 import { prisma as defaultPrisma } from "../client";
@@ -37,76 +39,156 @@ type Row = {
   updatedAt: Date;
 };
 
-function delegate(db: DbClient) {
-  const d = (db as unknown as Record<string, unknown>)["overrideRequest"] as
-    | {
-        findUnique: (a: unknown) => Promise<Row | null>;
-        findFirst: (a: unknown) => Promise<Row | null>;
-        findMany: (a: unknown) => Promise<Row[]>;
-        count: (a: unknown) => Promise<number>;
-        create: (a: unknown) => Promise<Row>;
-        update: (a: unknown) => Promise<Row>;
-      }
-    | undefined;
-  if (!d) {
+type OverrideRequestDelegate = {
+  findUnique: (args: unknown) => Promise<Row | null>;
+  findFirst: (args: unknown) => Promise<Row | null>;
+  findMany: (args: unknown) => Promise<Row[]>;
+  count: (args: unknown) => Promise<number>;
+  create: (args: unknown) => Promise<Row>;
+  update: (args: unknown) => Promise<Row>;
+  updateMany: (args: unknown) => Promise<{ count: number }>;
+};
+
+function delegate(db: DbClient): OverrideRequestDelegate {
+  const overrideRequestDelegate = (db as unknown as Record<string, unknown>)[
+    "overrideRequest"
+  ] as OverrideRequestDelegate | undefined;
+
+  if (!overrideRequestDelegate) {
     throw new Error(
       "PrismaOverrideRequestRepository: overrideRequest delegate missing — run prisma generate",
     );
   }
-  return d;
+
+  return overrideRequestDelegate;
 }
 
-export class PrismaOverrideRequestRepository implements OverrideRequestRepository {
+function client(
+  db: OverrideRequestDbClient | undefined,
+  fallback: DbClient,
+): DbClient {
+  return (db as DbClient | undefined) ?? fallback;
+}
+
+function persistenceData(snapshot: OverrideRequestSnapshot) {
+  return {
+    organizationId: snapshot.organizationId,
+    action: snapshot.action,
+    resourceType: snapshot.resourceType,
+    resourceId: snapshot.resourceId,
+    reason: snapshot.reason,
+    evidenceUrl: snapshot.evidenceUrl,
+    requestedById: snapshot.requestedById,
+    requestedAt: new Date(snapshot.requestedAt),
+    approvedById: snapshot.approvedById,
+    approvedAt: snapshot.approvedAt ? new Date(snapshot.approvedAt) : null,
+    rejectedById: snapshot.rejectedById,
+    rejectedAt: snapshot.rejectedAt ? new Date(snapshot.rejectedAt) : null,
+    rejectionReason: snapshot.rejectionReason,
+    cancelledById: snapshot.cancelledById,
+    cancelledAt: snapshot.cancelledAt ? new Date(snapshot.cancelledAt) : null,
+    status: snapshot.status,
+    executedById: snapshot.executedById,
+    executedAt: snapshot.executedAt ? new Date(snapshot.executedAt) : null,
+    expiresAt: snapshot.expiresAt ? new Date(snapshot.expiresAt) : null,
+    version: snapshot.version,
+    updatedAt: new Date(snapshot.updatedAt),
+  };
+}
+
+function mapUniqueConflict(error: unknown): never {
+  if (
+    error instanceof Prisma.PrismaClientKnownRequestError &&
+    error.code === "P2002"
+  ) {
+    throw new ConflictError(
+      "A pending override already exists for this resource/action",
+      "OverrideRequest",
+    );
+  }
+  throw error;
+}
+
+export class PrismaOverrideRequestRepository
+  implements StrictOverrideRequestRepository
+{
   constructor(private readonly db: DbClient = defaultPrisma) {}
 
-  async save(override: OverrideRequest, db?: DbClient): Promise<void> {
-    const client = db ?? this.db;
-    const d = delegate(client);
-    const snap = override.toSnapshot();
-    const existing = await d.findUnique({ where: { id: snap.id } });
-    const data = {
-      organizationId: snap.organizationId,
-      action: snap.action,
-      resourceType: snap.resourceType,
-      resourceId: snap.resourceId,
-      reason: snap.reason,
-      evidenceUrl: snap.evidenceUrl,
-      requestedById: snap.requestedById,
-      requestedAt: new Date(snap.requestedAt),
-      approvedById: snap.approvedById,
-      approvedAt: snap.approvedAt ? new Date(snap.approvedAt) : null,
-      rejectedById: snap.rejectedById,
-      rejectedAt: snap.rejectedAt ? new Date(snap.rejectedAt) : null,
-      rejectionReason: snap.rejectionReason,
-      cancelledById: snap.cancelledById,
-      cancelledAt: snap.cancelledAt ? new Date(snap.cancelledAt) : null,
-      status: snap.status,
-      executedById: snap.executedById,
-      executedAt: snap.executedAt ? new Date(snap.executedAt) : null,
-      expiresAt: snap.expiresAt ? new Date(snap.expiresAt) : null,
-      version: snap.version,
-      updatedAt: new Date(snap.updatedAt),
-    };
+  /** Legacy Inventory save semantics are retained for compatibility. */
+  async save(
+    override: OverrideRequest,
+    db?: OverrideRequestDbClient,
+  ): Promise<void> {
+    const persistenceClient = client(db, this.db);
+    const overrideDelegate = delegate(persistenceClient);
+    const snapshot = override.toSnapshot();
+    const data = persistenceData(snapshot);
+    const existing = await overrideDelegate.findUnique({
+      where: { id: snapshot.id },
+    });
+
     try {
       if (!existing) {
-        await d.create({ data: { id: snap.id, ...data, createdAt: new Date(snap.createdAt) } });
+        await overrideDelegate.create({
+          data: {
+            id: snapshot.id,
+            ...data,
+            createdAt: new Date(snapshot.createdAt),
+          },
+        });
       } else {
-        if (existing.version !== snap.version - 1 && existing.version !== snap.version) {
-          // allow same version no-op saves after rehydrate
-        }
-        await d.update({ where: { id: snap.id }, data });
+        await overrideDelegate.update({
+          where: { id: snapshot.id },
+          data,
+        });
       }
-    } catch (err) {
-      if (
-        err instanceof Prisma.PrismaClientKnownRequestError &&
-        err.code === "P2002"
-      ) {
-        throw new ConflictError(
-          "A pending override already exists for this resource/action",
-          "OverrideRequest",
+    } catch (error) {
+      mapUniqueConflict(error);
+    }
+  }
+
+  async saveWithVersion(
+    override: OverrideRequest,
+    expectedPersistedVersion: number | null,
+    db?: OverrideRequestDbClient,
+  ): Promise<void> {
+    const overrideDelegate = delegate(client(db, this.db));
+    const snapshot = override.toSnapshot();
+    const data = persistenceData(snapshot);
+
+    try {
+      if (expectedPersistedVersion === null) {
+        await overrideDelegate.create({
+          data: {
+            id: snapshot.id,
+            ...data,
+            createdAt: new Date(snapshot.createdAt),
+          },
+        });
+        return;
+      }
+
+      const updated = await overrideDelegate.updateMany({
+        where: {
+          id: snapshot.id,
+          organizationId: snapshot.organizationId,
+          version: expectedPersistedVersion,
+        },
+        data,
+      });
+
+      if (updated.count !== 1) {
+        throw new OverrideConcurrencyError(
+          "Override request was changed by another command",
+          {
+            overrideId: snapshot.id,
+            organizationId: snapshot.organizationId,
+            expectedVersion: expectedPersistedVersion,
+          },
         );
       }
-      throw err;
+    } catch (error) {
+      mapUniqueConflict(error);
     }
   }
 
@@ -115,14 +197,32 @@ export class PrismaOverrideRequestRepository implements OverrideRequestRepositor
     return row ? this.toDomain(row) : null;
   }
 
+  async findByIdForOrganization(
+    id: string,
+    organizationId: string,
+    db?: OverrideRequestDbClient,
+  ): Promise<OverrideRequest | null> {
+    const row = await delegate(client(db, this.db)).findFirst({
+      where: { id, organizationId },
+    });
+    return row ? this.toDomain(row) : null;
+  }
+
   async findPending(
     organizationId: string,
     action: string,
     resourceType: string,
     resourceId: string,
+    db?: OverrideRequestDbClient,
   ): Promise<OverrideRequest | null> {
-    const row = await delegate(this.db).findFirst({
-      where: { organizationId, action, resourceType, resourceId, status: "PENDING" },
+    const row = await delegate(client(db, this.db)).findFirst({
+      where: {
+        organizationId,
+        action,
+        resourceType,
+        resourceId,
+        status: "PENDING",
+      },
     });
     return row ? this.toDomain(row) : null;
   }
@@ -141,17 +241,17 @@ export class PrismaOverrideRequestRepository implements OverrideRequestRepositor
     if (filters.organizationId) where.organizationId = filters.organizationId;
     const take = Math.min(Math.max(limit, 1), 100);
     const skip = (Math.max(page, 1) - 1) * take;
-    const d = delegate(this.db);
+    const overrideDelegate = delegate(this.db);
     const [total, rows] = await Promise.all([
-      d.count({ where }),
-      d.findMany({
+      overrideDelegate.count({ where }),
+      overrideDelegate.findMany({
         where,
         orderBy: { requestedAt: "desc" },
         skip,
         take,
       }),
     ]);
-    return { data: rows.map((r) => this.toDomain(r)), total };
+    return { data: rows.map((row) => this.toDomain(row)), total };
   }
 
   private toDomain(row: Row): OverrideRequest {

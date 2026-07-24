@@ -676,10 +676,37 @@ model OverrideRequest {
   createdAt        DateTime  @default(now()) @map("created_at") @db.Timestamptz
   updatedAt        DateTime  @updatedAt @map("updated_at") @db.Timestamptz
 
+  commandReceipts OverrideCommandReceipt[]
+
+  @@unique([organizationId, id], map: "ovr_org_id_uq")
   @@index([status, expiresAt])
   @@index([resourceType, resourceId])
   @@index([organizationId, requestedAt])
   @@map("override_requests")
+}
+
+model OverrideCommandReceipt {
+  id                String   @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  organizationId    String   @map("organization_id")
+  overrideRequestId String   @map("override_request_id") @db.Uuid
+  commandName       String   @map("command_name")
+  keyHash           String   @map("key_hash") @db.VarChar(64)
+  requestHash       String   @map("request_hash") @db.VarChar(64)
+  actorId           String   @map("actor_id") @db.Uuid
+  correlationId     String   @map("correlation_id")
+  outcomeType       String   @map("outcome_type")
+  resultStatus      String   @map("result_status")
+  resultVersion     Int      @map("result_version")
+  httpStatus        Int      @map("http_status")
+  errorCode         String?  @map("error_code")
+  result            Json?
+  recordedAt        DateTime @map("recorded_at") @db.Timestamptz(6)
+
+  overrideRequest OverrideRequest @relation(fields: [organizationId, overrideRequestId], references: [organizationId, id], onDelete: Restrict, onUpdate: Restrict, map: "ocrr_override_request_fk")
+
+  @@unique([organizationId, commandName, keyHash], map: "ocrr_org_command_key_uq")
+  @@index([organizationId, overrideRequestId, recordedAt(sort: Desc)], map: "ocrr_request_history_idx")
+  @@map("override_command_receipts")
 }
 
 // ============================================
@@ -1043,8 +1070,11 @@ model InternationalOrder {
   transitions InternationalOrderStateTransition[]
   alerts      InternationalOrderAlert[]
 
+  receipts ComexCommandReceipt[]
+
   @@unique([organizationId, code], map: "io_org_code_idx")
   @@unique([organizationId, idempotencyKey], map: "io_org_idem_idx")
+  @@unique([organizationId, id])
   @@index([organizationId, status], map: "io_org_status_idx")
   @@index([organizationId, supplierPartyId], map: "io_org_supplier_idx")
   @@index([organizationId, createdAt], map: "io_org_created_idx")
@@ -1091,10 +1121,13 @@ model ProformaVersion {
   confirmedBy     String?  @map("confirmed_by") @db.Uuid
   confirmedAt     DateTime? @map("confirmed_at") @db.Timestamptz(6)
   correlationId   String?  @map("correlation_id")
+  version         Int      @default(0)
   createdAt       DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
 
-  order InternationalOrder @relation(fields: [orderId], references: [id], onDelete: Restrict)
+  order    InternationalOrder @relation(fields: [orderId], references: [id], onDelete: Restrict)
+  receipts ComexCommandReceipt[]
 
+  @@unique([organizationId, id])
   @@unique([organizationId, supplierPartyId, proformaNumber, versionNumber], map: "pv_org_sup_num_ver_idx")
   @@unique([orderId, versionNumber], map: "pv_order_ver_idx")
   @@map("proforma_versions")
@@ -1115,7 +1148,7 @@ model InternationalOrderStateTransition {
   requestHash       String?  @map("request_hash")
   createdAt         DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
 
-  order InternationalOrder @relation(fields: [orderId], references: [id], onDelete: Restrict)
+  order    InternationalOrder @relation(fields: [orderId], references: [id], onDelete: Restrict)
 
   @@index([orderId, createdAt], map: "iost_order_time_idx")
   @@unique([organizationId, idempotencyKey], map: "iost_org_idem_idx")
@@ -1135,10 +1168,13 @@ model InternationalOrderAlert {
   resolvedBy       String?  @map("resolved_by") @db.Uuid
   resolvedAt       DateTime? @map("resolved_at") @db.Timestamptz(6)
   resolutionReason String?  @map("resolution_reason")
+  version          Int      @default(0)
   createdAt        DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
 
-  order InternationalOrder @relation(fields: [orderId], references: [id], onDelete: Restrict)
+  order    InternationalOrder @relation(fields: [orderId], references: [id], onDelete: Restrict)
+  receipts ComexCommandReceipt[]
 
+  @@unique([organizationId, id])
   @@index([orderId, status], map: "ioa_order_status_idx")
   @@map("international_order_alerts")
 }
@@ -1172,4 +1208,26 @@ model ComexEventOutbox {
   @@index([aggregateType, aggregateId], map: "ceo_aggr_idx")
   @@index([correlationId], map: "ceo_correlation_idx")
   @@map("comex_event_outbox")
+}
+
+model ComexCommandReceipt {
+  id                String   @id @default(uuid()) @db.Uuid
+  organizationId    String   @map("organization_id")
+  orderId           String   @map("order_id") @db.Uuid
+  commandName       String   @map("command_name")
+  keyHash           String   @map("key_hash") @db.VarChar(64)
+  requestHash       String   @map("request_hash") @db.VarChar(64)
+  actorId           String   @map("actor_id") @db.Uuid
+  correlationId     String   @map("correlation_id")
+  alertId           String?  @map("alert_id") @db.Uuid
+  proformaVersionId String?  @map("proforma_version_id") @db.Uuid
+  recordedAt        DateTime @map("recorded_at") @db.Timestamptz(6)
+
+  order    InternationalOrder       @relation(fields: [organizationId, orderId], references: [organizationId, id], onDelete: Restrict, onUpdate: Restrict)
+  alert    InternationalOrderAlert? @relation(fields: [organizationId, alertId], references: [organizationId, id], onDelete: Restrict, onUpdate: Restrict)
+  proforma ProformaVersion?        @relation(fields: [organizationId, proformaVersionId], references: [organizationId, id], onDelete: Restrict, onUpdate: Restrict)
+
+  @@unique([organizationId, commandName, keyHash])
+  @@index([organizationId, orderId, recordedAt(sort: Desc)])
+  @@map("comex_command_receipts")
 }

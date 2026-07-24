@@ -39,3 +39,14 @@ Mesma estratégia de S01 (down.sql + git).
 
 ## Riscos residuais
 - R4: embarque parcial a partir de IN_PRODUCTION é responsabilidade de COMEX-02 (documentado, não implementado aqui)
+
+## Gate corretivo 2026-07-22 (commit d4b8461)
+- expectedVersion/expectedLineVersion aplicados no agregado e CAS no repository (updateMany version).
+- Transições com idempotencyKey + requestHash na timeline (replay seguro).
+- Outbox comex_event_outbox escrita na mesma transação do agregado.
+- Evidência: domain 21/21, api 26/26, typecheck limpo.
+
+## Review independente posterior a d4b8461
+- P1 identificado e parcialmente corrigido: CAS de override agora usa status + version no `updateMany` transacional.
+- P1 ainda aberto: idempotência persistente requer migration aditiva de `override_requests`.
+- Testes concorrentes PostgreSQL e replay de override ainda faltam.

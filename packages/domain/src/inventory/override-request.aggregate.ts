@@ -24,6 +24,7 @@ import {
 } from "./override-request.events";
 import {
   OverrideAction,
+  OverrideRequestContext,
   OverrideResourceType,
   OverrideStatus,
   OVERRIDE_TTL_HOURS,
@@ -169,9 +170,19 @@ export class OverrideRequest {
   }
 
   static request(cmd: RequestOverrideCommand): OverrideRequest {
+    return OverrideRequest.requestForContext(
+      cmd,
+      OverrideRequestContext.INVENTORY,
+    );
+  }
+
+  static requestForContext(
+    cmd: RequestOverrideCommand,
+    context: OverrideRequestContext,
+  ): OverrideRequest {
     const action = validateOverrideAction(String(cmd.action));
     const resourceType = validateOverrideResourceType(String(cmd.resourceType));
-    validateActionResourcePair(action, resourceType);
+    validateActionResourcePair(action, resourceType, context);
     const resourceId = validateResourceId(cmd.resourceId);
     const reason = validateOverrideReason(cmd.reason);
     const requestedById = validateActorId(cmd.requestedById, "requestedById");

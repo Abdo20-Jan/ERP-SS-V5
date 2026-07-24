@@ -43,3 +43,15 @@ down.sql + git revert; override_requests é tabela kernel compartilhada (sem dro
 ## Riscos residuais
 - R2: outbox sem consumidor (dispatch → T3)
 - R5: matriz completa de documentos (invoice/packing/BL) → COMEX-02/04; aqui só proforma (P0-START-46 escopo pedido)
+
+## Gate corretivo 2026-07-22 (commit d4b8461)
+- Confirmar proforma transiciona o pedido para PROFORMA_CONFIRMED na mesma tx (audit + timeline + outbox).
+- Alertas com create/acknowledge/resolve auditados; override parcial (ready_to_ship_partial) executa readyToShipWithOverride com SoD.
+- Publisher externo segue PENDING até adapter real aprovado (nenhum noop marcado como PUBLISHED).
+- Evidência: domain 21/21, api 26/26, typecheck limpo.
+
+## Review independente posterior a d4b8461
+- Outbox adicionada aos paths de proforma register, alert create/ack/resolve e override request/approve/reject/execute.
+- Eventos `.v1` adicionados ao catálogo para lifecycle de override e acknowledge de alerta.
+- P1 de idempotência do override permanece aberto até migration aditiva; gate permanece BLOCKED.
+- Testes pós-correção ainda não executados.

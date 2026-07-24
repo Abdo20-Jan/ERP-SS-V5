@@ -1,5 +1,5 @@
-import { Body, Controller, Get, Inject, Param, Post, Req, UseGuards } from "@nestjs/common";
-import type { CreateOrderAlertDto } from "@sunset/contracts";
+import { Body, Controller, Get, Headers, Inject, Param, Post, Req, UseGuards } from "@nestjs/common";
+import type { AcknowledgeOrderAlertDto, CreateOrderAlertDto, ResolveOrderAlertDto } from "@sunset/contracts";
 import { JwtAuthGuard } from "../auth/jwt-auth.guard";
 import { PermissionsGuard } from "../auth/permissions.guard";
 import { RequirePermission } from "../auth/require-permission.decorator";
@@ -18,17 +18,17 @@ export class OrderAlertController {
   }
 
   @Post() @RequirePermission("comex:alert:resolve")
-  async create(@Param("orderId") oid: string, @Body() dto: CreateOrderAlertDto, @Req() req: ReqUser) {
-    return this.svc.create(oid, dto, req.user);
+  async create(@Param("orderId") oid: string, @Body() dto: CreateOrderAlertDto, @Req() req: ReqUser, @Headers("idempotency-key") key: string | undefined) {
+    return this.svc.create(oid, dto, req.user, key?.trim() || undefined);
   }
 
   @Post(":id/acknowledge") @RequirePermission("comex:alert:resolve")
-  async acknowledge(@Param("id") id: string, @Req() req: ReqUser) {
-    return this.svc.acknowledge(id, req.user);
+  async acknowledge(@Param("orderId") oid: string, @Param("id") id: string, @Body() dto: AcknowledgeOrderAlertDto, @Req() req: ReqUser, @Headers("idempotency-key") key: string | undefined) {
+    return this.svc.acknowledge(oid, id, req.user, key?.trim() || undefined);
   }
 
   @Post(":id/resolve") @RequirePermission("comex:alert:resolve")
-  async resolve(@Param("id") id: string, @Req() req: ReqUser, @Body("reason") reason?: string) {
-    return this.svc.resolve(id, reason, req.user);
+  async resolve(@Param("orderId") oid: string, @Param("id") id: string, @Body() dto: ResolveOrderAlertDto, @Req() req: ReqUser, @Headers("idempotency-key") key: string | undefined) {
+    return this.svc.resolve(oid, id, dto.reason, req.user, key?.trim() || undefined);
   }
 }

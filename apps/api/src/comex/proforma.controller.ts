@@ -13,8 +13,13 @@ export class ProformaController {
   constructor(@Inject(ProformaService) private readonly svc: ProformaService) {}
 
   @Post() @RequirePermission("comex:proforma:register")
-  async register(@Param("orderId") oid: string, @Body() dto: RegisterProformaDto, @Req() req: ReqUser) {
-    return this.svc.register(oid, dto, req.user);
+  async register(
+    @Param("orderId") oid: string,
+    @Body() dto: RegisterProformaDto,
+    @Headers("idempotency-key") key: string | undefined,
+    @Req() req: ReqUser,
+  ) {
+    return this.svc.register(oid, dto, key?.trim(), req.user);
   }
 
   @Post(":version/confirm") @RequirePermission("comex:proforma:confirm")
@@ -25,6 +30,6 @@ export class ProformaController {
     @Headers("idempotency-key") key: string | undefined,
     @Req() req: ReqUser,
   ) {
-    return this.svc.confirm(oid, Number(v), { ...dto, idempotencyKey: key?.trim() || dto.idempotencyKey }, req.user);
+    return this.svc.confirm(oid, Number(v), dto, key?.trim(), req.user);
   }
 }

@@ -1,4 +1,7 @@
-import type { OverrideAction, OverrideResourceType } from "./override-request.enums";
+import type {
+  OverrideAction,
+  OverrideResourceType,
+} from "./override-request.enums";
 
 export interface RequestOverrideCommand {
   action: OverrideAction | string;
