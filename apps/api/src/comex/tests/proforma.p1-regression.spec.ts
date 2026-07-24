@@ -106,11 +106,11 @@ describe("ProformaService P1 regressions", () => {
       totalAmount: "1250.00",
       currencyCode: "USD",
       expectedOrderVersion: 5,
-      idempotencyKey: "idem-comex-proforma-register-001",
     };
+    const idemKey = "idem-comex-proforma-register-001";
 
-    const first = await service.register(COMEX_S03_TEST_IDS.order, command, actor);
-    const replay = await service.register(COMEX_S03_TEST_IDS.order, command, actor);
+    const first = await service.register(COMEX_S03_TEST_IDS.order, command, idemKey, actor);
+    const replay = await service.register(COMEX_S03_TEST_IDS.order, command, idemKey, actor);
 
     expect(replay.id).toBe(first.id);
     expect(replay.versionNumber).toBe(first.versionNumber);
@@ -129,11 +129,8 @@ describe("ProformaService P1 regressions", () => {
       service.confirm(
         COMEX_S03_TEST_IDS.order,
         proforma.versionNumber,
-        {
-          expectedVersion: 2,
-          expectedOrderVersion: 5,
-          idempotencyKey: "idem-comex-proforma-confirm-version-001",
-        },
+        { expectedVersion: 2, expectedOrderVersion: 5 },
+        "idem-comex-proforma-confirm-version-001",
         actor,
       ),
     ).rejects.toBeInstanceOf(ConflictError);
@@ -157,11 +154,8 @@ describe("ProformaService P1 regressions", () => {
     const result = await service.confirm(
       COMEX_S03_TEST_IDS.order,
       confirmed.versionNumber,
-      {
-        expectedVersion: 4,
-        expectedOrderVersion: 5,
-        idempotencyKey: "idem-comex-proforma-confirm-replay-001",
-      },
+      { expectedVersion: 4, expectedOrderVersion: 5 },
+      "idem-comex-proforma-confirm-replay-001",
       actor,
     );
 
