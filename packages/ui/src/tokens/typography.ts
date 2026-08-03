@@ -1,37 +1,38 @@
 /**
- * Design tokens - Typography (dense)
- * Tipografia compacta para ERP denso
+ * Design tokens - Typography (dense, operational)
+ * IBM Plex Sans for heavy-data ERP readability.
  */
 
 export const typography = {
-  // Font families
   fontFamily: {
     sans: [
-      "Inter",
-      "system-ui",
-      "-apple-system",
-      "BlinkMacSystemFont",
+      "IBM Plex Sans",
       "Segoe UI",
-      "Roboto",
+      "Helvetica Neue",
+      "Arial",
       "sans-serif",
     ],
-    mono: ["JetBrains Mono", "Fira Code", "Consolas", "Monaco", "monospace"],
+    mono: [
+      "IBM Plex Mono",
+      "JetBrains Mono",
+      "Consolas",
+      "Monaco",
+      "monospace",
+    ],
   },
 
-  // Font sizes (dense)
   fontSize: {
-    xs: ["0.75rem", { lineHeight: "1rem" }], // 12px
-    sm: ["0.875rem", { lineHeight: "1.25rem" }], // 14px
-    base: ["1rem", { lineHeight: "1.5rem" }], // 16px
-    lg: ["1.125rem", { lineHeight: "1.75rem" }], // 18px
-    xl: ["1.25rem", { lineHeight: "1.75rem" }], // 20px
-    "2xl": ["1.5rem", { lineHeight: "2rem" }], // 24px
-    "3xl": ["1.875rem", { lineHeight: "2.25rem" }], // 30px
-    "4xl": ["2.25rem", { lineHeight: "2.5rem" }], // 36px
-    "5xl": ["3rem", { lineHeight: "1" }], // 48px
+    xs: ["0.6875rem", { lineHeight: "1rem" }], // 11px
+    sm: ["0.8125rem", { lineHeight: "1.125rem" }], // 13px
+    base: ["0.875rem", { lineHeight: "1.25rem" }], // 14px
+    lg: ["1rem", { lineHeight: "1.375rem" }], // 16px
+    xl: ["1.125rem", { lineHeight: "1.5rem" }], // 18px
+    "2xl": ["1.25rem", { lineHeight: "1.625rem" }], // 20px
+    "3xl": ["1.5rem", { lineHeight: "1.875rem" }], // 24px
+    "4xl": ["1.875rem", { lineHeight: "2.25rem" }], // 30px
+    "5xl": ["2.25rem", { lineHeight: "1" }], // 36px
   },
 
-  // Font weights
   fontWeight: {
     thin: "100",
     extralight: "200",
@@ -44,7 +45,6 @@ export const typography = {
     black: "900",
   },
 
-  // Letter spacing
   letterSpacing: {
     tighter: "-0.05em",
     tight: "-0.025em",

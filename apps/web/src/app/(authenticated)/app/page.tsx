@@ -1,97 +1,220 @@
 "use client";
 
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-  ConflictState,
   EmptyState,
   ErrorState,
+  ListReport,
   LoadingState,
   NoPermissionState,
   OfflineState,
-  SuccessState,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  useOnlineStatus,
+  WorkflowBadge,
 } from "@sunset/ui";
+import Link from "next/link";
+import { useCallback, useMemo, useState } from "react";
+import { useListQuery } from "../../../components/use-list-query";
+import { modulesApi } from "../../../lib/api/modules";
+import { statusTone } from "../../../lib/status-tone";
 import { useAuth } from "../../../providers/auth-provider";
+
+type WorkItem = {
+  id: string;
+  module: string;
+  href: string;
+  reference: string;
+  summary: string;
+  status: string;
+  nextAction: string;
+  owner: string;
+};
 
 export default function AppPage() {
   const { user } = useAuth();
+  const online = useOnlineStatus(true);
+  const [search, setSearch] = useState("");
+
+  const loader = useCallback(async () => {
+    const [comex, recon, payables, invoices, leads, connectors] =
+      await Promise.all([
+        modulesApi.comexOrders(),
+        modulesApi.reconciliationLines(),
+        modulesApi.payables(),
+        modulesApi.salesInvoices(),
+        modulesApi.leads(),
+        modulesApi.connectors(),
+      ]);
+
+    const items: WorkItem[] = [
+      ...comex.data
+        .filter((o) => !["CLOSED", "CANCELLED"].includes(o.status))
+        .map((o) => ({
+          id: o.id,
+          module: "COMEX",
+          href: "/comex/orders",
+          reference: o.code,
+          summary: o.supplierName,
+          status: o.status,
+          nextAction: o.nextAction,
+          owner: o.owner,
+        })),
+      ...recon.data
+        .filter((l) => l.matchStatus !== "MATCHED")
+        .map((l) => ({
+          id: l.id,
+          module: "Conciliação",
+          href: "/treasury/reconciliation",
+          reference: l.reference,
+          summary: l.description,
+          status: l.matchStatus,
+          nextAction: l.nextAction,
+          owner: l.accountCode,
+        })),
+      ...payables.data
+        .filter((o) => o.status !== "SETTLED")
+        .map((o) => ({
+          id: o.id,
+          module: "Finanças",
+          href: "/finance/payables",
+          reference: o.documentNumber,
+          summary: o.counterparty,
+          status: o.status,
+          nextAction: o.nextAction,
+          owner: o.sourceModule,
+        })),
+      ...invoices.data
+        .filter((i) => i.status !== "RELEASED")
+        .map((i) => ({
+          id: i.id,
+          module: "Faturamento",
+          href: "/sales/invoices",
+          reference: i.number,
+          summary: i.customerName,
+          status: i.status,
+          nextAction: i.nextAction,
+          owner: i.owner,
+        })),
+      ...leads.data.map((l) => ({
+        id: l.id,
+        module: "CRM",
+        href: "/crm/leads",
+        reference: l.company,
+        summary: l.name,
+        status: l.status,
+        nextAction: l.nextAction,
+        owner: l.owner,
+      })),
+      ...connectors.data
+        .filter((c) => c.status !== "ACTIVE" || c.pendingJobs > 0)
+        .map((c) => ({
+          id: c.id,
+          module: "Integrações",
+          href: "/integrations/connectors",
+          reference: c.code,
+          summary: c.name,
+          status: c.status,
+          nextAction: c.nextAction,
+          owner: c.category,
+        })),
+    ];
+
+    return { data: items, total: items.length };
+  }, []);
+
+  const { rows, total, loading, error, forbidden, reload } =
+    useListQuery<WorkItem>(loader);
+
+  const filtered = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    if (!q) return rows;
+    return rows.filter((r) =>
+      [r.module, r.reference, r.summary, r.nextAction, r.owner, r.status]
+        .join(" ")
+        .toLowerCase()
+        .includes(q),
+    );
+  }, [rows, search]);
+
+  if (forbidden) {
+    return (
+      <div className="p-4">
+        <NoPermissionState message="Sem permissão para montar a worklist operacional." />
+      </div>
+    );
+  }
 
   return (
-    <div className="p-6 space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-gray-900">
-          Bem-vindo, {user?.name}
-        </h1>
-        <p className="text-sm text-gray-500">
-          Sunset ERP — Fundação executável (MS-00)
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">LoadingState</CardTitle>
-            <CardDescription>Carregando dados</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <LoadingState />
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">EmptyState</CardTitle>
-            <CardDescription>Sem registros</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <EmptyState actionLabel="Criar primeiro" onAction={() => { /* no-op */ }} />
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">ErrorState</CardTitle>
-            <CardDescription>Erro recuperável</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ErrorState correlationId="abc-123" onAction={() => { /* no-op */ }} />
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">NoPermissionState</CardTitle>
-            <CardDescription>Sem permissão</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <NoPermissionState onAction={() => { /* no-op */ }} />
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">ConflictState</CardTitle>
-            <CardDescription>Conflito de edição</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ConflictState onReload={() => { /* no-op */ }} />
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">Offline + Success</CardTitle>
-            <CardDescription>Estados de rede e sucesso</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            <OfflineState />
-            <SuccessState />
-          </CardContent>
-        </Card>
-      </div>
-    </div>
+    <ListReport
+      title={`Worklist · ${user?.name ?? "Operador"}`}
+      subtitle="Exceções e próximas ações — sem dashboard decorativo"
+      filters={
+        <input
+          className="ns-filter-input w-64"
+          placeholder="Filtrar fila"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          aria-label="Filtrar worklist"
+        />
+      }
+      footer={`${filtered.length} de ${total} itens prioritários`}
+      data-testid="home-worklist"
+    >
+      {!online ? <OfflineState /> : null}
+      {loading ? (
+        <div className="p-4">
+          <LoadingState message="Carregando fila operacional..." />
+        </div>
+      ) : error ? (
+        <div className="p-4">
+          <ErrorState
+            correlationId={error.error.correlationId}
+            onAction={reload}
+          />
+        </div>
+      ) : filtered.length === 0 ? (
+        <div className="p-4">
+          <EmptyState title="Nenhuma pendência na worklist." />
+        </div>
+      ) : (
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Módulo</TableHead>
+              <TableHead>Referência</TableHead>
+              <TableHead>Resumo</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Próxima ação</TableHead>
+              <TableHead>Responsável</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {filtered.map((row) => (
+              <TableRow key={row.id}>
+                <TableCell>
+                  <Link href={row.href} className="ns-link">
+                    {row.module}
+                  </Link>
+                </TableCell>
+                <TableCell className="font-medium">{row.reference}</TableCell>
+                <TableCell>{row.summary}</TableCell>
+                <TableCell>
+                  <WorkflowBadge
+                    label={row.status}
+                    tone={statusTone(row.status)}
+                  />
+                </TableCell>
+                <TableCell>{row.nextAction}</TableCell>
+                <TableCell>{row.owner}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      )}
+    </ListReport>
   );
 }

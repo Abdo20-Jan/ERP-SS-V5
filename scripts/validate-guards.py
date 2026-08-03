@@ -29,6 +29,13 @@ SCOPE = [
     "inventory/inventory-export.controller.ts",
     "inventory/inventory-posting.controller.ts",
     "inventory/inventory-event.controller.ts",
+    "comex/comex.controller.ts",
+    "treasury/treasury.controller.ts",
+    "finance/finance.controller.ts",
+    "sales/sales.controller.ts",
+    "crm/crm.controller.ts",
+    "hr/hr.controller.ts",
+    "integrations/integrations.controller.ts",
 ]
 
 HTTP = ("Get", "Post", "Patch", "Put", "Delete")
@@ -67,6 +74,19 @@ def family(rel: str) -> tuple[str, str] | None:
         return None
     if rel.startswith("inventory/"):
         return ("inventory:read", "inventory:write")
+    # Read-only workspace foundations (PR-PLATFORM-UX-01) — presence-only check.
+    if rel.startswith(
+        (
+            "comex/",
+            "treasury/",
+            "finance/",
+            "sales/",
+            "crm/",
+            "hr/",
+            "integrations/",
+        )
+    ):
+        return None
     return None
 
 

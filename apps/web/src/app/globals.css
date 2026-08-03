@@ -4,8 +4,12 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 210 16% 95%;
+    --foreground: 215 28% 17%;
+    --nsuite-orange: #ff6700;
+    --nsuite-sidebar: #3d4a5c;
+    --nsuite-content: #eef1f4;
+    --nsuite-link: #255599;
   }
 
   * {
@@ -13,7 +17,25 @@
   }
 
   body {
-    @apply bg-white text-gray-950 antialiased;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    @apply bg-nsuite-contentBg text-gray-900 antialiased;
+    font-feature-settings: "tnum" 1, "lnum" 1;
+  }
+
+  a {
+    color: var(--nsuite-link);
+  }
+}
+
+@layer components {
+  .ns-link {
+    @apply font-medium text-nsuite-link hover:text-nsuite-linkHover hover:underline;
+  }
+
+  .ns-filter-input {
+    @apply h-8 rounded-sm border border-nsuite-tableBorder bg-white px-2 text-[13px] text-gray-800 placeholder:text-gray-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500;
+  }
+
+  .ns-filter-select {
+    @apply h-8 rounded-sm border border-nsuite-tableBorder bg-white px-2 text-[13px] text-gray-800 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500;
   }
 }

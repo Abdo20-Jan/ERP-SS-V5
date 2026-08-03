@@ -92,10 +92,13 @@ async function main() {
     { action: "inventory:export:read", description: "Consultar jobs de exportacao de estoque" },
     { action: "inventory:export:download", description: "Download de arquivo exportado de estoque" },
     { action: "inventory:export:cancel", description: "Cancelar job de exportacao de estoque" },
-
-
-
-
+    { action: "comex:read", description: "Consultar pedidos e operações COMEX" },
+    { action: "treasury:read", description: "Consultar contas bancárias e conciliação" },
+    { action: "finance:read", description: "Consultar worklist de contas a pagar/receber" },
+    { action: "sales:read", description: "Consultar faturamento e liberação comercial" },
+    { action: "crm:read", description: "Consultar leads e oportunidades" },
+    { action: "hr:read", description: "Consultar colaboradores e provisionamento" },
+    { action: "integrations:read", description: "Consultar conectores e filas de integração" },
   ];
 
   for (const perm of permissions) {

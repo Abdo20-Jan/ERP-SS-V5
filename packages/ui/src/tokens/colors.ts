@@ -1,22 +1,43 @@
 /**
- * Design tokens - Colors (PT-BR)
- * Paleta de cores do Sunset ERP
+ * Design tokens - Colors (NetSuite-inspired heavy-data palette)
+ * Visual logic: orange chrome, slate sidebar, dense gray content, blue operational links.
  */
 
 export const colors = {
-  // Primary - Azul Sunset
+  // Primary brand — NetSuite orange
   primary: {
-    50: "#eff6ff",
-    100: "#dbeafe",
-    200: "#bfdbfe",
-    300: "#93c5fd",
-    400: "#60a5fa",
-    500: "#3b82f6",
-    600: "#2563eb",
-    700: "#1d4ed8",
-    800: "#1e40af",
-    900: "#1e3a8a",
-    950: "#172554",
+    50: "#fff4eb",
+    100: "#ffe4cc",
+    200: "#ffc999",
+    300: "#ffa866",
+    400: "#ff8833",
+    500: "#ff6700",
+    600: "#e85d00",
+    700: "#c44f00",
+    800: "#9a3e00",
+    900: "#6b2b00",
+    950: "#3d1800",
+  },
+
+  // NetSuite shell tokens
+  nsuite: {
+    orange: "#ff6700",
+    orangeDark: "#e85d00",
+    orangeHover: "#ff8533",
+    headerText: "#ffffff",
+    sidebar: "#3d4a5c",
+    sidebarHover: "#4a586c",
+    sidebarActive: "#2f3a4a",
+    sidebarBorder: "#2a3442",
+    sidebarText: "#e8ecf0",
+    sidebarMuted: "#a8b3c0",
+    contentBg: "#eef1f4",
+    link: "#255599",
+    linkHover: "#1a3f73",
+    tableHeader: "#f5f6f8",
+    tableBorder: "#c9d1d9",
+    rowHover: "#f0f4f8",
+    rowSelected: "#e5eef7",
   },
 
   // Semantic - Success

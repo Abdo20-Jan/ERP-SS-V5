@@ -19,10 +19,10 @@ export interface TopNavProps extends React.HTMLAttributes<HTMLElement> {
   };
   onLogout?: () => void;
   environment?: string;
-  /** Optional module links (e.g. Depósitos). Rendered between logo and user. */
+  /** Optional module links (legacy horizontal nav). Prefer SideNav. */
   navItems?: TopNavItem[];
-  /** Optional custom link renderer (Next.js Link). Defaults to <a>. */
   renderNavLink?: (item: TopNavItem) => React.ReactNode;
+  searchSlot?: React.ReactNode;
 }
 
 const TopNav = React.forwardRef<HTMLElement, TopNavProps>(
@@ -35,6 +35,7 @@ const TopNav = React.forwardRef<HTMLElement, TopNavProps>(
       environment = "dev",
       navItems,
       renderNavLink,
+      searchSlot,
       children,
       ...props
     },
@@ -44,28 +45,41 @@ const TopNav = React.forwardRef<HTMLElement, TopNavProps>(
       <nav
         ref={ref}
         className={cn(
-          "flex h-14 items-center justify-between border-b border-gray-200 bg-white px-4",
+          "flex h-11 items-center justify-between bg-nsuite-orange px-3 text-nsuite-headerText shadow-sm",
           className,
         )}
+        data-testid="top-nav"
         {...props}
       >
-        <div className="flex items-center gap-4">
+        <div className="flex min-w-0 items-center gap-3">
           {logo || (
             <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded bg-primary-600">
-                <span className="text-sm font-bold text-white">S</span>
+              <div className="flex h-7 w-7 items-center justify-center rounded-sm bg-white/15 ring-1 ring-white/30">
+                <span className="text-xs font-bold text-white">S</span>
               </div>
-              <span className="font-semibold text-gray-900">Sunset ERP</span>
+              <div className="leading-tight">
+                <span className="block text-sm font-semibold tracking-tight text-white">
+                  Sunset ERP
+                </span>
+                <span className="block text-[10px] font-medium uppercase tracking-wider text-white/80">
+                  Operacional
+                </span>
+              </div>
             </div>
           )}
           {environment && environment !== "production" && (
-            <span className="rounded bg-warning-100 px-2 py-1 text-xs font-medium text-warning-800">
-              {environment.toUpperCase()}
+            <span className="rounded-sm bg-black/20 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">
+              {environment}
             </span>
           )}
+          {searchSlot ? (
+            <div className="ml-2 hidden min-w-[240px] max-w-md flex-1 md:block">
+              {searchSlot}
+            </div>
+          ) : null}
           {navItems && navItems.length > 0 ? (
             <div
-              className="ml-2 hidden items-center gap-1 md:flex"
+              className="ml-2 hidden items-center gap-1 lg:flex"
               data-testid="top-nav-items"
             >
               {navItems.map((item) =>
@@ -78,10 +92,10 @@ const TopNav = React.forwardRef<HTMLElement, TopNavProps>(
                     key={item.href}
                     href={item.href}
                     className={cn(
-                      "rounded-md px-2 py-1 text-sm font-medium transition-colors",
+                      "rounded-sm px-2 py-1 text-xs font-medium transition-colors",
                       item.active
-                        ? "bg-primary-50 text-primary-700"
-                        : "text-gray-600 hover:bg-gray-50 hover:text-gray-900",
+                        ? "bg-white/20 text-white"
+                        : "text-white/85 hover:bg-white/10 hover:text-white",
                     )}
                     aria-current={item.active ? "page" : undefined}
                   >
@@ -93,17 +107,22 @@ const TopNav = React.forwardRef<HTMLElement, TopNavProps>(
           ) : null}
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           {children}
 
           {user && (
-            <div className="flex items-center gap-3">
-              <div className="text-right">
-                <p className="text-sm font-medium text-gray-900">{user.name}</p>
-                <p className="text-xs text-gray-500">{user.email}</p>
+            <div className="flex items-center gap-2">
+              <div className="hidden text-right sm:block">
+                <p className="text-xs font-medium text-white">{user.name}</p>
+                <p className="text-[10px] text-white/75">{user.email}</p>
               </div>
               {onLogout && (
-                <Button variant="ghost" size="sm" onClick={onLogout}>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={onLogout}
+                  className="h-7 text-xs text-white hover:bg-white/15 hover:text-white"
+                >
                   Sair
                 </Button>
               )}

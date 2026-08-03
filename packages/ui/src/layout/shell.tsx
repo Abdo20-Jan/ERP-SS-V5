@@ -13,7 +13,7 @@ const Shell = React.forwardRef<HTMLDivElement, ShellProps>(
     return (
       <div
         ref={ref}
-        className={cn("flex min-h-screen flex-col", className)}
+        className={cn("flex min-h-screen flex-col bg-nsuite-contentBg", className)}
         {...props}
       >
         {children}

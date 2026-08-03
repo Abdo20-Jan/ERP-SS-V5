@@ -46,17 +46,18 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
-      <Card className="w-full max-w-md">
+    <div className="flex min-h-screen items-center justify-center bg-nsuite-contentBg px-4">
+      <Card className="w-full max-w-md rounded-sm border-nsuite-tableBorder shadow-sm">
+        <div className="h-1.5 bg-nsuite-orange" />
         <CardHeader className="space-y-1">
           <div className="flex items-center gap-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded bg-primary-600">
+            <div className="flex h-10 w-10 items-center justify-center rounded-sm bg-nsuite-orange">
               <span className="text-lg font-bold text-white">S</span>
             </div>
             <div>
-              <CardTitle className="text-2xl">Sunset ERP</CardTitle>
+              <CardTitle className="text-xl">Sunset ERP</CardTitle>
               <CardDescription>
-                Entre com suas credenciais para acessar o sistema
+                Acesso operacional — ambiente autenticado
               </CardDescription>
             </div>
           </div>

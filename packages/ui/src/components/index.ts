@@ -7,3 +7,5 @@ export * from "./skeleton-rows";
 export * from "./status-badge";
 export * from "./table";
 export * from "./tabs";
+export * from "./list-report";
+export * from "./workflow-badge";

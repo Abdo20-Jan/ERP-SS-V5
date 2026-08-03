@@ -11,8 +11,15 @@ import { ParametersModule } from "./parameters/parameters.module";
 import { PartyModule } from "./party/party.module";
 import { ProductModule } from "./product/product.module";
 import { AccountingModule } from "./accounting/accounting.module";
+import { ComexModule } from "./comex/comex.module";
+import { CrmModule } from "./crm/crm.module";
+import { FinanceModule } from "./finance/finance.module";
+import { HrModule } from "./hr/hr.module";
+import { IntegrationsModule } from "./integrations/integrations.module";
 import { WarehouseModule } from "./inventory/warehouse.module";
 import { PrismaModule } from "./prisma/prisma.module";
+import { SalesModule } from "./sales/sales.module";
+import { TreasuryModule } from "./treasury/treasury.module";
 
 @Module({
   imports: [
@@ -31,6 +38,13 @@ import { PrismaModule } from "./prisma/prisma.module";
     ProductModule,
     AccountingModule,
     WarehouseModule,
+    ComexModule,
+    TreasuryModule,
+    FinanceModule,
+    SalesModule,
+    CrmModule,
+    HrModule,
+    IntegrationsModule,
   ],
   providers: [
     {
