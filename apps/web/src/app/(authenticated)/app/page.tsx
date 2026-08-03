@@ -40,18 +40,46 @@ export default function AppPage() {
   const [search, setSearch] = useState("");
 
   const loader = useCallback(async () => {
-    const [comex, recon, payables, invoices, leads, connectors] =
-      await Promise.all([
-        modulesApi.comexOrders(),
-        modulesApi.reconciliationLines(),
-        modulesApi.payables(),
-        modulesApi.salesInvoices(),
-        modulesApi.leads(),
-        modulesApi.connectors(),
-      ]);
+    const settled = await Promise.allSettled([
+      modulesApi.comexOrders(),
+      modulesApi.reconciliationLines(),
+      modulesApi.payables(),
+      modulesApi.salesInvoices(),
+      modulesApi.leads(),
+      modulesApi.connectors(),
+    ]);
+
+    const value = <T,>(index: number): T[] => {
+      const result = settled[index];
+      if (result?.status === "fulfilled") {
+        return (result.value.data ?? []) as T[];
+      }
+      return [];
+    };
+
+    const forbiddenCount = settled.filter(
+      (r) =>
+        r.status === "rejected" &&
+        ((r.reason as { status?: number })?.status === 403 ||
+          (r.reason as { error?: { code?: string } })?.error?.code ===
+            "FORBIDDEN"),
+    ).length;
+    if (forbiddenCount === settled.length) {
+      const err = settled.find((r) => r.status === "rejected") as
+        | PromiseRejectedResult
+        | undefined;
+      throw err?.reason ?? { status: 403, error: { code: "FORBIDDEN" } };
+    }
 
     const items: WorkItem[] = [
-      ...comex.data
+      ...value<{
+        id: string;
+        code: string;
+        supplierName: string;
+        status: string;
+        nextAction: string;
+        owner: string;
+      }>(0)
         .filter((o) => !["CLOSED", "CANCELLED"].includes(o.status))
         .map((o) => ({
           id: o.id,
@@ -63,7 +91,14 @@ export default function AppPage() {
           nextAction: o.nextAction,
           owner: o.owner,
         })),
-      ...recon.data
+      ...value<{
+        id: string;
+        reference: string;
+        description: string;
+        matchStatus: string;
+        nextAction: string;
+        accountCode: string;
+      }>(1)
         .filter((l) => l.matchStatus !== "MATCHED")
         .map((l) => ({
           id: l.id,
@@ -75,7 +110,14 @@ export default function AppPage() {
           nextAction: l.nextAction,
           owner: l.accountCode,
         })),
-      ...payables.data
+      ...value<{
+        id: string;
+        documentNumber: string;
+        counterparty: string;
+        status: string;
+        nextAction: string;
+        sourceModule: string;
+      }>(2)
         .filter((o) => o.status !== "SETTLED")
         .map((o) => ({
           id: o.id,
@@ -87,7 +129,14 @@ export default function AppPage() {
           nextAction: o.nextAction,
           owner: o.sourceModule,
         })),
-      ...invoices.data
+      ...value<{
+        id: string;
+        number: string;
+        customerName: string;
+        status: string;
+        nextAction: string;
+        owner: string;
+      }>(3)
         .filter((i) => i.status !== "RELEASED")
         .map((i) => ({
           id: i.id,
@@ -99,7 +148,14 @@ export default function AppPage() {
           nextAction: i.nextAction,
           owner: i.owner,
         })),
-      ...leads.data.map((l) => ({
+      ...value<{
+        id: string;
+        company: string;
+        name: string;
+        status: string;
+        nextAction: string;
+        owner: string;
+      }>(4).map((l) => ({
         id: l.id,
         module: "CRM",
         href: "/crm/leads",
@@ -109,7 +165,15 @@ export default function AppPage() {
         nextAction: l.nextAction,
         owner: l.owner,
       })),
-      ...connectors.data
+      ...value<{
+        id: string;
+        code: string;
+        name: string;
+        status: string;
+        nextAction: string;
+        category: string;
+        pendingJobs: number;
+      }>(5)
         .filter((c) => c.status !== "ACTIVE" || c.pendingJobs > 0)
         .map((c) => ({
           id: c.id,
