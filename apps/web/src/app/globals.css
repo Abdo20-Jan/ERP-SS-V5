@@ -4,16 +4,40 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 220 14% 94%;
+    --foreground: 220 13% 18%;
+    --sidebar: 213 58% 27%;
+    --content: 0 0% 100%;
+    --border: 216 12% 80%;
+    --table-header: 220 11% 91%;
+    --accent-link: 210 100% 40%;
   }
 
   * {
-    @apply border-gray-200;
+    @apply border-gray-300;
   }
 
   body {
-    @apply bg-white text-gray-950 antialiased;
+    @apply bg-gray-100 text-gray-900 antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
+    font-size: 13px;
+  }
+}
+
+@layer components {
+  .erp-input {
+    @apply h-7 rounded border border-gray-300 bg-white px-2 text-xs text-gray-900 placeholder:text-gray-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500;
+  }
+
+  .erp-select {
+    @apply erp-input pr-6;
+  }
+
+  .erp-btn-primary {
+    @apply inline-flex h-7 items-center rounded border border-primary-600 bg-primary-700 px-3 text-xs font-medium text-white hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-1;
+  }
+
+  .erp-btn-secondary {
+    @apply inline-flex h-7 items-center rounded border border-gray-300 bg-white px-3 text-xs font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-1;
   }
 }

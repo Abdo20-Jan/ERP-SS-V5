@@ -1,15 +1,16 @@
 "use client";
 
-import { LoadingState, Shell, ShellMain, TopNav } from "@sunset/ui";
+import {
+  ErpShell,
+  isItemActive,
+  LoadingState,
+  type SideNavItem,
+} from "@sunset/ui";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { type ReactNode, useEffect } from "react";
+import { type ReactNode, useEffect, useState } from "react";
+import { buildSideNavSections } from "../../config/navigation";
 import { useAuth } from "../../providers/auth-provider";
-
-const NAV_ITEMS = [
-  { href: "/app", label: "Início" },
-  { href: "/inventory/warehouses", label: "Depósitos" },
-];
 
 export default function AuthenticatedLayout({
   children,
@@ -19,6 +20,7 @@ export default function AuthenticatedLayout({
   const router = useRouter();
   const pathname = usePathname();
   const { user, isLoading, isAuthenticated, logout } = useAuth();
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
@@ -28,7 +30,7 @@ export default function AuthenticatedLayout({
 
   if (isLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center bg-gray-100">
         <LoadingState message="Verificando autenticação..." />
       </div>
     );
@@ -38,42 +40,54 @@ export default function AuthenticatedLayout({
     return null;
   }
 
-  const navItems = NAV_ITEMS.map((item) => ({
-    ...item,
-    active:
-      item.href === "/app"
-        ? pathname === "/app"
-        : pathname === item.href || pathname.startsWith(`${item.href}/`),
-  }));
+  const sections = buildSideNavSections(pathname);
+
+  const renderNavLink = (item: SideNavItem) => {
+    const active = isItemActive(item, pathname);
+    return (
+      <Link
+        key={item.href}
+        href={item.href}
+        className={
+          active
+            ? "flex items-center gap-2 bg-primary-600 px-3 py-1.5 text-xs font-medium text-white"
+            : "flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-primary-100 hover:bg-primary-600/70 hover:text-white"
+        }
+        aria-current={active ? "page" : undefined}
+      >
+        <span className="truncate">{item.label}</span>
+      </Link>
+    );
+  };
 
   return (
-    <Shell>
-      <TopNav
-        {...(user
-          ? { user: { name: user.name, email: user.email } }
-          : {})}
-        onLogout={async () => {
+    <ErpShell
+      topNav={{
+        ...(user ? { user: { name: user.name, email: user.email } } : {}),
+        onLogout: async () => {
           await logout();
           router.push("/login");
-        }}
-        environment={process.env.NODE_ENV}
-        navItems={navItems}
-        renderNavLink={(item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            className={
-              item.active
-                ? "rounded-md bg-primary-50 px-2 py-1 text-sm font-medium text-primary-700"
-                : "rounded-md px-2 py-1 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-            }
-            aria-current={item.active ? "page" : undefined}
-          >
-            {item.label}
-          </Link>
-        )}
-      />
-      <ShellMain>{children}</ShellMain>
-    </Shell>
+        },
+        environment: process.env.NODE_ENV,
+        children: (
+          <div className="hidden items-center gap-2 md:flex">
+            <input
+              type="search"
+              placeholder="Busca global (Ctrl+K)"
+              className="erp-input w-56"
+              aria-label="Busca global"
+            />
+          </div>
+        ),
+      }}
+      sideNav={{
+        sections,
+        collapsed: sidebarCollapsed,
+        onToggleCollapse: () => setSidebarCollapsed((c) => !c),
+        renderLink: renderNavLink,
+      }}
+    >
+      {children}
+    </ErpShell>
   );
 }

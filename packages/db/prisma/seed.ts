@@ -92,6 +92,20 @@ async function main() {
     { action: "inventory:export:read", description: "Consultar jobs de exportacao de estoque" },
     { action: "inventory:export:download", description: "Download de arquivo exportado de estoque" },
     { action: "inventory:export:cancel", description: "Cancelar job de exportacao de estoque" },
+    { action: "treasury:read", description: "Consultar contas bancárias e movimentos" },
+    { action: "treasury:write", description: "Criar/alterar contas e movimentos bancários" },
+    { action: "treasury:reconciliation:read", description: "Consultar sessões de conciliação bancária" },
+    { action: "treasury:reconciliation:write", description: "Executar conciliação bancária" },
+    { action: "comex:read", description: "Consultar embarques e documentos COMEX" },
+    { action: "comex:write", description: "Criar/alterar embarques e documentos COMEX" },
+    { action: "crm:read", description: "Consultar leads, oportunidades e atividades CRM" },
+    { action: "crm:write", description: "Criar/alterar registros CRM" },
+    { action: "hr:read", description: "Consultar colaboradores e departamentos" },
+    { action: "hr:write", description: "Criar/alterar colaboradores e departamentos" },
+    { action: "billing:read", description: "Consultar faturas e linhas de faturamento" },
+    { action: "billing:write", description: "Criar/alterar faturas" },
+    { action: "integration:read", description: "Consultar conectores e jobs de integração" },
+    { action: "integration:write", description: "Configurar e executar integrações" },
 
 
 
@@ -482,6 +496,136 @@ async function main() {
     }
   }
   console.log("✅ Warehouse location configs + virtuals seeded");
+
+  // ============================================
+  // Business modules seed (rebuild foundation)
+  // ============================================
+
+  const bankAccount = await prisma.bankAccount.upsert({
+    where: { organizationId_code: { organizationId: "org_001", code: "BB-001" } },
+    update: {},
+    create: {
+      code: "BB-001",
+      name: "Conta Corrente Principal",
+      bankName: "Banco do Brasil",
+      accountNumber: "12345-6",
+      currencyCode: "BRL",
+      currentBalance: 1250000.5,
+    },
+  });
+
+  await prisma.reconciliationSession.upsert({
+    where: { id: "00000000-0000-7000-8000-000000000001" },
+    update: {},
+    create: {
+      id: "00000000-0000-7000-8000-000000000001",
+      bankAccountId: bankAccount.id,
+      periodStart: new Date("2026-07-01"),
+      periodEnd: new Date("2026-07-31"),
+      status: "IN_PROGRESS",
+      statementBalance: 1250000.5,
+      ledgerBalance: 1248500.0,
+      difference: 1500.5,
+    },
+  });
+
+  const shipment = await prisma.comexShipment.upsert({
+    where: { organizationId_reference: { organizationId: "org_001", reference: "EMB-2026-0042" } },
+    update: {},
+    create: {
+      reference: "EMB-2026-0042",
+      incoterm: "CIF",
+      status: "CUSTOMS",
+      originCountry: "CN",
+      destinationCountry: "BR",
+      totalFobValue: 85000,
+      currencyCode: "USD",
+      estimatedArrival: new Date("2026-08-15"),
+    },
+  });
+
+  await prisma.comexDocument.createMany({
+    data: [
+      { shipmentId: shipment.id, documentType: "INVOICE", documentNumber: "INV-8842", status: "APPROVED" },
+      { shipmentId: shipment.id, documentType: "BL", documentNumber: "BL-2026-991", status: "PENDING" },
+    ],
+    skipDuplicates: true,
+  });
+
+  await prisma.crmLead.createMany({
+    data: [
+      { companyName: "Acme Pneus Ltda", contactName: "João Silva", source: "INBOUND", status: "QUALIFIED", score: 75, expectedValue: 45000, currencyCode: "BRL" },
+      { companyName: "Rodas & Cia", contactName: "Maria Costa", source: "OUTBOUND", status: "NEW", score: 40, expectedValue: 12000, currencyCode: "BRL" },
+    ],
+    skipDuplicates: true,
+  });
+
+  await prisma.crmOpportunity.createMany({
+    data: [
+      { title: "Contrato anual — Acme Pneus", stage: "PROPOSAL", probability: 60, amount: 180000, currencyCode: "BRL", expectedCloseDate: new Date("2026-09-30"), status: "OPEN" },
+    ],
+    skipDuplicates: true,
+  });
+
+  const dept = await prisma.hrDepartment.upsert({
+    where: { organizationId_code: { organizationId: "org_001", code: "FIN" } },
+    update: {},
+    create: { code: "FIN", name: "Financeiro" },
+  });
+
+  const position = await prisma.hrPosition.upsert({
+    where: { departmentId_code: { departmentId: dept.id, code: "ANAL-FIN" } },
+    update: {},
+    create: { departmentId: dept.id, code: "ANAL-FIN", title: "Analista Financeiro" },
+  });
+
+  await prisma.hrEmployee.upsert({
+    where: { organizationId_employeeCode: { organizationId: "org_001", employeeCode: "EMP-001" } },
+    update: {},
+    create: {
+      employeeCode: "EMP-001",
+      fullName: "Carlos Mendes",
+      email: "carlos.mendes@sunset.local",
+      departmentId: dept.id,
+      positionId: position.id,
+      hireDate: new Date("2024-03-15"),
+      status: "ACTIVE",
+    },
+  });
+
+  const party = await prisma.party.findFirst();
+  if (party) {
+    await prisma.invoice.upsert({
+      where: { organizationId_number: { organizationId: "org_001", number: "NF-2026-0001" } },
+      update: {},
+      create: {
+        number: "NF-2026-0001",
+        partyId: party.id,
+        status: "ISSUED",
+        issueDate: new Date("2026-07-28"),
+        dueDate: new Date("2026-08-28"),
+        currencyCode: "BRL",
+        subtotal: 15000,
+        taxTotal: 2700,
+        total: 17700,
+        paymentStatus: "UNPAID",
+      },
+    });
+  }
+
+  await prisma.integrationConnector.upsert({
+    where: { organizationId_code: { organizationId: "org_001", code: "BANK_OFX" } },
+    update: {},
+    create: {
+      code: "BANK_OFX",
+      name: "Importação OFX Bancária",
+      connectorType: "BANK_OFX",
+      status: "ERROR",
+      lastError: "Timeout na conexão com o banco",
+    },
+  });
+
+  console.log("✅ Business modules sample data seeded");
 
   console.log("🎉 Seed completed successfully!");
 

@@ -989,3 +989,351 @@ model InventoryExportJob {
   @@index([kind, status])
   @@map("inventory_export_jobs")
 }
+
+// ============================================
+// TESOURARIA (SM-TREASURY)
+// ============================================
+
+model BankAccount {
+  id             String   @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  organizationId String   @default("org_001") @map("organization_id")
+  code           String
+  name           String
+  bankName       String   @map("bank_name")
+  accountNumber  String   @map("account_number")
+  currencyCode   String   @map("currency_code")
+  currentBalance Decimal  @default(0) @map("current_balance") @db.Decimal(19, 2)
+  isActive       Boolean  @default(true) @map("is_active")
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt      DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  statements     BankStatement[]
+  transactions   BankTransaction[]
+  reconciliations ReconciliationSession[]
+
+  @@unique([organizationId, code])
+  @@index([organizationId, isActive])
+  @@map("bank_accounts")
+}
+
+model BankStatement {
+  id             String   @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  bankAccountId  String   @map("bank_account_id") @db.Uuid
+  periodStart    DateTime @map("period_start") @db.Date
+  periodEnd      DateTime @map("period_end") @db.Date
+  status         String   @default("DRAFT")
+  openingBalance Decimal  @map("opening_balance") @db.Decimal(19, 2)
+  closingBalance Decimal  @map("closing_balance") @db.Decimal(19, 2)
+  importedAt     DateTime? @map("imported_at") @db.Timestamptz
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt      DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  bankAccount    BankAccount @relation(fields: [bankAccountId], references: [id])
+  transactions   BankTransaction[]
+
+  @@index([bankAccountId, periodStart, periodEnd])
+  @@map("bank_statements")
+}
+
+model BankTransaction {
+  id                    String   @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  bankAccountId         String   @map("bank_account_id") @db.Uuid
+  statementId           String?  @map("statement_id") @db.Uuid
+  transactionDate       DateTime @map("transaction_date") @db.Date
+  description           String
+  reference             String?
+  amount                Decimal  @db.Decimal(19, 2)
+  type                  String
+  reconciliationStatus  String   @default("UNMATCHED") @map("reconciliation_status")
+  matchedJournalEntryId String?  @map("matched_journal_entry_id") @db.Uuid
+  createdAt             DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt             DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  bankAccount  BankAccount   @relation(fields: [bankAccountId], references: [id])
+  statement    BankStatement? @relation(fields: [statementId], references: [id])
+
+  @@index([bankAccountId, transactionDate])
+  @@index([reconciliationStatus])
+  @@map("bank_transactions")
+}
+
+model ReconciliationSession {
+  id              String   @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  bankAccountId   String   @map("bank_account_id") @db.Uuid
+  periodStart     DateTime @map("period_start") @db.Date
+  periodEnd       DateTime @map("period_end") @db.Date
+  status          String   @default("IN_PROGRESS")
+  statementBalance Decimal @map("statement_balance") @db.Decimal(19, 2)
+  ledgerBalance   Decimal  @map("ledger_balance") @db.Decimal(19, 2)
+  difference      Decimal  @db.Decimal(19, 2)
+  reconciledByUserId String? @map("reconciled_by_user_id") @db.Uuid
+  reconciledAt    DateTime? @map("reconciled_at") @db.Timestamptz
+  createdAt       DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt       DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  bankAccount BankAccount @relation(fields: [bankAccountId], references: [id])
+
+  @@index([bankAccountId, status])
+  @@map("reconciliation_sessions")
+}
+
+// ============================================
+// COMEX (SM-COMEX)
+// ============================================
+
+model ComexShipment {
+  id                String    @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  organizationId    String    @default("org_001") @map("organization_id")
+  reference         String
+  incoterm          String
+  status            String    @default("DRAFT")
+  originCountry     String    @map("origin_country")
+  destinationCountry String   @map("destination_country")
+  supplierPartyId   String?   @map("supplier_party_id") @db.Uuid
+  estimatedArrival  DateTime? @map("estimated_arrival") @db.Date
+  totalFobValue     Decimal   @default(0) @map("total_fob_value") @db.Decimal(19, 2)
+  currencyCode      String    @map("currency_code")
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt         DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+
+  documents ComexDocument[]
+
+  @@unique([organizationId, reference])
+  @@index([organizationId, status])
+  @@map("comex_shipments")
+}
+
+model ComexDocument {
+  id             String    @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  shipmentId     String    @map("shipment_id") @db.Uuid
+  documentType   String    @map("document_type")
+  documentNumber String    @map("document_number")
+  status         String    @default("PENDING")
+  issuedAt       DateTime? @map("issued_at") @db.Date
+  createdAt      DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt      DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+
+  shipment ComexShipment @relation(fields: [shipmentId], references: [id], onDelete: Cascade)
+
+  @@index([shipmentId])
+  @@map("comex_documents")
+}
+
+// ============================================
+// CRM (SM-CRM)
+// ============================================
+
+model CrmLead {
+  id               String    @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  organizationId   String    @default("org_001") @map("organization_id")
+  partyId          String?   @map("party_id") @db.Uuid
+  companyName      String    @map("company_name")
+  contactName      String?   @map("contact_name")
+  source           String    @default("INBOUND")
+  status           String    @default("NEW")
+  score            Int       @default(0)
+  assignedToUserId String?   @map("assigned_to_user_id") @db.Uuid
+  expectedValue    Decimal?  @map("expected_value") @db.Decimal(19, 2)
+  currencyCode     String?   @map("currency_code")
+  createdAt        DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt        DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+
+  opportunities CrmOpportunity[]
+
+  @@index([organizationId, status])
+  @@index([assignedToUserId])
+  @@map("crm_leads")
+}
+
+model CrmOpportunity {
+  id                String    @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  organizationId    String    @default("org_001") @map("organization_id")
+  leadId            String?   @map("lead_id") @db.Uuid
+  partyId           String?   @map("party_id") @db.Uuid
+  title             String
+  stage             String    @default("QUALIFICATION")
+  probability       Int       @default(10)
+  amount            Decimal   @db.Decimal(19, 2)
+  currencyCode      String    @map("currency_code")
+  expectedCloseDate DateTime? @map("expected_close_date") @db.Date
+  assignedToUserId  String?   @map("assigned_to_user_id") @db.Uuid
+  status            String    @default("OPEN")
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt         DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+
+  lead       CrmLead?      @relation(fields: [leadId], references: [id])
+  activities CrmActivity[]
+
+  @@index([organizationId, stage, status])
+  @@map("crm_opportunities")
+}
+
+model CrmActivity {
+  id               String    @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  organizationId   String    @default("org_001") @map("organization_id")
+  opportunityId    String?   @map("opportunity_id") @db.Uuid
+  relatedType      String    @map("related_type")
+  relatedId        String?   @map("related_id") @db.Uuid
+  activityType     String    @map("activity_type")
+  subject          String
+  dueAt            DateTime? @map("due_at") @db.Timestamptz
+  status           String    @default("PENDING")
+  assignedToUserId String?   @map("assigned_to_user_id") @db.Uuid
+  createdAt        DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt        DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+
+  opportunity CrmOpportunity? @relation(fields: [opportunityId], references: [id])
+
+  @@index([organizationId, status, dueAt])
+  @@map("crm_activities")
+}
+
+// ============================================
+// RH (SM-COMP-04)
+// ============================================
+
+model HrDepartment {
+  id             String   @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  organizationId String   @default("org_001") @map("organization_id")
+  code           String
+  name           String
+  parentId       String?  @map("parent_id") @db.Uuid
+  isActive       Boolean  @default(true) @map("is_active")
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt      DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  parent    HrDepartment?  @relation("DepartmentHierarchy", fields: [parentId], references: [id])
+  children  HrDepartment[] @relation("DepartmentHierarchy")
+  positions HrPosition[]
+  employees HrEmployee[]
+
+  @@unique([organizationId, code])
+  @@map("hr_departments")
+}
+
+model HrPosition {
+  id           String   @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  departmentId String   @map("department_id") @db.Uuid
+  code         String
+  title        String
+  isActive     Boolean  @default(true) @map("is_active")
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt    DateTime @updatedAt @map("updated_at") @db.Timestamptz
+
+  department HrDepartment @relation(fields: [departmentId], references: [id])
+  employees  HrEmployee[]
+
+  @@unique([departmentId, code])
+  @@map("hr_positions")
+}
+
+model HrEmployee {
+  id           String    @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  organizationId String  @default("org_001") @map("organization_id")
+  partyId      String?   @map("party_id") @db.Uuid
+  employeeCode String    @map("employee_code")
+  fullName     String    @map("full_name")
+  email        String?
+  departmentId String?   @map("department_id") @db.Uuid
+  positionId   String?   @map("position_id") @db.Uuid
+  managerId    String?   @map("manager_id") @db.Uuid
+  hireDate     DateTime  @map("hire_date") @db.Date
+  status       String    @default("ACTIVE")
+  createdAt    DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt    DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+
+  department HrDepartment? @relation(fields: [departmentId], references: [id])
+  position   HrPosition?   @relation(fields: [positionId], references: [id])
+  manager    HrEmployee?   @relation("EmployeeManager", fields: [managerId], references: [id])
+  reports    HrEmployee[]  @relation("EmployeeManager")
+
+  @@unique([organizationId, employeeCode])
+  @@index([organizationId, status])
+  @@map("hr_employees")
+}
+
+// ============================================
+// FATURAMENTO (SM-SALES-04)
+// ============================================
+
+model Invoice {
+  id             String    @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  organizationId String    @default("org_001") @map("organization_id")
+  number         String
+  partyId        String    @map("party_id") @db.Uuid
+  status         String    @default("DRAFT")
+  issueDate      DateTime  @map("issue_date") @db.Date
+  dueDate        DateTime  @map("due_date") @db.Date
+  currencyCode   String    @map("currency_code")
+  subtotal       Decimal   @db.Decimal(19, 2)
+  taxTotal       Decimal   @default(0) @map("tax_total") @db.Decimal(19, 2)
+  total          Decimal   @db.Decimal(19, 2)
+  paymentStatus  String    @default("UNPAID") @map("payment_status")
+  createdAt      DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt      DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+
+  lines InvoiceLine[]
+
+  @@unique([organizationId, number])
+  @@index([organizationId, status, issueDate])
+  @@map("invoices")
+}
+
+model InvoiceLine {
+  id          String  @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  invoiceId   String  @map("invoice_id") @db.Uuid
+  productId   String? @map("product_id") @db.Uuid
+  description String
+  quantity    Decimal @db.Decimal(19, 4)
+  unitPrice   Decimal @map("unit_price") @db.Decimal(19, 4)
+  taxRate     Decimal @default(0) @map("tax_rate") @db.Decimal(7, 4)
+  lineTotal   Decimal @map("line_total") @db.Decimal(19, 2)
+
+  invoice Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  @@index([invoiceId])
+  @@map("invoice_lines")
+}
+
+// ============================================
+// INTEGRAÇÕES (SM-PLATFORM-05)
+// ============================================
+
+model IntegrationConnector {
+  id             String    @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  organizationId String    @default("org_001") @map("organization_id")
+  code           String
+  name           String
+  connectorType  String    @map("connector_type")
+  status         String    @default("INACTIVE")
+  configRef      String?   @map("config_ref")
+  lastSyncAt     DateTime? @map("last_sync_at") @db.Timestamptz
+  lastError      String?   @map("last_error")
+  createdAt      DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt      DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+
+  jobs IntegrationJob[]
+
+  @@unique([organizationId, code])
+  @@index([organizationId, status])
+  @@map("integration_connectors")
+}
+
+model IntegrationJob {
+  id               String    @id @default(dbgenerated("uuid_generate_v7()")) @db.Uuid
+  connectorId      String    @map("connector_id") @db.Uuid
+  direction        String
+  status           String    @default("PENDING")
+  recordsProcessed Int       @default(0) @map("records_processed")
+  recordsFailed    Int       @default(0) @map("records_failed")
+  errorSummary     String?   @map("error_summary")
+  correlationId    String    @map("correlation_id")
+  startedAt        DateTime? @map("started_at") @db.Timestamptz
+  completedAt      DateTime? @map("completed_at") @db.Timestamptz
+  createdAt        DateTime  @default(now()) @map("created_at") @db.Timestamptz
+
+  connector IntegrationConnector @relation(fields: [connectorId], references: [id])
+
+  @@index([connectorId, status, createdAt])
+  @@map("integration_jobs")
+}

@@ -44,7 +44,7 @@ const TopNav = React.forwardRef<HTMLElement, TopNavProps>(
       <nav
         ref={ref}
         className={cn(
-          "flex h-14 items-center justify-between border-b border-gray-200 bg-white px-4",
+          "flex h-10 items-center justify-between border-b border-gray-300 bg-white px-3 shadow-sm",
           className,
         )}
         {...props}
@@ -52,10 +52,12 @@ const TopNav = React.forwardRef<HTMLElement, TopNavProps>(
         <div className="flex items-center gap-4">
           {logo || (
             <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded bg-primary-600">
-                <span className="text-sm font-bold text-white">S</span>
+              <div className="flex h-7 w-7 items-center justify-center rounded bg-primary-700">
+                <span className="text-xs font-bold text-white">S</span>
               </div>
-              <span className="font-semibold text-gray-900">Sunset ERP</span>
+              <span className="text-sm font-semibold text-gray-900">
+                Sunset ERP
+              </span>
             </div>
           )}
           {environment && environment !== "production" && (

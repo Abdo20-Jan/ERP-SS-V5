@@ -1,0 +1,16 @@
+DROP TABLE IF EXISTS "integration_jobs";
+DROP TABLE IF EXISTS "integration_connectors";
+DROP TABLE IF EXISTS "invoice_lines";
+DROP TABLE IF EXISTS "invoices";
+DROP TABLE IF EXISTS "hr_employees";
+DROP TABLE IF EXISTS "hr_positions";
+DROP TABLE IF EXISTS "hr_departments";
+DROP TABLE IF EXISTS "crm_activities";
+DROP TABLE IF EXISTS "crm_opportunities";
+DROP TABLE IF EXISTS "crm_leads";
+DROP TABLE IF EXISTS "comex_documents";
+DROP TABLE IF EXISTS "comex_shipments";
+DROP TABLE IF EXISTS "reconciliation_sessions";
+DROP TABLE IF EXISTS "bank_transactions";
+DROP TABLE IF EXISTS "bank_statements";
+DROP TABLE IF EXISTS "bank_accounts";
